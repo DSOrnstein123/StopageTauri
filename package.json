@@ -1,0 +1,15 @@
+{
+  "name": "stopage-tauri",
+  "private": true,
+  "scripts": {
+    "tauri": "tauri dev",
+    "tauri:build": "tauri build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.9.6"
+  }
+}

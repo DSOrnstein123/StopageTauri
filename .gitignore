@@ -1,0 +1,15 @@
+# OS
+.DS_Store
+Thumbs.db
+node_modules
+
+# IDE
+.vscode/
+.idea/
+
+# Rust (workspace)
+target/
+**/*.rs.bk
+
+# Logs
+*.log
