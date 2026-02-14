@@ -4,3 +4,13 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+tokio = { version = "1", features = ["full"] }
+uuid = { version = "1.10", features = ["v4", "serde"] }
+sqlx = { version = "0.8", features = [
+  "runtime-tokio",
+  "sqlite",
+  "macros",
+  "migrate",
+  "uuid"
+]}
+serde = "1.0.228"
