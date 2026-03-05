@@ -1,13 +1,14 @@
 import { useEffect, useRef } from "react";
 import Resizer from "./Resizer";
 import useRightSidebarStore from "@/app/store/rightSidebarStore";
-import FlashCardsSidebar from "@/routes/(features)/flashcards/-components/FlashCardsSidebar";
-import PdfSidebar from "@/routes/(features)/pdf-reader/-components/PdfSidebar";
+import { sidebarComponentList } from "./sidebarComponentList";
 
 const RightSidebar = () => {
   const width = useRightSidebarStore((state) => state.width);
   const setWidth = useRightSidebarStore((state) => state.setWidth);
   const rightSidebarRef = useRef<HTMLDivElement | null>(null);
+  const type = useRightSidebarStore((state) => state.type);
+  const SidebarComponent = sidebarComponentList[type];
 
   useEffect(() => {
     if (!rightSidebarRef.current) return;
@@ -26,10 +27,7 @@ const RightSidebar = () => {
       />
 
       <div className="h-full overflow-x-hidden overflow-y-auto p-2">
-        {/* <SpinePlayerSidebar /> */}
-        {/* <PdfSidebar /> */}
-        <FlashCardsSidebar />
-        {/* <PdfSidebar /> */}
+        <SidebarComponent />
       </div>
     </aside>
   );
