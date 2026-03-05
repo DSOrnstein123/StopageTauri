@@ -4,6 +4,7 @@ import SlashCommandExtension from "./extensions/slash-command/slashCommands";
 import ContentBlock from "./extensions/block-node/contentBlock";
 import { CustomBubbleMenu as BubbleMenu } from "./CustomBubbleMenu";
 import { Placeholder } from "@tiptap/extensions";
+import { FloatDragExtension } from "./extensions/dnd/floatDragExtension";
 
 const extensions = [
   StarterKit,
@@ -15,6 +16,7 @@ const extensions = [
       return "Press '/' for commands";
     },
   }),
+  FloatDragExtension,
   // KanbanNode,
 ];
 
@@ -28,7 +30,7 @@ const DocumentContent = () => {
     content,
     editorProps: {
       attributes: {
-        class: "flex h-full flex-col gap-y-2 focus:outline-none",
+        class: "focus:outline-none prose-mirror-container",
       },
     },
   });

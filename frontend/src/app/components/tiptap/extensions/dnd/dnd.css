@@ -1,0 +1,47 @@
+.prose-mirror-container > * {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.ProseMirror::after,
+.tiptap::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.ProseMirror > .react-renderer:not([data-align="left"]):not([data-align="right"]) {
+  clear: both;
+}
+
+div[data-align="left"] {
+  float: left;
+  margin-right: 1.5rem; 
+  margin-bottom: 0.5rem;
+  width: 45%; 
+}
+
+div[data-align="right"] {
+  float: right;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  width: 45%;
+}
+
+div[data-align="center"] {
+  float: none;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.drag-hover-left {
+  box-shadow: inset 4px 0 0 0 #3b82f6 !important;
+  background-color: rgba(59, 130, 246, 0.05);
+  transition: all 0.2s ease;
+}
+
+.drag-hover-right {
+  box-shadow: inset -4px 0 0 0 #3b82f6 !important;
+  background-color: rgba(59, 130, 246, 0.05);
+  transition: all 0.2s ease;
+}
