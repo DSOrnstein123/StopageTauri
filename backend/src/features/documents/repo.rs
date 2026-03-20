@@ -12,7 +12,7 @@ pub struct Document {
 }
 
 #[allow(dead_code)]
-pub async fn get_documents_list(pool: &SqlitePool) -> Result<Vec<Document>, sqlx::Error> {
+pub async fn get_document_list(pool: &SqlitePool) -> Result<Vec<Document>, sqlx::Error> {
     let documents = query_as!(
         Document,
         r#"
@@ -27,4 +27,28 @@ pub async fn get_documents_list(pool: &SqlitePool) -> Result<Vec<Document>, sqlx
     .await?;
 
     Ok(documents)
+}
+
+#[allow(dead_code)]
+pub async fn create_document(pool: &SqlitePool) -> Result<Document, sqlx::Error> {
+    let id = Uuid::new_v4();
+    let title = "Untitled";
+
+    let document = query_as!(
+        Document,
+        r#"
+            INSERT INTO documents (id, title)
+            VALUES (?, ?)
+            RETURNING
+                id as "id!: Uuid",
+                title,
+                created_at
+        "#,
+        id,
+        title
+    )
+    .fetch_one(pool)
+    .await?;
+
+    Ok(document)
 }

@@ -23,6 +23,7 @@ const DraftInput = () => {
         name: name,
         parentId: parentId ?? null,
       }),
+
     onSuccess: (data) => {
       clearDraft();
 
