@@ -1,181 +1,395 @@
 import { Extension } from "@tiptap/core";
-import { Plugin, PluginKey } from "@tiptap/pm/state";
+import { NodeSelection, Plugin, PluginKey } from "@tiptap/pm/state";
+import type { EditorView } from "@tiptap/pm/view";
+
+const getDragIndicator = () => {
+  let el = document.getElementById("tiptap-drag-indicator");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "tiptap-drag-indicator";
+    el.style.cssText =
+      "position:fixed;pointer-events:none;z-index:99999;background:#3b82f6;border-radius:2px;opacity:0;transition:opacity 0.15s ease";
+    document.body.appendChild(el);
+  }
+  return el;
+};
+const hideDragIndicator = () => {
+  const el = document.getElementById("tiptap-drag-indicator");
+  if (el) el.style.opacity = "0";
+};
+
+function syncAlignAttrs(view: EditorView) {
+  (view.dom as HTMLElement)
+    .querySelectorAll<HTMLElement>(".react-renderer.node-content-block")
+    .forEach((wrapper) => {
+      let raw: number;
+      try {
+        raw = view.posAtDOM(wrapper, 0);
+      } catch {
+        return;
+      }
+      if (raw < 0) return;
+      const $pos = view.state.doc.resolve(raw);
+      for (let d = $pos.depth; d >= 1; d--) {
+        const pName = $pos.node(d - 1).type.name;
+        if (pName === "doc" || pName === "column") {
+          const node = view.state.doc.nodeAt($pos.before(d));
+          if (!node || node.type.name !== "content-block") break;
+          const align: string = node.attrs.align ?? "center";
+          if (wrapper.dataset.align !== align) wrapper.dataset.align = align;
+          break;
+        }
+      }
+    });
+}
+
+function findBlockDOM(
+  element: HTMLElement,
+  editorDOM: HTMLElement,
+): HTMLElement | null {
+  let el: HTMLElement | null = element;
+  while (el && el !== editorDOM) {
+    const parent: HTMLElement | null = el.parentElement;
+    if (!parent) break;
+    if (parent === editorDOM) return el;
+    if (parent.getAttribute("data-type") === "column") return el;
+    if (
+      parent.classList.contains("react-renderer") &&
+      (parent.parentElement === editorDOM ||
+        parent.parentElement?.getAttribute("data-type") === "column")
+    )
+      return parent;
+    el = parent;
+  }
+  return null;
+}
+
+function getDropTarget(
+  view: EditorView,
+  x: number,
+  y: number,
+  skipDOM: HTMLElement | null,
+): HTMLElement | null {
+  const editorDOM = view.dom as HTMLElement;
+  const skip = skipDOM && document.contains(skipDOM) ? skipDOM : null;
+
+  const coord = view.posAtCoords({ left: x, top: y });
+  if (coord) {
+    const $pos = view.state.doc.resolve(coord.pos);
+    for (let d = $pos.depth; d >= 1; d--) {
+      const pName = $pos.node(d - 1).type.name;
+      if (pName === "doc" || pName === "column") {
+        const nodeName = $pos.node(d).type.name;
+        if (nodeName === "column" || nodeName === "column-container") break;
+
+        let dom = view.nodeDOM($pos.before(d)) as HTMLElement | null;
+        if (!dom) break;
+        while (
+          dom.parentElement !== editorDOM &&
+          dom.parentElement?.getAttribute("data-type") !== "column"
+        ) {
+          if (!dom.parentElement) break;
+          dom = dom.parentElement;
+        }
+        if (skip && (dom === skip || skip.contains(dom))) break;
+        return dom;
+      }
+    }
+  }
+
+  for (const el of document.elementsFromPoint(x, y) as HTMLElement[]) {
+    if (skip && (el === skip || skip.contains(el))) continue;
+    const block = findBlockDOM(el, editorDOM);
+    if (block) return block;
+  }
+  return null;
+}
+
+function blockPosFromDOM(
+  view: EditorView,
+  blockDOM: HTMLElement,
+): number | null {
+  let raw: number;
+  try {
+    raw = view.posAtDOM(blockDOM, 0);
+  } catch {
+    return null;
+  }
+  if (raw < 0) return null;
+  const $pos = view.state.doc.resolve(raw);
+  for (let d = $pos.depth; d >= 1; d--) {
+    const pName = $pos.node(d - 1).type.name;
+    if (pName === "doc" || pName === "column") return $pos.before(d);
+  }
+  return $pos.before(1);
+}
 
 export const FloatDragExtension = Extension.create({
   name: "floatDrag",
 
   addProseMirrorPlugins() {
-    let dragSource: { pos: number; size: number } | null = null;
+    let dragSource: {
+      pos: number;
+      size: number;
+      dom: HTMLElement | null;
+    } | null = null;
 
     return [
       new Plugin({
         key: new PluginKey("floatDrag"),
+
+        view(editorView) {
+          return {
+            update() {
+              syncAlignAttrs(editorView);
+            },
+          };
+        },
+
         props: {
           handleDOMEvents: {
             dragstart(view, event) {
-              const { selection } = view.state;
+              const target = event.target as HTMLElement | null;
+              if (target) {
+                let el: HTMLElement | null = target;
+                while (el && el !== view.dom) {
+                  const parent: HTMLElement | null = el.parentElement;
+                  if (!parent) break;
+                  if (
+                    el.classList.contains("react-renderer") &&
+                    el.classList.contains("node-content-block") &&
+                    (parent === view.dom ||
+                      parent.getAttribute("data-type") === "column")
+                  ) {
+                    let raw: number;
+                    try {
+                      raw = view.posAtDOM(el, 0);
+                    } catch {
+                      break;
+                    }
+                    if (raw >= 0) {
+                      const $pos = view.state.doc.resolve(raw);
+                      for (let d = $pos.depth; d >= 1; d--) {
+                        const pName = $pos.node(d - 1).type.name;
+                        if (pName === "doc" || pName === "column") {
+                          const blockPos = $pos.before(d);
+                          const node = view.state.doc.nodeAt(blockPos);
+                          if (node) {
+                            dragSource = {
+                              pos: blockPos,
+                              size: node.nodeSize,
+                              dom: el,
+                            };
+                            return false;
+                          }
+                          break;
+                        }
+                      }
+                    }
+                    break;
+                  }
+                  el = parent;
+                }
+              }
 
-              if ("node" in selection && selection.node) {
+              const { selection } = view.state;
+              if (selection instanceof NodeSelection) {
+                const dom = view.nodeDOM(selection.from) as HTMLElement | null;
                 dragSource = {
                   pos: selection.from,
-                  size: (selection.node as any).nodeSize,
-                };
-                return false;
-              }
-
-              const pos = view.posAtCoords({
-                left: event.clientX,
-                top: event.clientY,
-              });
-              if (!pos) return false;
-
-              const $pos = view.state.doc.resolve(pos.pos);
-
-              const blockPos =
-                $pos.depth > 0 ? $pos.before($pos.depth) : pos.pos;
-              const targetNode = view.state.doc.nodeAt(blockPos);
-
-              if (targetNode) {
-                dragSource = {
-                  pos: blockPos,
-                  size: targetNode.nodeSize,
+                  size: selection.node.nodeSize,
+                  dom,
                 };
               }
-
               return false;
             },
 
             dragover(view, event) {
-              const pos = view.posAtCoords({
-                left: event.clientX,
-                top: event.clientY,
-              });
-              if (!pos) return false;
-              console.log(dragSource);
-              const node = view.domAtPos(pos.pos).node;
-              const element = (
-                node.nodeType === 3 ? node.parentElement : node
-              ) as HTMLElement;
-              const targetDOM = element?.closest(
-                ".ProseMirror > *",
-              ) as HTMLElement;
-
-              document
-                .querySelectorAll(".drag-hover-left, .drag-hover-right")
-                .forEach((el) => {
-                  el.classList.remove("drag-hover-left", "drag-hover-right");
-                });
-
-              if (!targetDOM) return false;
-
-              const rect = targetDOM.getBoundingClientRect();
-              const relativeX = event.clientX - rect.left;
-              const leftThreshold = rect.width * 0.2;
-              const rightThreshold = rect.width * 0.8;
-
-              if (relativeX < leftThreshold) {
-                targetDOM.classList.add("drag-hover-left");
-                event.preventDefault();
-                return true;
-              } else if (relativeX > rightThreshold) {
-                targetDOM.classList.add("drag-hover-right");
-                event.preventDefault();
-                return true;
+              const element = document.elementFromPoint(
+                event.clientX,
+                event.clientY,
+              ) as HTMLElement | null;
+              if (!element) {
+                hideDragIndicator();
+                return false;
+              }
+              const blockDOM = findBlockDOM(element, view.dom as HTMLElement);
+              if (!blockDOM) {
+                hideDragIndicator();
+                return false;
               }
 
-              return false;
+              const rect = blockDOM.getBoundingClientRect();
+              const relX = event.clientX - rect.left;
+              const midY = rect.top + rect.height / 2;
+              const ind = getDragIndicator();
+              const GAP = 6,
+                LINE = 4;
+
+              const isContainerOrColumn =
+                blockDOM.classList.contains("node-column-container") ||
+                blockDOM.getAttribute("data-type") === "column" ||
+                (blockDOM.classList.contains("react-renderer") &&
+                  blockDOM.firstElementChild?.classList.contains(
+                    "column-container-wrapper",
+                  ));
+
+              if (isContainerOrColumn) {
+                Object.assign(ind.style, {
+                  left: `${rect.left}px`,
+                  width: `${rect.width}px`,
+                  height: `${LINE}px`,
+                  opacity: "1",
+                  top:
+                    event.clientY < midY
+                      ? `${rect.top - GAP - LINE}px`
+                      : `${rect.bottom + GAP}px`,
+                });
+              } else {
+                const ZONE = Math.min(rect.width * 0.25, 80);
+                if (relX < ZONE) {
+                  Object.assign(ind.style, {
+                    left: `${rect.left - GAP - LINE}px`,
+                    top: `${rect.top}px`,
+                    width: `${LINE}px`,
+                    height: `${rect.height}px`,
+                    opacity: "1",
+                  });
+                } else if (relX > rect.width - ZONE) {
+                  Object.assign(ind.style, {
+                    left: `${rect.right + GAP}px`,
+                    top: `${rect.top}px`,
+                    width: `${LINE}px`,
+                    height: `${rect.height}px`,
+                    opacity: "1",
+                  });
+                } else {
+                  Object.assign(ind.style, {
+                    left: `${rect.left}px`,
+                    width: `${rect.width}px`,
+                    height: `${LINE}px`,
+                    opacity: "1",
+                    top:
+                      event.clientY < midY
+                        ? `${rect.top - GAP - LINE}px`
+                        : `${rect.bottom + GAP}px`,
+                  });
+                }
+              }
+              event.preventDefault();
+              return true;
             },
 
-            dragleave() {
-              document
-                .querySelectorAll(".drag-hover-left, .drag-hover-right")
-                .forEach((el) => {
-                  el.classList.remove("drag-hover-left", "drag-hover-right");
-                });
+            dragleave(view, event) {
+              if (!view.dom.contains(event.relatedTarget as Node))
+                hideDragIndicator();
             },
 
             drop(view, event) {
+              hideDragIndicator();
+              if (!dragSource) return false;
+
               const { state, dispatch } = view;
+              const blockDOM = getDropTarget(
+                view,
+                event.clientX,
+                event.clientY,
+                dragSource.dom,
+              );
+              if (!blockDOM) return false;
 
-              const pos = view.posAtCoords({
-                left: event.clientX,
-                top: event.clientY,
-              });
-              if (!pos) return false;
+              const slice = view.dragging?.slice;
+              if (!slice?.content.firstChild?.type.spec.attrs?.align)
+                return false;
 
-              document
-                .querySelectorAll(".drag-hover-left, .drag-hover-right")
-                .forEach((el) => {
-                  el.classList.remove("drag-hover-left", "drag-hover-right");
-                });
+              const rect = blockDOM.getBoundingClientRect();
+              const relX = event.clientX - rect.left;
+              const midY = rect.top + rect.height / 2;
 
-              const node = view.domAtPos(pos.pos).node;
-              const element = (
-                node.nodeType === 3 ? node.parentElement : node
-              ) as HTMLElement;
-              const targetDOM = element?.closest(
-                ".ProseMirror > *",
-              ) as HTMLElement;
+              const isColumn = blockDOM.getAttribute("data-type") === "column";
+              const isContainer =
+                blockDOM.classList.contains("node-column-container") ||
+                (blockDOM.classList.contains("react-renderer") &&
+                  blockDOM.firstElementChild?.classList.contains(
+                    "column-container-wrapper",
+                  ));
 
-              if (!targetDOM) return false;
+              const ZONE = Math.min(rect.width * 0.25, 80);
+              let align = "center";
+              if (!isColumn && !isContainer) {
+                if (relX < ZONE) align = "left";
+                else if (relX > rect.width - ZONE) align = "right";
+              }
 
-              const rect = targetDOM.getBoundingClientRect();
-              const relativeX = event.clientX - rect.left;
-              const leftThreshold = rect.width * 0.2;
-              const rightThreshold = rect.width * 0.8;
+              const targetBlockPos = blockPosFromDOM(view, blockDOM);
+              if (targetBlockPos === null) return false;
 
-              let align = null;
-              if (relativeX < leftThreshold) align = "left";
-              else if (relativeX > rightThreshold) align = "right";
-
-              if (!align) return false;
               event.preventDefault();
 
-              const draggedNodeSlice = view.dragging?.slice;
-              if (!draggedNodeSlice) return false;
+              let targetPos: number;
+              if (isColumn) {
+                const $i = state.doc.resolve(targetBlockPos + 1);
+                let d = $i.depth;
+                while (d > 0 && $i.node(d).type.name !== "column") d--;
+                targetPos = event.clientY < midY ? $i.start(d) : $i.end(d);
+              } else if (isContainer) {
+                const $i = state.doc.resolve(targetBlockPos + 1);
+                let d = $i.depth;
+                while (d > 0 && $i.node(d).type.name !== "column-container")
+                  d--;
+                targetPos = event.clientY < midY ? $i.before(d) : $i.after(d);
+              } else if (align === "left" || align === "right") {
+                targetPos = targetBlockPos;
+              } else {
+                const targetNode = state.doc.nodeAt(targetBlockPos);
+                targetPos =
+                  event.clientY < midY
+                    ? targetBlockPos
+                    : targetBlockPos + (targetNode?.nodeSize ?? 1);
+              }
 
-              // Lấy vị trí ngay trước thẻ <p>
-              const $pos = state.doc.resolve(pos.pos);
-              const targetPos =
-                $pos.depth > 0 ? $pos.before($pos.depth) : pos.pos;
+              const originalNode = state.doc.nodeAt(dragSource.pos);
+              if (!originalNode) return false;
 
+              const newNode = originalNode.type.create(
+                { ...originalNode.attrs, align },
+                originalNode.content,
+                originalNode.marks,
+              );
+
+              const srcFrom = dragSource.pos;
+              const srcTo = srcFrom + dragSource.size;
               const tr = state.tr;
 
-              // FIX: Xóa Node cũ dựa trên tọa độ đã lưu từ dragstart
-              // Thay vì dùng tr.deleteSelection()
-              if (dragSource) {
-                tr.delete(dragSource.pos, dragSource.pos + dragSource.size);
-              } else {
-                // Fallback nếu không bắt được dragstart (ít khi xảy ra)
-                tr.deleteSelection();
-              }
-
-              // Tính toán lại vị trí chèn sau khi xóa
-              const mappedTargetPos = tr.mapping.map(targetPos);
-
-              const contentNode = draggedNodeSlice.content.firstChild;
-              if (contentNode) {
-                const newAttrs = { ...contentNode.attrs };
-                if (contentNode.type.spec.attrs?.align) {
-                  newAttrs.align = align;
+              if (targetPos === srcFrom) {
+                if (align !== originalNode.attrs.align) {
+                  tr.setNodeMarkup(srcFrom, undefined, {
+                    ...originalNode.attrs,
+                    align,
+                  });
+                  dispatch(tr);
                 }
-
-                const newNode = contentNode.type.create(
-                  newAttrs,
-                  contentNode.content,
-                );
-
-                tr.insert(mappedTargetPos, newNode);
+                dragSource = null;
+                return true;
               }
 
-              dispatch(tr);
+              if (targetPos > srcFrom && targetPos <= srcTo) targetPos = srcTo;
+
+              if (targetPos > srcTo) {
+                tr.insert(targetPos, newNode);
+                tr.delete(srcFrom, srcTo);
+              } else {
+                tr.delete(srcFrom, srcTo);
+                tr.insert(tr.mapping.map(targetPos), newNode);
+              }
 
               dragSource = null;
-
+              dispatch(tr);
               return true;
             },
 
             dragend() {
+              hideDragIndicator();
               dragSource = null;
             },
           },

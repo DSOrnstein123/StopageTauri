@@ -1,47 +1,42 @@
-.prose-mirror-container > * {
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
+/* Column chứa float block phải là flow-root để float không tràn ra ngoài */
+div[data-type="column"] {
+  display: flow-root !important;
 }
 
-.ProseMirror::after,
-.tiptap::after {
-  content: "";
-  display: table;
-  clear: both;
+.ProseMirror .react-renderer {
+  clear: none !important;
 }
 
-.ProseMirror > .react-renderer:not([data-align="left"]):not([data-align="right"]) {
-  clear: both;
+/* Float trái: target .react-renderer wrapper (không phải inner div) */
+.ProseMirror .react-renderer.node-content-block[data-align="left"] {
+  float: left !important;
+  width: 48% !important;
+  margin-right: 4% !important;
+  margin-bottom: 0.5rem !important;
+  clear: none !important;
 }
 
-div[data-align="left"] {
-  float: left;
-  margin-right: 1.5rem; 
-  margin-bottom: 0.5rem;
-  width: 45%; 
+/* Float phải */
+.ProseMirror .react-renderer.node-content-block[data-align="right"] {
+  float: right !important;
+  width: 48% !important;
+  margin-left: 4% !important;
+  margin-bottom: 0.5rem !important;
+  clear: none !important;
 }
 
-div[data-align="right"] {
-  float: right;
-  margin-left: 1.5rem;
-  margin-bottom: 0.5rem;
-  width: 45%;
+/* Center: trở về bình thường, clear float */
+.ProseMirror .react-renderer.node-content-block[data-align="center"] {
+  float: none !important;
+  width: 100% !important;
+  clear: both !important;
 }
 
-div[data-align="center"] {
-  float: none;
-  width: 100%;
-  margin: 0 auto;
+/* Paragraph sau float block không chống lại float */
+.ProseMirror p {
+  clear: none !important;
 }
 
-.drag-hover-left {
-  box-shadow: inset 4px 0 0 0 #3b82f6 !important;
-  background-color: rgba(59, 130, 246, 0.05);
-  transition: all 0.2s ease;
-}
-
-.drag-hover-right {
-  box-shadow: inset -4px 0 0 0 #3b82f6 !important;
-  background-color: rgba(59, 130, 246, 0.05);
-  transition: all 0.2s ease;
+div[data-type="column"] p {
+  min-height: 1.5em;
 }

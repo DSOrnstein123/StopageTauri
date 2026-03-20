@@ -5,9 +5,13 @@ import ContentBlock from "./extensions/block-node/contentBlock";
 import { CustomBubbleMenu as BubbleMenu } from "./CustomBubbleMenu";
 import { Placeholder } from "@tiptap/extensions";
 import { FloatDragExtension } from "./extensions/dnd/floatDragExtension";
+import { ColumnContainer } from "./extensions/column/columnContainer";
+import { Column } from "./extensions/column/column";
 
 const extensions = [
-  StarterKit,
+  StarterKit.configure({
+    dropcursor: false,
+  }),
   SlashCommandExtension,
   ContentBlock,
   Placeholder.configure({
@@ -17,6 +21,8 @@ const extensions = [
     },
   }),
   FloatDragExtension,
+  Column,
+  ColumnContainer,
   // KanbanNode,
 ];
 

@@ -1,27 +1,9 @@
-import { useEffect, useRef } from "react";
-import {
-  NodeViewContent,
-  NodeViewWrapper,
-  type ReactNodeViewProps,
-} from "@tiptap/react";
+import { NodeViewContent, NodeViewWrapper } from "@tiptap/react";
 import { GripVertical } from "lucide-react";
 
-const ContentBlockView = ({ node }: ReactNodeViewProps) => {
-  const elementRef = useRef<HTMLDivElement>(null);
-  const align = node.attrs.align;
-
-  useEffect(() => {
-    const parent = elementRef.current?.parentElement;
-    if (parent && parent.classList.contains("react-renderer")) {
-      parent.setAttribute("data-align", align);
-    }
-  }, [align]);
-
+const ContentBlockView = () => {
   return (
-    <NodeViewWrapper
-      ref={elementRef}
-      className="group relative w-full rounded-sm border bg-yellow-100 p-4 transition-all"
-    >
+    <NodeViewWrapper className="group relative w-full rounded-sm border bg-yellow-100 p-4 transition-all">
       <div
         contentEditable={false}
         data-drag-handle

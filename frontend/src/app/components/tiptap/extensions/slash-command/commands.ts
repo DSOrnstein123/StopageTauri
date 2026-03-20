@@ -34,6 +34,30 @@ const commands: CommandItemProps[] = [
         .run();
     },
   },
+  {
+    name: "Column",
+    icon: RectangleHorizontal,
+    command: ({ editor, range }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .insertContent({
+          type: "column-container",
+          content: [
+            {
+              type: "column",
+              content: [{ type: "paragraph" }],
+            },
+            {
+              type: "column",
+              content: [{ type: "paragraph" }],
+            },
+          ],
+        })
+        .run();
+    },
+  },
 ];
 
 export { commands, type CommandItemProps };
