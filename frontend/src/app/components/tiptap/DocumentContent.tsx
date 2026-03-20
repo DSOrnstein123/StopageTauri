@@ -1,4 +1,4 @@
-import { EditorContent, useEditor } from "@tiptap/react";
+import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import SlashCommandExtension from "./extensions/slash-command/slashCommands";
 import ContentBlock from "./extensions/block-node/contentBlock";
@@ -7,6 +7,10 @@ import { Placeholder } from "@tiptap/extensions";
 import { FloatDragExtension } from "./extensions/dnd/floatDragExtension";
 import { ColumnContainer } from "./extensions/column/columnContainer";
 import { Column } from "./extensions/column/column";
+import debounce from "@/shared/utils/debounce";
+import { invoke } from "@tauri-apps/api/core";
+import { getRouteApi } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 const extensions = [
   StarterKit.configure({
@@ -27,9 +31,10 @@ const extensions = [
 ];
 
 const content = ``;
+const route = getRouteApi("/(features)/documents/$documentId");
 
 const DocumentContent = () => {
-  // const { id } = useParams();
+  const { documentId } = route.useParams();
 
   const editor = useEditor({
     extensions,
@@ -41,24 +46,26 @@ const DocumentContent = () => {
     },
   });
 
-  // const saveContent = debounce<(editor: Editor) => void>((currentEditor) => {
-  //   const docJSON = currentEditor.getJSON();
+  useEffect(() => {
+    if (!editor) return;
 
-  // }, 1000);
+    const handleUpdate = debounce<(props: { editor: Editor }) => void>(
+      (props) => {
+        const content = props.editor.getJSON();
+        invoke("update_document", {
+          id: documentId,
+          content: JSON.stringify(content),
+        });
+      },
+      500,
+    );
 
-  // useEffect(() => {
-  //   if (!editor) return;
+    editor.on("update", handleUpdate);
 
-  //   const handleUpdate = (editor: Editor) => {
-  //     saveContent(editor);
-  //   };
-
-  //   editor.on("update", ({ editor }) => handleUpdate(editor));
-
-  //   return () => {
-  //     editor.off("update", ({ editor }) => handleUpdate(editor));
-  //   };
-  // }, [editor, saveContent]);
+    return () => {
+      editor.off("update", handleUpdate);
+    };
+  }, [editor, documentId]);
 
   return (
     <>
