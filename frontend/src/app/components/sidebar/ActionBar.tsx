@@ -3,11 +3,11 @@ import { useTabStore } from "@/app/store/tabStore";
 import { Calendar } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useNavigate } from "@tanstack/react-router";
-import useDocumentsMutation from "@/routes/(features)/documents/-hooks/useDocumentsMutation";
+import useCreateDocument from "@/routes/(features)/documents/-hooks/useCreateDocument";
 
 const ActionBar = () => {
   const addTab = useTabStore((state) => state.addTab);
-  const { mutateAsync: createDocument } = useDocumentsMutation();
+  const { mutateAsync: createDocument } = useCreateDocument();
   const navigate = useNavigate();
 
   return (
@@ -17,9 +17,12 @@ const ActionBar = () => {
           variant="ghost"
           className="relative size-8 p-0"
           onClick={async () => {
-            // const data = await createDocument();
-            // addTab(`/documents/${data.id}`);
-            // navigate(`/documents/${data.id}`);
+            const data = await createDocument();
+            addTab(`/documents/${data.id}`);
+            navigate({
+              to: `/documents/$documentId`,
+              params: { documentId: data.id },
+            });
           }}
         >
           <img src="/icon/new_note.svg" className="h-5 w-5" />

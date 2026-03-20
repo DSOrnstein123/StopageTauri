@@ -1,14 +1,14 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
 import File from "./items/File";
-import { useGetDocumentsList } from "@/routes/(features)/documents/-hooks/useGetDocumentsList";
+import { useGetDocumentList } from "@/routes/(features)/documents/-hooks/useGetDocumentList";
 
 const List = () => {
   //TODO: folder
   //TODO: fix getDocumentsList type
   const scrollElementRef = useRef<HTMLDivElement>(null);
 
-  const { data: documentsList = [] } = useGetDocumentsList();
+  const { data: documentsList = [] } = useGetDocumentList();
 
   const virtualizer = useVirtualizer({
     count: documentsList.length,

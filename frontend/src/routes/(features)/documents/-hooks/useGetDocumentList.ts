@@ -3,15 +3,15 @@ import { invoke } from "@tauri-apps/api/core";
 import { DocumentListSchema } from "../-schemas/documentSchema";
 import zodCheck from "@/shared/utils/zodCheck";
 
-const useGetDocumentsList = () => {
+const useGetDocumentList = () => {
   return useQuery({
-    queryKey: ["documents-list"],
+    queryKey: ["document-list"],
     queryFn: async () => {
-      const raw = await invoke("get_documents_list");
+      const raw = await invoke("get_document_list");
       const result = zodCheck(DocumentListSchema, raw);
       return result;
     },
   });
 };
 
-export { useGetDocumentsList };
+export { useGetDocumentList };
