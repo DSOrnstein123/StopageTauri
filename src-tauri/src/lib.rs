@@ -26,8 +26,8 @@ async fn get_decks(state: State<'_, AppState>) -> Result<Vec<Deck>, String> {
 }
 
 #[tauri::command]
-async fn get_documents_list(state: State<'_, AppState>) -> Result<Vec<Document>, String> {
-    backend::features::documents::repo::get_documents_list(&state.db)
+async fn get_document_list(state: State<'_, AppState>) -> Result<Vec<Document>, String> {
+    backend::features::documents::repo::get_document_list(&state.db)
         .await
         .map_err(|e| e.to_string())
 }
@@ -49,6 +49,13 @@ async fn create_deck(
     parent_id: Option<Uuid>,
 ) -> Result<Deck, String> {
     backend::features::flashcards::decks::repo::create_deck(&state.db, name, parent_id)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+async fn create_document(state: State<'_, AppState>) -> Result<Document, String> {
+    backend::features::documents::repo::create_document(&state.db)
         .await
         .map_err(|e| e.to_string())
 }
@@ -77,10 +84,11 @@ pub fn run() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            get_documents_list,
+            get_document_list,
             get_decks,
             get_cards_from_deck,
-            create_deck
+            create_deck,
+            create_document
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
