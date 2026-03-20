@@ -1,5 +1,5 @@
 use serde::Serialize;
-use sqlx::{SqlitePool, query_as};
+use sqlx::{SqlitePool, query, query_as};
 use uuid::Uuid;
 
 #[derive(Debug, Serialize)]
@@ -31,8 +31,8 @@ pub async fn get_document_list(pool: &SqlitePool) -> Result<Vec<Document>, sqlx:
 
 #[allow(dead_code)]
 pub async fn create_document(pool: &SqlitePool) -> Result<Document, sqlx::Error> {
-    let id = Uuid::new_v4();
-    let title = "Untitled";
+    let id = Uuid::new_v4().to_string();
+    let title = "";
 
     let document = query_as!(
         Document,
@@ -51,4 +51,26 @@ pub async fn create_document(pool: &SqlitePool) -> Result<Document, sqlx::Error>
     .await?;
 
     Ok(document)
+}
+
+#[allow(dead_code)]
+pub async fn update_document(
+    pool: &SqlitePool,
+    id: String,
+    content: String,
+) -> Result<(), sqlx::Error> {
+    println!("update_document called: id={}", id);
+    query!(
+        r#"
+            UPDATE documents 
+            SET content = ?
+            WHERE id = ?
+        "#,
+        content,
+        id,
+    )
+    .execute(pool)
+    .await?;
+
+    Ok(())
 }
