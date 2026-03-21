@@ -6,7 +6,7 @@ use uuid::Uuid;
 #[serde(rename_all = "camelCase")]
 #[allow(dead_code)]
 pub struct Document {
-    pub id: Uuid,
+    pub id: String,
     pub title: String,
     pub created_at: String,
 }
@@ -17,7 +17,7 @@ pub async fn get_document_list(pool: &SqlitePool) -> Result<Vec<Document>, sqlx:
         Document,
         r#"
         SELECT
-            id as "id!: Uuid",
+            id as "id!: String",
             title,
             created_at
         FROM documents
@@ -31,7 +31,7 @@ pub async fn get_document_list(pool: &SqlitePool) -> Result<Vec<Document>, sqlx:
 
 #[allow(dead_code)]
 pub async fn create_document(pool: &SqlitePool) -> Result<Document, sqlx::Error> {
-    let id = Uuid::new_v4().to_string();
+    let id = Uuid::new_v4().simple().to_string();
     let title = "";
 
     let document = query_as!(
@@ -40,7 +40,7 @@ pub async fn create_document(pool: &SqlitePool) -> Result<Document, sqlx::Error>
             INSERT INTO documents (id, title)
             VALUES (?, ?)
             RETURNING
-                id as "id!: Uuid",
+                id as "id!: String",
                 title,
                 created_at
         "#,
@@ -59,7 +59,6 @@ pub async fn update_document(
     id: String,
     content: String,
 ) -> Result<(), sqlx::Error> {
-    println!("update_document called: id={}", id);
     query!(
         r#"
             UPDATE documents 
@@ -73,4 +72,46 @@ pub async fn update_document(
     .await?;
 
     Ok(())
+}
+
+#[allow(dead_code)]
+pub async fn update_title(pool: &SqlitePool, id: String, title: String) -> Result<(), sqlx::Error> {
+    query!(
+        r#"
+            UPDATE documents 
+            SET title = ?
+            WHERE id = ?
+        "#,
+        title,
+        id,
+    )
+    .execute(pool)
+    .await?;
+
+    Ok(())
+}
+
+#[derive(Serialize)]
+pub struct DocumentContent {
+    pub content: Option<String>,
+}
+
+#[allow(dead_code)]
+pub async fn get_document_content(
+    pool: &SqlitePool,
+    id: String,
+) -> Result<DocumentContent, sqlx::Error> {
+    let document = query_as!(
+        DocumentContent,
+        r#"
+            SELECT content
+            FROM documents 
+            WHERE id = ?
+        "#,
+        id,
+    )
+    .fetch_one(pool)
+    .await?;
+
+    Ok(document)
 }

@@ -1,7 +1,7 @@
 use backend::{
     database::migrate::migrate,
     features::{
-        documents::repo::Document,
+        documents::repo::{Document, DocumentContent},
         flashcards::{
             cards::repo::Card,
             decks::{repo::Deck, service},
@@ -71,6 +71,23 @@ async fn update_document(
         .map_err(|e| e.to_string())
 }
 
+#[tauri::command]
+async fn update_title(state: State<'_, AppState>, id: String, title: String) -> Result<(), String> {
+    backend::features::documents::repo::update_title(&state.db, id, title)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+async fn get_document_content(
+    state: State<'_, AppState>,
+    id: String,
+) -> Result<DocumentContent, String> {
+    backend::features::documents::repo::get_document_content(&state.db, id)
+        .await
+        .map_err(|e| e.to_string())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -100,7 +117,9 @@ pub fn run() {
             get_cards_from_deck,
             create_deck,
             create_document,
-            update_document
+            update_document,
+            update_title,
+            get_document_content
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
