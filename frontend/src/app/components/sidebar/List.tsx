@@ -41,7 +41,7 @@ const List = () => {
               }}
               data-index={virtualizerItem.index}
             >
-              <File title={document.title} />
+              <File id={document.id} title={document.title} />
             </div>
           );
         })}

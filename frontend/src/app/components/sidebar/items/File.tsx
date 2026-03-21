@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { cn } from "@/shared/lib/utils";
+import { useTabStore } from "@/app/store/tabStore";
+import { useNavigate } from "@tanstack/react-router";
 
 interface FileProps {
+  id: string;
   title: string;
 }
 
-const File = ({ title }: FileProps) => {
+const File = ({ id, title }: FileProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
+  const addTab = useTabStore((state) => state.addTab);
+  const navigate = useNavigate();
 
   const handleOnClick = () => {
     setIsSelected(true);
+    addTab(`/documents/${id}`, title);
+    navigate({ to: "/documents/$documentId", params: { documentId: id } });
   };
 
   return (

@@ -12,6 +12,7 @@ const useGetDocumentList = () => {
       const result = zodCheck(DocumentListSchema, raw);
       return result;
     },
+    staleTime: Infinity,
   });
 };
 
