@@ -19,6 +19,7 @@ import { Route as featuresFlashcardsManageRouteImport } from './routes/(features
 import { Route as featuresFlashcardsDeckIdRouteRouteImport } from './routes/(features)/flashcards/$deckId/route'
 import { Route as featuresDocumentsDocumentIdRouteRouteImport } from './routes/(features)/documents/$documentId/route'
 import { Route as featuresFlashcardsDeckIdIndexRouteImport } from './routes/(features)/flashcards/$deckId/index'
+import { Route as featuresDocumentsDocumentIdIndexRouteImport } from './routes/(features)/documents/$documentId/index'
 import { Route as featuresFlashcardsDeckIdStudyRouteImport } from './routes/(features)/flashcards/$deckId/study'
 
 const pluginsSpineRouteRoute = pluginsSpineRouteRouteImport.update({
@@ -75,6 +76,12 @@ const featuresFlashcardsDeckIdIndexRoute =
     path: '/',
     getParentRoute: () => featuresFlashcardsDeckIdRouteRoute,
   } as any)
+const featuresDocumentsDocumentIdIndexRoute =
+  featuresDocumentsDocumentIdIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => featuresDocumentsDocumentIdRouteRoute,
+  } as any)
 const featuresFlashcardsDeckIdStudyRoute =
   featuresFlashcardsDeckIdStudyRouteImport.update({
     id: '/study',
@@ -88,11 +95,12 @@ export interface FileRoutesByFullPath {
   '/pdf-reader': typeof featuresPdfReaderRouteRoute
   '/planner': typeof featuresPlannerRouteRoute
   '/spine': typeof pluginsSpineRouteRoute
-  '/documents/$documentId': typeof featuresDocumentsDocumentIdRouteRoute
+  '/documents/$documentId': typeof featuresDocumentsDocumentIdRouteRouteWithChildren
   '/flashcards/$deckId': typeof featuresFlashcardsDeckIdRouteRouteWithChildren
   '/flashcards/manage': typeof featuresFlashcardsManageRoute
   '/flashcards/': typeof featuresFlashcardsIndexRoute
   '/flashcards/$deckId/study': typeof featuresFlashcardsDeckIdStudyRoute
+  '/documents/$documentId/': typeof featuresDocumentsDocumentIdIndexRoute
   '/flashcards/$deckId/': typeof featuresFlashcardsDeckIdIndexRoute
 }
 export interface FileRoutesByTo {
@@ -100,10 +108,10 @@ export interface FileRoutesByTo {
   '/pdf-reader': typeof featuresPdfReaderRouteRoute
   '/planner': typeof featuresPlannerRouteRoute
   '/spine': typeof pluginsSpineRouteRoute
-  '/documents/$documentId': typeof featuresDocumentsDocumentIdRouteRoute
   '/flashcards/manage': typeof featuresFlashcardsManageRoute
   '/flashcards': typeof featuresFlashcardsIndexRoute
   '/flashcards/$deckId/study': typeof featuresFlashcardsDeckIdStudyRoute
+  '/documents/$documentId': typeof featuresDocumentsDocumentIdIndexRoute
   '/flashcards/$deckId': typeof featuresFlashcardsDeckIdIndexRoute
 }
 export interface FileRoutesById {
@@ -113,11 +121,12 @@ export interface FileRoutesById {
   '/(features)/pdf-reader': typeof featuresPdfReaderRouteRoute
   '/(features)/planner': typeof featuresPlannerRouteRoute
   '/(plugins)/spine': typeof pluginsSpineRouteRoute
-  '/(features)/documents/$documentId': typeof featuresDocumentsDocumentIdRouteRoute
+  '/(features)/documents/$documentId': typeof featuresDocumentsDocumentIdRouteRouteWithChildren
   '/(features)/flashcards/$deckId': typeof featuresFlashcardsDeckIdRouteRouteWithChildren
   '/(features)/flashcards/manage': typeof featuresFlashcardsManageRoute
   '/(features)/flashcards/': typeof featuresFlashcardsIndexRoute
   '/(features)/flashcards/$deckId/study': typeof featuresFlashcardsDeckIdStudyRoute
+  '/(features)/documents/$documentId/': typeof featuresDocumentsDocumentIdIndexRoute
   '/(features)/flashcards/$deckId/': typeof featuresFlashcardsDeckIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/flashcards/manage'
     | '/flashcards/'
     | '/flashcards/$deckId/study'
+    | '/documents/$documentId/'
     | '/flashcards/$deckId/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -140,10 +150,10 @@ export interface FileRouteTypes {
     | '/pdf-reader'
     | '/planner'
     | '/spine'
-    | '/documents/$documentId'
     | '/flashcards/manage'
     | '/flashcards'
     | '/flashcards/$deckId/study'
+    | '/documents/$documentId'
     | '/flashcards/$deckId'
   id:
     | '__root__'
@@ -157,6 +167,7 @@ export interface FileRouteTypes {
     | '/(features)/flashcards/manage'
     | '/(features)/flashcards/'
     | '/(features)/flashcards/$deckId/study'
+    | '/(features)/documents/$documentId/'
     | '/(features)/flashcards/$deckId/'
   fileRoutesById: FileRoutesById
 }
@@ -240,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof featuresFlashcardsDeckIdIndexRouteImport
       parentRoute: typeof featuresFlashcardsDeckIdRouteRoute
     }
+    '/(features)/documents/$documentId/': {
+      id: '/(features)/documents/$documentId/'
+      path: '/'
+      fullPath: '/documents/$documentId/'
+      preLoaderRoute: typeof featuresDocumentsDocumentIdIndexRouteImport
+      parentRoute: typeof featuresDocumentsDocumentIdRouteRoute
+    }
     '/(features)/flashcards/$deckId/study': {
       id: '/(features)/flashcards/$deckId/study'
       path: '/study'
@@ -250,14 +268,29 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface featuresDocumentsDocumentIdRouteRouteChildren {
+  featuresDocumentsDocumentIdIndexRoute: typeof featuresDocumentsDocumentIdIndexRoute
+}
+
+const featuresDocumentsDocumentIdRouteRouteChildren: featuresDocumentsDocumentIdRouteRouteChildren =
+  {
+    featuresDocumentsDocumentIdIndexRoute:
+      featuresDocumentsDocumentIdIndexRoute,
+  }
+
+const featuresDocumentsDocumentIdRouteRouteWithChildren =
+  featuresDocumentsDocumentIdRouteRoute._addFileChildren(
+    featuresDocumentsDocumentIdRouteRouteChildren,
+  )
+
 interface featuresDocumentsRouteRouteChildren {
-  featuresDocumentsDocumentIdRouteRoute: typeof featuresDocumentsDocumentIdRouteRoute
+  featuresDocumentsDocumentIdRouteRoute: typeof featuresDocumentsDocumentIdRouteRouteWithChildren
 }
 
 const featuresDocumentsRouteRouteChildren: featuresDocumentsRouteRouteChildren =
   {
     featuresDocumentsDocumentIdRouteRoute:
-      featuresDocumentsDocumentIdRouteRoute,
+      featuresDocumentsDocumentIdRouteRouteWithChildren,
   }
 
 const featuresDocumentsRouteRouteWithChildren =
