@@ -1,13 +1,12 @@
-import { useEffect, useRef } from "react";
-import { useTabStore } from "@/app/store/tabStore";
+import { useEffect, useRef, type KeyboardEvent } from "react";
+import useDocumentTitle from "./useDocumentTitle";
 
-const DocumentTitle = () => {
-  const activeTabId = useTabStore((state) => state.activeTabId);
-  const tabs = useTabStore((state) => state.tabs);
-  const updateTabTitle = useTabStore((state) => state.updateTabTitle);
-
-  const activeTab = tabs.find((tab) => tab.id === activeTabId);
-  const title = activeTab?.title ?? "";
+const DocumentTitle = ({
+  onKeyDown,
+}: {
+  onKeyDown?: (e: KeyboardEvent<HTMLHeadingElement>) => void;
+}) => {
+  const { title, handleInput } = useDocumentTitle();
 
   const h1Ref = useRef<HTMLHeadingElement>(null);
 
@@ -23,9 +22,8 @@ const DocumentTitle = () => {
         ref={h1Ref}
         contentEditable
         suppressContentEditableWarning
-        onInput={(e) =>
-          updateTabTitle(activeTabId!, e.currentTarget.textContent || "")
-        }
+        onKeyDown={onKeyDown}
+        onInput={handleInput}
         className="text-4xl font-bold outline-none"
       />
       {!title && (
