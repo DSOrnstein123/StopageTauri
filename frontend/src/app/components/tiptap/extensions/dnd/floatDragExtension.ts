@@ -18,7 +18,7 @@ const hideDragIndicator = () => {
   if (el) el.style.opacity = "0";
 };
 
-function syncAlignAttrs(view: EditorView) {
+export function syncAlignAttrs(view: EditorView) {
   (view.dom as HTMLElement)
     .querySelectorAll<HTMLElement>(".react-renderer.node-content-block")
     .forEach((wrapper) => {

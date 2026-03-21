@@ -4,13 +4,16 @@ import SlashCommandExtension from "./extensions/slash-command/slashCommands";
 import ContentBlock from "./extensions/block-node/contentBlock";
 import { CustomBubbleMenu as BubbleMenu } from "./CustomBubbleMenu";
 import { Placeholder } from "@tiptap/extensions";
-import { FloatDragExtension } from "./extensions/dnd/floatDragExtension";
+import {
+  FloatDragExtension,
+  syncAlignAttrs,
+} from "./extensions/dnd/floatDragExtension";
 import { ColumnContainer } from "./extensions/column/columnContainer";
 import { Column } from "./extensions/column/column";
 import debounce from "@/shared/utils/debounce";
 import { invoke } from "@tauri-apps/api/core";
 import { getRouteApi } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, type RefObject } from "react";
 
 const extensions = [
   StarterKit.configure({
@@ -30,19 +33,26 @@ const extensions = [
   // KanbanNode,
 ];
 
-const content = ``;
 const route = getRouteApi("/(features)/documents/$documentId");
 
-const DocumentContent = () => {
+const DocumentContent = ({
+  editorRef,
+}: {
+  editorRef: RefObject<Editor | null>;
+}) => {
   const { documentId } = route.useParams();
+  const document = route.useLoaderData();
 
   const editor = useEditor({
-    extensions,
-    content,
+    extensions: extensions,
+    content: document.content ? JSON.parse(document.content) : "",
     editorProps: {
       attributes: {
         class: "focus:outline-none prose-mirror-container",
       },
+    },
+    onCreate({ editor }) {
+      requestAnimationFrame(() => syncAlignAttrs(editor.view));
     },
   });
 
@@ -59,13 +69,16 @@ const DocumentContent = () => {
       },
       500,
     );
-
     editor.on("update", handleUpdate);
 
     return () => {
       editor.off("update", handleUpdate);
     };
   }, [editor, documentId]);
+
+  useEffect(() => {
+    editorRef.current = editor;
+  }, [editor, editorRef]);
 
   return (
     <>
