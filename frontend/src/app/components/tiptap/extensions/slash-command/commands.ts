@@ -1,4 +1,9 @@
-import { Image, RectangleHorizontal, type LucideIcon } from "lucide-react";
+import {
+  CodeXml,
+  Image,
+  RectangleHorizontal,
+  type LucideIcon,
+} from "lucide-react";
 import { type Editor, type Range } from "@tiptap/react";
 
 interface CommandItemProps {
@@ -56,6 +61,13 @@ const commands: CommandItemProps[] = [
           ],
         })
         .run();
+    },
+  },
+  {
+    name: "Code Block",
+    icon: CodeXml,
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).setCodeBlock().run();
     },
   },
 ];

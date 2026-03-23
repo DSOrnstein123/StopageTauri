@@ -17,7 +17,7 @@ import { useEffect, type RefObject } from "react";
 import CustomLink from "./extensions/custom-link/customLink";
 import { useTabStore } from "@/app/store/tabStore";
 import { all, createLowlight } from "lowlight";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { CustomCodeBlock } from "./extensions/custom-code-block/CustomCodeBlock";
 
 const route = getRouteApi("/(features)/documents/$documentId");
 
@@ -38,6 +38,7 @@ const DocumentContent = ({
     StarterKit.configure({
       dropcursor: false,
       link: false,
+      codeBlock: false,
     }),
     CustomLink.configure({
       openOnClick: false,
@@ -53,7 +54,7 @@ const DocumentContent = ({
     FloatDragExtension,
     Column,
     ColumnContainer,
-    CodeBlockLowlight.configure({
+    CustomCodeBlock.configure({
       lowlight,
     }),
     // KanbanNode,
@@ -66,7 +67,7 @@ const DocumentContent = ({
       attributes: {
         class: "focus:outline-none prose-mirror-container",
       },
-      handleClick(_1, _2, event) {
+      handleClick(_view, _pos, event) {
         const target = event.target as HTMLElement;
         const anchor = target.closest("a");
 
@@ -140,7 +141,7 @@ const DocumentContent = ({
   return (
     <>
       <BubbleMenu editor={editor} />
-      <EditorContent editor={editor} />
+      <EditorContent editor={editor} spellCheck={false} />
     </>
   );
 };

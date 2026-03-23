@@ -61,7 +61,7 @@ const SlashCommandExtension = Extension.create<SlashSuggestionOptions>({
             onUpdate(props) {
               reactRenderer.updateProps(props);
 
-              popup[0].setProps({
+              popup?.[0]?.setProps({
                 getReferenceClientRect: () => {
                   const rect = props.clientRect?.();
                   if (rect) {
@@ -74,7 +74,7 @@ const SlashCommandExtension = Extension.create<SlashSuggestionOptions>({
 
             onKeyDown(props) {
               if (props.event.key === "Escape") {
-                popup[0].hide();
+                popup?.[0]?.hide();
 
                 return true;
               }
@@ -84,8 +84,8 @@ const SlashCommandExtension = Extension.create<SlashSuggestionOptions>({
             },
 
             onExit() {
-              popup[0].destroy();
-              reactRenderer.destroy();
+              popup?.[0]?.destroy();
+              reactRenderer?.destroy();
             },
           };
         },
