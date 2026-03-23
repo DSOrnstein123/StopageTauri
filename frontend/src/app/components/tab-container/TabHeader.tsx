@@ -11,14 +11,12 @@ const TabHeader = ({ data }: { data: Tab }) => {
   const isActive = useTabStore((state) => state.activeTabId === data.id);
   const setActiveTab = useTabStore((state) => state.setActiveTab);
   const removeTab = useTabStore((state) => state.removeTab);
-  console.log(data.route);
 
   useEffect(() => {
     if (isActive) {
       navigate({ to: data.route });
     }
-    //TODO: fix deps
-  }, [isActive, data, navigate]);
+  }, [isActive, data.route, navigate]);
 
   return (
     <div

@@ -11,6 +11,7 @@ interface TabSlice {
   addTab: (route: string, title?: string) => void;
   removeTab: (id: string) => void;
   updateTabTitle: (id: string, title: string) => void;
+  updateTabRoute: (id: string, route: string) => void;
 }
 
 const createTabSlice: DefaultStateCreator<TabState, TabSlice> = (set) =>
@@ -22,6 +23,7 @@ const createTabSlice: DefaultStateCreator<TabState, TabSlice> = (set) =>
       const newTab: Tab = {
         id: id,
         title: title ? title : "",
+
         route: route,
       };
 
@@ -49,6 +51,12 @@ const createTabSlice: DefaultStateCreator<TabState, TabSlice> = (set) =>
       set((state) => ({
         tabs: state.tabs.map((tab) =>
           tab.id === id ? { ...tab, title: title } : tab,
+        ),
+      })),
+    updateTabRoute: (id: string, route: string) =>
+      set((state) => ({
+        tabs: state.tabs.map((tab) =>
+          tab.id === id ? { ...tab, route: route } : tab,
         ),
       })),
   }) satisfies TabSlice;
