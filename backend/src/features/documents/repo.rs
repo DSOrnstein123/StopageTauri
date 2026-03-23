@@ -32,7 +32,7 @@ pub async fn get_document_list(pool: &SqlitePool) -> Result<Vec<Document>, sqlx:
 #[allow(dead_code)]
 pub async fn create_document(pool: &SqlitePool) -> Result<Document, sqlx::Error> {
     let id = Uuid::new_v4().simple().to_string();
-    let title = "";
+    let title = "Untitled";
 
     let document = query_as!(
         Document,
