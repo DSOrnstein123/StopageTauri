@@ -13,6 +13,7 @@ const useGetDocumentList = () => {
       return result;
     },
     staleTime: Infinity,
+    gcTime: Infinity,
   });
 };
 

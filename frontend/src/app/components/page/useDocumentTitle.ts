@@ -11,12 +11,10 @@ const route = getRouteApi("/(features)/documents/$documentId");
 
 const useDocumentTitle = () => {
   const activeTabId = useTabStore((state) => state.activeTabId);
-  const tabs = useTabStore((state) => state.tabs);
   const updateTabTitle = useTabStore((state) => state.updateTabTitle);
   const queryClient = useQueryClient();
   const { documentId } = route.useParams();
-
-  const title = tabs.find((tab) => tab.id === activeTabId)?.title ?? "";
+  const { title } = route.useLoaderData();
 
   const saveTitle = useRef(
     debounce<(id: string, title: string) => void>((id, newTitle) => {
