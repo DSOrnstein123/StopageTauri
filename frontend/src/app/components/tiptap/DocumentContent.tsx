@@ -12,28 +12,16 @@ import { ColumnContainer } from "./extensions/column/columnContainer";
 import { Column } from "./extensions/column/column";
 import debounce from "@/shared/utils/debounce";
 import { invoke } from "@tauri-apps/api/core";
-import { getRouteApi } from "@tanstack/react-router";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useEffect, type RefObject } from "react";
-
-const extensions = [
-  StarterKit.configure({
-    dropcursor: false,
-  }),
-  SlashCommandExtension,
-  ContentBlock,
-  Placeholder.configure({
-    showOnlyCurrent: true,
-    placeholder: () => {
-      return "Press '/' for commands";
-    },
-  }),
-  FloatDragExtension,
-  Column,
-  ColumnContainer,
-  // KanbanNode,
-];
+import CustomLink from "./extensions/custom-link/customLink";
+import { useTabStore } from "@/app/store/tabStore";
+import { all, createLowlight } from "lowlight";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 
 const route = getRouteApi("/(features)/documents/$documentId");
+
+const lowlight = createLowlight(all);
 
 const DocumentContent = ({
   editorRef,
@@ -41,18 +29,74 @@ const DocumentContent = ({
   editorRef: RefObject<Editor | null>;
 }) => {
   const { documentId } = route.useParams();
-  const document = route.useLoaderData();
+  const { documentContent } = route.useLoaderData();
+  const navigate = useNavigate();
+  const activeTabId = useTabStore((state) => state.activeTabId);
+  const updateTabRoute = useTabStore((state) => state.updateTabRoute);
+
+  const extensions = [
+    StarterKit.configure({
+      dropcursor: false,
+      link: false,
+    }),
+    CustomLink.configure({
+      openOnClick: false,
+    }),
+    SlashCommandExtension,
+    ContentBlock,
+    Placeholder.configure({
+      showOnlyCurrent: true,
+      placeholder: () => {
+        return "Press '/' for commands";
+      },
+    }),
+    FloatDragExtension,
+    Column,
+    ColumnContainer,
+    CodeBlockLowlight.configure({
+      lowlight,
+    }),
+    // KanbanNode,
+  ];
 
   const editor = useEditor({
     extensions: extensions,
-    content: document.content ? JSON.parse(document.content) : "",
+    content: documentContent.content ? JSON.parse(documentContent.content) : "",
     editorProps: {
       attributes: {
         class: "focus:outline-none prose-mirror-container",
       },
+      handleClick(_1, _2, event) {
+        const target = event.target as HTMLElement;
+        const anchor = target.closest("a");
+
+        if (!anchor) return false;
+
+        const href = anchor.getAttribute("href");
+
+        if (href?.startsWith("/documents/")) {
+          const documentId = href.split("/documents/")[1];
+          updateTabRoute(activeTabId!, `/documents/${documentId}`);
+          navigate({
+            to: "/documents/$documentId",
+            params: { documentId },
+          });
+          return true;
+        }
+
+        if (href) {
+          window.open(href, "_blank");
+          return true;
+        }
+
+        return false;
+      },
     },
     onCreate({ editor }) {
-      requestAnimationFrame(() => syncAlignAttrs(editor.view));
+      requestAnimationFrame(() => {
+        if (editor.isDestroyed) return;
+        syncAlignAttrs(editor.view);
+      });
     },
   });
 
@@ -77,8 +121,21 @@ const DocumentContent = ({
   }, [editor, documentId]);
 
   useEffect(() => {
-    editorRef.current = editor;
+    if (editor) {
+      editorRef.current = editor;
+    }
+    return () => {
+      editorRef.current = null;
+    };
   }, [editor, editorRef]);
+
+  useEffect(() => {
+    if (!editor) return;
+
+    editor.commands.setContent(
+      documentContent.content ? JSON.parse(documentContent.content) : "",
+    );
+  }, [editor, documentContent]);
 
   return (
     <>

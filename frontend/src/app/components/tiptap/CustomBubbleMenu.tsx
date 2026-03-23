@@ -31,7 +31,7 @@ const CustomBubbleMenu = ({ editor }: { editor: Editor }) => {
     editor
       .chain()
       .focus()
-      .setLink({
+      .setMark("link", {
         href: `/documents/${document.id}`,
         "data-type": "note",
         "data-document-id": document.id,
