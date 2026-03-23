@@ -8,7 +8,6 @@ import { useTabStore } from "@/app/store/tabStore";
 
 const TabBar = () => {
   const tabs = useTabStore((state) => state.tabs);
-
   const addTab = useTabStore((state) => state.addTab);
 
   return (
