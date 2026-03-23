@@ -2,17 +2,22 @@ import { BubbleMenu } from "@tiptap/react/menus";
 import { Editor, useEditorState } from "@tiptap/react";
 import { Button } from "@/shared/components/shadcn/button";
 import { cn } from "@/shared/lib/utils";
+import { useState } from "react";
+import LinkSuggestion from "./LinkSuggestion";
+import type { Document } from "@/routes/(features)/documents/-schemas/documentSchema";
 
 //TODO: optimize
 //TODO: fixed position
 //TODO: not appear when select from right to left
 interface ToolbarButton {
   label: string;
-  isActive: boolean;
+  highlighted: boolean;
   action: () => void;
 }
 
 const CustomBubbleMenu = ({ editor }: { editor: Editor }) => {
+  const [showLinkSuggestion, setShowLinkSuggestion] = useState(false);
+
   const { isBold, isItalic, isStrike } = useEditorState({
     editor: editor,
     selector: ({ editor }) => ({
@@ -22,21 +27,40 @@ const CustomBubbleMenu = ({ editor }: { editor: Editor }) => {
     }),
   });
 
+  const handleSelectDocument = (document: Document) => {
+    editor
+      .chain()
+      .focus()
+      .setLink({
+        href: `/documents/${document.id}`,
+        "data-type": "note",
+        "data-document-id": document.id,
+      })
+      .run();
+
+    setShowLinkSuggestion(false);
+  };
+
   const toolbarButtons: ToolbarButton[] = [
     {
       label: "Bold",
-      isActive: isBold,
+      highlighted: isBold,
       action: () => editor.chain().focus().toggleBold().run(),
     },
     {
       label: "Italic",
-      isActive: isItalic,
+      highlighted: isItalic,
       action: () => editor.chain().focus().toggleItalic().run(),
     },
     {
       label: "Strike",
-      isActive: isStrike,
+      highlighted: isStrike,
       action: () => editor.chain().focus().toggleStrike().run(),
+    },
+    {
+      label: "Link",
+      highlighted: showLinkSuggestion,
+      action: () => setShowLinkSuggestion((prev) => !prev),
     },
   ];
 
@@ -47,18 +71,36 @@ const CustomBubbleMenu = ({ editor }: { editor: Editor }) => {
       className="bg-white"
     >
       <div className="flex gap-x-1 rounded-md border p-1">
-        {toolbarButtons.map((button, index) => (
-          <Button
-            key={index}
-            onClick={button.action}
-            className={cn(
-              "hover:bg-secondary rounded-sm border-0 bg-white p-2 text-black shadow-white outline-0",
-              button.isActive && "bg-red-400",
-            )}
-          >
-            {button.label}
-          </Button>
-        ))}
+        {toolbarButtons.map((button, index) =>
+          button.label == "Link" ? (
+            <div key={index} className="relative">
+              <Button
+                onClick={button.action}
+                className={cn(
+                  "hover:bg-secondary rounded-sm border-0 bg-white p-2 text-black shadow-white outline-0",
+                  button.highlighted && "bg-red-400",
+                )}
+              >
+                {button.label}
+              </Button>
+
+              {showLinkSuggestion && (
+                <LinkSuggestion onSelect={handleSelectDocument} />
+              )}
+            </div>
+          ) : (
+            <Button
+              key={index}
+              onClick={button.action}
+              className={cn(
+                "hover:bg-secondary rounded-sm border-0 bg-white p-2 text-black shadow-white outline-0",
+                button.highlighted && "bg-red-400",
+              )}
+            >
+              {button.label}
+            </Button>
+          ),
+        )}
       </div>
     </BubbleMenu>
   );
