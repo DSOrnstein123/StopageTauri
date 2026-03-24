@@ -14,6 +14,7 @@ import { Route as featuresPlannerRouteRouteImport } from './routes/(features)/pl
 import { Route as featuresPdfReaderRouteRouteImport } from './routes/(features)/pdf-reader/route'
 import { Route as featuresFlashcardsRouteRouteImport } from './routes/(features)/flashcards/route'
 import { Route as featuresDocumentsRouteRouteImport } from './routes/(features)/documents/route'
+import { Route as pluginsExternalLinkViewIndexRouteImport } from './routes/(plugins)/external-link-view/index'
 import { Route as featuresFlashcardsIndexRouteImport } from './routes/(features)/flashcards/index'
 import { Route as featuresFlashcardsManageRouteImport } from './routes/(features)/flashcards/manage'
 import { Route as featuresFlashcardsDeckIdRouteRouteImport } from './routes/(features)/flashcards/$deckId/route'
@@ -46,6 +47,12 @@ const featuresDocumentsRouteRoute = featuresDocumentsRouteRouteImport.update({
   path: '/documents',
   getParentRoute: () => rootRouteImport,
 } as any)
+const pluginsExternalLinkViewIndexRoute =
+  pluginsExternalLinkViewIndexRouteImport.update({
+    id: '/(plugins)/external-link-view/',
+    path: '/external-link-view/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const featuresFlashcardsIndexRoute = featuresFlashcardsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -92,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/flashcards/$deckId': typeof featuresFlashcardsDeckIdRouteRouteWithChildren
   '/flashcards/manage': typeof featuresFlashcardsManageRoute
   '/flashcards/': typeof featuresFlashcardsIndexRoute
+  '/external-link-view': typeof pluginsExternalLinkViewIndexRoute
   '/flashcards/$deckId/study': typeof featuresFlashcardsDeckIdStudyRoute
   '/flashcards/$deckId/': typeof featuresFlashcardsDeckIdIndexRoute
 }
@@ -103,6 +111,7 @@ export interface FileRoutesByTo {
   '/documents/$documentId': typeof featuresDocumentsDocumentIdRouteRoute
   '/flashcards/manage': typeof featuresFlashcardsManageRoute
   '/flashcards': typeof featuresFlashcardsIndexRoute
+  '/external-link-view': typeof pluginsExternalLinkViewIndexRoute
   '/flashcards/$deckId/study': typeof featuresFlashcardsDeckIdStudyRoute
   '/flashcards/$deckId': typeof featuresFlashcardsDeckIdIndexRoute
 }
@@ -117,6 +126,7 @@ export interface FileRoutesById {
   '/(features)/flashcards/$deckId': typeof featuresFlashcardsDeckIdRouteRouteWithChildren
   '/(features)/flashcards/manage': typeof featuresFlashcardsManageRoute
   '/(features)/flashcards/': typeof featuresFlashcardsIndexRoute
+  '/(plugins)/external-link-view/': typeof pluginsExternalLinkViewIndexRoute
   '/(features)/flashcards/$deckId/study': typeof featuresFlashcardsDeckIdStudyRoute
   '/(features)/flashcards/$deckId/': typeof featuresFlashcardsDeckIdIndexRoute
 }
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/flashcards/$deckId'
     | '/flashcards/manage'
     | '/flashcards/'
+    | '/external-link-view'
     | '/flashcards/$deckId/study'
     | '/flashcards/$deckId/'
   fileRoutesByTo: FileRoutesByTo
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/documents/$documentId'
     | '/flashcards/manage'
     | '/flashcards'
+    | '/external-link-view'
     | '/flashcards/$deckId/study'
     | '/flashcards/$deckId'
   id:
@@ -156,6 +168,7 @@ export interface FileRouteTypes {
     | '/(features)/flashcards/$deckId'
     | '/(features)/flashcards/manage'
     | '/(features)/flashcards/'
+    | '/(plugins)/external-link-view/'
     | '/(features)/flashcards/$deckId/study'
     | '/(features)/flashcards/$deckId/'
   fileRoutesById: FileRoutesById
@@ -166,6 +179,7 @@ export interface RootRouteChildren {
   featuresPdfReaderRouteRoute: typeof featuresPdfReaderRouteRoute
   featuresPlannerRouteRoute: typeof featuresPlannerRouteRoute
   pluginsSpineRouteRoute: typeof pluginsSpineRouteRoute
+  pluginsExternalLinkViewIndexRoute: typeof pluginsExternalLinkViewIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -203,6 +217,13 @@ declare module '@tanstack/react-router' {
       path: '/documents'
       fullPath: '/documents'
       preLoaderRoute: typeof featuresDocumentsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(plugins)/external-link-view/': {
+      id: '/(plugins)/external-link-view/'
+      path: '/external-link-view'
+      fullPath: '/external-link-view'
+      preLoaderRoute: typeof pluginsExternalLinkViewIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(features)/flashcards/': {
@@ -306,6 +327,7 @@ const rootRouteChildren: RootRouteChildren = {
   featuresPdfReaderRouteRoute: featuresPdfReaderRouteRoute,
   featuresPlannerRouteRoute: featuresPlannerRouteRoute,
   pluginsSpineRouteRoute: pluginsSpineRouteRoute,
+  pluginsExternalLinkViewIndexRoute: pluginsExternalLinkViewIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

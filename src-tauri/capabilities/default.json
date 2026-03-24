@@ -5,7 +5,18 @@
   "windows": [
     "main"
   ],
+  "webviews": [
+    "*"
+  ],
   "permissions": [
-    "core:default"
+    "core:default",
+    "core:window:default",
+    "core:webview:default",
+    "core:webview:allow-create-webview",
+    
+    "core:webview:allow-set-webview-position",
+    "core:webview:allow-set-webview-size",
+    
+    "core:webview:allow-webview-close"
   ]
 }

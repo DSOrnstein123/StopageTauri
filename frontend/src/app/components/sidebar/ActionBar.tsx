@@ -82,6 +82,8 @@ const ActionBar = () => {
         </Button>
       </Link>
 
+      <Link to="/external-link-view">123</Link>
+
       <button
         className="rounded-md border"
         onClick={() => {
