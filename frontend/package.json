@@ -61,6 +61,8 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
+    "dockview": "^5.1.0",
+    "dockview-core": "^5.1.0",
     "embla-carousel-react": "^8.6.0",
     "lowlight": "^3.3.0",
     "lucide-react": "^0.525.0",

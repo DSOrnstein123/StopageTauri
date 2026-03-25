@@ -17,7 +17,6 @@ import { Route as featuresDocumentsRouteRouteImport } from './routes/(features)/
 import { Route as featuresFlashcardsIndexRouteImport } from './routes/(features)/flashcards/index'
 import { Route as featuresFlashcardsManageRouteImport } from './routes/(features)/flashcards/manage'
 import { Route as featuresFlashcardsDeckIdRouteRouteImport } from './routes/(features)/flashcards/$deckId/route'
-import { Route as featuresDocumentsDocumentIdRouteRouteImport } from './routes/(features)/documents/$documentId/route'
 import { Route as featuresFlashcardsDeckIdIndexRouteImport } from './routes/(features)/flashcards/$deckId/index'
 import { Route as featuresFlashcardsDeckIdStudyRouteImport } from './routes/(features)/flashcards/$deckId/study'
 
@@ -63,12 +62,6 @@ const featuresFlashcardsDeckIdRouteRoute =
     path: '/$deckId',
     getParentRoute: () => featuresFlashcardsRouteRoute,
   } as any)
-const featuresDocumentsDocumentIdRouteRoute =
-  featuresDocumentsDocumentIdRouteRouteImport.update({
-    id: '/$documentId',
-    path: '/$documentId',
-    getParentRoute: () => featuresDocumentsRouteRoute,
-  } as any)
 const featuresFlashcardsDeckIdIndexRoute =
   featuresFlashcardsDeckIdIndexRouteImport.update({
     id: '/',
@@ -83,12 +76,11 @@ const featuresFlashcardsDeckIdStudyRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/documents': typeof featuresDocumentsRouteRouteWithChildren
+  '/documents': typeof featuresDocumentsRouteRoute
   '/flashcards': typeof featuresFlashcardsRouteRouteWithChildren
   '/pdf-reader': typeof featuresPdfReaderRouteRoute
   '/planner': typeof featuresPlannerRouteRoute
   '/spine': typeof pluginsSpineRouteRoute
-  '/documents/$documentId': typeof featuresDocumentsDocumentIdRouteRoute
   '/flashcards/$deckId': typeof featuresFlashcardsDeckIdRouteRouteWithChildren
   '/flashcards/manage': typeof featuresFlashcardsManageRoute
   '/flashcards/': typeof featuresFlashcardsIndexRoute
@@ -96,11 +88,10 @@ export interface FileRoutesByFullPath {
   '/flashcards/$deckId/': typeof featuresFlashcardsDeckIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/documents': typeof featuresDocumentsRouteRouteWithChildren
+  '/documents': typeof featuresDocumentsRouteRoute
   '/pdf-reader': typeof featuresPdfReaderRouteRoute
   '/planner': typeof featuresPlannerRouteRoute
   '/spine': typeof pluginsSpineRouteRoute
-  '/documents/$documentId': typeof featuresDocumentsDocumentIdRouteRoute
   '/flashcards/manage': typeof featuresFlashcardsManageRoute
   '/flashcards': typeof featuresFlashcardsIndexRoute
   '/flashcards/$deckId/study': typeof featuresFlashcardsDeckIdStudyRoute
@@ -108,12 +99,11 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/(features)/documents': typeof featuresDocumentsRouteRouteWithChildren
+  '/(features)/documents': typeof featuresDocumentsRouteRoute
   '/(features)/flashcards': typeof featuresFlashcardsRouteRouteWithChildren
   '/(features)/pdf-reader': typeof featuresPdfReaderRouteRoute
   '/(features)/planner': typeof featuresPlannerRouteRoute
   '/(plugins)/spine': typeof pluginsSpineRouteRoute
-  '/(features)/documents/$documentId': typeof featuresDocumentsDocumentIdRouteRoute
   '/(features)/flashcards/$deckId': typeof featuresFlashcardsDeckIdRouteRouteWithChildren
   '/(features)/flashcards/manage': typeof featuresFlashcardsManageRoute
   '/(features)/flashcards/': typeof featuresFlashcardsIndexRoute
@@ -128,7 +118,6 @@ export interface FileRouteTypes {
     | '/pdf-reader'
     | '/planner'
     | '/spine'
-    | '/documents/$documentId'
     | '/flashcards/$deckId'
     | '/flashcards/manage'
     | '/flashcards/'
@@ -140,7 +129,6 @@ export interface FileRouteTypes {
     | '/pdf-reader'
     | '/planner'
     | '/spine'
-    | '/documents/$documentId'
     | '/flashcards/manage'
     | '/flashcards'
     | '/flashcards/$deckId/study'
@@ -152,7 +140,6 @@ export interface FileRouteTypes {
     | '/(features)/pdf-reader'
     | '/(features)/planner'
     | '/(plugins)/spine'
-    | '/(features)/documents/$documentId'
     | '/(features)/flashcards/$deckId'
     | '/(features)/flashcards/manage'
     | '/(features)/flashcards/'
@@ -161,7 +148,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  featuresDocumentsRouteRoute: typeof featuresDocumentsRouteRouteWithChildren
+  featuresDocumentsRouteRoute: typeof featuresDocumentsRouteRoute
   featuresFlashcardsRouteRoute: typeof featuresFlashcardsRouteRouteWithChildren
   featuresPdfReaderRouteRoute: typeof featuresPdfReaderRouteRoute
   featuresPlannerRouteRoute: typeof featuresPlannerRouteRoute
@@ -226,13 +213,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof featuresFlashcardsDeckIdRouteRouteImport
       parentRoute: typeof featuresFlashcardsRouteRoute
     }
-    '/(features)/documents/$documentId': {
-      id: '/(features)/documents/$documentId'
-      path: '/$documentId'
-      fullPath: '/documents/$documentId'
-      preLoaderRoute: typeof featuresDocumentsDocumentIdRouteRouteImport
-      parentRoute: typeof featuresDocumentsRouteRoute
-    }
     '/(features)/flashcards/$deckId/': {
       id: '/(features)/flashcards/$deckId/'
       path: '/'
@@ -249,21 +229,6 @@ declare module '@tanstack/react-router' {
     }
   }
 }
-
-interface featuresDocumentsRouteRouteChildren {
-  featuresDocumentsDocumentIdRouteRoute: typeof featuresDocumentsDocumentIdRouteRoute
-}
-
-const featuresDocumentsRouteRouteChildren: featuresDocumentsRouteRouteChildren =
-  {
-    featuresDocumentsDocumentIdRouteRoute:
-      featuresDocumentsDocumentIdRouteRoute,
-  }
-
-const featuresDocumentsRouteRouteWithChildren =
-  featuresDocumentsRouteRoute._addFileChildren(
-    featuresDocumentsRouteRouteChildren,
-  )
 
 interface featuresFlashcardsDeckIdRouteRouteChildren {
   featuresFlashcardsDeckIdStudyRoute: typeof featuresFlashcardsDeckIdStudyRoute
@@ -301,7 +266,7 @@ const featuresFlashcardsRouteRouteWithChildren =
   )
 
 const rootRouteChildren: RootRouteChildren = {
-  featuresDocumentsRouteRoute: featuresDocumentsRouteRouteWithChildren,
+  featuresDocumentsRouteRoute: featuresDocumentsRouteRoute,
   featuresFlashcardsRouteRoute: featuresFlashcardsRouteRouteWithChildren,
   featuresPdfReaderRouteRoute: featuresPdfReaderRouteRoute,
   featuresPlannerRouteRoute: featuresPlannerRouteRoute,

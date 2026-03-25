@@ -1,9 +1,9 @@
 import { useRef, type KeyboardEvent } from "react";
-import DocumentContent from "../tiptap/DocumentContent";
 import DocumentTitle from "./DocumentTitle";
 import { Editor } from "@tiptap/react";
+import DocumentContent from "./DocumentContent";
 
-const Page = () => {
+const Document = () => {
   const editorRef = useRef<Editor | null>(null);
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -13,7 +13,7 @@ const Page = () => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-80px)] w-full justify-center p-10">
+    <div className="flex h-full w-full justify-center overflow-auto p-10">
       <div className="relative h-full w-full max-w-187.5">
         <DocumentTitle onKeyDown={handleKeyDown} />
         <DocumentContent editorRef={editorRef} />
@@ -22,4 +22,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Document;

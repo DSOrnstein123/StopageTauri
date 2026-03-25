@@ -1,7 +1,6 @@
 import { cn } from "@/shared/lib/utils";
-import { useTabStore } from "@/app/store/tabStore";
-import { useNavigate } from "@tanstack/react-router";
 import { usePrimarySidebarStore } from "@/app/store/primarySidebarStore";
+import { useWorkspaceStore } from "@/app/components/main-layout/useWorkspaceStore";
 
 interface FileProps {
   id: string;
@@ -9,15 +8,11 @@ interface FileProps {
 }
 
 const File = ({ id, title }: FileProps) => {
+  const openFile = useWorkspaceStore((state) => state.openFile);
   const isSelected = usePrimarySidebarStore((state) => state.selectedId === id);
-  const setSelectedId = usePrimarySidebarStore((state) => state.setSelectedId);
-  const addTab = useTabStore((state) => state.addTab);
-  const navigate = useNavigate();
 
   const handleOnClick = () => {
-    setSelectedId(id);
-    addTab(`/documents/${id}`, title);
-    navigate({ to: "/documents/$documentId", params: { documentId: id } });
+    openFile("document", id, title);
   };
 
   return (

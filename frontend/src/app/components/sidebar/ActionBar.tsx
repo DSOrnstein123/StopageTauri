@@ -1,91 +1,85 @@
 import { Button } from "@/shared/components/shadcn/button";
 import { useTabStore } from "@/app/store/tabStore";
 import { Calendar } from "lucide-react";
-import { Link } from "@tanstack/react-router";
-import { useNavigate } from "@tanstack/react-router";
 import useCreateDocument from "@/routes/(features)/documents/-hooks/useCreateDocument";
 
 const ActionBar = () => {
   const addTab = useTabStore((state) => state.addTab);
   const { mutateAsync: createDocument } = useCreateDocument();
-  const navigate = useNavigate();
 
   return (
     <aside className="bg-primary/20 flex h-full w-10 flex-col items-center gap-y-px py-1">
-      <Link to="/documents">
-        <Button
-          variant="ghost"
-          className="relative size-8 p-0"
-          onClick={async () => {
-            const data = await createDocument();
-            addTab(`/documents/${data.id}`);
-            navigate({
-              to: `/documents/$documentId`,
-              params: { documentId: data.id },
-            });
-          }}
+      {/* document */}
+      <Button
+        variant="ghost"
+        className="relative size-8 p-0"
+        onClick={async () => {
+          const data = await createDocument();
+          addTab(`/documents/${data.id}`);
+          // navigate({
+          //   to: `/documents/$documentId`,
+          //   params: { documentId: data.id },
+          // });
+        }}
+      >
+        <img src="/icon/new_note.svg" className="h-5 w-5" />
+      </Button>
+
+      {/* flashcard */}
+      <Button
+        variant="ghost"
+        className="relative size-8"
+        onClick={() => addTab("/flashcards", "Flashcards")}
+      >
+        <svg
+          width="40"
+          height="40"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <img src="/icon/new_note.svg" className="h-5 w-5" />
-        </Button>
-      </Link>
+          <rect
+            x="50"
+            y="10"
+            width="50"
+            height="70"
+            rx="6"
+            ry="6"
+            transform="rotate(15 30 10)"
+            stroke="black"
+            strokeWidth="5"
+            fill="white"
+          />
 
-      <Link to="/flashcards">
-        <Button
-          variant="ghost"
-          className="relative size-8"
-          onClick={() => addTab("/flashcards", "Flashcards")}
-        >
-          <svg
-            width="40"
-            height="40"
-            viewBox="0 0 100 100"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              x="50"
-              y="10"
-              width="50"
-              height="70"
-              rx="6"
-              ry="6"
-              transform="rotate(15 30 10)"
-              stroke="black"
-              stroke-width="5"
-              fill="white"
-            />
+          <rect
+            x="10"
+            y="20"
+            width="50"
+            height="70"
+            rx="6"
+            ry="6"
+            transform="rotate(-10 10 20)"
+            stroke="black"
+            strokeWidth="5"
+            fill="white"
+          />
+        </svg>
+      </Button>
 
-            <rect
-              x="10"
-              y="20"
-              width="50"
-              height="70"
-              rx="6"
-              ry="6"
-              transform="rotate(-10 10 20)"
-              stroke="black"
-              stroke-width="5"
-              fill="white"
-            />
-          </svg>
-        </Button>
-      </Link>
+      {/* calendar */}
+      <Button variant="ghost" className="relative size-8">
+        <Calendar />
+      </Button>
 
-      <Link to="/planner">
-        <Button variant="ghost" className="relative size-8">
-          <Calendar />
-        </Button>
-      </Link>
+      {/* spine */}
+      <Button variant="ghost" className="relative size-8">
+        =`{">"}`
+      </Button>
 
-      <Link to="/spine">
-        <Button variant="ghost" className="relative size-8">
-          =`{">"}`
-        </Button>
-      </Link>
-
+      {/* pdf */}
       <button
         className="rounded-md border"
         onClick={() => {
-          navigate({ to: "/pdf-reader" });
+          // navigate({ to: "/pdf-reader" });
         }}
       >
         pdf

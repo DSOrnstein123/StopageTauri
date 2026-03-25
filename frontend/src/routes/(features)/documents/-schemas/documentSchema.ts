@@ -6,7 +6,7 @@ const DocumentSchema = z.object({
   createdAt: z.string(),
 });
 
-interface DocumentContent {
+interface DocumentContentType {
   content: string;
 }
 
@@ -18,5 +18,5 @@ export {
   DocumentSchema,
   type Document,
   DocumentListSchema,
-  type DocumentContent,
+  type DocumentContentType,
 };
