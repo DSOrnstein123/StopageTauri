@@ -1,5 +1,5 @@
 import { useEffect, useRef, type KeyboardEvent } from "react";
-import useDocumentTitle from "./useDocumentTitle";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 const DocumentTitle = ({
   onKeyDown,

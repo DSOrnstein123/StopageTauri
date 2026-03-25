@@ -1,4 +1,4 @@
-import DocumentWrapper from "../page/DocumentWrapper";
+import DocumentWrapper from "../../../routes/(features)/document/components/DocumentWrapper";
 import List from "../sidebar/List";
 
 export const components = {

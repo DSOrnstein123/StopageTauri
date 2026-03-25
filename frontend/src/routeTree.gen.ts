@@ -8,248 +8,248 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as pluginsSpineRouteRouteImport } from './routes/(plugins)/spine/route'
-import { Route as featuresPlannerRouteRouteImport } from './routes/(features)/planner/route'
-import { Route as featuresPdfReaderRouteRouteImport } from './routes/(features)/pdf-reader/route'
-import { Route as featuresFlashcardsRouteRouteImport } from './routes/(features)/flashcards/route'
-import { Route as featuresDocumentsRouteRouteImport } from './routes/(features)/documents/route'
-import { Route as featuresFlashcardsIndexRouteImport } from './routes/(features)/flashcards/index'
-import { Route as featuresFlashcardsManageRouteImport } from './routes/(features)/flashcards/manage'
-import { Route as featuresFlashcardsDeckIdRouteRouteImport } from './routes/(features)/flashcards/$deckId/route'
-import { Route as featuresFlashcardsDeckIdIndexRouteImport } from './routes/(features)/flashcards/$deckId/index'
-import { Route as featuresFlashcardsDeckIdStudyRouteImport } from './routes/(features)/flashcards/$deckId/study'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as pluginsSpineRouteRouteImport } from "./routes/(plugins)/spine/route";
+import { Route as featuresPlannerRouteRouteImport } from "./routes/(features)/planner/route";
+import { Route as featuresPdfReaderRouteRouteImport } from "./routes/(features)/pdf-reader/route";
+import { Route as featuresFlashcardsRouteRouteImport } from "./routes/(features)/flashcards/route";
+import { Route as featuresDocumentsRouteRouteImport } from "./routes/(features)/document/route";
+import { Route as featuresFlashcardsIndexRouteImport } from "./routes/(features)/flashcards/index";
+import { Route as featuresFlashcardsManageRouteImport } from "./routes/(features)/flashcards/manage";
+import { Route as featuresFlashcardsDeckIdRouteRouteImport } from "./routes/(features)/flashcards/$deckId/route";
+import { Route as featuresFlashcardsDeckIdIndexRouteImport } from "./routes/(features)/flashcards/$deckId/index";
+import { Route as featuresFlashcardsDeckIdStudyRouteImport } from "./routes/(features)/flashcards/$deckId/study";
 
 const pluginsSpineRouteRoute = pluginsSpineRouteRouteImport.update({
-  id: '/(plugins)/spine',
-  path: '/spine',
+  id: "/(plugins)/spine",
+  path: "/spine",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const featuresPlannerRouteRoute = featuresPlannerRouteRouteImport.update({
-  id: '/(features)/planner',
-  path: '/planner',
+  id: "/(features)/planner",
+  path: "/planner",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const featuresPdfReaderRouteRoute = featuresPdfReaderRouteRouteImport.update({
-  id: '/(features)/pdf-reader',
-  path: '/pdf-reader',
+  id: "/(features)/pdf-reader",
+  path: "/pdf-reader",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const featuresFlashcardsRouteRoute = featuresFlashcardsRouteRouteImport.update({
-  id: '/(features)/flashcards',
-  path: '/flashcards',
+  id: "/(features)/flashcards",
+  path: "/flashcards",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const featuresDocumentsRouteRoute = featuresDocumentsRouteRouteImport.update({
-  id: '/(features)/documents',
-  path: '/documents',
+  id: "/(features)/documents",
+  path: "/documents",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const featuresFlashcardsIndexRoute = featuresFlashcardsIndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => featuresFlashcardsRouteRoute,
-} as any)
+} as any);
 const featuresFlashcardsManageRoute =
   featuresFlashcardsManageRouteImport.update({
-    id: '/manage',
-    path: '/manage',
+    id: "/manage",
+    path: "/manage",
     getParentRoute: () => featuresFlashcardsRouteRoute,
-  } as any)
+  } as any);
 const featuresFlashcardsDeckIdRouteRoute =
   featuresFlashcardsDeckIdRouteRouteImport.update({
-    id: '/$deckId',
-    path: '/$deckId',
+    id: "/$deckId",
+    path: "/$deckId",
     getParentRoute: () => featuresFlashcardsRouteRoute,
-  } as any)
+  } as any);
 const featuresFlashcardsDeckIdIndexRoute =
   featuresFlashcardsDeckIdIndexRouteImport.update({
-    id: '/',
-    path: '/',
+    id: "/",
+    path: "/",
     getParentRoute: () => featuresFlashcardsDeckIdRouteRoute,
-  } as any)
+  } as any);
 const featuresFlashcardsDeckIdStudyRoute =
   featuresFlashcardsDeckIdStudyRouteImport.update({
-    id: '/study',
-    path: '/study',
+    id: "/study",
+    path: "/study",
     getParentRoute: () => featuresFlashcardsDeckIdRouteRoute,
-  } as any)
+  } as any);
 
 export interface FileRoutesByFullPath {
-  '/documents': typeof featuresDocumentsRouteRoute
-  '/flashcards': typeof featuresFlashcardsRouteRouteWithChildren
-  '/pdf-reader': typeof featuresPdfReaderRouteRoute
-  '/planner': typeof featuresPlannerRouteRoute
-  '/spine': typeof pluginsSpineRouteRoute
-  '/flashcards/$deckId': typeof featuresFlashcardsDeckIdRouteRouteWithChildren
-  '/flashcards/manage': typeof featuresFlashcardsManageRoute
-  '/flashcards/': typeof featuresFlashcardsIndexRoute
-  '/flashcards/$deckId/study': typeof featuresFlashcardsDeckIdStudyRoute
-  '/flashcards/$deckId/': typeof featuresFlashcardsDeckIdIndexRoute
+  "/documents": typeof featuresDocumentsRouteRoute;
+  "/flashcards": typeof featuresFlashcardsRouteRouteWithChildren;
+  "/pdf-reader": typeof featuresPdfReaderRouteRoute;
+  "/planner": typeof featuresPlannerRouteRoute;
+  "/spine": typeof pluginsSpineRouteRoute;
+  "/flashcards/$deckId": typeof featuresFlashcardsDeckIdRouteRouteWithChildren;
+  "/flashcards/manage": typeof featuresFlashcardsManageRoute;
+  "/flashcards/": typeof featuresFlashcardsIndexRoute;
+  "/flashcards/$deckId/study": typeof featuresFlashcardsDeckIdStudyRoute;
+  "/flashcards/$deckId/": typeof featuresFlashcardsDeckIdIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/documents': typeof featuresDocumentsRouteRoute
-  '/pdf-reader': typeof featuresPdfReaderRouteRoute
-  '/planner': typeof featuresPlannerRouteRoute
-  '/spine': typeof pluginsSpineRouteRoute
-  '/flashcards/manage': typeof featuresFlashcardsManageRoute
-  '/flashcards': typeof featuresFlashcardsIndexRoute
-  '/flashcards/$deckId/study': typeof featuresFlashcardsDeckIdStudyRoute
-  '/flashcards/$deckId': typeof featuresFlashcardsDeckIdIndexRoute
+  "/documents": typeof featuresDocumentsRouteRoute;
+  "/pdf-reader": typeof featuresPdfReaderRouteRoute;
+  "/planner": typeof featuresPlannerRouteRoute;
+  "/spine": typeof pluginsSpineRouteRoute;
+  "/flashcards/manage": typeof featuresFlashcardsManageRoute;
+  "/flashcards": typeof featuresFlashcardsIndexRoute;
+  "/flashcards/$deckId/study": typeof featuresFlashcardsDeckIdStudyRoute;
+  "/flashcards/$deckId": typeof featuresFlashcardsDeckIdIndexRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/(features)/documents': typeof featuresDocumentsRouteRoute
-  '/(features)/flashcards': typeof featuresFlashcardsRouteRouteWithChildren
-  '/(features)/pdf-reader': typeof featuresPdfReaderRouteRoute
-  '/(features)/planner': typeof featuresPlannerRouteRoute
-  '/(plugins)/spine': typeof pluginsSpineRouteRoute
-  '/(features)/flashcards/$deckId': typeof featuresFlashcardsDeckIdRouteRouteWithChildren
-  '/(features)/flashcards/manage': typeof featuresFlashcardsManageRoute
-  '/(features)/flashcards/': typeof featuresFlashcardsIndexRoute
-  '/(features)/flashcards/$deckId/study': typeof featuresFlashcardsDeckIdStudyRoute
-  '/(features)/flashcards/$deckId/': typeof featuresFlashcardsDeckIdIndexRoute
+  __root__: typeof rootRouteImport;
+  "/(features)/documents": typeof featuresDocumentsRouteRoute;
+  "/(features)/flashcards": typeof featuresFlashcardsRouteRouteWithChildren;
+  "/(features)/pdf-reader": typeof featuresPdfReaderRouteRoute;
+  "/(features)/planner": typeof featuresPlannerRouteRoute;
+  "/(plugins)/spine": typeof pluginsSpineRouteRoute;
+  "/(features)/flashcards/$deckId": typeof featuresFlashcardsDeckIdRouteRouteWithChildren;
+  "/(features)/flashcards/manage": typeof featuresFlashcardsManageRoute;
+  "/(features)/flashcards/": typeof featuresFlashcardsIndexRoute;
+  "/(features)/flashcards/$deckId/study": typeof featuresFlashcardsDeckIdStudyRoute;
+  "/(features)/flashcards/$deckId/": typeof featuresFlashcardsDeckIdIndexRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/documents'
-    | '/flashcards'
-    | '/pdf-reader'
-    | '/planner'
-    | '/spine'
-    | '/flashcards/$deckId'
-    | '/flashcards/manage'
-    | '/flashcards/'
-    | '/flashcards/$deckId/study'
-    | '/flashcards/$deckId/'
-  fileRoutesByTo: FileRoutesByTo
+    | "/documents"
+    | "/flashcards"
+    | "/pdf-reader"
+    | "/planner"
+    | "/spine"
+    | "/flashcards/$deckId"
+    | "/flashcards/manage"
+    | "/flashcards/"
+    | "/flashcards/$deckId/study"
+    | "/flashcards/$deckId/";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/documents'
-    | '/pdf-reader'
-    | '/planner'
-    | '/spine'
-    | '/flashcards/manage'
-    | '/flashcards'
-    | '/flashcards/$deckId/study'
-    | '/flashcards/$deckId'
+    | "/documents"
+    | "/pdf-reader"
+    | "/planner"
+    | "/spine"
+    | "/flashcards/manage"
+    | "/flashcards"
+    | "/flashcards/$deckId/study"
+    | "/flashcards/$deckId";
   id:
-    | '__root__'
-    | '/(features)/documents'
-    | '/(features)/flashcards'
-    | '/(features)/pdf-reader'
-    | '/(features)/planner'
-    | '/(plugins)/spine'
-    | '/(features)/flashcards/$deckId'
-    | '/(features)/flashcards/manage'
-    | '/(features)/flashcards/'
-    | '/(features)/flashcards/$deckId/study'
-    | '/(features)/flashcards/$deckId/'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/(features)/documents"
+    | "/(features)/flashcards"
+    | "/(features)/pdf-reader"
+    | "/(features)/planner"
+    | "/(plugins)/spine"
+    | "/(features)/flashcards/$deckId"
+    | "/(features)/flashcards/manage"
+    | "/(features)/flashcards/"
+    | "/(features)/flashcards/$deckId/study"
+    | "/(features)/flashcards/$deckId/";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  featuresDocumentsRouteRoute: typeof featuresDocumentsRouteRoute
-  featuresFlashcardsRouteRoute: typeof featuresFlashcardsRouteRouteWithChildren
-  featuresPdfReaderRouteRoute: typeof featuresPdfReaderRouteRoute
-  featuresPlannerRouteRoute: typeof featuresPlannerRouteRoute
-  pluginsSpineRouteRoute: typeof pluginsSpineRouteRoute
+  featuresDocumentsRouteRoute: typeof featuresDocumentsRouteRoute;
+  featuresFlashcardsRouteRoute: typeof featuresFlashcardsRouteRouteWithChildren;
+  featuresPdfReaderRouteRoute: typeof featuresPdfReaderRouteRoute;
+  featuresPlannerRouteRoute: typeof featuresPlannerRouteRoute;
+  pluginsSpineRouteRoute: typeof pluginsSpineRouteRoute;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/(plugins)/spine': {
-      id: '/(plugins)/spine'
-      path: '/spine'
-      fullPath: '/spine'
-      preLoaderRoute: typeof pluginsSpineRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(features)/planner': {
-      id: '/(features)/planner'
-      path: '/planner'
-      fullPath: '/planner'
-      preLoaderRoute: typeof featuresPlannerRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(features)/pdf-reader': {
-      id: '/(features)/pdf-reader'
-      path: '/pdf-reader'
-      fullPath: '/pdf-reader'
-      preLoaderRoute: typeof featuresPdfReaderRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(features)/flashcards': {
-      id: '/(features)/flashcards'
-      path: '/flashcards'
-      fullPath: '/flashcards'
-      preLoaderRoute: typeof featuresFlashcardsRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(features)/documents': {
-      id: '/(features)/documents'
-      path: '/documents'
-      fullPath: '/documents'
-      preLoaderRoute: typeof featuresDocumentsRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(features)/flashcards/': {
-      id: '/(features)/flashcards/'
-      path: '/'
-      fullPath: '/flashcards/'
-      preLoaderRoute: typeof featuresFlashcardsIndexRouteImport
-      parentRoute: typeof featuresFlashcardsRouteRoute
-    }
-    '/(features)/flashcards/manage': {
-      id: '/(features)/flashcards/manage'
-      path: '/manage'
-      fullPath: '/flashcards/manage'
-      preLoaderRoute: typeof featuresFlashcardsManageRouteImport
-      parentRoute: typeof featuresFlashcardsRouteRoute
-    }
-    '/(features)/flashcards/$deckId': {
-      id: '/(features)/flashcards/$deckId'
-      path: '/$deckId'
-      fullPath: '/flashcards/$deckId'
-      preLoaderRoute: typeof featuresFlashcardsDeckIdRouteRouteImport
-      parentRoute: typeof featuresFlashcardsRouteRoute
-    }
-    '/(features)/flashcards/$deckId/': {
-      id: '/(features)/flashcards/$deckId/'
-      path: '/'
-      fullPath: '/flashcards/$deckId/'
-      preLoaderRoute: typeof featuresFlashcardsDeckIdIndexRouteImport
-      parentRoute: typeof featuresFlashcardsDeckIdRouteRoute
-    }
-    '/(features)/flashcards/$deckId/study': {
-      id: '/(features)/flashcards/$deckId/study'
-      path: '/study'
-      fullPath: '/flashcards/$deckId/study'
-      preLoaderRoute: typeof featuresFlashcardsDeckIdStudyRouteImport
-      parentRoute: typeof featuresFlashcardsDeckIdRouteRoute
-    }
+    "/(plugins)/spine": {
+      id: "/(plugins)/spine";
+      path: "/spine";
+      fullPath: "/spine";
+      preLoaderRoute: typeof pluginsSpineRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(features)/planner": {
+      id: "/(features)/planner";
+      path: "/planner";
+      fullPath: "/planner";
+      preLoaderRoute: typeof featuresPlannerRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(features)/pdf-reader": {
+      id: "/(features)/pdf-reader";
+      path: "/pdf-reader";
+      fullPath: "/pdf-reader";
+      preLoaderRoute: typeof featuresPdfReaderRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(features)/flashcards": {
+      id: "/(features)/flashcards";
+      path: "/flashcards";
+      fullPath: "/flashcards";
+      preLoaderRoute: typeof featuresFlashcardsRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(features)/documents": {
+      id: "/(features)/documents";
+      path: "/documents";
+      fullPath: "/documents";
+      preLoaderRoute: typeof featuresDocumentsRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(features)/flashcards/": {
+      id: "/(features)/flashcards/";
+      path: "/";
+      fullPath: "/flashcards/";
+      preLoaderRoute: typeof featuresFlashcardsIndexRouteImport;
+      parentRoute: typeof featuresFlashcardsRouteRoute;
+    };
+    "/(features)/flashcards/manage": {
+      id: "/(features)/flashcards/manage";
+      path: "/manage";
+      fullPath: "/flashcards/manage";
+      preLoaderRoute: typeof featuresFlashcardsManageRouteImport;
+      parentRoute: typeof featuresFlashcardsRouteRoute;
+    };
+    "/(features)/flashcards/$deckId": {
+      id: "/(features)/flashcards/$deckId";
+      path: "/$deckId";
+      fullPath: "/flashcards/$deckId";
+      preLoaderRoute: typeof featuresFlashcardsDeckIdRouteRouteImport;
+      parentRoute: typeof featuresFlashcardsRouteRoute;
+    };
+    "/(features)/flashcards/$deckId/": {
+      id: "/(features)/flashcards/$deckId/";
+      path: "/";
+      fullPath: "/flashcards/$deckId/";
+      preLoaderRoute: typeof featuresFlashcardsDeckIdIndexRouteImport;
+      parentRoute: typeof featuresFlashcardsDeckIdRouteRoute;
+    };
+    "/(features)/flashcards/$deckId/study": {
+      id: "/(features)/flashcards/$deckId/study";
+      path: "/study";
+      fullPath: "/flashcards/$deckId/study";
+      preLoaderRoute: typeof featuresFlashcardsDeckIdStudyRouteImport;
+      parentRoute: typeof featuresFlashcardsDeckIdRouteRoute;
+    };
   }
 }
 
 interface featuresFlashcardsDeckIdRouteRouteChildren {
-  featuresFlashcardsDeckIdStudyRoute: typeof featuresFlashcardsDeckIdStudyRoute
-  featuresFlashcardsDeckIdIndexRoute: typeof featuresFlashcardsDeckIdIndexRoute
+  featuresFlashcardsDeckIdStudyRoute: typeof featuresFlashcardsDeckIdStudyRoute;
+  featuresFlashcardsDeckIdIndexRoute: typeof featuresFlashcardsDeckIdIndexRoute;
 }
 
 const featuresFlashcardsDeckIdRouteRouteChildren: featuresFlashcardsDeckIdRouteRouteChildren =
   {
     featuresFlashcardsDeckIdStudyRoute: featuresFlashcardsDeckIdStudyRoute,
     featuresFlashcardsDeckIdIndexRoute: featuresFlashcardsDeckIdIndexRoute,
-  }
+  };
 
 const featuresFlashcardsDeckIdRouteRouteWithChildren =
   featuresFlashcardsDeckIdRouteRoute._addFileChildren(
     featuresFlashcardsDeckIdRouteRouteChildren,
-  )
+  );
 
 interface featuresFlashcardsRouteRouteChildren {
-  featuresFlashcardsDeckIdRouteRoute: typeof featuresFlashcardsDeckIdRouteRouteWithChildren
-  featuresFlashcardsManageRoute: typeof featuresFlashcardsManageRoute
-  featuresFlashcardsIndexRoute: typeof featuresFlashcardsIndexRoute
+  featuresFlashcardsDeckIdRouteRoute: typeof featuresFlashcardsDeckIdRouteRouteWithChildren;
+  featuresFlashcardsManageRoute: typeof featuresFlashcardsManageRoute;
+  featuresFlashcardsIndexRoute: typeof featuresFlashcardsIndexRoute;
 }
 
 const featuresFlashcardsRouteRouteChildren: featuresFlashcardsRouteRouteChildren =
@@ -258,12 +258,12 @@ const featuresFlashcardsRouteRouteChildren: featuresFlashcardsRouteRouteChildren
       featuresFlashcardsDeckIdRouteRouteWithChildren,
     featuresFlashcardsManageRoute: featuresFlashcardsManageRoute,
     featuresFlashcardsIndexRoute: featuresFlashcardsIndexRoute,
-  }
+  };
 
 const featuresFlashcardsRouteRouteWithChildren =
   featuresFlashcardsRouteRoute._addFileChildren(
     featuresFlashcardsRouteRouteChildren,
-  )
+  );
 
 const rootRouteChildren: RootRouteChildren = {
   featuresDocumentsRouteRoute: featuresDocumentsRouteRoute,
@@ -271,7 +271,7 @@ const rootRouteChildren: RootRouteChildren = {
   featuresPdfReaderRouteRoute: featuresPdfReaderRouteRoute,
   featuresPlannerRouteRoute: featuresPlannerRouteRoute,
   pluginsSpineRouteRoute: pluginsSpineRouteRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();

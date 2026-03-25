@@ -1,13 +1,13 @@
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
-import { CustomBubbleMenu as BubbleMenu } from "../../../routes/(features)/documents/tiptap/CustomBubbleMenu";
-import { syncAlignAttrs } from "../../../routes/(features)/documents/tiptap/extensions/dnd/floatDragExtension";
+import { CustomBubbleMenu as BubbleMenu } from "../tiptap/bubble-menu/CustomBubbleMenu";
+import { syncAlignAttrs } from "../tiptap/extensions/dnd/floatDragExtension";
 import debounce from "@/shared/utils/debounce";
 import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useState, type RefObject } from "react";
-import { usePanelContext } from "./usePanelParams";
-import type { DocumentContentType } from "@/routes/(features)/documents/-schemas/documentSchema";
-import { useWorkspaceStore } from "../main-layout/useWorkspaceStore";
-import { extensions } from "./extensions";
+import { usePanelContext } from "../../../../app/components/page/usePanelParams";
+import type { DocumentContentType } from "@/routes/(features)/document/schemas/documentSchema";
+import { useWorkspaceStore } from "../../../../app/components/main-layout/useWorkspaceStore";
+import { extensions } from "../../../../app/components/page/extensions";
 
 const DocumentContent = ({
   editorRef,

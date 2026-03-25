@@ -1,10 +1,10 @@
-import documentKeys from "@/routes/(features)/documents/-hooks/documentKeys";
-import type { Document } from "@/routes/(features)/documents/-schemas/documentSchema";
+import documentKeys from "@/routes/(features)/document/hooks/documentKeys";
+import type { Document } from "@/routes/(features)/document/schemas/documentSchema";
 import debounce from "@/shared/utils/debounce";
 import { useQueryClient } from "@tanstack/react-query";
 import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { usePanelContext } from "./usePanelParams";
+import { usePanelContext } from "../../../../app/components/page/usePanelParams";
 
 const useDocumentTitle = () => {
   const queryClient = useQueryClient();

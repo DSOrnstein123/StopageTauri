@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { invoke } from "@tauri-apps/api/core";
-import { DocumentListSchema } from "../-schemas/documentSchema";
+import { DocumentListSchema } from "../schemas/documentSchema";
 import zodCheck from "@/shared/utils/zodCheck";
 import documentKeys from "./documentKeys";
 

@@ -1,7 +1,7 @@
 import { Button } from "@/shared/components/shadcn/button";
 import { useTabStore } from "@/app/store/tabStore";
 import { Calendar } from "lucide-react";
-import useCreateDocument from "@/routes/(features)/documents/-hooks/useCreateDocument";
+import useCreateDocument from "@/routes/(features)/document/hooks/useCreateDocument";
 
 const ActionBar = () => {
   const addTab = useTabStore((state) => state.addTab);
