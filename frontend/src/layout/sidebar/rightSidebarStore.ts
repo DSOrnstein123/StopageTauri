@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { SidebarType } from "../components/sidebar/sidebarComponentList";
+import type { SidebarType } from "./sidebarComponentList";
 
 interface RightSidebarState {
   width: number;

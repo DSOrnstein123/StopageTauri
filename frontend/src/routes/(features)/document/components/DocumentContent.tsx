@@ -4,10 +4,10 @@ import { syncAlignAttrs } from "../tiptap/extensions/dnd/floatDragExtension";
 import debounce from "@/shared/utils/debounce";
 import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useState, type RefObject } from "react";
-import { usePanelContext } from "../../../../app/components/page/usePanelParams";
 import type { DocumentContentType } from "@/routes/(features)/document/schemas/documentSchema";
-import { useWorkspaceStore } from "../../../../app/components/main-layout/useWorkspaceStore";
-import { extensions } from "../../../../app/components/page/extensions";
+import { useWorkspaceStore } from "../../../../layout/dockview/useWorkspaceStore";
+import { extensionList } from "../tiptap/extensions/extensionList";
+import { usePanelContext } from "@/layout/dockview/panel-context/usePanelParams";
 
 const DocumentContent = ({
   editorRef,
@@ -19,11 +19,11 @@ const DocumentContent = ({
     useState<DocumentContentType | null>(null);
   const changeFile = useWorkspaceStore((state) => state.changeFile);
   const panelId = panelContext.api.id;
-  const documentId = panelContext.params.fileId;
+  const documentId = panelContext.params.documentId;
 
   const editor = useEditor({
     immediatelyRender: false,
-    extensions: extensions,
+    extensions: extensionList,
     editorProps: {
       attributes: {
         class: "focus:outline-none prose-mirror-container",

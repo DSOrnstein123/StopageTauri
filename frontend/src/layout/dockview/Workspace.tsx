@@ -1,7 +1,7 @@
 import { themeLight } from "dockview-core";
 import { useWorkspaceStore } from "./useWorkspaceStore";
 import { DockviewReact } from "dockview";
-import { components } from "./components";
+import { components } from "../components";
 import { tabComponents } from "./tabComponents";
 
 const Workspace = () => {

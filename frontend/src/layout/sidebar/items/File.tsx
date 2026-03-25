@@ -1,6 +1,6 @@
 import { cn } from "@/shared/lib/utils";
-import { usePrimarySidebarStore } from "@/app/store/primarySidebarStore";
-import { useWorkspaceStore } from "@/app/components/main-layout/useWorkspaceStore";
+import { usePrimarySidebarStore } from "@/layout/sidebar/primarySidebarStore";
+import { useWorkspaceStore } from "@/layout/dockview/useWorkspaceStore";
 
 interface FileProps {
   id: string;

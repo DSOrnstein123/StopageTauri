@@ -1,8 +1,8 @@
 import { SplitviewReact, type SplitviewReadyEvent } from "dockview";
 import { Orientation } from "dockview-core";
-import ActionBar from "../sidebar/ActionBar";
+import ActionBar from "./sidebar/ActionBar";
 import LeftSidebar from "./LeftSidebar";
-import Workspace from "./Workspace";
+import Workspace from "./dockview/Workspace";
 
 const MainLayout = () => {
   const onSplitviewReady = (event: SplitviewReadyEvent) => {

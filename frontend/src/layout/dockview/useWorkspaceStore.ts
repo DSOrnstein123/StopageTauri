@@ -1,5 +1,6 @@
 import type { DockviewApi, SplitviewApi } from "dockview-core";
 import { create } from "zustand";
+import type { PanelType } from "./panelRegistry";
 
 interface WorkspaceState {
   dockApi: DockviewApi | null;
@@ -9,7 +10,7 @@ interface WorkspaceState {
   setSplitApi: (api: SplitviewApi) => void;
 
   openFile: (
-    fileType: "document" | "canvas",
+    fileType: PanelType,
     fileId: string,
     title: string,
     icon?: string,

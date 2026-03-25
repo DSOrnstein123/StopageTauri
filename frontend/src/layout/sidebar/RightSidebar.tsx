@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import Resizer from "./Resizer";
-import useRightSidebarStore from "@/app/store/rightSidebarStore";
+import useRightSidebarStore from "@/layout/sidebar/rightSidebarStore";
 import { sidebarComponentList } from "./sidebarComponentList";
 
 const RightSidebar = () => {

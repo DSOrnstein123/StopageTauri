@@ -1,4 +1,4 @@
-import FlashCardsSidebar from "@/routes/(features)/flashcards/-components/FlashCardsSidebar";
+import FlashCardsSidebar from "@/routes/(features)/flashcard/-components/FlashCardsSidebar";
 import PdfSidebar from "@/routes/(features)/pdf-reader/-components/PdfSidebar";
 import SpinePlayerSidebar from "@/routes/(plugins)/spine-player/SpinePlayerSidebar";
 import type { JSX } from "react";
