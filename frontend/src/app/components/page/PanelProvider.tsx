@@ -1,5 +1,5 @@
 import type { IDockviewPanelProps } from "dockview-core";
-import type { DocParams } from "../docParams";
+import type { DocParams } from "./docParams";
 import { PanelContext } from "./panelContext";
 
 export const PanelProvider = ({

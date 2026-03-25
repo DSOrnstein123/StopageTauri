@@ -1,6 +1,6 @@
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
-import { CustomBubbleMenu as BubbleMenu } from "../tiptap/CustomBubbleMenu";
-import { syncAlignAttrs } from "../tiptap/extensions/dnd/floatDragExtension";
+import { CustomBubbleMenu as BubbleMenu } from "../../../routes/(features)/documents/tiptap/CustomBubbleMenu";
+import { syncAlignAttrs } from "../../../routes/(features)/documents/tiptap/extensions/dnd/floatDragExtension";
 import debounce from "@/shared/utils/debounce";
 import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useState, type RefObject } from "react";
