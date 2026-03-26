@@ -2,8 +2,8 @@ import { Input } from "@/shared/components/shadcn/input";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { invoke } from "@tauri-apps/api/core";
 import { useRef } from "react";
-import useDeckTreeStore from "../../-stores/deckTreeStore";
-import type { Deck } from "../../-types/flashcard.types";
+import useDeckTreeStore from "../../stores/deckTreeStore";
+import type { Deck } from "../../types/flashcard.types";
 
 const DraftInput = () => {
   const inputRef = useRef<HTMLInputElement>(null);

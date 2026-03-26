@@ -8,7 +8,7 @@ import CarouselCard from "./CarouselCard";
 import { useState } from "react";
 import EvaluateBar from "./EvaluateBar";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { deckCardsQueryOptions } from "../../-hooks/useCardsFetch";
+import { deckCardsQueryOptions } from "../../hooks/useCardsFetch";
 
 const route = getRouteApi("/(features)/flashcards/$deckId/study");
 

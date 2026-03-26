@@ -1,6 +1,6 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { invoke } from "@tauri-apps/api/core";
-import type { Card } from "../-schemas/cardSchema";
+import type { Card } from "../schemas/cardSchema";
 
 const useGetCardsFromDeck = (deckId: string) => {
   return useQuery({

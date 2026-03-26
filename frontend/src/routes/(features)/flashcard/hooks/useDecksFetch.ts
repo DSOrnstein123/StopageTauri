@@ -1,8 +1,8 @@
 // import { mapDeck } from "@/mapping/map"
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import { type Deck } from "../-types/flashcard.types";
+import { type Deck } from "../types/flashcard.types";
 import { invoke } from "@tauri-apps/api/core";
-import type { RawDeck } from "../-schemas/deckSchema";
+import type { RawDeck } from "../schemas/deckSchema";
 
 export interface DecksData {
   decksFlat: Deck[];

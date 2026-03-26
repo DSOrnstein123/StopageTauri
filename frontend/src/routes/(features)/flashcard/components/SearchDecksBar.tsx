@@ -5,7 +5,7 @@ import { cn } from "@/shared/lib/utils";
 import { useEffect, useState } from "react";
 import useDebounce from "@/shared/hooks/useDebounce";
 import { Input } from "@/shared/components/shadcn/input";
-import { useDeckFiltersStore } from "../-stores/deckFiltersStore";
+import { useDeckFiltersStore } from "../stores/deckFiltersStore";
 
 const SearchDecksBar = () => {
   const [query, setQuery] = useState("");

@@ -1,5 +1,5 @@
 import { Button } from "@/shared/components/shadcn/button";
-import useDeckTreeStore from "../-stores/deckTreeStore";
+import useDeckTreeStore from "../stores/deckTreeStore";
 import SearchDecksBar from "./SearchDecksBar";
 import DecksList from "./views/DecksList";
 

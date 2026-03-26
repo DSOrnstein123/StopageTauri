@@ -3,8 +3,8 @@ import { cn } from "@/shared/lib/utils";
 import { ChevronRight } from "lucide-react";
 import DraftInput from "./DraftInput";
 import { Link } from "@tanstack/react-router";
-import type { DeckNode } from "../../-types/flashcard.types";
-import useDeckTreeStore from "../../-stores/deckTreeStore";
+import type { DeckNode } from "../../types/flashcard.types";
+import useDeckTreeStore from "../../stores/deckTreeStore";
 
 const DeckItemHeader = ({
   data,

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import DeckItem from "./DeckItem";
 import { cn } from "@/shared/lib/utils";
-import type { DeckNode } from "../../-types/flashcard.types";
+import type { DeckNode } from "../../types/flashcard.types";
 
 const DeckItemChildren = ({
   data,

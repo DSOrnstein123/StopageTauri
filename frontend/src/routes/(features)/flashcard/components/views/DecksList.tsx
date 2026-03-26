@@ -1,5 +1,5 @@
-import { useDecksFetch } from "../../-hooks/useDecksFetch";
-import useDeckTreeStore from "../../-stores/deckTreeStore";
+import { useDecksFetch } from "../../hooks/useDecksFetch";
+import useDeckTreeStore from "../../stores/deckTreeStore";
 import DeckItem from "../deck-item/DeckItem";
 import { buildDeckTree } from "./tree";
 import { useMemo } from "react";

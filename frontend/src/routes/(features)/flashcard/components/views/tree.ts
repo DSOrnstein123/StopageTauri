@@ -1,4 +1,4 @@
-import type { Deck, DeckNode, DeckTree } from "../../-types/flashcard.types";
+import type { Deck, DeckNode, DeckTree } from "../../types/flashcard.types";
 
 export const buildDeckTree = (decks: Deck[]): DeckTree => {
   const roots: DeckNode[] = [];

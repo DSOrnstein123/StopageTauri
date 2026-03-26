@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Deck } from "../-types/flashcard.types";
+import type { Deck } from "../types/flashcard.types";
 
 interface DeckTreeState {
   draft: Deck | null;
