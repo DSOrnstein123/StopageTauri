@@ -1,17 +1,17 @@
+import { usePanelContext } from "@/layout/dockview/panel-context/usePanelParams";
 import documentKeys from "@/routes/(features)/document/hooks/documentKeys";
 import type { Document } from "@/routes/(features)/document/schemas/documentSchema";
 import debounce from "@/shared/utils/debounce";
 import { useQueryClient } from "@tanstack/react-query";
 import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { usePanelContext } from "../../../../app/components/page/usePanelParams";
 
 const useDocumentTitle = () => {
   const queryClient = useQueryClient();
   const panelContext = usePanelContext();
   const panelId = panelContext.api.id;
   const panelApi = panelContext.api;
-  const documentId = panelContext.params.fileId;
+  const documentId = panelContext.params.documentId;
   const [title, setTitle] = useState("");
 
   useEffect(() => {

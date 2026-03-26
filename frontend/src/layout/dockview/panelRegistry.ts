@@ -5,3 +5,4 @@ export interface PanelParamsRegistry {
 }
 
 export type PanelType = keyof PanelParamsRegistry;
+export type PanelParams = PanelParamsRegistry[PanelType];

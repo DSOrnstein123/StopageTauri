@@ -2,10 +2,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import "./app/components/tiptap/tiptap.css";
-import "./app/components/tiptap/extensions/dnd/dnd.css";
-import "./app/components/tiptap/link.css";
+import "./routes/(features)/document/tiptap/tiptap.css";
 import "highlight.js/styles/github-dark.css";
+import "dockview/dist/styles/dockview.css";
+import "./layout/dockview/custom-dockview.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

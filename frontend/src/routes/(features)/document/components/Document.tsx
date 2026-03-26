@@ -1,7 +1,7 @@
 import { useRef, type KeyboardEvent } from "react";
 import DocumentTitle from "./DocumentTitle";
 import { Editor } from "@tiptap/react";
-import DocumentContent from "../../../../app/components/page/DocumentContent";
+import DocumentContent from "./DocumentContent";
 
 const Document = () => {
   const editorRef = useRef<Editor | null>(null);

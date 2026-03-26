@@ -1,9 +1,7 @@
-import DecksList from "@/routes/(features)/flashcards/-components/views/DecksList";
-import SearchDecksBar from "@/routes/(features)/flashcards/-components/SearchDecksBar";
 import { Button } from "@/shared/components/shadcn/button";
 import useDeckTreeStore from "../-stores/deckTreeStore";
-import { Settings } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import SearchDecksBar from "./SearchDecksBar";
+import DecksList from "./views/DecksList";
 
 const FlashCardsSidebar = () => {
   const setDraft = useDeckTreeStore((state) => state.setDraft);
@@ -20,11 +18,11 @@ const FlashCardsSidebar = () => {
           New deck
         </Button>
 
-        <Link to="/flashcards/manage">
+        {/* <Link to="/flashcards/manage">
           <Button>
             <Settings />
           </Button>
-        </Link>
+        </Link> */}
       </div>
 
       <div className="mt-2 flex flex-col gap-y-2">

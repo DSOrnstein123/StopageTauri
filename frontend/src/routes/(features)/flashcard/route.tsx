@@ -2,7 +2,7 @@ import FlashCardsLayout from "@/routes/(features)/flashcards/-components/FlashCa
 import setSidebarType from "@/shared/utils/setSidebarType";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/(features)/flashcards")({
+export const Route = createFileRoute("/(features)/flashcard")({
   component: FlashCardsLayout,
   staticData: {
     breadcrumb: "Flashcards",

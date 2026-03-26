@@ -3,6 +3,7 @@ import { Orientation } from "dockview-core";
 import ActionBar from "./sidebar/ActionBar";
 import LeftSidebar from "./LeftSidebar";
 import Workspace from "./dockview/Workspace";
+import RightSidebar from "./sidebar/RightSidebar";
 
 const MainLayout = () => {
   const onSplitviewReady = (event: SplitviewReadyEvent) => {
@@ -13,11 +14,18 @@ const MainLayout = () => {
     });
 
     event.api.addPanel({
-      id: "right-pane",
-      component: "rightDock",
+      id: "center-pane",
+      component: "centerDock",
     });
 
     leftPane.api.setSize({ size: 200 });
+
+    event.api.addPanel({
+      id: "right-pane",
+      component: "rightDock",
+      size: 200,
+      minimumSize: 100,
+    });
   };
 
   return (
@@ -30,7 +38,8 @@ const MainLayout = () => {
         onReady={onSplitviewReady}
         components={{
           leftDock: LeftSidebar,
-          rightDock: Workspace,
+          centerDock: Workspace,
+          rightDock: RightSidebar,
         }}
       />
     </div>

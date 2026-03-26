@@ -1,11 +1,12 @@
 import { Button } from "@/shared/components/shadcn/button";
-import { useTabStore } from "@/app/store/tabStore";
 import { Calendar } from "lucide-react";
 import useCreateDocument from "@/routes/(features)/document/hooks/useCreateDocument";
+import { useWorkspaceStore } from "../dockview/useWorkspaceStore";
+import type { DocumentParams } from "@/routes/(features)/document/document.params";
 
 const ActionBar = () => {
-  const addTab = useTabStore((state) => state.addTab);
   const { mutateAsync: createDocument } = useCreateDocument();
+  const openFile = useWorkspaceStore((state) => state.openFile);
 
   return (
     <aside className="bg-primary/20 flex h-full w-10 flex-col items-center gap-y-px py-1">
@@ -15,7 +16,10 @@ const ActionBar = () => {
         className="relative size-8 p-0"
         onClick={async () => {
           const data = await createDocument();
-          addTab(`/documents/${data.id}`);
+          openFile<DocumentParams>("document", data.title, {
+            documentId: data.id,
+          });
+          // addTab(`/documents/${data.id}`);
           // navigate({
           //   to: `/documents/$documentId`,
           //   params: { documentId: data.id },
@@ -29,7 +33,7 @@ const ActionBar = () => {
       <Button
         variant="ghost"
         className="relative size-8"
-        onClick={() => addTab("/flashcards", "Flashcards")}
+        // onClick={() => addTab("/flashcards", "Flashcards")}
       >
         <svg
           width="40"

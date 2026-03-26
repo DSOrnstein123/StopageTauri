@@ -1,34 +1,43 @@
 import type { DockviewApi, SplitviewApi } from "dockview-core";
 import { create } from "zustand";
-import type { PanelType } from "./panelRegistry";
+import type { PanelParams, PanelType } from "./panelRegistry";
 
 interface WorkspaceState {
   dockApi: DockviewApi | null;
   splitApi: SplitviewApi | null;
+  activePanelInfo: ActivePanelInfo | null;
 
   setDockApi: (api: DockviewApi) => void;
   setSplitApi: (api: SplitviewApi) => void;
 
-  openFile: (
+  openFile: <T extends PanelParams>(
     fileType: PanelType,
-    fileId: string,
     title: string,
+    params: T,
     icon?: string,
   ) => void;
   updatePanelTitel: (panelId: string, newTitle: string) => void;
   changeFile: (panelId: string, newFileId: string) => void;
+  setActivePanelInfo: (info: ActivePanelInfo) => void;
   // toggleSidebar: (side: "left" | "right") => void;
 
   // saveLayout: () => void;
 }
 
+interface ActivePanelInfo {
+  id: string;
+  type: PanelType | "none";
+  fileId: string;
+}
+
 export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   dockApi: null,
   splitApi: null,
+  activePanelInfo: null,
 
   setDockApi: (api) => set({ dockApi: api }),
   setSplitApi: (api) => set({ splitApi: api }),
-  openFile: (fileType, fileId, title, icon?) => {
+  openFile: (fileType, title, params) => {
     const { dockApi } = get();
     if (!dockApi) return;
 
@@ -39,7 +48,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
       component: fileType,
       title: title,
       tabComponent: "workspace",
-      params: { fileId: fileId, icon: icon },
+      params: params,
     });
   },
   updatePanelTitel: (panelId, newTitle) => {
@@ -60,4 +69,5 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
       mainPanel.api.updateParameters({ fileId: newFileId });
     }
   },
+  setActivePanelInfo: (info) => set({ activePanelInfo: info }),
 }));
