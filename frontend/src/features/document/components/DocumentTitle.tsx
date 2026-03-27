@@ -24,7 +24,7 @@ const DocumentTitle = ({
         suppressContentEditableWarning
         onInput={handleInput}
         onKeyDown={onKeyDown}
-        className="text-4xl font-bold outline-none"
+        className="mb-4 text-5xl font-bold outline-none"
       />
       {!title && (
         <span className="pointer-events-none absolute top-0 left-0 text-4xl font-bold text-gray-400">

@@ -27,6 +27,7 @@ const DocumentContent = ({
   const [localTOC, setLocalTOC] = useState<TableOfContentData | null>(null);
   const panelId = panelContext.api.id;
   const documentId = panelContext.params.documentId;
+  const activeDocumentId = activePanelInfo?.params?.documentId as string;
 
   const extensions = useMemo(
     () => [
@@ -81,23 +82,32 @@ const DocumentContent = ({
 
   useEffect(() => {
     if (!editor || !activePanelInfo) return;
-    if (
-      panelId === activePanelInfo.id &&
-      documentId === activePanelInfo.fileId
-    ) {
+    if (panelId === activePanelInfo.id && documentId === activeDocumentId) {
       setActiveEditor(editor);
     }
-  }, [editor, documentId, activePanelInfo, panelId, setActiveEditor]);
+  }, [
+    editor,
+    documentId,
+    activePanelInfo,
+    panelId,
+    setActiveEditor,
+    activeDocumentId,
+  ]);
 
   useEffect(() => {
     if (!editor || !activePanelInfo || !localTOC) return;
-    if (
-      panelId === activePanelInfo.id &&
-      documentId === activePanelInfo.fileId
-    ) {
+    if (panelId === activePanelInfo.id && documentId === activeDocumentId) {
       setTOCItems(localTOC);
     }
-  }, [editor, documentId, activePanelInfo, panelId, setTOCItems, localTOC]);
+  }, [
+    editor,
+    documentId,
+    activePanelInfo,
+    panelId,
+    setTOCItems,
+    localTOC,
+    activeDocumentId,
+  ]);
 
   useEffect(() => {
     let cancel = false;
@@ -108,7 +118,7 @@ const DocumentContent = ({
 
         setDocumentContent(data);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err, documentId));
 
     return () => {
       cancel = true;

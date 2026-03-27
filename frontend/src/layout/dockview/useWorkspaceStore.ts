@@ -22,7 +22,7 @@ interface WorkspaceState {
   ) => void;
   updatePanelTitel: (panelId: string, newTitle: string) => void;
   changeFile: (panelId: string, newFileId: string) => void;
-  setActivePanelInfo: (info: ActivePanelInfo) => void;
+  setActivePanelInfo: (info: ActivePanelInfo | null) => void;
   setActiveEditor: (editor: Editor) => void;
   setTOCItems: (tocItems: TableOfContentData) => void;
   // toggleSidebar: (side: "left" | "right") => void;
@@ -33,7 +33,7 @@ interface WorkspaceState {
 interface ActivePanelInfo {
   id: string;
   type: PanelType | "none";
-  fileId: string;
+  params: Record<string, unknown> | null;
 }
 
 export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
