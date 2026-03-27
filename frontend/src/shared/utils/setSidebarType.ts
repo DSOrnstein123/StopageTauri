@@ -1,5 +1,5 @@
-import type { SidebarType } from "@/app/components/sidebar/sidebarComponentList";
-import useRightSidebarStore from "@/app/store/rightSidebarStore";
+import type { SidebarType } from "@/layout/sidebar/sidebarComponentList";
+import useRightSidebarStore from "@/layout/sidebar/rightSidebarStore";
 
 const setSidebarType = (type: SidebarType) => {
   useRightSidebarStore.getState().setType(type);
