@@ -3,11 +3,14 @@ import { CustomBubbleMenu as BubbleMenu } from "../tiptap/bubble-menu/CustomBubb
 import { syncAlignAttrs } from "../tiptap/extensions/dnd/floatDragExtension";
 import debounce from "@/shared/utils/debounce";
 import { invoke } from "@tauri-apps/api/core";
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useMemo, useState, type RefObject } from "react";
 import type { DocumentContentType } from "@/routes/(features)/document/schemas/documentSchema";
 import { useWorkspaceStore } from "../../../../layout/dockview/useWorkspaceStore";
 import { extensionList } from "../tiptap/extensions/extensionList";
 import { usePanelContext } from "@/layout/dockview/panel-context/usePanelParams";
+import TableOfContents, {
+  type TableOfContentData,
+} from "@tiptap/extension-table-of-contents";
 
 const DocumentContent = ({
   editorRef,
@@ -18,12 +21,28 @@ const DocumentContent = ({
   const [documentContent, setDocumentContent] =
     useState<DocumentContentType | null>(null);
   const changeFile = useWorkspaceStore((state) => state.changeFile);
+  const activePanelInfo = useWorkspaceStore((state) => state.activePanelInfo);
+  const setActiveEditor = useWorkspaceStore((state) => state.setActiveEditor);
+  const setTOCItems = useWorkspaceStore((state) => state.setTOCItems);
+  const [localTOC, setLocalTOC] = useState<TableOfContentData | null>(null);
   const panelId = panelContext.api.id;
   const documentId = panelContext.params.documentId;
 
+  const extensions = useMemo(
+    () => [
+      ...extensionList,
+      TableOfContents.configure({
+        onUpdate: (content) => {
+          setLocalTOC((prev) => (prev === content ? prev : content));
+        },
+      }),
+    ],
+    [],
+  );
+
   const editor = useEditor({
     immediatelyRender: false,
-    extensions: extensionList,
+    extensions: extensions,
     editorProps: {
       attributes: {
         class: "focus:outline-none prose-mirror-container",
@@ -61,11 +80,31 @@ const DocumentContent = ({
   });
 
   useEffect(() => {
+    if (!editor || !activePanelInfo) return;
+    if (
+      panelId === activePanelInfo.id &&
+      documentId === activePanelInfo.fileId
+    ) {
+      setActiveEditor(editor);
+    }
+  }, [editor, documentId, activePanelInfo, panelId, setActiveEditor]);
+
+  useEffect(() => {
+    if (!editor || !activePanelInfo || !localTOC) return;
+    if (
+      panelId === activePanelInfo.id &&
+      documentId === activePanelInfo.fileId
+    ) {
+      setTOCItems(localTOC);
+    }
+  }, [editor, documentId, activePanelInfo, panelId, setTOCItems, localTOC]);
+
+  useEffect(() => {
     let cancel = false;
 
     invoke<DocumentContentType>("get_document_content", { id: documentId })
       .then((data) => {
-        if (cancel) setDocumentContent(data);
+        if (!cancel) setDocumentContent(data);
       })
       .catch((err) => console.error(err));
 

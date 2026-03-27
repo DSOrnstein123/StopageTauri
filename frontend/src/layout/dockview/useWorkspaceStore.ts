@@ -1,11 +1,15 @@
 import type { DockviewApi, SplitviewApi } from "dockview-core";
 import { create } from "zustand";
 import type { PanelParams, PanelType } from "./panelRegistry";
+import { Editor } from "@tiptap/react";
+import type { TableOfContentData } from "@tiptap/extension-table-of-contents";
 
 interface WorkspaceState {
   dockApi: DockviewApi | null;
   splitApi: SplitviewApi | null;
   activePanelInfo: ActivePanelInfo | null;
+  activeEditor: Editor | null;
+  tocItems: TableOfContentData | null;
 
   setDockApi: (api: DockviewApi) => void;
   setSplitApi: (api: SplitviewApi) => void;
@@ -19,6 +23,8 @@ interface WorkspaceState {
   updatePanelTitel: (panelId: string, newTitle: string) => void;
   changeFile: (panelId: string, newFileId: string) => void;
   setActivePanelInfo: (info: ActivePanelInfo) => void;
+  setActiveEditor: (editor: Editor) => void;
+  setTOCItems: (tocItems: TableOfContentData) => void;
   // toggleSidebar: (side: "left" | "right") => void;
 
   // saveLayout: () => void;
@@ -34,6 +40,8 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   dockApi: null,
   splitApi: null,
   activePanelInfo: null,
+  activeEditor: null,
+  tocItems: null,
 
   setDockApi: (api) => set({ dockApi: api }),
   setSplitApi: (api) => set({ splitApi: api }),
@@ -70,4 +78,6 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
     }
   },
   setActivePanelInfo: (info) => set({ activePanelInfo: info }),
+  setActiveEditor: (editor) => set({ activeEditor: editor }),
+  setTOCItems: (tocItems) => set({ tocItems: tocItems }),
 }));
