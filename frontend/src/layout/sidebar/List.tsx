@@ -1,7 +1,7 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
 import File from "./items/File";
-import { useGetDocumentList } from "@/routes/(features)/document/hooks/useGetDocumentList";
+import { useGetDocumentList } from "@/features/document/hooks/useGetDocumentList";
 
 const List = () => {
   //TODO: folder

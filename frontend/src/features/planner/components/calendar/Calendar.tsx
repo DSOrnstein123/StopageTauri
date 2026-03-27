@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import getCalendarDatesForMonth from "../../-utils/getCalendarDatesForMonth";
+import getCalendarDatesForMonth from "../../utils/getCalendarDatesForMonth";
 import {
   useFloating,
   useClick,

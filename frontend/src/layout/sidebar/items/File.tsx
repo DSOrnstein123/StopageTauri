@@ -1,7 +1,7 @@
 import { cn } from "@/shared/lib/utils";
 import { usePrimarySidebarStore } from "@/layout/sidebar/primarySidebarStore";
 import { useWorkspaceStore } from "@/layout/dockview/useWorkspaceStore";
-import type { DocumentParams } from "@/routes/(features)/document/document.params";
+import type { DocumentParams } from "@/features/document/document.params";
 
 interface FileProps {
   id: string;

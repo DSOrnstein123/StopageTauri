@@ -4,7 +4,7 @@ import { Button } from "@/shared/components/shadcn/button";
 import { cn } from "@/shared/lib/utils";
 import { useState } from "react";
 import LinkSuggestion from "./LinkSuggestion";
-import type { Document } from "@/routes/(features)/document/schemas/documentSchema";
+import type { Document } from "@/features/document/schemas/documentSchema";
 
 //TODO: optimize
 //TODO: fixed position

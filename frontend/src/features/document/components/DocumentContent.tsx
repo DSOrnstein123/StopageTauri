@@ -4,8 +4,8 @@ import { syncAlignAttrs } from "../tiptap/extensions/dnd/floatDragExtension";
 import debounce from "@/shared/utils/debounce";
 import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useMemo, useState, type RefObject } from "react";
-import type { DocumentContentType } from "@/routes/(features)/document/schemas/documentSchema";
-import { useWorkspaceStore } from "../../../../layout/dockview/useWorkspaceStore";
+import type { DocumentContentType } from "@/features/document/schemas/documentSchema";
+import { useWorkspaceStore } from "../../../layout/dockview/useWorkspaceStore";
 import { extensionList } from "../tiptap/extensions/extensionList";
 import { usePanelContext } from "@/layout/dockview/panel-context/usePanelParams";
 import TableOfContents, {
@@ -104,7 +104,9 @@ const DocumentContent = ({
 
     invoke<DocumentContentType>("get_document_content", { id: documentId })
       .then((data) => {
-        if (!cancel) setDocumentContent(data);
+        if (cancel) return;
+
+        setDocumentContent(data);
       })
       .catch((err) => console.error(err));
 

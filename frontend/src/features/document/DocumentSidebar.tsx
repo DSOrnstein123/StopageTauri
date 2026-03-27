@@ -4,7 +4,6 @@ import { TextSelection } from "@tiptap/pm/state";
 const DocumentSidebar = () => {
   const editor = useWorkspaceStore((state) => state.activeEditor);
   const items = useWorkspaceStore((state) => state.tocItems);
-  console.log(items);
 
   if (!items) return;
 

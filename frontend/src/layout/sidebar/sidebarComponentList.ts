@@ -1,7 +1,7 @@
-import DocumentSidebar from "@/routes/(features)/document/DocumentSidebar";
-import FlashCardsSidebar from "@/routes/(features)/flashcard/components/FlashCardsSidebar";
-import PdfSidebar from "@/routes/(features)/pdf-reader/-components/PdfSidebar";
-import SpinePlayerSidebar from "@/routes/(plugins)/spine-player/SpinePlayerSidebar";
+import DocumentSidebar from "@/features/document/DocumentSidebar";
+import FlashCardsSidebar from "@/features/flashcard/components/FlashCardsSidebar";
+import PdfSidebar from "@/features/pdf-reader/components/PdfSidebar";
+import SpinePlayerSidebar from "@/plugins/spine-player/SpinePlayerSidebar";
 import type { JSX } from "react";
 
 const sidebarComponentList = {
@@ -10,7 +10,7 @@ const sidebarComponentList = {
   spinePlayer: SpinePlayerSidebar,
   document: DocumentSidebar,
   none: () => null,
-} satisfies Record<string, () => JSX.Element | null>;
+} satisfies Record<string, () => JSX.Element | null | undefined>;
 
 type SidebarType = keyof typeof sidebarComponentList;
 

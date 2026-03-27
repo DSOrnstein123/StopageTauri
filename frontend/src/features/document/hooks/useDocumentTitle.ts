@@ -1,6 +1,6 @@
 import { usePanelContext } from "@/layout/dockview/panel-context/usePanelParams";
-import documentKeys from "@/routes/(features)/document/hooks/documentKeys";
-import type { Document } from "@/routes/(features)/document/schemas/documentSchema";
+import documentKeys from "@/features/document/hooks/documentKeys";
+import type { Document } from "@/features/document/schemas/documentSchema";
 import debounce from "@/shared/utils/debounce";
 import { useQueryClient } from "@tanstack/react-query";
 import { invoke } from "@tauri-apps/api/core";

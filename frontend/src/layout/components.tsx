@@ -1,4 +1,4 @@
-import DocumentPanel from "../routes/(features)/document/DocumentPanel";
+import DocumentPanel from "../features/document/DocumentPanel";
 import List from "./sidebar/List";
 
 export const components = {

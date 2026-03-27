@@ -1,4 +1,4 @@
-import useHighlightStore from "../-stores/highlightStore";
+import useHighlightStore from "../stores/highlightStore";
 
 const PdfSidebar = () => {
   const text = useHighlightStore((state) => state.text);

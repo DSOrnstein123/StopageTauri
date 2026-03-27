@@ -5,7 +5,7 @@ import {
 import { useEffect, useState } from "react";
 import { ignore, PdfAnnotationSubtype } from "@embedpdf/models";
 import { useAnnotation } from "@embedpdf/plugin-annotation/react";
-import useHighlightStore from "../-stores/highlightStore";
+import useHighlightStore from "../stores/highlightStore";
 
 const Highlighter = ({ documentId }: { documentId: string }) => {
   const { provides: selectionCapability } = useSelectionCapability();
