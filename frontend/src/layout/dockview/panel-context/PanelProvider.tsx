@@ -1,6 +1,6 @@
 import type { IDockviewPanelProps } from "dockview-core";
 import { PanelContext } from "./panelContext";
-import type { PanelParamsRegistry } from "../panelRegistry";
+import type { PanelParamsRegistry } from "../../../registry/featureRegistry";
 import type { ReactNode } from "react";
 
 export const PanelProvider = ({

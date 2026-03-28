@@ -1,9 +1,9 @@
 import { DockviewApi, themeLight } from "dockview-core";
 import { useWorkspaceStore } from "./useWorkspaceStore";
 import { DockviewReact } from "dockview";
-import { components } from "../components";
+import { components } from "./components";
 import { tabComponents } from "./tabComponents";
-import type { PanelType } from "./panelRegistry";
+import type { FeatureType } from "@/registry/featureRegistry";
 
 const loadDefaultLayout = (api: DockviewApi) => {
   api.addPanel({
@@ -47,7 +47,7 @@ const Workspace = () => {
           const { api: panelApi } = panelEvent;
           setActivePanelInfo({
             id: panelApi.id || "",
-            type: (panelApi.component as PanelType) || "none",
+            type: (panelApi.component as FeatureType) || "none",
             params: panelEvent.params || null,
           });
         });

@@ -3,7 +3,7 @@ import Document from "./components/Document";
 import { PanelProvider } from "@/layout/dockview/panel-context/PanelProvider";
 import type { DocumentParams } from "./document.params";
 
-const DocumentPanel = (props: IDockviewPanelProps<DocumentParams>) => {
+const DocumentView = (props: IDockviewPanelProps<DocumentParams>) => {
   return (
     <PanelProvider props={props}>
       <Document key={props.api.id} />
@@ -11,4 +11,4 @@ const DocumentPanel = (props: IDockviewPanelProps<DocumentParams>) => {
   );
 };
 
-export default DocumentPanel;
+export default DocumentView;
