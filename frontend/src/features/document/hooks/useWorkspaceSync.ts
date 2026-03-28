@@ -3,6 +3,7 @@ import { Editor } from "@tiptap/react";
 import { useWorkspaceStore } from "@/layout/dockview/useWorkspaceStore";
 import { usePanelContext } from "@/layout/dockview/panel-context/usePanelParams";
 import type { TableOfContentData } from "@tiptap/extension-table-of-contents";
+import type { DocumentParams } from "../document.params";
 
 const useWorkspaceSync = (
   editor: Editor | null,
@@ -13,7 +14,7 @@ const useWorkspaceSync = (
   const activeDocumentId = activePanelInfo?.params?.documentId as string;
   const setTOCItems = useWorkspaceStore((state) => state.setTOCItems);
   const setActiveEditor = useWorkspaceStore((state) => state.setActiveEditor);
-  const panelContext = usePanelContext();
+  const panelContext = usePanelContext<DocumentParams>();
   const panelId = panelContext.api.id;
 
   const isActivePanel =

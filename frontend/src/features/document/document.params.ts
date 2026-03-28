@@ -1,3 +1,3 @@
-export interface DocumentParams {
+export type DocumentParams = {
   documentId: string;
-}
+};

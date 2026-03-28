@@ -5,10 +5,11 @@ import debounce from "@/shared/utils/debounce";
 import { useQueryClient } from "@tanstack/react-query";
 import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import type { DocumentParams } from "../document.params";
 
 const useDocumentTitle = () => {
   const queryClient = useQueryClient();
-  const panelContext = usePanelContext();
+  const panelContext = usePanelContext<DocumentParams>();
   const panelId = panelContext.api.id;
   const panelApi = panelContext.api;
   const documentId = panelContext.params.documentId;

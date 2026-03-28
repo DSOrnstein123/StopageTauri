@@ -7,12 +7,13 @@ import TableOfContents, {
 import { useWorkspaceStore } from "@/layout/dockview/useWorkspaceStore";
 import { useMemo, useState, type RefObject } from "react";
 import { usePanelContext } from "@/layout/dockview/panel-context/usePanelParams";
+import type { DocumentParams } from "../document.params";
 
 const useDocumentEditor = (editorRef: RefObject<Editor | null>) => {
   const [localTOC, setLocalTOC] = useState<TableOfContentData | null>(null);
   const changeFile = useWorkspaceStore((state) => state.changeFile);
 
-  const panelContext = usePanelContext();
+  const panelContext = usePanelContext<DocumentParams>();
   const panelId = panelContext.api.id;
 
   const extensions = useMemo(

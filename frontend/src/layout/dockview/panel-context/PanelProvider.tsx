@@ -1,12 +1,11 @@
 import type { IDockviewPanelProps } from "dockview-core";
 import { PanelContext } from "./panelContext";
-import type { PanelParamsRegistry } from "../../../registry/featureRegistry";
 import type { ReactNode } from "react";
 
-export const PanelProvider = ({
+export const PanelProvider = <T extends Record<string, unknown>>({
   props,
   children,
 }: {
-  props: IDockviewPanelProps<PanelParamsRegistry[keyof PanelParamsRegistry]>;
+  props: IDockviewPanelProps<T>;
   children: ReactNode;
 }) => <PanelContext.Provider value={props}>{children}</PanelContext.Provider>;
