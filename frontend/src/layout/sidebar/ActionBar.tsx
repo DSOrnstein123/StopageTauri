@@ -2,7 +2,6 @@ import { Button } from "@/shared/components/shadcn/button";
 import { Calendar } from "lucide-react";
 import useCreateDocument from "@/features/document/hooks/useCreateDocument";
 import { useWorkspaceStore } from "../dockview/useWorkspaceStore";
-import type { DocumentParams } from "@/features/document/document.params";
 
 const ActionBar = () => {
   const { mutateAsync: createDocument } = useCreateDocument();
@@ -16,14 +15,9 @@ const ActionBar = () => {
         className="relative size-8 p-0"
         onClick={async () => {
           const data = await createDocument();
-          openFile<DocumentParams>("document", data.title, {
+          openFile("document", data.title, {
             documentId: data.id,
           });
-          // addTab(`/documents/${data.id}`);
-          // navigate({
-          //   to: `/documents/$documentId`,
-          //   params: { documentId: data.id },
-          // });
         }}
       >
         <img src="/icon/new_note.svg" className="h-5 w-5" />
@@ -70,7 +64,11 @@ const ActionBar = () => {
       </Button>
 
       {/* calendar */}
-      <Button variant="ghost" className="relative size-8">
+      <Button
+        variant="ghost"
+        className="relative size-8"
+        onClick={() => openFile("planner", "Planner")}
+      >
         <Calendar />
       </Button>
 

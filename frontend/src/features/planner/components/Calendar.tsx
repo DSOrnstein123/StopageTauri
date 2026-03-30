@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import getCalendarDatesForMonth from "../../utils/getCalendarDatesForMonth";
+import getCalendarDatesForMonth from "../utils/getCalendarDatesForMonth";
 import {
   useFloating,
   useClick,
@@ -11,11 +11,15 @@ import {
 } from "@floating-ui/react";
 import DateCell from "./DateCell";
 import Popover from "./Popover";
+import { getMonth, getYear } from "date-fns";
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const Calendar = () => {
-  const dates = getCalendarDatesForMonth(8, 2025);
+  const now = new Date();
+  const currentMonth = getMonth(now) + 1;
+  const currentYear = getYear(now);
+  const dates = getCalendarDatesForMonth(currentMonth, currentYear);
 
   const arrowRef = useRef(null);
   const [popoverOpenIndex, setPopoverOpenIndex] = useState<number | null>(null);

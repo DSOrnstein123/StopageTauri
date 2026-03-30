@@ -1,5 +1,5 @@
 import DocumentView from "@/features/document/DocumentView";
-import Calendar from "@/features/planner/components/calendar/Calendar";
+import Calendar from "@/features/planner/components/Calendar";
 import { Calendar1 } from "lucide-react";
 import type { ComponentType, ElementType } from "react";
 

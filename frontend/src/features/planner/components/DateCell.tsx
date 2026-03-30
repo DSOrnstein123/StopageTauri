@@ -12,7 +12,7 @@ interface DateCellProps {
 const DateCell = memo(
   ({ id, date, handleOnClick, getReferenceProps }: DateCellProps) => {
     return (
-      <div className="flex h-44 justify-between border-r border-b p-1">
+      <div className="flex h-40 justify-between border-r border-b p-1">
         <span>{date}</span>
 
         <Button

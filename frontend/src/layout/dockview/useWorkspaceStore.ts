@@ -18,7 +18,7 @@ interface WorkspaceState {
   openFile: <T extends FeatureType>(
     fileType: T,
     title: string,
-    params: PanelParamsRegistry[T],
+    params?: PanelParamsRegistry[T],
     icon?: string,
   ) => void;
   changeFile: (panelId: string, newFileId: string) => void;
