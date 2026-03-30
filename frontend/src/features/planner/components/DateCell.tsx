@@ -3,9 +3,9 @@ import type { UseInteractionsReturn } from "@floating-ui/react";
 import { memo } from "react";
 
 interface DateCellProps {
-  id: number;
+  id: string;
   date: number;
-  handleOnClick: (e: React.MouseEvent<Element, MouseEvent>, id: number) => void;
+  handleOnClick: (e: React.MouseEvent<Element, MouseEvent>, id: string) => void;
   getReferenceProps: UseInteractionsReturn["getReferenceProps"] | undefined;
 }
 

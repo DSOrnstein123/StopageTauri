@@ -37,7 +37,7 @@ import LinkHandler from "./LinkHandler";
 
 const plugins = [
   createPluginRegistration(DocumentManagerPluginPackage, {
-    initialDocuments: [{ url: "/12253-tham-kich-o-styles-thuviensach.vn.pdf" }],
+    initialDocuments: [{ url: "/1.pdf" }],
   }),
   createPluginRegistration(ViewportPluginPackage),
   createPluginRegistration(ScrollPluginPackage),

@@ -78,12 +78,7 @@ const ActionBar = () => {
       </Button>
 
       {/* pdf */}
-      <button
-        className="rounded-md border"
-        onClick={() => {
-          // navigate({ to: "/pdf-reader" });
-        }}
-      >
+      <button className="rounded-md border" onClick={() => {}}>
         pdf
       </button>
     </aside>
