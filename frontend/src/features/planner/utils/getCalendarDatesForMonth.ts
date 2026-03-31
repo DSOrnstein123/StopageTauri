@@ -11,7 +11,10 @@ interface CalendarDate {
 const getCalendarDatesForMonth = (
   month: number,
   year: number,
-): CalendarDate[] => {
+): {
+  firstDayOfCurrentMonth: number;
+  dates: CalendarDate[];
+} => {
   const monthIndex = month - 1;
   const datesInCurrentMonth = getDaysInMonth(new Date(year, monthIndex));
 
@@ -66,7 +69,10 @@ const getCalendarDatesForMonth = (
     },
   );
 
-  return [...prevMonthDays, ...currentMonthDays, ...nextMonthDays];
+  return {
+    firstDayOfCurrentMonth: firstDayOfCurrentMonth,
+    dates: [...prevMonthDays, ...currentMonthDays, ...nextMonthDays],
+  };
 };
 
 export default getCalendarDatesForMonth;

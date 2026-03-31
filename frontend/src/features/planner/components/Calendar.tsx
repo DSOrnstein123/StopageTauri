@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import getCalendarDatesForMonth from "../utils/getCalendarDatesForMonth";
 import {
   useFloating,
@@ -11,11 +11,10 @@ import {
 } from "@floating-ui/react";
 import DateCell from "./DateCell";
 import Popover from "./Popover";
-import { getMonth, getYear } from "date-fns";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { differenceInDays, getDate, getDay, parseISO } from "date-fns";
 import Task from "./Task";
-
-const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+import { useCalendar } from "../hooks/useCalendar";
+import CalendarHeader from "./CalendarHeader";
 
 interface Task {
   title: string;
@@ -41,14 +40,21 @@ const mockTasks: Task[] = [
       endDate: "2026-04-03",
     },
   },
+  {
+    title: "456",
+    metadata: {
+      startDate: "2026-03-01",
+      endDate: "2026-03-23",
+    },
+  },
 ];
 
 const Calendar = () => {
-  const now = new Date();
-  const [month, setMonth] = useState(getMonth(now) + 1);
-  const [year, setYear] = useState(getYear(now));
-  const currentYear = getYear(now);
-  const dates = getCalendarDatesForMonth(month, currentYear);
+  const { month, year, nextMonth, prevMonth } = useCalendar();
+  const { firstDayOfCurrentMonth, dates } = getCalendarDatesForMonth(
+    month,
+    year,
+  );
 
   const arrowRef = useRef(null);
   const [popoverOpenIndex, setPopoverOpenIndex] = useState<string | null>(null);
@@ -62,6 +68,7 @@ const Calendar = () => {
     middleware: [
       flip(),
       offset(),
+      // eslint-disable-next-line react-hooks/refs
       arrow({
         element: arrowRef,
       }),
@@ -83,38 +90,68 @@ const Calendar = () => {
 
   return (
     <div className="h-[calc(100vh-80px)] w-full overflow-y-auto">
-      <div className="sticky top-0 left-0 z-10 flex flex-col bg-white">
-        <div className="flex h-6">
-          <ArrowLeft onClick={() => setMonth((prev) => prev - 1)} />
-          {month}
-          <ArrowRight onClick={() => setMonth((prev) => prev + 1)} />
-        </div>
-        <div className="grid h-6 grid-cols-7">
-          {days.map((day) => (
-            <div className="border-t border-r border-b pl-1 text-sm leading-6 font-medium">
-              {day}
-            </div>
-          ))}
-        </div>
-      </div>
+      <CalendarHeader
+        month={month}
+        year={year}
+        onNext={nextMonth}
+        onPrev={prevMonth}
+      />
 
-      <div className="grid grid-cols-7">
+      <div className="relative grid grid-cols-7">
         {dates.map((date) => (
-          <div key={date.id} className="relative">
-            <DateCell
-              id={date.id}
-              date={date.date}
-              handleOnClick={handleOnClick}
-              getReferenceProps={
-                date.id === popoverOpenIndex ? getReferenceProps : undefined
-              }
-            />
-
-            {mockTasks.find((task) => task.metadata.startDate == date.id) && (
-              <Task id="1" title={"ok"} />
-            )}
-          </div>
+          <DateCell
+            key={date.id}
+            id={date.id}
+            date={date.date}
+            handleOnClick={handleOnClick}
+            getReferenceProps={
+              date.id === popoverOpenIndex ? getReferenceProps : undefined
+            }
+          />
         ))}
+
+        {mockTasks.map((task) => {
+          const startDay = getDay(task.metadata.startDate) + 1;
+          const daysInFirstWeek = 7 - startDay + 1;
+
+          const startDate = parseISO(task.metadata.startDate);
+          const endDate = parseISO(task.metadata.endDate);
+          const duration = differenceInDays(endDate, startDate) + 1;
+
+          const row = Math.ceil(
+            (getDate(startDate) + firstDayOfCurrentMonth) / 7,
+          );
+          const segments = Math.ceil((duration + (startDay - 1)) / 7);
+
+          return Array.from({ length: segments }).map((_, i) => {
+            let currentSpan;
+            let currentStartCol;
+
+            if (i === 0) {
+              currentStartCol = startDay;
+              currentSpan = Math.min(duration, daysInFirstWeek);
+            } else {
+              currentStartCol = 1;
+              const daysRemaining = duration - daysInFirstWeek - (i - 1) * 7;
+              currentSpan = Math.min(daysRemaining, 7);
+            }
+
+            return (
+              <Task
+                id="1"
+                title={task.title}
+                style={{
+                  gridColumn: `${currentStartCol} / span ${currentSpan}`,
+                  gridRow: `${row + i}`,
+                  marginTop: "16px",
+                  width: "100%",
+                  left: 0,
+                }}
+                className="absolute z-10 h-8 rounded-md border bg-blue-300 p-1"
+              />
+            );
+          });
+        })}
       </div>
 
       {open && (
