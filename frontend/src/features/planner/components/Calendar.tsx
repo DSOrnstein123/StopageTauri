@@ -55,7 +55,9 @@ const Calendar = () => {
     month,
     year,
   );
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
+  const calendarRef = useRef(null);
   const arrowRef = useRef(null);
   const [popoverOpenIndex, setPopoverOpenIndex] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
@@ -66,7 +68,10 @@ const Calendar = () => {
     onOpenChange: setOpen,
     whileElementsMounted: autoUpdate,
     middleware: [
-      flip(),
+      flip({
+        // eslint-disable-next-line react-hooks/refs
+        boundary: calendarRef.current || undefined,
+      }),
       offset(),
       // eslint-disable-next-line react-hooks/refs
       arrow({
@@ -97,7 +102,7 @@ const Calendar = () => {
         onPrev={prevMonth}
       />
 
-      <div className="relative grid grid-cols-7">
+      <div ref={calendarRef} className="relative grid grid-cols-7">
         {dates.map((date) => (
           <DateCell
             key={date.id}
@@ -107,6 +112,7 @@ const Calendar = () => {
             getReferenceProps={
               date.id === popoverOpenIndex ? getReferenceProps : undefined
             }
+            setSelectedDate={() => setSelectedDate(date.fullDate)}
           />
         ))}
 
@@ -161,6 +167,7 @@ const Calendar = () => {
           floatingStyles={floatingStyles}
           getFloatingProps={getFloatingProps}
           context={context}
+          selectedDate={selectedDate}
         />
       )}
     </div>

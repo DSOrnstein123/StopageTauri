@@ -7,10 +7,17 @@ interface DateCellProps {
   date: number;
   handleOnClick: (e: React.MouseEvent<Element, MouseEvent>, id: string) => void;
   getReferenceProps: UseInteractionsReturn["getReferenceProps"] | undefined;
+  setSelectedDate: () => void;
 }
 
 const DateCell = memo(
-  ({ id, date, handleOnClick, getReferenceProps }: DateCellProps) => {
+  ({
+    id,
+    date,
+    handleOnClick,
+    getReferenceProps,
+    setSelectedDate,
+  }: DateCellProps) => {
     return (
       <div className="flex h-40 justify-between border-r border-b p-1">
         <span>{date}</span>
@@ -18,7 +25,10 @@ const DateCell = memo(
         <Button
           variant="ghost"
           className="size-6 p-0 opacity-0 hover:opacity-100"
-          onClick={(e) => handleOnClick(e, id)}
+          onClick={(e) => {
+            handleOnClick(e, id);
+            setSelectedDate();
+          }}
           {...getReferenceProps?.()}
         >
           +

@@ -4,18 +4,18 @@ interface TaskProps {
   id: string;
   title: string;
   className: string;
+  style: CSSProperties;
   status?: "todo" | "in-progress" | "done";
   color?: string;
-  style: CSSProperties;
 }
 
 const Task = ({
   id,
   title,
   className,
+  style,
   status = "todo",
   color = "grey",
-  style,
 }: TaskProps) => {
   return (
     <div
