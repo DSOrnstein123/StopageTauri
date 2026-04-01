@@ -4,7 +4,7 @@ use std::error::Error;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    let pool = SqlitePool::connect("sqlite://F:/Code/stopage-tauri/data/dev1.db").await?;
+    let pool = SqlitePool::connect("sqlite://D:/code/p/StopageTauri/data/dev1.db").await?;
     migrate(&pool).await?;
 
     Ok(())
