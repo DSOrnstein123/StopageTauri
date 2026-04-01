@@ -9,7 +9,7 @@ interface FeatureDefinition {
   type: FeatureType;
   icon?: ElementType;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component: ComponentType<any>;
+  component?: ComponentType<any>;
 }
 
 export const featureRegistry: Record<FeatureType, FeatureDefinition> = {

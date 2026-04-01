@@ -1,5 +1,6 @@
 import {
   CodeXml,
+  Database,
   Heading1,
   Heading2,
   Heading3,
@@ -17,6 +18,19 @@ interface CommandItemProps {
 }
 
 const commands: CommandItemProps[] = [
+  {
+    name: "Database",
+    icon: Database,
+    command: ({ editor, range }) => {
+      editor
+        .chain()
+        .deleteRange(range)
+        .insertContent({
+          type: "database",
+        })
+        .run();
+    },
+  },
   {
     name: "Heading 1",
     icon: Heading1,
