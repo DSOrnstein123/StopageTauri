@@ -7,6 +7,20 @@ import {
   createColumnHelper,
 } from "@tanstack/react-table";
 import { useMemo } from "react";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/shared/components/shadcn/popover";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/shared/components/shadcn/hover-card";
+
+const COLUMN_TYPES = ["text", "number", "date", "checkbox"] as const;
+
+type ColumnType = (typeof COLUMN_TYPES)[number];
 
 interface ColumnValueMap {
   text: string;
@@ -14,8 +28,6 @@ interface ColumnValueMap {
   date: string;
   checkbox: boolean;
 }
-
-type ColumnType = keyof ColumnValueMap;
 
 interface Column {
   id: string;
@@ -53,7 +65,25 @@ const DatabaseView = () => {
       ...columnSchema.map((schema) =>
         columnHelper.accessor((row) => row.properties[schema.id], {
           id: schema.id,
-          header: schema.name,
+          header: () => (
+            <Popover>
+              <PopoverTrigger asChild>
+                <div className="hover:cursor-pointer">{schema.name}</div>
+              </PopoverTrigger>
+
+              <PopoverContent className="flex flex-col">
+                <input value={schema.name} />
+
+                <HoverCard>
+                  <HoverCardTrigger>Change type</HoverCardTrigger>
+
+                  <HoverCardContent className="flex flex-col">
+                    <div>Text</div>
+                  </HoverCardContent>
+                </HoverCard>
+              </PopoverContent>
+            </Popover>
+          ),
           cell: (data) => data.getValue(),
         }),
       ),
