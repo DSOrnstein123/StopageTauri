@@ -1,4 +1,5 @@
 use serde::Serialize;
+use serde_json::json;
 use sqlx::{SqlitePool, query, query_as};
 use uuid::Uuid;
 
@@ -9,6 +10,15 @@ pub struct Document {
     pub id: String,
     pub title: String,
     pub created_at: String,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+#[allow(dead_code)]
+pub struct Collection {
+    pub id: String,
+    pub name: String,
+    pub schema: String,
 }
 
 #[allow(dead_code)]
@@ -114,4 +124,38 @@ pub async fn get_document_content(
     .await?;
 
     Ok(document)
+}
+
+#[allow(dead_code)]
+pub async fn create_collection(pool: &SqlitePool) -> Result<Collection, sqlx::Error> {
+    let id = Uuid::new_v4().simple().to_string();
+    let name = "";
+    let schema = json!([
+        {
+            "id": Uuid::new_v4().simple().to_string();,
+            "name": "Name",
+            "type": "text",
+            "position": 0
+        }
+    ])
+    .to_string();
+
+    let collection = query_as!(
+        Collection,
+        r#"
+            INSERT INTO collections (id, name, schema)
+            VALUES (?, ?, ?)
+            RETURNING
+                id as "id!: String",
+                name,
+                schema
+        "#,
+        id,
+        name,
+        schema,
+    )
+    .fetch_one(pool)
+    .await?;
+
+    Ok(collection)
 }

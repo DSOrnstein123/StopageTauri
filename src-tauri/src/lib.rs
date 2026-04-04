@@ -1,7 +1,7 @@
 use backend::{
     database::migrate::migrate,
     features::{
-        documents::repo::{Document, DocumentContent},
+        documents::repo::{Collection, Document, DocumentContent},
         flashcards::{
             cards::repo::Card,
             decks::{repo::Deck, service},
@@ -49,6 +49,13 @@ async fn create_deck(
     parent_id: Option<Uuid>,
 ) -> Result<Deck, String> {
     backend::features::flashcards::decks::repo::create_deck(&state.db, name, parent_id)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+async fn create_collection(state: State<'_, AppState>) -> Result<Collection, String> {
+    backend::features::documents::repo::create_collection(&state.db)
         .await
         .map_err(|e| e.to_string())
 }
@@ -119,7 +126,8 @@ pub fn run() {
             create_document,
             update_document,
             update_title,
-            get_document_content
+            get_document_content,
+            create_collection
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
