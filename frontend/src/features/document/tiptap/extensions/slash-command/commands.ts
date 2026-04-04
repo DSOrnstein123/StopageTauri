@@ -9,6 +9,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { type Editor, type Range } from "@tiptap/react";
+import { invoke } from "@tauri-apps/api/core";
+import type { Collection } from "../collection/collection.types";
 
 interface CommandItemProps {
   name: string;
@@ -19,14 +21,19 @@ interface CommandItemProps {
 
 const commands: CommandItemProps[] = [
   {
-    name: "Database",
+    name: "Collection",
     icon: Database,
-    command: ({ editor, range }) => {
+    command: async ({ editor, range }) => {
+      const collection = await invoke<Collection>("create_collection");
+
       editor
         .chain()
         .deleteRange(range)
         .insertContent({
           type: "database",
+          attrs: {
+            collectionId: collection.id,
+          },
         })
         .run();
     },

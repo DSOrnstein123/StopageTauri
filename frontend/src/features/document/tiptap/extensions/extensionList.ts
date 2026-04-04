@@ -8,7 +8,7 @@ import { Column } from "./column/column";
 import { ColumnContainer } from "./column/columnContainer";
 import { CustomCodeBlock } from "./custom-code-block/CustomCodeBlock";
 import { createLowlight, all } from "lowlight";
-import Database from "./database/Database";
+import Collection from "./collection/Collection";
 
 const lowlight = createLowlight(all);
 
@@ -35,6 +35,6 @@ export const extensionList = [
   CustomCodeBlock.configure({
     lowlight,
   }),
-  Database,
+  Collection,
   // KanbanNode,
 ];

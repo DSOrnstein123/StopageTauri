@@ -24,7 +24,9 @@ const SlashCommandsList = (props: SlashCommandsListProps) => {
         return (
           <button
             key={index}
-            onClick={() => selectItem(index)}
+            onClick={async () => {
+              selectItem(index);
+            }}
             className="hover:bg-secondary flex gap-x-1"
           >
             <span>
