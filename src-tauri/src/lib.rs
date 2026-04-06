@@ -95,6 +95,18 @@ async fn get_document_content(
         .map_err(|e| e.to_string())
 }
 
+#[tauri::command]
+async fn add_property(
+    state: State<'_, AppState>,
+    id: String,
+    name: String,
+    property_type: String,
+) -> Result<(), String> {
+    backend::features::documents::repo::add_property(&state.db, id, name, property_type)
+        .await
+        .map_err(|e| e.to_string())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -127,7 +139,8 @@ pub fn run() {
             update_document,
             update_title,
             get_document_content,
-            create_collection
+            create_collection,
+            add_property
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
