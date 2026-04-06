@@ -7,11 +7,11 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { invoke } from "@tauri-apps/api/core";
 
-const AddColumnButton = () => {
+const AddColumnButton = ({ collectionId }: { collectionId: string }) => {
   const { mutate: addProperty } = useMutation({
     mutationFn: () =>
       invoke("add_property", {
-        collectionId: id,
+        collectionId: collectionId,
         name: name,
         propertyType: type,
       }),

@@ -27,9 +27,9 @@ const commands: CommandItemProps[] = [
     icon: Database,
     command: async ({ editor, range }) => {
       const collection = await invoke<Collection>("create_collection");
-      queryClient.setQueryData<Collection[]>(
-        collectionKeys.lists(),
-        (oldData) => [...(oldData ?? []), collection],
+      queryClient.setQueryData<Collection>(
+        collectionKeys.detail(collection.id),
+        (oldData) => oldData ?? collection,
       );
 
       editor

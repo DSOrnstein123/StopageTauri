@@ -25,19 +25,6 @@ const CollectionNode = Node.create({
 
   addAttributes() {
     return {
-      schema: {
-        parseHTML: (el) => JSON.parse(el.getAttribute("data-schema") || "[]"),
-        renderHTML: (attrs) => ({
-          "data-schema": JSON.stringify(attrs.schema),
-        }),
-      },
-
-      rows: {
-        default: [],
-        parseHTML: (el) => JSON.parse(el.getAttribute("data-rows") || "[]"),
-        renderHTML: (attrs) => ({ "data-rows": JSON.stringify(attrs.rows) }),
-      },
-
       view: {
         default: "table",
         parseHTML: (el) => el.getAttribute("data-view") || "table",

@@ -7,10 +7,12 @@ import {
   createColumnHelper,
 } from "@tanstack/react-table";
 import { useMemo } from "react";
-
-import type { ColumnSchema } from "./collection.types";
 import ColumnHeaderWithConfiguration from "./ColumnHeaderWithConfiguration";
 import AddColumnButton from "./AddColumnButton";
+import type { ColumnSchema } from "./collection.types";
+import { useQueryClient } from "@tanstack/react-query";
+import collectionKeys from "@/features/document/hooks/collectionKeys";
+import { useCollectionNode } from "./context/useCollectionNodeContext";
 
 interface Row {
   id: string;
@@ -19,7 +21,17 @@ interface Row {
 
 const columnHelper = createColumnHelper<Row>();
 
-const CollectionView = ({ columnSchema }: { columnSchema: ColumnSchema[] }) => {
+const CollectionView = () => {
+  const { collectionId } = useCollectionNode();
+  const queryClient = useQueryClient();
+  const columnSchema = useMemo(
+    () =>
+      queryClient.getQueryData<ColumnSchema[]>(
+        collectionKeys.detail(collectionId),
+      ) ?? [],
+    [collectionId, queryClient],
+  );
+
   const data: Row[] = useMemo(
     () => [
       { id: "1", properties: { c1: "Nguyễn Văn A" } },
@@ -40,7 +52,7 @@ const CollectionView = ({ columnSchema }: { columnSchema: ColumnSchema[] }) => {
 
       columnHelper.display({
         id: "_add",
-        header: () => <AddColumnButton collectionId={} />,
+        header: () => <AddColumnButton collectionId={collectionId} />,
         cell: () => (
           <button>
             <Trash />
@@ -48,7 +60,7 @@ const CollectionView = ({ columnSchema }: { columnSchema: ColumnSchema[] }) => {
         ),
       }),
     ],
-    [columnSchema],
+    [columnSchema, collectionId],
   );
 
   const table = useReactTable({
