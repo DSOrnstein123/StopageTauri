@@ -11,6 +11,8 @@ import {
 import { type Editor, type Range } from "@tiptap/react";
 import { invoke } from "@tauri-apps/api/core";
 import type { Collection } from "../collection/collection.types";
+import { queryClient } from "@/queryClient";
+import collectionKeys from "@/features/document/hooks/collectionKeys";
 
 interface CommandItemProps {
   name: string;
@@ -25,12 +27,16 @@ const commands: CommandItemProps[] = [
     icon: Database,
     command: async ({ editor, range }) => {
       const collection = await invoke<Collection>("create_collection");
+      queryClient.setQueryData<Collection[]>(
+        collectionKeys.lists(),
+        (oldData) => [...(oldData ?? []), collection],
+      );
 
       editor
         .chain()
         .deleteRange(range)
         .insertContent({
-          type: "database",
+          type: "collection-node",
           attrs: {
             collectionId: collection.id,
           },

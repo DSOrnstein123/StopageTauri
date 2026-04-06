@@ -1,9 +1,9 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import { ReactNodeViewRenderer } from "@tiptap/react";
-import CollectionView from "./CollectionView";
+import CollectionUI from "./CollectionUI";
 
-const Collection = Node.create({
-  name: "collection",
+const CollectionNode = Node.create({
+  name: "collection-node",
   group: "block",
   atom: true,
   draggable: true,
@@ -11,7 +11,7 @@ const Collection = Node.create({
   parseHTML() {
     return [
       {
-        tag: 'div[data-type="collection"]',
+        tag: 'div[data-type="collection-node"]',
       },
     ];
   },
@@ -19,7 +19,7 @@ const Collection = Node.create({
   renderHTML({ HTMLAttributes }) {
     return [
       "div",
-      mergeAttributes(HTMLAttributes, { "data-type": "collection" }),
+      mergeAttributes(HTMLAttributes, { "data-type": "collection-node" }),
     ];
   },
 
@@ -43,12 +43,18 @@ const Collection = Node.create({
         parseHTML: (el) => el.getAttribute("data-view") || "table",
         renderHTML: (attrs) => ({ "data-view": attrs.view }),
       },
+
+      collectionId: {
+        default: "",
+        parseHTML: (el) => el.getAttribute("data-collection-id") || "",
+        renderHTML: (attrs) => ({ "data-collection-id": attrs.collectionId }),
+      },
     };
   },
 
   addNodeView() {
-    return ReactNodeViewRenderer(CollectionView);
+    return ReactNodeViewRenderer(CollectionUI);
   },
 });
 
-export default Collection;
+export default CollectionNode;

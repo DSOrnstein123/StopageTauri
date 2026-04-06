@@ -7,33 +7,10 @@ import {
   createColumnHelper,
 } from "@tanstack/react-table";
 import { useMemo } from "react";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/shared/components/shadcn/popover";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/shared/components/shadcn/hover-card";
 
-const COLUMN_TYPES = ["text", "number", "date", "checkbox"] as const;
-
-type ColumnType = (typeof COLUMN_TYPES)[number];
-
-interface ColumnValueMap {
-  text: string;
-  number: number;
-  date: string;
-  checkbox: boolean;
-}
-
-interface Column {
-  id: string;
-  name: string;
-  type: ColumnType;
-}
+import type { ColumnSchema } from "./collection.types";
+import ColumnHeaderWithConfiguration from "./ColumnHeaderWithConfiguration";
+import AddColumnButton from "./AddColumnButton";
 
 interface Row {
   id: string;
@@ -42,20 +19,11 @@ interface Row {
 
 const columnHelper = createColumnHelper<Row>();
 
-const CollectionView = () => {
+const CollectionView = ({ columnSchema }: { columnSchema: ColumnSchema[] }) => {
   const data: Row[] = useMemo(
     () => [
       { id: "1", properties: { c1: "Nguyễn Văn A" } },
       { id: "2", properties: { c1: "Nguyễn Văn B" } },
-    ],
-    [],
-  );
-
-  const columnSchema: Column[] = useMemo(
-    () => [
-      { id: "c1", name: "Name", type: "text" },
-      { id: "c3", name: "Deadline", type: "date" },
-      { id: "c4", name: "Done", type: "checkbox" },
     ],
     [],
   );
@@ -65,32 +33,14 @@ const CollectionView = () => {
       ...columnSchema.map((schema) =>
         columnHelper.accessor((row) => row.properties[schema.id], {
           id: schema.id,
-          header: () => (
-            <Popover>
-              <PopoverTrigger asChild>
-                <div className="hover:cursor-pointer">{schema.name}</div>
-              </PopoverTrigger>
-
-              <PopoverContent className="flex flex-col">
-                <input value={schema.name} />
-
-                <HoverCard>
-                  <HoverCardTrigger>Change type</HoverCardTrigger>
-
-                  <HoverCardContent className="flex flex-col">
-                    <div>Text</div>
-                  </HoverCardContent>
-                </HoverCard>
-              </PopoverContent>
-            </Popover>
-          ),
+          header: () => <ColumnHeaderWithConfiguration schema={schema} />,
           cell: (data) => data.getValue(),
         }),
       ),
 
       columnHelper.display({
         id: "_add",
-        header: () => <button>+</button>,
+        header: () => <AddColumnButton collectionId={} />,
         cell: () => (
           <button>
             <Trash />
