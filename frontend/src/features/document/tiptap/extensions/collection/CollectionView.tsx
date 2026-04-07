@@ -9,7 +9,7 @@ import {
 import { useMemo } from "react";
 import ColumnHeaderWithConfiguration from "./ColumnHeaderWithConfiguration";
 import AddColumnButton from "./AddColumnButton";
-import type { ColumnSchema } from "./collection.types";
+import type { Collection } from "./collection.types";
 import { useQueryClient } from "@tanstack/react-query";
 import collectionKeys from "@/features/document/hooks/collectionKeys";
 import { useCollectionNode } from "./context/useCollectionNodeContext";
@@ -26,9 +26,8 @@ const CollectionView = () => {
   const queryClient = useQueryClient();
   const columnSchema = useMemo(
     () =>
-      queryClient.getQueryData<ColumnSchema[]>(
-        collectionKeys.detail(collectionId),
-      ) ?? [],
+      queryClient.getQueryData<Collection>(collectionKeys.detail(collectionId))
+        ?.schema ?? [],
     [collectionId, queryClient],
   );
 

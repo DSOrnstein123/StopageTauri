@@ -12,7 +12,7 @@ export interface ColumnValueMap {
 export interface Collection {
   id: string;
   name: string;
-  schema: ColumnSchema;
+  schema: ColumnSchema[];
   position: number;
 }
 

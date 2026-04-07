@@ -4,17 +4,41 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/shared/components/shadcn/popover";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { invoke } from "@tauri-apps/api/core";
+import {
+  COLUMN_TYPES,
+  type Collection,
+  type ColumnSchema,
+  type ColumnType,
+} from "./collection.types";
+import collectionKeys from "@/features/document/hooks/collectionKeys";
+
+interface AddPropertyParams {
+  name: string;
+  type: ColumnType;
+}
 
 const AddColumnButton = ({ collectionId }: { collectionId: string }) => {
-  const { mutate: addProperty } = useMutation({
-    mutationFn: () =>
+  const queryClient = useQueryClient();
+  const { mutate: addProperty } = useMutation<
+    ColumnSchema,
+    unknown,
+    AddPropertyParams
+  >({
+    mutationFn: (params: AddPropertyParams) =>
       invoke("add_property", {
         collectionId: collectionId,
-        name: name,
-        propertyType: type,
+        name: params.name,
+        propertyType: params.type,
       }),
+    onSuccess: (data) => {
+      queryClient.setQueryData<Collection>(
+        collectionKeys.detail(collectionId),
+        (oldData) =>
+          oldData && { ...oldData, schema: [...oldData.schema, data] },
+      );
+    },
   });
 
   return (
@@ -24,7 +48,18 @@ const AddColumnButton = ({ collectionId }: { collectionId: string }) => {
       </PopoverTrigger>
 
       <PopoverContent>
-        <Button onClick={() => addProperty}>ok</Button>
+        {COLUMN_TYPES.map((type) => (
+          <Button
+            onClick={() =>
+              addProperty({
+                name: "ok",
+                type: type,
+              })
+            }
+          >
+            {type}
+          </Button>
+        ))}
       </PopoverContent>
     </Popover>
   );
