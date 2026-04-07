@@ -1,7 +1,7 @@
 use backend::{
     database::migrate::migrate,
     features::{
-        documents::repo::{Collection, Document, DocumentContent},
+        documents::repo::{Collection, Document, DocumentContent, Property},
         flashcards::{
             cards::repo::Card,
             decks::{repo::Deck, service},
@@ -101,7 +101,7 @@ async fn add_property(
     id: String,
     name: String,
     property_type: String,
-) -> Result<(), String> {
+) -> Result<Property, String> {
     backend::features::documents::repo::add_property(&state.db, id, name, property_type)
         .await
         .map_err(|e| e.to_string())

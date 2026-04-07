@@ -22,7 +22,7 @@ pub struct Collection {
     pub schema: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Property {
     pub id: String,
@@ -129,6 +129,23 @@ pub async fn get_document_content(pool: &SqlitePool, id: String) -> Result<Docum
 }
 
 #[allow(dead_code)]
+pub async fn get_collection(pool: &SqlitePool, id: String) -> Result<Collection, Error> {
+    let collection = query_as!(
+        Collection,
+        r#"
+            SELECT id, name, schema as "schema!"
+            FROM collections 
+            WHERE id = ?
+        "#,
+        id,
+    )
+    .fetch_one(pool)
+    .await?;
+
+    Ok(collection)
+}
+
+#[allow(dead_code)]
 pub async fn create_collection(pool: &SqlitePool) -> Result<Collection, Error> {
     let id = Uuid::new_v4().simple().to_string();
     let name = "";
@@ -167,7 +184,7 @@ pub async fn add_property(
     collection_id: String,
     name: String,
     property_type: String,
-) -> Result<()> {
+) -> Result<Property> {
     let row = query!("SELECT schema FROM collections WHERE id = ?", collection_id)
         .fetch_one(pool)
         .await?;
@@ -180,7 +197,7 @@ pub async fn add_property(
         r#type: property_type,
     };
 
-    schema.push(new_property);
+    schema.push(new_property.clone());
     let updated_schema = serde_json::to_string(&schema)?;
 
     query!(
@@ -191,5 +208,5 @@ pub async fn add_property(
     .execute(pool)
     .await?;
 
-    Ok(())
+    Ok(new_property)
 }
