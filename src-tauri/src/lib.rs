@@ -1,7 +1,9 @@
 use backend::{
     database::migrate::migrate,
     features::{
-        documents::repo::{Collection, Document, DocumentContent, Property},
+        documents::models::{
+            Collection, Document, DocumentContent, DocumentInCollection, Property,
+        },
         flashcards::{
             cards::repo::Card,
             decks::{repo::Deck, service},
@@ -27,7 +29,7 @@ async fn get_decks(state: State<'_, AppState>) -> Result<Vec<Deck>, String> {
 
 #[tauri::command]
 async fn get_document_list(state: State<'_, AppState>) -> Result<Vec<Document>, String> {
-    backend::features::documents::repo::get_document_list(&state.db)
+    backend::features::documents::document::get_document_list(&state.db)
         .await
         .map_err(|e| e.to_string())
 }
@@ -55,14 +57,14 @@ async fn create_deck(
 
 #[tauri::command]
 async fn create_collection(state: State<'_, AppState>) -> Result<Collection, String> {
-    backend::features::documents::repo::create_collection(&state.db)
+    backend::features::documents::collection::create_collection(&state.db)
         .await
         .map_err(|e| e.to_string())
 }
 
 #[tauri::command]
 async fn create_document(state: State<'_, AppState>) -> Result<Document, String> {
-    backend::features::documents::repo::create_document(&state.db)
+    backend::features::documents::document::create_document(&state.db)
         .await
         .map_err(|e| e.to_string())
 }
@@ -73,14 +75,14 @@ async fn update_document(
     id: String,
     content: String,
 ) -> Result<(), String> {
-    backend::features::documents::repo::update_document(&state.db, id, content)
+    backend::features::documents::document::update_document(&state.db, id, content)
         .await
         .map_err(|e| e.to_string())
 }
 
 #[tauri::command]
 async fn update_title(state: State<'_, AppState>, id: String, title: String) -> Result<(), String> {
-    backend::features::documents::repo::update_title(&state.db, id, title)
+    backend::features::documents::document::update_title(&state.db, id, title)
         .await
         .map_err(|e| e.to_string())
 }
@@ -90,7 +92,14 @@ async fn get_document_content(
     state: State<'_, AppState>,
     id: String,
 ) -> Result<DocumentContent, String> {
-    backend::features::documents::repo::get_document_content(&state.db, id)
+    backend::features::documents::document::get_document_content(&state.db, id)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+async fn get_collection(state: State<'_, AppState>, id: String) -> Result<Collection, String> {
+    backend::features::documents::collection::get_collection(&state.db, id)
         .await
         .map_err(|e| e.to_string())
 }
@@ -98,11 +107,26 @@ async fn get_document_content(
 #[tauri::command]
 async fn add_property(
     state: State<'_, AppState>,
-    id: String,
+    collection_id: String,
     name: String,
     property_type: String,
 ) -> Result<Property, String> {
-    backend::features::documents::repo::add_property(&state.db, id, name, property_type)
+    backend::features::documents::collection::add_property(
+        &state.db,
+        collection_id,
+        name,
+        property_type,
+    )
+    .await
+    .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+async fn create_document_in_collection(
+    state: State<'_, AppState>,
+    collection_id: String,
+) -> Result<DocumentInCollection, String> {
+    backend::features::documents::document::create_document_in_collection(&state.db, collection_id)
         .await
         .map_err(|e| e.to_string())
 }
@@ -140,7 +164,9 @@ pub fn run() {
             update_title,
             get_document_content,
             create_collection,
-            add_property
+            add_property,
+            get_collection,
+            create_document_in_collection
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
