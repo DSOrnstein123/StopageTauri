@@ -10,9 +10,11 @@ import { useMemo } from "react";
 import ColumnHeaderWithConfiguration from "./ColumnHeaderWithConfiguration";
 import AddColumnButton from "./AddColumnButton";
 import type { Collection } from "./collection.types";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import collectionKeys from "@/features/document/hooks/collectionKeys";
 import { useCollectionNode } from "./context/useCollectionNodeContext";
+import { invoke } from "@tauri-apps/api/core";
+import AddRowButton from "./AddRowButton";
 
 interface Row {
   id: string;
@@ -23,25 +25,19 @@ const columnHelper = createColumnHelper<Row>();
 
 const CollectionView = () => {
   const { collectionId } = useCollectionNode();
-  const queryClient = useQueryClient();
-  const columnSchema = useMemo(
-    () =>
-      queryClient.getQueryData<Collection>(collectionKeys.detail(collectionId))
-        ?.schema ?? [],
-    [collectionId, queryClient],
-  );
+  const { data: collection = {} as Collection } = useQuery<Collection>({
+    queryKey: collectionKeys.detail(collectionId),
+    queryFn: () => invoke("get_collection", { id: collectionId }),
+    staleTime: Infinity,
+  });
 
-  const data: Row[] = useMemo(
-    () => [
-      { id: "1", properties: { c1: "Nguyễn Văn A" } },
-      { id: "2", properties: { c1: "Nguyễn Văn B" } },
-    ],
-    [],
-  );
+  const data: Row[] = useMemo(() => [], []);
 
-  const columns = useMemo(
-    () => [
-      ...columnSchema.map((schema) =>
+  const columns = useMemo(() => {
+    const schema = Array.isArray(collection?.schema) ? collection.schema : [];
+
+    return [
+      ...schema.map((schema) =>
         columnHelper.accessor((row) => row.properties[schema.id], {
           id: schema.id,
           header: () => <ColumnHeaderWithConfiguration schema={schema} />,
@@ -58,9 +54,8 @@ const CollectionView = () => {
           </button>
         ),
       }),
-    ],
-    [columnSchema, collectionId],
-  );
+    ];
+  }, [collection, collectionId]);
 
   const table = useReactTable({
     data: data,
@@ -69,7 +64,7 @@ const CollectionView = () => {
   });
 
   return (
-    <NodeViewWrapper className="group relative w-full rounded-sm border bg-white p-4 transition-all">
+    <NodeViewWrapper className="group relative w-full rounded-sm bg-white transition-all">
       <div
         contentEditable={false}
         data-drag-handle
@@ -78,13 +73,16 @@ const CollectionView = () => {
         <GripVertical size={16} className="text-gray-400" />
       </div>
 
-      <div className="p-4">
-        <table className="w-full border-collapse border">
+      <div>
+        <table className="w-full min-w-200 border-collapse border">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id} className="bg-[#f4f4f4] p-2">
+                  <th
+                    key={header.id}
+                    className="sticky top-0 z-10 bg-[#f4f4f4] p-2"
+                  >
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext(),
@@ -96,17 +94,31 @@ const CollectionView = () => {
           </thead>
 
           <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="p-2">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
+            {table.getRowModel().rows.length > 0 ? (
+              table.getRowModel().rows.map((row) => (
+                <tr key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className="p-2">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            ) : (
+              <tr className="h-32 text-center">
+                <td
+                  colSpan={table.getAllLeafColumns().length}
+                  className="border p-4 text-gray-500 italic"
+                />
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
+
+        <AddRowButton />
       </div>
     </NodeViewWrapper>
   );

@@ -21,18 +21,14 @@ interface AddPropertyParams {
 
 const AddColumnButton = ({ collectionId }: { collectionId: string }) => {
   const queryClient = useQueryClient();
-  const { mutate: addProperty } = useMutation<
-    ColumnSchema,
-    unknown,
-    AddPropertyParams
-  >({
+  const { mutate: addProperty } = useMutation({
     mutationFn: (params: AddPropertyParams) =>
-      invoke("add_property", {
+      invoke<ColumnSchema>("add_property", {
         collectionId: collectionId,
         name: params.name,
         propertyType: params.type,
       }),
-    onSuccess: (data) => {
+    onSuccess: (data: ColumnSchema) => {
       queryClient.setQueryData<Collection>(
         collectionKeys.detail(collectionId),
         (oldData) =>
@@ -50,6 +46,7 @@ const AddColumnButton = ({ collectionId }: { collectionId: string }) => {
       <PopoverContent>
         {COLUMN_TYPES.map((type) => (
           <Button
+            key={type}
             onClick={() =>
               addProperty({
                 name: "ok",
