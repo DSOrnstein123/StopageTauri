@@ -20,6 +20,28 @@ pub async fn get_document_list(pool: &SqlitePool) -> Result<Vec<Document>, Error
     Ok(documents)
 }
 
+pub async fn get_documents_in_collection(
+    pool: &SqlitePool,
+    collection_id: String,
+) -> Result<Vec<Document>, Error> {
+    let documents = query_as!(
+        Document,
+        r#"
+        SELECT
+            id as "id!: String",
+            title,
+            created_at
+        FROM documents
+        WHERE collection_id = ?
+        "#,
+        collection_id
+    )
+    .fetch_all(pool)
+    .await?;
+
+    Ok(documents)
+}
+
 pub async fn create_document(pool: &SqlitePool) -> Result<Document, Error> {
     let id = Uuid::new_v4().simple().to_string();
     let title = "Untitled";
