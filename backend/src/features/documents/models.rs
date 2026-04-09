@@ -37,3 +37,11 @@ pub struct Property {
     pub name: String,
     pub r#type: String,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Row {
+    pub id: String,
+    pub collection_id: String,
+    pub property: serde_json::Value,
+}

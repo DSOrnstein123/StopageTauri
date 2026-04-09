@@ -2,7 +2,7 @@ use anyhow::Result;
 use sqlx::{Error, SqlitePool, query, query_as};
 use uuid::Uuid;
 
-use crate::features::documents::models::{Collection, Property};
+use crate::features::documents::models::{Collection, Property, Row};
 
 #[allow(dead_code)]
 pub async fn get_collection(pool: &SqlitePool, id: String) -> Result<Collection, Error> {
@@ -75,7 +75,52 @@ pub async fn create_collection(pool: &SqlitePool) -> Result<Collection, Error> {
     })
 }
 
-pub async fn add_property(
+pub async fn create_row(pool: &SqlitePool, collection_id: String) -> Result<Row, Error> {
+    let collection = get_collection(pool, collection_id.clone()).await?;
+
+    let property: serde_json::Value =
+        collection
+            .schema
+            .iter()
+            .fold(serde_json::json!({}), |mut acc, property| {
+                acc[&property.id] = serde_json::Value::Null;
+                acc
+            });
+
+    let property_str = serde_json::to_string(&property).unwrap();
+    let id = Uuid::new_v4().simple().to_string();
+
+    struct RawRow {
+        id: String,
+        collection_id: String,
+        property: String,
+    }
+
+    let raw = query_as!(
+        RawRow,
+        r#"
+            INSERT INTO documents (id, collection_id, property)
+            VALUES (?, ?, ?)
+            RETURNING
+                id as "id!",
+                collection_id as "collection_id!",
+                property as "property!"
+        "#,
+        id,
+        collection_id,
+        property_str,
+    )
+    .fetch_one(pool)
+    .await?;
+
+    Ok(Row {
+        id: raw.id,
+        collection_id: raw.collection_id,
+        property: serde_json::from_str(&raw.property).unwrap_or_default(),
+    })
+}
+
+pub async fn create_property(
     pool: &SqlitePool,
     collection_id: String,
     name: String,

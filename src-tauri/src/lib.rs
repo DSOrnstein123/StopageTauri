@@ -2,7 +2,7 @@ use backend::{
     database::migrate::migrate,
     features::{
         documents::models::{
-            Collection, Document, DocumentContent, DocumentInCollection, Property,
+            Collection, Document, DocumentContent, DocumentInCollection, Property, Row,
         },
         flashcards::{
             cards::repo::Card,
@@ -13,7 +13,7 @@ use backend::{
 use sqlx::{types::Uuid, SqlitePool};
 use tauri::{Manager, State};
 
-pub mod features;
+pub mod commands;
 
 #[allow(dead_code)]
 pub struct AppState {
@@ -105,13 +105,13 @@ async fn get_collection(state: State<'_, AppState>, id: String) -> Result<Collec
 }
 
 #[tauri::command]
-async fn add_property(
+async fn create_property(
     state: State<'_, AppState>,
     collection_id: String,
     name: String,
     property_type: String,
 ) -> Result<Property, String> {
-    backend::features::documents::collection::add_property(
+    backend::features::documents::collection::create_property(
         &state.db,
         collection_id,
         name,
@@ -127,6 +127,23 @@ async fn create_document_in_collection(
     collection_id: String,
 ) -> Result<DocumentInCollection, String> {
     backend::features::documents::document::create_document_in_collection(&state.db, collection_id)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+async fn get_documents_in_collection(
+    state: State<'_, AppState>,
+    collection_id: String,
+) -> Result<Vec<Document>, String> {
+    backend::features::documents::document::get_documents_in_collection(&state.db, collection_id)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+async fn create_row(state: State<'_, AppState>, collection_id: String) -> Result<Row, String> {
+    backend::features::documents::collection::create_row(&state.db, collection_id)
         .await
         .map_err(|e| e.to_string())
 }
@@ -164,9 +181,11 @@ pub fn run() {
             update_title,
             get_document_content,
             create_collection,
-            add_property,
+            create_property,
             get_collection,
-            create_document_in_collection
+            create_document_in_collection,
+            get_documents_in_collection,
+            create_row
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
