@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import type { DocumentContentType } from "../schemas/documentSchema";
-import { invoke } from "@tauri-apps/api/core";
 import { Editor } from "@tiptap/react";
 import debounce from "@/shared/utils/debounce";
+import { documentService } from "../services/documentService";
 
 const useDocumentData = (documentId: string, editor: Editor | null) => {
   const [documentContent, setDocumentContent] =
@@ -11,7 +11,8 @@ const useDocumentData = (documentId: string, editor: Editor | null) => {
   useEffect(() => {
     let cancel = false;
 
-    invoke<DocumentContentType>("get_document_content", { id: documentId })
+    documentService
+      .getContent(documentId)
       .then((data) => {
         if (cancel) return;
 
@@ -47,10 +48,7 @@ const useDocumentData = (documentId: string, editor: Editor | null) => {
     const handleUpdate = debounce<(props: { editor: Editor }) => void>(
       (props) => {
         const content = props.editor.getJSON();
-        invoke("update_document", {
-          id: documentId,
-          content: JSON.stringify(content),
-        });
+        documentService.updateContent(documentId, JSON.stringify(content));
       },
       500,
     );

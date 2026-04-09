@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { invoke } from "@tauri-apps/api/core";
 import type { Document } from "../schemas/documentSchema";
 import documentKeys from "./documentKeys";
+import { documentService } from "../services/documentService";
 
 const useCreateDocument = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () => invoke<Document>("create_document"),
+    mutationFn: () => documentService.create(),
 
     onSuccess: (newDoc) => {
       queryClient.setQueryData<Document[]>(

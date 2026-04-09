@@ -9,10 +9,10 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { type Editor, type Range } from "@tiptap/react";
-import { invoke } from "@tauri-apps/api/core";
 import type { Collection } from "../collection/collection.types";
 import { queryClient } from "@/queryClient";
 import collectionKeys from "@/features/document/hooks/collectionKeys";
+import { collectionService } from "@/features/document/services/collectionService";
 
 interface CommandItemProps {
   name: string;
@@ -26,7 +26,7 @@ const commands: CommandItemProps[] = [
     name: "Collection",
     icon: Database,
     command: async ({ editor, range }) => {
-      const collection = await invoke<Collection>("create_collection");
+      const collection = await collectionService.create();
       queryClient.setQueryData<Collection>(
         collectionKeys.detail(collection.id),
         (oldData) => oldData ?? collection,

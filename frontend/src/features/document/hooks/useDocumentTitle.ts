@@ -3,9 +3,9 @@ import documentKeys from "@/features/document/hooks/documentKeys";
 import type { Document } from "@/features/document/schemas/documentSchema";
 import debounce from "@/shared/utils/debounce";
 import { useQueryClient } from "@tanstack/react-query";
-import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { DocumentParams } from "../document.params";
+import { documentService } from "../services/documentService";
 
 const useDocumentTitle = () => {
   const queryClient = useQueryClient();
@@ -21,7 +21,7 @@ const useDocumentTitle = () => {
     const getTitle = async () => {
       const documentList = await queryClient.ensureQueryData({
         queryKey: documentKeys.lists(),
-        queryFn: () => invoke<Document[]>("get_document_list"),
+        queryFn: () => documentService.getList(),
         staleTime: Infinity,
       });
 
@@ -42,7 +42,7 @@ const useDocumentTitle = () => {
 
   const saveTitle = useRef(
     debounce<(id: string, title: string) => void>((id, newTitle) => {
-      invoke("update_title", { id, title: newTitle });
+      documentService.updateTitle(id, newTitle);
     }, 500),
   ).current;
 

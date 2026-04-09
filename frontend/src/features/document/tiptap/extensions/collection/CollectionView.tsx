@@ -13,8 +13,8 @@ import type { Collection } from "./collection.types";
 import { useQuery } from "@tanstack/react-query";
 import collectionKeys from "@/features/document/hooks/collectionKeys";
 import { useCollectionNode } from "./context/useCollectionNodeContext";
-import { invoke } from "@tauri-apps/api/core";
 import AddRowButton from "./AddRowButton";
+import { collectionService } from "@/features/document/services/collectionService";
 
 interface Row {
   id: string;
@@ -27,7 +27,7 @@ const CollectionView = () => {
   const { collectionId } = useCollectionNode();
   const { data: collection = {} as Collection } = useQuery<Collection>({
     queryKey: collectionKeys.detail(collectionId),
-    queryFn: () => invoke("get_collection", { id: collectionId }),
+    queryFn: () => collectionService.get(collectionId),
     staleTime: Infinity,
   });
 
