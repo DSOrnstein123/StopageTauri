@@ -31,6 +31,13 @@ const CollectionView = () => {
     staleTime: Infinity,
   });
 
+  // const { data } = useQuery<Document[]>({
+  //   queryKey: collectionKeys.documentList(collectionId),
+  //   queryFn: () =>
+  //     invoke("get_documents_in_collection", { collectionId: collectionId }),
+  //   staleTime: Infinity,
+  // });
+
   const data: Row[] = useMemo(() => [], []);
 
   const columns = useMemo(() => {
