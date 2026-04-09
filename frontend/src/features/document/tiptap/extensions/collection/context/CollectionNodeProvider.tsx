@@ -1,5 +1,5 @@
 import { useMemo, type ReactNode } from "react";
-import { CollectionNodeContext } from "./CollectionNodeContext";
+import { CollectionNodeContext } from "./collectionNodeContext";
 import type { ReactNodeViewProps } from "@tiptap/react";
 
 const CollectionNodeProvider = ({
