@@ -1,11 +1,11 @@
 use anyhow::Result;
-use sqlx::{Error, SqlitePool, query, query_as};
+use sqlx::{SqlitePool, query, query_as};
 use uuid::Uuid;
 
-use crate::features::documents::models::{Collection, Property, Row};
+use crate::features::documents::models::{Collection, DocumentInCollection, Property};
 
 #[allow(dead_code)]
-pub async fn get_collection(pool: &SqlitePool, id: String) -> Result<Collection, Error> {
+pub async fn get_collection(pool: &SqlitePool, id: String) -> Result<Collection> {
     struct RawCollection {
         id: String,
         name: String,
@@ -35,11 +35,11 @@ pub async fn get_collection(pool: &SqlitePool, id: String) -> Result<Collection,
 }
 
 #[allow(dead_code)]
-pub async fn create_collection(pool: &SqlitePool) -> Result<Collection, Error> {
-    let id = Uuid::new_v4().simple().to_string();
+pub async fn create_collection(pool: &SqlitePool) -> Result<Collection> {
+    let id = Uuid::new_v4().to_string();
     let name = "";
     let default_property = Property {
-        id: Uuid::new_v4().simple().to_string(),
+        id: Uuid::new_v4().to_string(),
         name: "Name".to_string(),
         r#type: "text".to_string(),
     };
@@ -75,7 +75,10 @@ pub async fn create_collection(pool: &SqlitePool) -> Result<Collection, Error> {
     })
 }
 
-pub async fn create_row(pool: &SqlitePool, collection_id: String) -> Result<Row, Error> {
+pub async fn create_document_in_collection(
+    pool: &SqlitePool,
+    collection_id: String,
+) -> Result<DocumentInCollection> {
     let collection = get_collection(pool, collection_id.clone()).await?;
 
     let property: serde_json::Value =
@@ -88,34 +91,39 @@ pub async fn create_row(pool: &SqlitePool, collection_id: String) -> Result<Row,
             });
 
     let property_str = serde_json::to_string(&property).unwrap();
-    let id = Uuid::new_v4().simple().to_string();
+    let id = Uuid::new_v4().to_string();
+    let title = "".to_string();
 
-    struct RawRow {
+    struct RawDocumentInCollection {
         id: String,
         collection_id: String,
+        title: String,
         property: String,
     }
 
     let raw = query_as!(
-        RawRow,
+        RawDocumentInCollection,
         r#"
-            INSERT INTO documents (id, collection_id, property)
-            VALUES (?, ?, ?)
+            INSERT INTO documents (id, collection_id, title, property)
+            VALUES (?, ?, ?, ?)
             RETURNING
                 id as "id!",
                 collection_id as "collection_id!",
+                title as "title!",
                 property as "property!"
         "#,
         id,
         collection_id,
+        title,
         property_str,
     )
     .fetch_one(pool)
     .await?;
 
-    Ok(Row {
+    Ok(DocumentInCollection {
         id: raw.id,
         collection_id: raw.collection_id,
+        title: raw.title,
         property: serde_json::from_str(&raw.property).unwrap_or_default(),
     })
 }

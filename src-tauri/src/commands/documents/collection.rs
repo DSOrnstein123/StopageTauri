@@ -1,6 +1,4 @@
-use backend::features::documents::models::{
-    Collection, Document, DocumentInCollection, Property, Row,
-};
+use backend::features::documents::models::{Collection, Document, DocumentInCollection, Property};
 use tauri::State;
 
 use crate::AppState;
@@ -19,6 +17,39 @@ pub async fn create_collection(state: State<'_, AppState>) -> Result<Collection,
         .map_err(|e| e.to_string())
 }
 
+// #[tauri::command]
+// pub async fn create_document_in_collection(
+//     state: State<'_, AppState>,
+//     collection_id: String,
+// ) -> Result<DocumentInCollection, String> {
+//     backend::features::documents::document::create_document_in_collection(&state.db, collection_id)
+//         .await
+//         .map_err(|e| e.to_string())
+// }
+
+#[tauri::command]
+pub async fn get_documents_in_collection(
+    state: State<'_, AppState>,
+    collection_id: String,
+) -> Result<Vec<Document>, String> {
+    backend::features::documents::document::get_documents_in_collection(&state.db, collection_id)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub async fn create_document_in_collection(
+    state: State<'_, AppState>,
+    collection_id: String,
+) -> Result<DocumentInCollection, String> {
+    backend::features::documents::collection::create_document_in_collection(
+        &state.db,
+        collection_id,
+    )
+    .await
+    .map_err(|e| e.to_string())
+}
+
 #[tauri::command]
 pub async fn create_property(
     state: State<'_, AppState>,
@@ -34,31 +65,4 @@ pub async fn create_property(
     )
     .await
     .map_err(|e| e.to_string())
-}
-
-#[tauri::command]
-pub async fn create_document_in_collection(
-    state: State<'_, AppState>,
-    collection_id: String,
-) -> Result<DocumentInCollection, String> {
-    backend::features::documents::document::create_document_in_collection(&state.db, collection_id)
-        .await
-        .map_err(|e| e.to_string())
-}
-
-#[tauri::command]
-pub async fn get_documents_in_collection(
-    state: State<'_, AppState>,
-    collection_id: String,
-) -> Result<Vec<Document>, String> {
-    backend::features::documents::document::get_documents_in_collection(&state.db, collection_id)
-        .await
-        .map_err(|e| e.to_string())
-}
-
-#[tauri::command]
-pub async fn create_row(state: State<'_, AppState>, collection_id: String) -> Result<Row, String> {
-    backend::features::documents::collection::create_row(&state.db, collection_id)
-        .await
-        .map_err(|e| e.to_string())
 }

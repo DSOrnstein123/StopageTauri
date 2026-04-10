@@ -21,7 +21,6 @@ macro_rules! all_commands {
             crate::commands::documents::collection::get_collection,
             crate::commands::documents::collection::create_document_in_collection,
             crate::commands::documents::collection::get_documents_in_collection,
-            crate::commands::documents::collection::create_row
         ]
     };
 }
