@@ -13,15 +13,11 @@ import type { Collection } from "./collection.types";
 import { useQuery } from "@tanstack/react-query";
 import collectionKeys from "@/features/document/hooks/collectionKeys";
 import { useCollectionNode } from "./context/useCollectionNodeContext";
-import AddRowButton from "./AddRowButton";
+import AddDocumentButton from "./AddDocumentButton";
 import { collectionService } from "@/features/document/services/collectionService";
+import type { Document } from "@/features/document/schemas/documentSchema";
 
-interface Row {
-  id: string;
-  properties: Record<string, unknown>;
-}
-
-const columnHelper = createColumnHelper<Row>();
+const columnHelper = createColumnHelper<Document>();
 
 const CollectionView = () => {
   const { collectionId } = useCollectionNode();
@@ -31,21 +27,18 @@ const CollectionView = () => {
     staleTime: Infinity,
   });
 
-  // const { data } = useQuery<Document[]>({
-  //   queryKey: collectionKeys.documentList(collectionId),
-  //   queryFn: () =>
-  //     invoke("get_documents_in_collection", { collectionId: collectionId }),
-  //   staleTime: Infinity,
-  // });
-
-  const data: Row[] = useMemo(() => [], []);
+  const { data = [] } = useQuery<Document[]>({
+    queryKey: collectionKeys.documentList(collectionId),
+    queryFn: () => collectionService.getDocuments(collectionId),
+    staleTime: Infinity,
+  });
 
   const columns = useMemo(() => {
     const schema = Array.isArray(collection?.schema) ? collection.schema : [];
 
     return [
       ...schema.map((schema) =>
-        columnHelper.accessor((row) => row.properties[schema.id], {
+        columnHelper.accessor((row) => row.property?.[schema.id], {
           id: schema.id,
           header: () => <ColumnHeaderWithConfiguration schema={schema} />,
           cell: (data) => data.getValue(),
@@ -125,7 +118,7 @@ const CollectionView = () => {
           </tbody>
         </table>
 
-        <AddRowButton />
+        <AddDocumentButton />
       </div>
     </NodeViewWrapper>
   );
