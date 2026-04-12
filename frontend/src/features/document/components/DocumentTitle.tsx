@@ -9,7 +9,6 @@ const DocumentTitle = ({
   const { title, handleInput } = useDocumentTitle();
 
   const h1Ref = useRef<HTMLHeadingElement>(null);
-
   useEffect(() => {
     if (h1Ref.current && h1Ref.current.textContent !== title) {
       h1Ref.current.textContent = title;

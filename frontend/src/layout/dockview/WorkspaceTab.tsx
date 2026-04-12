@@ -1,9 +1,11 @@
 import type { IDockviewPanelHeaderProps } from "dockview";
 import { X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
   const { api } = props;
   const isActive = api.isActive;
+  const [title, setTitle] = useState(api.title);
 
   const onTabClick = () => {
     api.setActive();
@@ -13,6 +15,13 @@ const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
     e.stopPropagation();
     api.close();
   };
+
+  useEffect(() => {
+    const disposable = api.onDidTitleChange(() => {
+      setTitle(api.title);
+    });
+    return () => disposable.dispose();
+  }, [api]);
 
   return (
     <div
@@ -24,7 +33,7 @@ const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
       }`}
     >
       <div className="flex items-center gap-2 truncate">
-        <span className="truncate">{api.title}</span>
+        <span className="truncate">{title}</span>
       </div>
 
       <button
