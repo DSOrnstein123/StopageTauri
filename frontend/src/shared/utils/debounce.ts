@@ -11,6 +11,11 @@ const debounce = <T extends (...args: any[]) => void>(fn: T, delay: number) => {
 
   debounced.cancel = () => clearTimeout(timer);
 
+  debounced.flush = (...args: Parameters<T>) => {
+    clearTimeout(timer);
+    fn(...args);
+  };
+
   return debounced;
 };
 

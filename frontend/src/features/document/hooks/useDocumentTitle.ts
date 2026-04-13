@@ -10,7 +10,6 @@ import { documentService } from "../services/documentService";
 const useDocumentTitle = () => {
   const queryClient = useQueryClient();
   const panelContext = usePanelContext<DocumentParams>();
-  const panelId = panelContext.api.id;
   const panelApi = panelContext.api;
   const documentId = panelContext.params.documentId;
   const [title, setTitle] = useState("");
@@ -38,13 +37,17 @@ const useDocumentTitle = () => {
     return () => {
       cancel = true;
     };
-  }, [documentId, panelId, panelApi, queryClient]);
+  }, [documentId, panelApi, queryClient]);
 
   const saveTitle = useRef(
     debounce<(id: string, title: string) => void>((id, newTitle) => {
       documentService.updateTitle(id, newTitle);
     }, 500),
   ).current;
+
+  const handleBlur = () => {
+    saveTitle.flush(documentId, title);
+  };
 
   const handleInput = (e: FormEvent<HTMLHeadingElement>) => {
     const newTitle = e.currentTarget.textContent || "";
@@ -58,7 +61,7 @@ const useDocumentTitle = () => {
     saveTitle(documentId, newTitle);
   };
 
-  return { title, handleInput };
+  return { title, handleInput, handleBlur };
 };
 
 export default useDocumentTitle;
