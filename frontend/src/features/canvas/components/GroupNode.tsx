@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/utils";
-import { Node, NodeProps } from "@xyflow/react";
+import { type Node, type NodeProps } from "@xyflow/react";
 import { memo } from "react";
 
 type GroupNodeProps = Node<

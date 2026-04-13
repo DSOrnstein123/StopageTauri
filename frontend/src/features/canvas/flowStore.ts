@@ -1,15 +1,21 @@
 import { create } from "zustand";
-import { applyNodeChanges, Edge, MarkerType, Node, NodeChange } from "@xyflow/react";
+import {
+  applyNodeChanges,
+  type Edge,
+  MarkerType,
+  type Node,
+  type NodeChange,
+} from "@xyflow/react";
 
 interface FlowState {
-  nodes: Node[],
-  edges: Edge[],
-  tool: "select" | "pan",
-  setTool: (tool: "select" | "pan") => void,
-  setNodes: (updater: (nodes: Node[]) => Node[]) => void
-  setEdges: (updater: (edges: Edge[]) => Edge[]) => void
-  onNodesChange: (changes: NodeChange<Node>[]) => void
-  onNodeDoubleClick: (event: React.MouseEvent, node: Node) => void
+  nodes: Node[];
+  edges: Edge[];
+  tool: "select" | "pan";
+  setTool: (tool: "select" | "pan") => void;
+  setNodes: (updater: (nodes: Node[]) => Node[]) => void;
+  setEdges: (updater: (edges: Edge[]) => Edge[]) => void;
+  onNodesChange: (changes: NodeChange<Node>[]) => void;
+  onNodeDoubleClick: (event: React.MouseEvent, node: Node) => void;
 }
 
 export const useFlowStore = create<FlowState>((set, get) => ({
@@ -22,7 +28,7 @@ export const useFlowStore = create<FlowState>((set, get) => ({
       style: {
         height: 64,
         width: 240,
-      }
+      },
     },
     {
       id: "2",
@@ -77,7 +83,7 @@ export const useFlowStore = create<FlowState>((set, get) => ({
         width: 8,
         height: 10,
       },
-    }
+    },
   ],
   tool: "select",
   setTool: (tool) => set({ tool }),
@@ -87,15 +93,15 @@ export const useFlowStore = create<FlowState>((set, get) => ({
 
   onNodesChange: (changes) => {
     set({
-      nodes: applyNodeChanges(changes, get().nodes)
-    })
+      nodes: applyNodeChanges(changes, get().nodes),
+    });
   },
 
   onNodeDoubleClick: (_, node) => {
-    get().setNodes((nodes) => 
-      nodes.map((n) => 
-        n.id === node.id ? {...n, data: {...n.data, isEditing: true}} : n
-      )
-    )
-  }
-}))
+    get().setNodes((nodes) =>
+      nodes.map((n) =>
+        n.id === node.id ? { ...n, data: { ...n.data, isEditing: true } } : n,
+      ),
+    );
+  },
+}));

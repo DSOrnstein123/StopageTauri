@@ -16,6 +16,7 @@ import { useCollectionNode } from "./context/useCollectionNodeContext";
 import AddDocumentButton from "./AddDocumentButton";
 import { collectionService } from "@/features/document/services/collectionService";
 import type { Document } from "@/features/document/schemas/documentSchema";
+import Cell from "./Cell";
 
 const columnHelper = createColumnHelper<Document>();
 
@@ -41,7 +42,14 @@ const CollectionView = () => {
         columnHelper.accessor((row) => row.property?.[schema.id], {
           id: schema.id,
           header: () => <ColumnHeaderWithConfiguration schema={schema} />,
-          cell: (data) => data.getValue(),
+          cell: (data) => (
+            <Cell
+              data={data.getValue()!}
+              documentId={data.row.original.id}
+              propertyId={schema.id}
+              propertyType={schema.type}
+            />
+          ),
         }),
       ),
 

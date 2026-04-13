@@ -1,6 +1,6 @@
 export const COLUMN_TYPES = ["text", "number", "date", "checkbox"] as const;
 
-export type ColumnType = (typeof COLUMN_TYPES)[number];
+export type PropertyType = (typeof COLUMN_TYPES)[number];
 
 export interface ColumnValueMap {
   text: string;
@@ -19,5 +19,5 @@ export interface Collection {
 export interface ColumnSchema {
   id: string;
   name: string;
-  type: ColumnType;
+  type: PropertyType;
 }

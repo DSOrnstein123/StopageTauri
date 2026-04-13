@@ -3,6 +3,7 @@ import { useCollectionNode } from "./context/useCollectionNodeContext";
 import { invoke } from "@tauri-apps/api/core";
 import type { Document } from "@/features/document/schemas/documentSchema";
 import collectionKeys from "@/features/document/hooks/collectionKeys";
+import documentKeys from "@/features/document/hooks/documentKeys";
 
 const AddDocumentButton = () => {
   const { collectionId } = useCollectionNode();
@@ -17,6 +18,10 @@ const AddDocumentButton = () => {
         collectionKeys.documentList(collectionId),
         (oldData) => [...(oldData ?? []), data],
       );
+      queryClient.setQueryData<Document[]>(documentKeys.lists(), (oldData) => [
+        ...(oldData ?? []),
+        data,
+      ]);
     },
   });
 

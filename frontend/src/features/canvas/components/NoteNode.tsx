@@ -1,9 +1,9 @@
-import { Card } from "@/components/ui/card";
 import { cn } from "@/shared/lib/utils";
-import { Node, NodeProps, NodeResizer } from "@xyflow/react";
+import { type Node, type NodeProps, NodeResizer } from "@xyflow/react";
 import React, { memo, useCallback } from "react";
 import ConnectionPoint from "./ConnectionPoint";
 import { useFlowStore } from "@/features/canvas/flowStore";
+import { Card } from "@/shared/components/shadcn/card";
 
 type NoteNodeProps = Node<{ text: string; isEditing?: boolean }, "notenode">;
 
@@ -52,7 +52,7 @@ const NoteNode = ({ id, data, selected }: NodeProps<NoteNodeProps>) => {
         className={cn(
           "border-primary/20 relative flex h-full w-full rounded-md border-2 p-4 leading-7 shadow-none",
           selected
-            ? "border-[#000] shadow-[inset_0_0_0_0.5px_#000] outline-[0.5px] outline-[#000]"
+            ? "border-black shadow-[inset_0_0_0_0.5px_#000] outline-[0.5px] outline-black"
             : "",
         )}
       >

@@ -1,5 +1,5 @@
-import { BaseEdge, EdgeProps } from "@xyflow/react";
-import { getPath } from "../-utils/ultils";
+import { BaseEdge, type EdgeProps } from "@xyflow/react";
+import { getPath } from "../utils/ultils";
 import { memo } from "react";
 
 const FloatingEdge = ({

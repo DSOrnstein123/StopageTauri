@@ -6,7 +6,7 @@ const DocumentTitle = ({
 }: {
   onKeyDown: (e: KeyboardEvent<HTMLHeadingElement>) => void;
 }) => {
-  const { title, handleInput } = useDocumentTitle();
+  const { title, handleInput, handleBlur } = useDocumentTitle();
 
   const h1Ref = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
@@ -22,6 +22,7 @@ const DocumentTitle = ({
         contentEditable
         suppressContentEditableWarning
         onInput={handleInput}
+        onBlur={handleBlur}
         onKeyDown={onKeyDown}
         className="mb-4 text-5xl font-bold outline-none"
       />

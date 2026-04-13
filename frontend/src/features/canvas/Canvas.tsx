@@ -1,19 +1,19 @@
 import {
   ReactFlow,
   addEdge,
-  Connection,
+  type Connection,
   ConnectionMode,
   MarkerType,
   SelectionMode,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import NoteNode from "./-custom/NoteNode";
-import GroupNode from "./-custom/GroupNode";
+import NoteNode from "./components/NoteNode";
+import GroupNode from "./components/GroupNode";
 import { useCallback } from "react";
 import { useFlowStore } from "@/features/canvas/flowStore";
-import FloatingEdge from "./-custom/FloatingEdge";
-import Controller from "./-custom/controller/Controller";
-import { ZoomSlider } from "@/components/ui/zoom-slider";
+import FloatingEdge from "./components/FloatingEdge";
+import Controller from "./components/controller/Controller";
+import { ZoomSlider } from "@/components/zoom-slider";
 
 const nodeTypes = { notenode: NoteNode, groupnode: GroupNode };
 const edgeTypes = { floating: FloatingEdge };

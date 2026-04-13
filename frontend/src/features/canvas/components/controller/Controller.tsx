@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { useFlowStore } from "@/features/canvas/flowStore";
+import { Button } from "@/shared/components/shadcn/button";
+import { Card } from "@/shared/components/shadcn/card";
 import { useReactFlow } from "@xyflow/react";
 import { Hand, MousePointer, StickyNote } from "lucide-react";
 
@@ -37,7 +37,7 @@ const Controller = () => {
   };
 
   return (
-    <Card className="absolute top-1/2 left-2.5 z-20 flex w-[46px] -translate-y-1/2 flex-col gap-y-1 rounded-lg p-1">
+    <Card className="absolute top-1/2 left-2.5 z-20 flex w-11.5 -translate-y-1/2 flex-col gap-y-1 rounded-lg p-1">
       <Button variant="ghost" size="icon" className="rounded-sm">
         {tool === "select" ? (
           <MousePointer

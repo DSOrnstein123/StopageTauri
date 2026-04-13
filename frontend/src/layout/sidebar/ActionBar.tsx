@@ -74,13 +74,15 @@ const ActionBar = () => {
 
       {/* spine */}
       <Button variant="ghost" className="relative size-8">
-        =`{">"}`
+        Sp
       </Button>
 
       {/* pdf */}
       <button className="rounded-md border" onClick={() => {}}>
         pdf
       </button>
+
+      <button onClick={() => openFile("canvas", "canvas")}>Canvas</button>
     </aside>
   );
 };
