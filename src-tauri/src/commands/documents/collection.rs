@@ -1,4 +1,4 @@
-use backend::features::documents::models::{Collection, Document, DocumentInCollection, Property};
+use backend::features::documents::models::{Collection, DocumentInCollection, Property};
 use tauri::State;
 
 use crate::AppState;
@@ -31,7 +31,7 @@ pub async fn create_collection(state: State<'_, AppState>) -> Result<Collection,
 pub async fn get_documents_in_collection(
     state: State<'_, AppState>,
     collection_id: String,
-) -> Result<Vec<Document>, String> {
+) -> Result<Vec<DocumentInCollection>, String> {
     backend::features::documents::document::get_documents_in_collection(&state.db, collection_id)
         .await
         .map_err(|e| e.to_string())
@@ -62,6 +62,23 @@ pub async fn create_property(
         collection_id,
         name,
         property_type,
+    )
+    .await
+    .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub async fn update_document_property(
+    state: State<'_, AppState>,
+    document_id: String,
+    property_id: String,
+    new_value: String,
+) -> Result<(), String> {
+    backend::features::documents::collection::update_document_property(
+        &state.db,
+        document_id,
+        property_id,
+        new_value,
     )
     .await
     .map_err(|e| e.to_string())

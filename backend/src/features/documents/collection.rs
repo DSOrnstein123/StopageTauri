@@ -1,4 +1,7 @@
+use std::collections::HashMap;
+
 use anyhow::Result;
+use serde_json::{Value, json};
 use sqlx::{SqlitePool, query, query_as};
 use uuid::Uuid;
 
@@ -36,10 +39,10 @@ pub async fn get_collection(pool: &SqlitePool, id: String) -> Result<Collection>
 
 #[allow(dead_code)]
 pub async fn create_collection(pool: &SqlitePool) -> Result<Collection> {
-    let id = Uuid::new_v4().to_string();
+    let id = Uuid::new_v4().simple().to_string();
     let name = "";
     let default_property = Property {
-        id: Uuid::new_v4().to_string(),
+        id: Uuid::new_v4().simple().to_string(),
         name: "Name".to_string(),
         r#type: "text".to_string(),
     };
@@ -91,7 +94,7 @@ pub async fn create_document_in_collection(
             });
 
     let property_str = serde_json::to_string(&property).unwrap();
-    let id = Uuid::new_v4().to_string();
+    let id = Uuid::new_v4().simple().to_string();
     let title = "".to_string();
 
     struct RawDocumentInCollection {
@@ -141,7 +144,7 @@ pub async fn create_property(
     let mut schema: Vec<Property> = serde_json::from_str(&row.schema)?;
 
     let new_property = Property {
-        id: Uuid::new_v4().to_string(),
+        id: Uuid::new_v4().simple().to_string(),
         name: name,
         r#type: property_type,
     };
@@ -158,4 +161,29 @@ pub async fn create_property(
     .await?;
 
     Ok(new_property)
+}
+
+pub async fn update_document_property(
+    pool: &SqlitePool,
+    document_id: String,
+    property_id: String,
+    new_value: String,
+) -> Result<()> {
+    let row = query!("SELECT property FROM documents WHERE id = ?", document_id)
+        .fetch_one(pool)
+        .await?;
+
+    let mut properties: HashMap<String, Value> = serde_json::from_str(&row.property)?;
+    properties.insert(property_id, json!(new_value));
+
+    let updated_json = serde_json::to_string(&properties)?;
+    sqlx::query!(
+        "UPDATE documents SET property = ? WHERE id = ?",
+        updated_json,
+        document_id
+    )
+    .execute(pool)
+    .await?;
+
+    Ok(())
 }
