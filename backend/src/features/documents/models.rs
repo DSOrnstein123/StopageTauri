@@ -1,4 +1,7 @@
+use std::collections::HashMap;
+
 use serde::{Deserialize, Serialize};
+use sqlx::types::Json;
 
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -7,15 +10,6 @@ pub struct Document {
     pub title: String,
     pub created_at: String,
 }
-
-// #[derive(Debug, Serialize)]
-// #[serde(rename_all = "camelCase")]
-// pub struct DocumentInCollection {
-//     pub id: String,
-//     pub collection_id: String,
-//     pub title: String,
-//     pub created_at: String,
-// }
 
 #[derive(Serialize)]
 pub struct DocumentContent {
@@ -42,7 +36,7 @@ pub struct Property {
 #[serde(rename_all = "camelCase")]
 pub struct DocumentInCollection {
     pub id: String,
-    pub title: String,
     pub collection_id: String,
-    pub property: serde_json::Value,
+    pub title: String,
+    pub property: Json<HashMap<String, serde_json::Value>>,
 }

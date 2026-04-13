@@ -1,7 +1,9 @@
+use sqlx::types::Json;
 use sqlx::{Error, SqlitePool, query, query_as};
+use std::collections::HashMap;
 use uuid::Uuid;
 
-use crate::features::documents::models::{Document, DocumentContent};
+use crate::features::documents::models::{Document, DocumentContent, DocumentInCollection};
 
 pub async fn get_document_list(pool: &SqlitePool) -> Result<Vec<Document>, Error> {
     let documents = query_as!(
@@ -23,14 +25,15 @@ pub async fn get_document_list(pool: &SqlitePool) -> Result<Vec<Document>, Error
 pub async fn get_documents_in_collection(
     pool: &SqlitePool,
     collection_id: String,
-) -> Result<Vec<Document>, Error> {
+) -> Result<Vec<DocumentInCollection>, Error> {
     let documents = query_as!(
-        Document,
+        DocumentInCollection,
         r#"
         SELECT
             id as "id!: String",
+            collection_id as "collection_id!",
             title,
-            created_at
+            property as "property: Json<HashMap<String, serde_json::Value>>"
         FROM documents
         WHERE collection_id = ?
         "#,
