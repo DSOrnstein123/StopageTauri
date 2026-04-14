@@ -1,16 +1,21 @@
 import z from "zod";
 
 const DocumentSchema = z.object({
-  id: z.string(),
-  collectionId: z.string().optional(),
+  id: z.uuidv4(),
   title: z.string(),
-  property: z.object().optional(),
-  createdAt: z.string(),
+  createdAt: z.coerce.date(),
 });
 
-interface DocumentContentType {
-  content: string;
-}
+const PropertySchema = z.record(z.string(), z.string()).default({});
+
+const DocumentInCollectionSchema = DocumentSchema.extend({
+  collectionId: z.uuidv4(),
+  property: PropertySchema,
+});
+
+const DocumentContentSchema = z.object({
+  content: z.string(),
+});
 
 type Document = z.infer<typeof DocumentSchema>;
 
@@ -18,7 +23,9 @@ const DocumentListSchema = z.array(DocumentSchema);
 
 export {
   DocumentSchema,
-  type Document,
+  DocumentContentSchema,
+  DocumentInCollectionSchema,
+  PropertySchema,
   DocumentListSchema,
-  type DocumentContentType,
+  type Document,
 };
