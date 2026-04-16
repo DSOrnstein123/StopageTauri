@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Document } from "../schemas/documentSchema";
-import documentKeys from "./documentKeys";
+import documentKeys from "../keys/documentKeys";
 import { documentService } from "../services/documentService";
 
 const useCreateDocument = () => {

@@ -1,24 +1,30 @@
-import { useEffect, useState } from "react";
-import type { DocumentContentType } from "../schemas/documentSchema";
+import { useEffect, useMemo, useState } from "react";
 import { Editor } from "@tiptap/react";
 import debounce from "@/shared/utils/debounce";
 import { documentService } from "../services/documentService";
+import type { RawProperties } from "../schemas/documentSchema";
+import { collectionService } from "../services/collectionService";
+import type { ColumnSchema } from "../tiptap/extensions/collection/collection.types";
 
 const useDocumentData = (documentId: string, editor: Editor | null) => {
-  const [documentContent, setDocumentContent] =
-    useState<DocumentContentType | null>(null);
+  const [collectionId, setCollectionId] = useState("");
+  const [content, setContent] = useState("");
+  const [properties, setProperties] = useState<RawProperties>({});
+  const [schema, setSchema] = useState<ColumnSchema[]>([]);
 
   useEffect(() => {
     let cancel = false;
 
-    documentService
-      .getContent(documentId)
-      .then((data) => {
-        if (cancel) return;
+    const getDocumentDetail = async () => {
+      const data = await documentService.getDetail(documentId);
+      console.log(data);
+      if (cancel) return;
 
-        setDocumentContent(data);
-      })
-      .catch((err) => console.error(err, documentId));
+      setCollectionId(data.collectionId);
+      setContent(data.content);
+      setProperties(data.property);
+    };
+    getDocumentDetail();
 
     return () => {
       cancel = true;
@@ -26,21 +32,47 @@ const useDocumentData = (documentId: string, editor: Editor | null) => {
   }, [documentId]);
 
   useEffect(() => {
-    if (!editor || !documentContent || editor.isDestroyed) return;
+    let cancel = false;
+
+    if (!collectionId) return;
+
+    const getSchema = async () => {
+      const data = await collectionService.get(collectionId);
+      if (cancel) return;
+      setSchema(data.schema);
+    };
+    getSchema();
+
+    return () => {
+      cancel = true;
+    };
+  }, [collectionId]);
+
+  const mappedProperties = useMemo(() => {
+    if (!schema.length) return [];
+
+    return schema.map((col) => ({
+      id: col.id,
+      name: col.name,
+      type: col.type,
+      value: properties[col.id],
+    }));
+  }, [schema, properties]);
+
+  useEffect(() => {
+    if (!editor || !content || editor.isDestroyed) return;
 
     const currentContent = JSON.stringify(editor.getJSON());
-    if (currentContent !== documentContent.content) {
+    if (currentContent !== content) {
       setTimeout(() => {
         if (!editor.isDestroyed) {
           queueMicrotask(() => {
-            editor.commands.setContent(
-              JSON.parse(documentContent.content || '""'),
-            );
+            editor.commands.setContent(JSON.parse(content || '""'));
           });
         }
       }, 0);
     }
-  }, [editor, documentContent]);
+  }, [editor, content]);
 
   useEffect(() => {
     if (!editor) return;
@@ -58,6 +90,8 @@ const useDocumentData = (documentId: string, editor: Editor | null) => {
       editor.off("update", handleUpdate);
     };
   }, [editor, documentId]);
+
+  return { mappedProperties };
 };
 
 export default useDocumentData;
