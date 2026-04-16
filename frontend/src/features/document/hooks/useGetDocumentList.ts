@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { DocumentListSchema } from "../schemas/documentSchema";
-import zodCheck from "@/shared/utils/zodCheck";
-import documentKeys from "./documentKeys";
+import documentKeys from "../keys/documentKeys";
 import { documentService } from "../services/documentService";
 
 const useGetDocumentList = () => {
@@ -9,8 +7,8 @@ const useGetDocumentList = () => {
     queryKey: documentKeys.lists(),
     queryFn: async () => {
       const raw = await documentService.getList();
-      const result = zodCheck(DocumentListSchema, raw);
-      return result;
+      // const result = zodCheck(DocumentListSchema, raw);
+      return raw;
     },
     staleTime: Infinity,
     gcTime: Infinity,

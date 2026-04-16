@@ -11,6 +11,7 @@ export const dockviewAdapterComponents = Object.fromEntries(
 export interface PanelParamsRegistry {
   document: DocumentParams;
   planner: undefined;
+  canvas: undefined;
 }
 
 export type PanelParams = PanelParamsRegistry[FeatureType];

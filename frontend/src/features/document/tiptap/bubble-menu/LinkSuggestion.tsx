@@ -1,4 +1,4 @@
-import documentKeys from "@/features/document/hooks/documentKeys";
+import documentKeys from "@/features/document/keys/documentKeys";
 import type { Document } from "@/features/document/schemas/documentSchema";
 import { Input } from "@/shared/components/shadcn/input";
 import { useQueryClient } from "@tanstack/react-query";

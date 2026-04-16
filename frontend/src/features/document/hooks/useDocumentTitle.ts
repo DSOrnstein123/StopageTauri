@@ -1,5 +1,5 @@
 import { usePanelContext } from "@/layout/dockview/panel-context/usePanelParams";
-import documentKeys from "@/features/document/hooks/documentKeys";
+import documentKeys from "@/features/document/keys/documentKeys";
 import type { Document } from "@/features/document/schemas/documentSchema";
 import debounce from "@/shared/utils/debounce";
 import { useQueryClient } from "@tanstack/react-query";

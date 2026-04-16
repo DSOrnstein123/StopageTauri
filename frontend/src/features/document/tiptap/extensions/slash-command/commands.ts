@@ -11,7 +11,7 @@ import {
 import { type Editor, type Range } from "@tiptap/react";
 import type { Collection } from "../collection/collection.types";
 import { queryClient } from "@/queryClient";
-import collectionKeys from "@/features/document/hooks/collectionKeys";
+import collectionKeys from "@/features/document/keys/collectionKeys";
 import { collectionService } from "@/features/document/services/collectionService";
 
 interface CommandItemProps {

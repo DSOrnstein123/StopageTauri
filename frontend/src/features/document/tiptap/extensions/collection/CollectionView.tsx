@@ -11,7 +11,7 @@ import ColumnHeaderWithConfiguration from "./ColumnHeaderWithConfiguration";
 import AddColumnButton from "./AddColumnButton";
 import type { Collection } from "./collection.types";
 import { useQuery } from "@tanstack/react-query";
-import collectionKeys from "@/features/document/hooks/collectionKeys";
+import collectionKeys from "@/features/document/keys/collectionKeys";
 import { useCollectionNode } from "./context/useCollectionNodeContext";
 import AddDocumentButton from "./AddDocumentButton";
 import { collectionService } from "@/features/document/services/collectionService";
