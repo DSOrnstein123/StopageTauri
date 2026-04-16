@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
-import type { Document, DocumentContentType } from "../schemas/documentSchema";
+import type { Document, DocumentContent } from "../schemas/documentSchema";
 
 export const documentService = {
   getList: async (): Promise<Document[]> => {
@@ -14,7 +14,7 @@ export const documentService = {
   updateTitle: async (id: string, title: string): Promise<void> => {
     return await invoke("update_title", { id: id, title: title });
   },
-  getContent: async (id: string): Promise<DocumentContentType> => {
+  getDetail: async (id: string): Promise<DocumentContent> => {
     return await invoke("get_document_content", { id: id });
   },
 };

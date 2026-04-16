@@ -1,7 +1,6 @@
 import { cn } from "@/shared/lib/utils";
 import { usePrimarySidebarStore } from "@/layout/sidebar/primarySidebarStore";
 import { useWorkspaceStore } from "@/layout/dockview/useWorkspaceStore";
-import type { DocumentParams } from "@/features/document/document.params";
 
 interface FileProps {
   id: string;
@@ -13,7 +12,7 @@ const File = ({ id, title }: FileProps) => {
   const isSelected = usePrimarySidebarStore((state) => state.selectedId === id);
 
   const handleOnClick = () => {
-    openFile<DocumentParams>("document", title, { documentId: id });
+    openFile("document", title, { documentId: id });
   };
 
   return (
