@@ -104,7 +104,10 @@ pub async fn get_document_content(pool: &SqlitePool, id: String) -> Result<Docum
     let document = query_as!(
         DocumentContent,
         r#"
-            SELECT content
+            SELECT 
+                collection_id,
+                content,
+                property as "property: Json<HashMap<String, serde_json::Value>>"
             FROM documents 
             WHERE id = ?
         "#,

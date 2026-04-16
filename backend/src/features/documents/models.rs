@@ -11,9 +11,12 @@ pub struct Document {
     pub created_at: String,
 }
 
-#[derive(Serialize)]
+#[derive(Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct DocumentContent {
+    pub collection_id: Option<String>,
     pub content: Option<String>,
+    pub property: Json<HashMap<String, serde_json::Value>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
