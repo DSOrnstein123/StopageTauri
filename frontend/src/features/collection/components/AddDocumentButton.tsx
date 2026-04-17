@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useCollectionNode } from "./context/useCollectionNodeContext";
+import { useCollectionNode } from "../context/useCollectionNodeContext";
 import { invoke } from "@tauri-apps/api/core";
 import type { Document } from "@/features/document/schemas/documentSchema";
-import collectionKeys from "@/features/document/keys/collectionKeys";
+import collectionKeys from "@/features/collection/keys/collectionKeys";
 import documentKeys from "@/features/document/keys/documentKeys";
 
 const AddDocumentButton = () => {

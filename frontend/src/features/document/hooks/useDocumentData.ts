@@ -4,7 +4,7 @@ import debounce from "@/shared/utils/debounce";
 import { documentService } from "../services/documentService";
 import type { RawProperties } from "../schemas/documentSchema";
 import { collectionService } from "../services/collectionService";
-import type { ColumnSchema } from "../tiptap/extensions/collection/collection.types";
+import type { ColumnSchema } from "../../collection/components/collection.types";
 
 const useDocumentData = (documentId: string, editor: Editor | null) => {
   const [collectionId, setCollectionId] = useState("");

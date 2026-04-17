@@ -1,76 +1,8 @@
+import Collection from "@/features/collection/components/Collection";
 import { NodeViewWrapper } from "@tiptap/react";
-import { GripVertical, Trash } from "lucide-react";
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  createColumnHelper,
-} from "@tanstack/react-table";
-import { useMemo } from "react";
-import ColumnHeaderWithConfiguration from "./ColumnHeaderWithConfiguration";
-import AddColumnButton from "./AddColumnButton";
-import type { Collection } from "./collection.types";
-import { useQuery } from "@tanstack/react-query";
-import collectionKeys from "@/features/document/keys/collectionKeys";
-import { useCollectionNode } from "./context/useCollectionNodeContext";
-import AddDocumentButton from "./AddDocumentButton";
-import { collectionService } from "@/features/document/services/collectionService";
-import type { Document } from "@/features/document/schemas/documentSchema";
-import Cell from "./Cell";
-
-const columnHelper = createColumnHelper<Document>();
+import { GripVertical } from "lucide-react";
 
 const CollectionView = () => {
-  const { collectionId } = useCollectionNode();
-  const { data: collection = {} as Collection } = useQuery<Collection>({
-    queryKey: collectionKeys.detail(collectionId),
-    queryFn: () => collectionService.get(collectionId),
-    staleTime: Infinity,
-  });
-
-  const { data = [] } = useQuery<Document[]>({
-    queryKey: collectionKeys.documentList(collectionId),
-    queryFn: () => collectionService.getDocuments(collectionId),
-    staleTime: Infinity,
-  });
-
-  const columns = useMemo(() => {
-    const schema = Array.isArray(collection?.schema) ? collection.schema : [];
-
-    return [
-      ...schema.map((schema) =>
-        columnHelper.accessor((row) => row.property?.[schema.id], {
-          id: schema.id,
-          header: () => <ColumnHeaderWithConfiguration schema={schema} />,
-          cell: (data) => (
-            <Cell
-              data={data.getValue()!}
-              documentId={data.row.original.id}
-              propertyId={schema.id}
-              propertyType={schema.type}
-            />
-          ),
-        }),
-      ),
-
-      columnHelper.display({
-        id: "_add",
-        header: () => <AddColumnButton collectionId={collectionId} />,
-        cell: () => (
-          <button>
-            <Trash />
-          </button>
-        ),
-      }),
-    ];
-  }, [collection, collectionId]);
-
-  const table = useReactTable({
-    data: data,
-    columns: columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
   return (
     <NodeViewWrapper className="group relative w-full rounded-sm bg-white transition-all">
       <div
@@ -81,53 +13,7 @@ const CollectionView = () => {
         <GripVertical size={16} className="text-gray-400" />
       </div>
 
-      <div>
-        <table className="w-full min-w-200 border-collapse border">
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    className="sticky top-0 z-10 bg-[#f4f4f4] p-2"
-                  >
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-
-          <tbody>
-            {table.getRowModel().rows.length > 0 ? (
-              table.getRowModel().rows.map((row) => (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="p-2">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            ) : (
-              <tr className="h-32 text-center">
-                <td
-                  colSpan={table.getAllLeafColumns().length}
-                  className="border p-4 text-gray-500 italic"
-                />
-              </tr>
-            )}
-          </tbody>
-        </table>
-
-        <AddDocumentButton />
-      </div>
+      <Collection />
     </NodeViewWrapper>
   );
 };

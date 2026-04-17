@@ -1,6 +1,6 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import { ReactNodeViewRenderer } from "@tiptap/react";
-import CollectionUI from "./CollectionUI";
+import CollectionUI from "../../document/tiptap/extensions/collection/CollectionUI";
 
 const CollectionNode = Node.create({
   name: "collection-node",
