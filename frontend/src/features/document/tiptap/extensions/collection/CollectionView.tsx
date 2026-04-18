@@ -1,8 +1,9 @@
 import Collection from "@/features/collection/components/Collection";
-import { NodeViewWrapper } from "@tiptap/react";
+import CollectionNodeProvider from "@/features/collection/context/CollectionNodeProvider";
+import { NodeViewWrapper, type ReactNodeViewProps } from "@tiptap/react";
 import { GripVertical } from "lucide-react";
 
-const CollectionView = () => {
+const CollectionView = (props: ReactNodeViewProps) => {
   return (
     <NodeViewWrapper className="group relative w-full rounded-sm bg-white transition-all">
       <div
@@ -13,7 +14,9 @@ const CollectionView = () => {
         <GripVertical size={16} className="text-gray-400" />
       </div>
 
-      <Collection />
+      <CollectionNodeProvider props={props}>
+        <Collection />
+      </CollectionNodeProvider>
     </NodeViewWrapper>
   );
 };

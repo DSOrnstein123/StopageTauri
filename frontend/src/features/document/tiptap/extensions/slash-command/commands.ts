@@ -12,7 +12,7 @@ import { type Editor, type Range } from "@tiptap/react";
 import type { Collection } from "../../../../collection/components/collection.types";
 import { queryClient } from "@/queryClient";
 import collectionKeys from "@/features/collection/keys/collectionKeys";
-import { collectionService } from "@/features/document/services/collectionService";
+import { collectionService } from "@/features/collection/services/collectionService";
 
 interface CommandItemProps {
   name: string;

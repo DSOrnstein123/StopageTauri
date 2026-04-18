@@ -7,7 +7,7 @@ import {
 import { useMemo } from "react";
 import ColumnHeaderWithConfiguration from "./ColumnHeaderWithConfiguration";
 import AddColumnButton from "./AddColumnButton";
-import type { Collection } from "./collection.types";
+import type { Collection as CollectionType } from "./collection.types";
 import { useQuery } from "@tanstack/react-query";
 import collectionKeys from "@/features/collection/keys/collectionKeys";
 import AddDocumentButton from "./AddDocumentButton";
@@ -21,7 +21,7 @@ const columnHelper = createColumnHelper<Document>();
 
 const Collection = () => {
   const { collectionId } = useCollectionNode();
-  const { data: collection = {} as Collection } = useQuery<Collection>({
+  const { data: collection = {} as CollectionType } = useQuery<CollectionType>({
     queryKey: collectionKeys.detail(collectionId),
     queryFn: () => collectionService.get(collectionId),
     staleTime: Infinity,

@@ -1,6 +1,6 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import { ReactNodeViewRenderer } from "@tiptap/react";
-import CollectionUI from "../../document/tiptap/extensions/collection/CollectionUI";
+import CollectionView from "./CollectionView";
 
 const CollectionNode = Node.create({
   name: "collection-node",
@@ -40,7 +40,7 @@ const CollectionNode = Node.create({
   },
 
   addNodeView() {
-    return ReactNodeViewRenderer(CollectionUI);
+    return ReactNodeViewRenderer(CollectionView);
   },
 });
 
