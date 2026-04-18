@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Button } from "@/shared/components/shadcn/button";
+import { Card } from "@/shared/components/shadcn/card";
 
 const ZoomController = () => {
   return (

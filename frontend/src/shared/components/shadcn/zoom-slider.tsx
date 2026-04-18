@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Maximize, Minus, Plus } from "lucide-react";
 
 import {
@@ -50,9 +49,7 @@ export function ZoomSlider({
           <Minus className="h-4 w-4" />
         </Button>
         <Slider
-          className={cn(
-            orientation === "horizontal" ? "w-[140px]" : "h-[140px]",
-          )}
+          className={cn(orientation === "horizontal" ? "w-35" : "h-35")}
           orientation={orientation}
           value={[zoom]}
           min={minZoom}
@@ -71,9 +68,7 @@ export function ZoomSlider({
       <Button
         className={cn(
           "tabular-nums",
-          orientation === "horizontal"
-            ? "w-[140px] min-w-10"
-            : "h-[40px] w-[40px]",
+          orientation === "horizontal" ? "w-35 min-w-10" : "h-10 w-10",
         )}
         variant="ghost"
         onClick={() => zoomTo(1, { duration: 300 })}

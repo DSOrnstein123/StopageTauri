@@ -13,7 +13,7 @@ import { useCallback } from "react";
 import { useFlowStore } from "@/features/canvas/flowStore";
 import FloatingEdge from "./components/FloatingEdge";
 import Controller from "./components/controller/Controller";
-import { ZoomSlider } from "@/components/zoom-slider";
+import { ZoomSlider } from "@/shared/components/shadcn/zoom-slider";
 
 const nodeTypes = { notenode: NoteNode, groupnode: GroupNode };
 const edgeTypes = { floating: FloatingEdge };
