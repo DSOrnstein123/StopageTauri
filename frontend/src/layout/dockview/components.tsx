@@ -1,7 +1,7 @@
-import List from "../sidebar/List";
+import LeftSidebar from "../sidebar/LeftSidebar";
 import { dockviewAdapterComponents } from "./Adapter";
 
 export const components = {
   ...dockviewAdapterComponents,
-  fileList: List,
+  fileList: LeftSidebar,
 };

@@ -1,5 +1,5 @@
 import { Button } from "@/shared/components/shadcn/button";
-import { Calendar } from "lucide-react";
+import { Calendar, FilePlus } from "lucide-react";
 import useCreateDocument from "@/features/document/hooks/useCreateDocument";
 import { useWorkspaceStore } from "../dockview/useWorkspaceStore";
 
@@ -20,7 +20,7 @@ const ActionBar = () => {
           });
         }}
       >
-        <img src="/icon/new_note.svg" className="h-5 w-5" />
+        <FilePlus />
       </Button>
 
       {/* flashcard */}
