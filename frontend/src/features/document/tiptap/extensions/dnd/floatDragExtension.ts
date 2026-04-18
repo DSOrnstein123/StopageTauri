@@ -13,6 +13,7 @@ const getDragIndicator = () => {
   }
   return el;
 };
+
 const hideDragIndicator = () => {
   const el = document.getElementById("tiptap-drag-indicator");
   if (el) el.style.opacity = "0";
@@ -64,14 +65,13 @@ function findBlockDOM(
   return null;
 }
 
-function getDropTarget(
+function getBlockDOMAtCoords(
   view: EditorView,
   x: number,
   y: number,
-  skipDOM: HTMLElement | null,
+  skip: HTMLElement | null,
 ): HTMLElement | null {
   const editorDOM = view.dom as HTMLElement;
-  const skip = skipDOM && document.contains(skipDOM) ? skipDOM : null;
 
   const coord = view.posAtCoords({ left: x, top: y });
   if (coord) {
@@ -81,7 +81,6 @@ function getDropTarget(
       if (pName === "doc" || pName === "column") {
         const nodeName = $pos.node(d).type.name;
         if (nodeName === "column" || nodeName === "column-container") break;
-
         let dom = view.nodeDOM($pos.before(d)) as HTMLElement | null;
         if (!dom) break;
         while (
@@ -124,6 +123,65 @@ function blockPosFromDOM(
   return $pos.before(1);
 }
 
+function updateIndicator(
+  _: EditorView,
+  blockDOM: HTMLElement,
+  x: number,
+  y: number,
+) {
+  const rect = blockDOM.getBoundingClientRect();
+  const relX = x - rect.left;
+  const midY = rect.top + rect.height / 2;
+  const ind = getDragIndicator();
+  const GAP = 6,
+    LINE = 4;
+
+  const isContainerOrColumn =
+    blockDOM.classList.contains("node-column-container") ||
+    blockDOM.getAttribute("data-type") === "column" ||
+    (blockDOM.classList.contains("react-renderer") &&
+      blockDOM.firstElementChild?.classList.contains(
+        "column-container-wrapper",
+      ));
+
+  if (isContainerOrColumn) {
+    Object.assign(ind.style, {
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      height: `${LINE}px`,
+      opacity: "1",
+      top: y < midY ? `${rect.top - GAP - LINE}px` : `${rect.bottom + GAP}px`,
+    });
+  } else {
+    const ZONE = Math.min(rect.width * 0.25, 80);
+    if (relX < ZONE) {
+      Object.assign(ind.style, {
+        left: `${rect.left - GAP - LINE}px`,
+        top: `${rect.top}px`,
+        width: `${LINE}px`,
+        height: `${rect.height}px`,
+        opacity: "1",
+      });
+    } else if (relX > rect.width - ZONE) {
+      Object.assign(ind.style, {
+        left: `${rect.right + GAP}px`,
+        top: `${rect.top}px`,
+        width: `${LINE}px`,
+        height: `${rect.height}px`,
+        opacity: "1",
+      });
+    } else {
+      Object.assign(ind.style, {
+        left: `${rect.left}px`,
+        width: `${rect.width}px`,
+        height: `${LINE}px`,
+        opacity: "1",
+        top: y < midY ? `${rect.top - GAP - LINE}px` : `${rect.bottom + GAP}px`,
+      });
+    }
+  }
+}
+
 export const FloatDragExtension = Extension.create({
   name: "floatDrag",
 
@@ -139,9 +197,42 @@ export const FloatDragExtension = Extension.create({
         key: new PluginKey("floatDrag"),
 
         view(editorView) {
+          const editorDOM = editorView.dom;
+
+          const onDragOver = (event: DragEvent) => {
+            event.preventDefault();
+            const skip =
+              dragSource?.dom && document.contains(dragSource.dom)
+                ? dragSource.dom
+                : null;
+            const blockDOM = getBlockDOMAtCoords(
+              editorView,
+              event.clientX,
+              event.clientY,
+              skip,
+            );
+            if (!blockDOM) {
+              hideDragIndicator();
+              return;
+            }
+            updateIndicator(editorView, blockDOM, event.clientX, event.clientY);
+          };
+
+          const onDragLeave = (event: DragEvent) => {
+            if (!editorDOM.contains(event.relatedTarget as Node))
+              hideDragIndicator();
+          };
+
+          editorDOM.addEventListener("dragover", onDragOver);
+          editorDOM.addEventListener("dragleave", onDragLeave);
+
           return {
             update() {
               syncAlignAttrs(editorView);
+            },
+            destroy() {
+              editorDOM.removeEventListener("dragover", onDragOver);
+              editorDOM.removeEventListener("dragleave", onDragLeave);
             },
           };
         },
@@ -191,98 +282,15 @@ export const FloatDragExtension = Extension.create({
                   el = parent;
                 }
               }
-
               const { selection } = view.state;
               if (selection instanceof NodeSelection) {
-                const dom = view.nodeDOM(selection.from) as HTMLElement | null;
                 dragSource = {
                   pos: selection.from,
                   size: selection.node.nodeSize,
-                  dom,
+                  dom: view.nodeDOM(selection.from) as HTMLElement | null,
                 };
               }
               return false;
-            },
-
-            dragover(view, event) {
-              const element = document.elementFromPoint(
-                event.clientX,
-                event.clientY,
-              ) as HTMLElement | null;
-              if (!element) {
-                hideDragIndicator();
-                return false;
-              }
-              const blockDOM = findBlockDOM(element, view.dom as HTMLElement);
-              if (!blockDOM) {
-                hideDragIndicator();
-                return false;
-              }
-
-              const rect = blockDOM.getBoundingClientRect();
-              const relX = event.clientX - rect.left;
-              const midY = rect.top + rect.height / 2;
-              const ind = getDragIndicator();
-              const GAP = 6,
-                LINE = 4;
-
-              const isContainerOrColumn =
-                blockDOM.classList.contains("node-column-container") ||
-                blockDOM.getAttribute("data-type") === "column" ||
-                (blockDOM.classList.contains("react-renderer") &&
-                  blockDOM.firstElementChild?.classList.contains(
-                    "column-container-wrapper",
-                  ));
-
-              if (isContainerOrColumn) {
-                Object.assign(ind.style, {
-                  left: `${rect.left}px`,
-                  width: `${rect.width}px`,
-                  height: `${LINE}px`,
-                  opacity: "1",
-                  top:
-                    event.clientY < midY
-                      ? `${rect.top - GAP - LINE}px`
-                      : `${rect.bottom + GAP}px`,
-                });
-              } else {
-                const ZONE = Math.min(rect.width * 0.25, 80);
-                if (relX < ZONE) {
-                  Object.assign(ind.style, {
-                    left: `${rect.left - GAP - LINE}px`,
-                    top: `${rect.top}px`,
-                    width: `${LINE}px`,
-                    height: `${rect.height}px`,
-                    opacity: "1",
-                  });
-                } else if (relX > rect.width - ZONE) {
-                  Object.assign(ind.style, {
-                    left: `${rect.right + GAP}px`,
-                    top: `${rect.top}px`,
-                    width: `${LINE}px`,
-                    height: `${rect.height}px`,
-                    opacity: "1",
-                  });
-                } else {
-                  Object.assign(ind.style, {
-                    left: `${rect.left}px`,
-                    width: `${rect.width}px`,
-                    height: `${LINE}px`,
-                    opacity: "1",
-                    top:
-                      event.clientY < midY
-                        ? `${rect.top - GAP - LINE}px`
-                        : `${rect.bottom + GAP}px`,
-                  });
-                }
-              }
-              event.preventDefault();
-              return true;
-            },
-
-            dragleave(view, event) {
-              if (!view.dom.contains(event.relatedTarget as Node))
-                hideDragIndicator();
             },
 
             drop(view, event) {
@@ -290,11 +298,15 @@ export const FloatDragExtension = Extension.create({
               if (!dragSource) return false;
 
               const { state, dispatch } = view;
-              const blockDOM = getDropTarget(
+              const skip =
+                dragSource.dom && document.contains(dragSource.dom)
+                  ? dragSource.dom
+                  : null;
+              const blockDOM = getBlockDOMAtCoords(
                 view,
                 event.clientX,
                 event.clientY,
-                dragSource.dom,
+                skip,
               );
               if (!blockDOM) return false;
 
