@@ -3,7 +3,7 @@ use sqlx::{Error, SqlitePool, query, query_as};
 use std::collections::HashMap;
 use uuid::Uuid;
 
-use crate::features::documents::models::{Document, DocumentContent, DocumentInCollection};
+use crate::features::document::models::{Document, DocumentContent, DocumentInCollection};
 
 pub async fn get_document_list(pool: &SqlitePool) -> Result<Vec<Document>, Error> {
     let documents = query_as!(

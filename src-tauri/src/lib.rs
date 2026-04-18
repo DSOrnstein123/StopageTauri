@@ -1,4 +1,4 @@
-use backend::database::migrate::migrate;
+use backend::database::{migrate::migrate, pool};
 use sqlx::SqlitePool;
 use tauri::Manager;
 
@@ -22,7 +22,7 @@ pub fn run() {
             }
 
             tauri::async_runtime::block_on(async {
-                let db = backend::repo::pool::connect().await;
+                let db = pool::connect().await;
                 migrate(&db).await?;
 
                 app.manage(AppState { db });
