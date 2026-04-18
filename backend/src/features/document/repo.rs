@@ -11,8 +11,7 @@ pub async fn get_document_list(pool: &SqlitePool) -> Result<Vec<Document>, Error
         r#"
         SELECT
             id as "id!: String",
-            title,
-            created_at
+            title
         FROM documents
         "#
     )
@@ -56,8 +55,7 @@ pub async fn create_document(pool: &SqlitePool) -> Result<Document, Error> {
             VALUES (?, ?)
             RETURNING
                 id as "id!: String",
-                title,
-                created_at
+                title
         "#,
         id,
         title

@@ -8,7 +8,6 @@ use sqlx::types::Json;
 pub struct Document {
     pub id: String,
     pub title: String,
-    pub created_at: String,
 }
 
 #[derive(Deserialize, Serialize)]

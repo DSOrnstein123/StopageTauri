@@ -32,7 +32,7 @@ pub async fn get_documents_in_collection(
     state: State<'_, AppState>,
     collection_id: String,
 ) -> Result<Vec<DocumentInCollection>, String> {
-    backend::features::document::document::get_documents_in_collection(&state.db, collection_id)
+    backend::features::document::repo::get_documents_in_collection(&state.db, collection_id)
         .await
         .map_err(|e| e.to_string())
 }

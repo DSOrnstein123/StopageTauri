@@ -4,14 +4,14 @@ use tauri::State;
 
 #[tauri::command]
 pub async fn get_document_list(state: State<'_, AppState>) -> Result<Vec<Document>, String> {
-    backend::features::document::document::get_document_list(&state.db)
+    backend::features::document::repo::get_document_list(&state.db)
         .await
         .map_err(|e| e.to_string())
 }
 
 #[tauri::command]
 pub async fn create_document(state: State<'_, AppState>) -> Result<Document, String> {
-    backend::features::document::document::create_document(&state.db)
+    backend::features::document::repo::create_document(&state.db)
         .await
         .map_err(|e| e.to_string())
 }
@@ -22,7 +22,7 @@ pub async fn update_document(
     id: String,
     content: String,
 ) -> Result<(), String> {
-    backend::features::document::document::update_document(&state.db, id, content)
+    backend::features::document::repo::update_document(&state.db, id, content)
         .await
         .map_err(|e| e.to_string())
 }
@@ -33,7 +33,7 @@ pub async fn update_title(
     id: String,
     title: String,
 ) -> Result<(), String> {
-    backend::features::document::document::update_title(&state.db, id, title)
+    backend::features::document::repo::update_title(&state.db, id, title)
         .await
         .map_err(|e| e.to_string())
 }
@@ -43,7 +43,7 @@ pub async fn get_document_content(
     state: State<'_, AppState>,
     id: String,
 ) -> Result<DocumentContent, String> {
-    backend::features::document::document::get_document_content(&state.db, id)
+    backend::features::document::repo::get_document_content(&state.db, id)
         .await
         .map_err(|e| e.to_string())
 }
