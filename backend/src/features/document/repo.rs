@@ -61,7 +61,7 @@ pub async fn create_document(pool: &SqlitePool) -> Result<File, Error> {
     let file_id = Uuid::new_v4().simple().to_string();
     let icon = Json(IconData {
         icon_type: "lucide".to_string(),
-        value: "file-text".to_string(),
+        value: "FileText".to_string(),
     });
     let document_file = query_as!(
         File,
