@@ -32,7 +32,7 @@ pub fn run() {
 
             Ok(())
         })
-        .invoke_handler(all_commands!())
+        .invoke_handler(feature_commands!())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

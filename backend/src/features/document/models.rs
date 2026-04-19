@@ -7,7 +7,6 @@ use sqlx::types::Json;
 #[serde(rename_all = "camelCase")]
 pub struct Document {
     pub id: String,
-    pub title: String,
 }
 
 #[derive(Deserialize, Serialize)]

@@ -1,5 +1,8 @@
 use crate::AppState;
-use backend::features::document::models::{Document, DocumentContent};
+use backend::{
+    entities::file::models::File,
+    features::document::models::{Document, DocumentContent},
+};
 use tauri::State;
 
 #[tauri::command]
@@ -10,7 +13,7 @@ pub async fn get_document_list(state: State<'_, AppState>) -> Result<Vec<Documen
 }
 
 #[tauri::command]
-pub async fn create_document(state: State<'_, AppState>) -> Result<Document, String> {
+pub async fn create_document(state: State<'_, AppState>) -> Result<File, String> {
     backend::features::document::repo::create_document(&state.db)
         .await
         .map_err(|e| e.to_string())
