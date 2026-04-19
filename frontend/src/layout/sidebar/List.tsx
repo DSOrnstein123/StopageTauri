@@ -1,17 +1,17 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
 import File from "./items/File";
-import { useGetDocumentList } from "@/features/document/hooks/useGetDocumentList";
+import useGetFileList from "@/entities/file/hooks/useGetFileList";
 
 const List = () => {
   //TODO: folder
-  //TODO: fix getDocumentsList type
+  //TODO: fix getfileList type
   const scrollElementRef = useRef<HTMLDivElement>(null);
 
-  const { data: documentsList = [] } = useGetDocumentList();
+  const { data: fileList = [] } = useGetFileList();
 
   const virtualizer = useVirtualizer({
-    count: documentsList.length,
+    count: fileList.length,
     estimateSize: () => 32,
     getScrollElement: () => scrollElementRef.current,
     overscan: 5,
@@ -29,7 +29,7 @@ const List = () => {
         style={{ height: `${virtualizer.getTotalSize()}px` }}
       >
         {virtualizerItems.map((virtualizerItem) => {
-          const document = documentsList[virtualizerItem.index];
+          const document = fileList[virtualizerItem.index];
 
           return (
             <div
@@ -41,7 +41,7 @@ const List = () => {
               }}
               data-index={virtualizerItem.index}
             >
-              <File id={document.id} title={document.title} />
+              <File id={document.id} name={document.name} />
             </div>
           );
         })}
