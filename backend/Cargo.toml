@@ -11,8 +11,10 @@ sqlx = { version = "0.8", features = [
   "sqlite",
   "macros",
   "migrate",
-  "uuid"
+  "uuid",
+  "chrono",
 ]}
 serde = "1.0.228"
 serde_json = "1.0.149"
 anyhow = "1"
+chrono = { version = "0.4", features = ["serde"] }
