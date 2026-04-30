@@ -1,59 +1,35 @@
 import z from "zod";
-import { UUIDSchema } from "@/shared/schemas/uuidSchema";
+import { SimpleUUIDSchema } from "@/shared/schemas/simpleUUIDSchema";
+import { FileSchema } from "@/entities/file/schemas/fileSchema";
+import { PropertyListSchema, RawPropertiesSchema } from "./propertySchema";
 
-const RawPropertiesSchema = z.record(z.string(), z.string()).default({});
-type RawProperties = z.infer<typeof RawPropertiesSchema>;
-
-const BasePropertySchema = z.object({
-  id: UUIDSchema,
-  name: z.string(),
+const BaseDocumentFileSchema = FileSchema.extend({
+  type: z.literal("document"),
+  collectionId: SimpleUUIDSchema.nullable(),
+  content: z
+    .string()
+    .nullish()
+    .transform((value) => value ?? ""),
 });
-const PropertySchema = z.discriminatedUnion("type", [
-  BasePropertySchema.extend({
-    type: z.literal("text"),
-    value: z.string(),
-  }),
-  BasePropertySchema.extend({
-    type: z.literal("select"),
-    options: z.array(z.string()),
-    value: z.string(),
-  }),
-]);
-type Property = z.infer<typeof PropertySchema>;
 
-const DocumentSchema = z.object({
-  id: UUIDSchema,
-  collectionId: UUIDSchema,
-  title: z.string(),
-  content: z.string(),
-  property: RawPropertiesSchema,
-  createdAt: z.coerce.date().optional(),
-});
-type Document = z.infer<typeof DocumentSchema>;
-
-const DocumentInCollectionSchema = DocumentSchema.extend({
-  collectionId: UUIDSchema,
+const RawDocumentFileSchema = BaseDocumentFileSchema.extend({
   property: RawPropertiesSchema,
 });
+type RawDocumentFile = z.infer<typeof RawDocumentFileSchema>;
 
-const DocumentContentSchema = z.object({
-  collectionId: UUIDSchema,
-  content: z.string(),
-  property: RawPropertiesSchema,
+const DocumentFileSchema = BaseDocumentFileSchema.extend({
+  property: PropertyListSchema,
 });
-type DocumentContent = z.infer<typeof DocumentContentSchema>;
+type DocumentFile = z.infer<typeof DocumentFileSchema>;
 
-const DocumentListSchema = z.array(DocumentSchema);
+const DocumentFileListSchema = z.array(DocumentFileSchema);
+type DocumentFileList = z.infer<typeof DocumentFileListSchema>;
 
 export {
-  DocumentSchema,
-  type Document,
-  DocumentContentSchema,
-  type DocumentContent,
-  DocumentInCollectionSchema,
-  RawPropertiesSchema,
-  type RawProperties,
-  PropertySchema,
-  type Property,
-  DocumentListSchema,
+  RawDocumentFileSchema,
+  type RawDocumentFile,
+  DocumentFileSchema,
+  type DocumentFile,
+  DocumentFileListSchema,
+  type DocumentFileList,
 };
