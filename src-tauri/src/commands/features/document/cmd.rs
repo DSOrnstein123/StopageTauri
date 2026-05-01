@@ -1,8 +1,5 @@
 use crate::AppState;
-use backend::{
-    entities::file::models::File,
-    features::document::models::{Document, DocumentContent},
-};
+use backend::{entities::file::models::File, features::document::models::Document};
 use tauri::State;
 
 #[tauri::command]
@@ -37,16 +34,6 @@ pub async fn update_title(
     title: String,
 ) -> Result<(), String> {
     backend::features::document::repo::update_title(&state.db, id, title)
-        .await
-        .map_err(|e| e.to_string())
-}
-
-#[tauri::command]
-pub async fn get_document_content(
-    state: State<'_, AppState>,
-    id: String,
-) -> Result<DocumentContent, String> {
-    backend::features::document::repo::get_document_content(&state.db, id)
         .await
         .map_err(|e| e.to_string())
 }
