@@ -1,18 +1,18 @@
+import { useWorkspaceStore } from "@/app/layout/dockview/useWorkspaceStore";
+import { usePrimarySidebarStore } from "@/app/layout/sidebar/primarySidebarStore";
 import { cn } from "@/shared/lib/utils";
-import { usePrimarySidebarStore } from "@/layout/sidebar/primarySidebarStore";
-import { useWorkspaceStore } from "@/layout/dockview/useWorkspaceStore";
 
-interface FileProps {
+interface FileItemProps {
   id: string;
   name: string;
 }
 
-const File = ({ id, name }: FileProps) => {
+const FileItem = ({ id, name }: FileItemProps) => {
   const openFile = useWorkspaceStore((state) => state.openFile);
   const isSelected = usePrimarySidebarStore((state) => state.selectedId === id);
 
-  const handleOnClick = () => {
-    openFile("document", name, { documentId: id });
+  const handleOnClick = async () => {
+    openFile(id, name);
   };
 
   return (
@@ -28,4 +28,4 @@ const File = ({ id, name }: FileProps) => {
   );
 };
 
-export default File;
+export default FileItem;

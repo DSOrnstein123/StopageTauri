@@ -15,9 +15,7 @@ const ActionBar = () => {
         className="relative size-8 p-0"
         onClick={async () => {
           const data = await createDocument();
-          openFile("document", data.title, {
-            documentId: data.id,
-          });
+          openFile(data.id, data.name);
         }}
       >
         <FilePlus />

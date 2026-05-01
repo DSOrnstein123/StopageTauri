@@ -3,7 +3,6 @@ import { create } from "zustand";
 import { Editor } from "@tiptap/react";
 import type { TableOfContentData } from "@tiptap/extension-table-of-contents";
 import type { FeatureType } from "@/registry/featureRegistry";
-import type { PanelParamsRegistry } from "./Adapter";
 
 interface WorkspaceState {
   dockApi: DockviewApi | null;
@@ -15,12 +14,7 @@ interface WorkspaceState {
   setDockApi: (api: DockviewApi) => void;
   setSplitApi: (api: SplitviewApi) => void;
 
-  openFile: <T extends FeatureType>(
-    fileType: T,
-    title: string,
-    params?: PanelParamsRegistry[T],
-    icon?: string,
-  ) => void;
+  openFile: (id: string, name: string, icon?: string) => void;
   changeFile: (panelId: string, newFileId: string) => void;
   setActivePanelInfo: (info: ActivePanelInfo | null) => void;
   setActiveEditor: (editor: Editor) => void;
@@ -43,7 +37,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
   setDockApi: (api) => set({ dockApi: api }),
   setSplitApi: (api) => set({ splitApi: api }),
-  openFile: (fileType, title, params) => {
+  openFile: (id, name) => {
     const { dockApi } = get();
     if (!dockApi) return;
 
@@ -51,10 +45,10 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
     dockApi.addPanel({
       id: panelId,
-      component: fileType,
-      title: title,
+      component: "file",
+      title: name,
       tabComponent: "workspace",
-      params: params,
+      params: { id: id },
     });
   },
   changeFile: (panelId, newFileId) => {
