@@ -1,5 +1,5 @@
-import { useWorkspaceStore } from "@/app/layout/dockview/useWorkspaceStore";
-import { usePrimarySidebarStore } from "@/app/layout/sidebar/primarySidebarStore";
+import { useWorkspaceStore } from "@/core/layout/dockview/useWorkspaceStore";
+import { usePrimarySidebarStore } from "@/core/layout/sidebar/primarySidebarStore";
 import { cn } from "@/shared/lib/utils";
 
 interface FileItemProps {

@@ -1,4 +1,4 @@
-import { FileTypeRegistry } from "@/app/registries/fileTypeRegistry";
+import { FileTypeRegistry } from "@/core/registries/fileTypeRegistry";
 import { IconDataSchema } from "@/shared/schemas/iconData";
 import { SimpleUUIDSchema } from "@/shared/schemas/simpleUUIDSchema";
 import z from "zod";

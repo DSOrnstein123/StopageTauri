@@ -1,4 +1,4 @@
-import File from "@/app/file/components/File";
+import File from "@/core/file/components/File";
 import LeftSidebar from "../sidebar/LeftSidebar";
 import { dockviewAdapterComponents } from "./Adapter";
 
