@@ -1,9 +1,36 @@
 use crate::entities::file::models::{File, IconData};
-use crate::features::document::models::{Document, DocumentContent, DocumentInCollection};
+use crate::features::document::models::{Document, DocumentFile, DocumentInCollection};
 use sqlx::types::Json;
 use sqlx::{Error, SqlitePool, query, query_as};
 use std::collections::HashMap;
 use uuid::Uuid;
+
+pub async fn get_document_detail(pool: &SqlitePool, id: String) -> Result<DocumentFile, Error> {
+    let document = query_as!(
+        DocumentFile,
+        r#"
+        SELECT
+            f.id as "id!: String",
+            f.name,
+            f.type as file_type,
+            f.icon as "icon: Json<IconData>",
+            f.content_id as "content_id!: String",
+            f.created_at,
+            f.updated_at,
+            d.collection_id,
+            d.content,
+            d.property as "property: Json<HashMap<String, serde_json::Value>>"
+        FROM documents d
+        INNER JOIN files f ON d.id = f.content_id
+        WHERE d.id = ?
+        "#,
+        id
+    )
+    .fetch_one(pool)
+    .await?;
+
+    Ok(document)
+}
 
 pub async fn get_document_list(pool: &SqlitePool) -> Result<Vec<Document>, Error> {
     let documents = query_as!(
@@ -119,23 +146,4 @@ pub async fn update_title(pool: &SqlitePool, id: String, title: String) -> Resul
     .await?;
 
     Ok(())
-}
-
-pub async fn get_document_content(pool: &SqlitePool, id: String) -> Result<DocumentContent, Error> {
-    let document = query_as!(
-        DocumentContent,
-        r#"
-            SELECT 
-                collection_id,
-                content,
-                property as "property: Json<HashMap<String, serde_json::Value>>"
-            FROM documents 
-            WHERE id = ?
-        "#,
-        id,
-    )
-    .fetch_one(pool)
-    .await?;
-
-    Ok(document)
 }
