@@ -1,16 +1,11 @@
 import { useRef } from "react";
-import { useWorkspaceStore } from "../dockview/useWorkspaceStore";
-import { sidebarRegistry } from "@/registry/sidebarRegistry";
-import type { FeatureType } from "@/registry/featureRegistry";
+import { useWorkspaceStore } from "../core/layout/dockview/useWorkspaceStore";
+import { featureRegistry } from "@/app/init";
 
-const SidebarRenderer = ({
-  type,
-}: {
-  type: FeatureType | "none" | undefined;
-}) => {
-  if (!type || type === "none") return null;
-
-  const Component = sidebarRegistry[type];
+const SidebarRenderer = ({ type }: { type: string }) => {
+  if (!type) return null;
+  /* eslint-disable react-hooks/static-components */
+  const Component = featureRegistry.getSidebarComponent(type);
 
   if (!Component) return null;
 

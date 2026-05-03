@@ -1,5 +1,5 @@
 import { DockviewReact, themeLight } from "dockview";
-import { components } from "./dockview/components";
+import { components } from "../core/layout/dockview/components";
 
 const LeftSidebar = () => {
   return (
