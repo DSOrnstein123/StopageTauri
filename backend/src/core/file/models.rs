@@ -12,7 +12,6 @@ pub struct File {
     pub icon: Json<IconData>,
     #[serde(rename = "type")]
     pub file_type: String,
-    pub content_id: String,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
 }
