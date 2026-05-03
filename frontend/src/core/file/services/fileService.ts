@@ -19,10 +19,13 @@ export const fileService = {
   getList: async () => {
     try {
       const rawFileList = await invoke("get_files");
+      console.log(rawFileList);
       return FileListSchema.parse(rawFileList);
     } catch (error) {
       console.error(error);
       throw error;
     }
   },
+  updateName: (id: string, newName: string) =>
+    invoke("update_file_name", { id: id, newName: newName }),
 };
