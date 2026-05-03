@@ -1,6 +1,6 @@
-import type { Property } from "../schemas/documentSchema";
+import type { PropertyList } from "../schemas/propertySchema";
 
-const DocumentProperties = ({ data }: { data: Property[] }) => {
+const Properties = ({ data }: { data: PropertyList }) => {
   console.log(data);
   return (
     <>
@@ -22,4 +22,4 @@ const DocumentProperties = ({ data }: { data: Property[] }) => {
   );
 };
 
-export default DocumentProperties;
+export default Properties;
