@@ -2,7 +2,7 @@ use anyhow::{Error, Ok};
 use sqlx::{SqlitePool, query, query_as};
 
 use crate::{
-    entities::file::models::{File, FileDetail, IconData},
+    core::file::models::{File, FileDetail, IconData},
     features::document::repo::get_document_detail,
 };
 use sqlx::types::Json;
@@ -11,8 +11,7 @@ pub async fn get_file_detail(pool: &SqlitePool, id: String) -> Result<FileDetail
     let file_info = query!(
         r#"
             SELECT 
-              type as file_type,
-              content_id
+              type as file_type
             FROM files
             WHERE id = ?
         "#,
@@ -23,7 +22,7 @@ pub async fn get_file_detail(pool: &SqlitePool, id: String) -> Result<FileDetail
 
     let response = match file_info.file_type.as_str() {
         "document" => {
-            let document_detail = get_document_detail(pool, file_info.content_id).await?;
+            let document_detail = get_document_detail(pool, id).await?;
             FileDetail::Document(document_detail)
         }
         _ => {
@@ -46,7 +45,6 @@ pub async fn get_files(pool: &SqlitePool) -> Result<Vec<File>, Error> {
               name,
               icon as "icon: Json<IconData>",
               type as file_type,
-              content_id,
               created_at,
               updated_at
             FROM files
@@ -56,4 +54,24 @@ pub async fn get_files(pool: &SqlitePool) -> Result<Vec<File>, Error> {
     .await?;
 
     Ok(files)
+}
+
+pub async fn update_file_name(
+    pool: &SqlitePool,
+    id: String,
+    new_name: String,
+) -> Result<(), Error> {
+    query!(
+        r#"
+            UPDATE files
+            SET name = ?
+            WHERE id = ? 
+        "#,
+        new_name,
+        id,
+    )
+    .execute(pool)
+    .await?;
+
+    Ok(())
 }
