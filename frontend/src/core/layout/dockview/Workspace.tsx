@@ -3,7 +3,6 @@ import { useWorkspaceStore } from "./useWorkspaceStore";
 import { DockviewReact } from "dockview";
 import { components } from "./components";
 import { tabComponents } from "./tabComponents";
-import type { FeatureType } from "@/registry/featureRegistry";
 
 const loadDefaultLayout = (api: DockviewApi) => {
   api.addPanel({
@@ -47,7 +46,7 @@ const Workspace = () => {
           const { api: panelApi } = panelEvent;
           setActivePanelInfo({
             id: panelApi.id || "",
-            type: (panelApi.component as FeatureType) || "none",
+            type: "document",
             params: panelEvent.params || null,
           });
         });

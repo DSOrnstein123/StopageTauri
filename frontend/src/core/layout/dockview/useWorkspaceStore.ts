@@ -2,7 +2,6 @@ import type { DockviewApi, SplitviewApi } from "dockview-core";
 import { create } from "zustand";
 import { Editor } from "@tiptap/react";
 import type { TableOfContentData } from "@tiptap/extension-table-of-contents";
-import type { FeatureType } from "@/registry/featureRegistry";
 
 interface WorkspaceState {
   dockApi: DockviewApi | null;
@@ -24,7 +23,7 @@ interface WorkspaceState {
 
 interface ActivePanelInfo {
   id: string;
-  type: FeatureType | "none";
+  type: "document" | "none";
   params: Record<string, unknown> | null;
 }
 
