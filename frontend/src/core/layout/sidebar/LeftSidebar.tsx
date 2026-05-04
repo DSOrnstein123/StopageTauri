@@ -1,4 +1,4 @@
-import FileExplorer from "@/features/file-explorer/components/FileExplorer";
+import FileExplorer from "@/entities/file/components/file-explorer/FileExplorer";
 
 const LeftSidebar = () => {
   return (

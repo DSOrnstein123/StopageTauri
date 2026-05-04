@@ -1,4 +1,4 @@
-import { useWorkspaceStore } from "@/layout/dockview/useWorkspaceStore";
+import { useWorkspaceStore } from "@/core/layout/dockview/useWorkspaceStore";
 import { TextSelection } from "@tiptap/pm/state";
 
 const DocumentSidebar = () => {
