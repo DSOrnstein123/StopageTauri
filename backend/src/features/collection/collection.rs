@@ -5,7 +5,7 @@ use serde_json::{Value, json};
 use sqlx::{SqlitePool, query, query_as};
 use uuid::Uuid;
 
-use crate::features::document::models::{Collection, DocumentInCollection, Property};
+use crate::features::collection::models::{Collection, Property};
 
 #[allow(dead_code)]
 pub async fn get_collection(pool: &SqlitePool, id: String) -> Result<Collection> {
