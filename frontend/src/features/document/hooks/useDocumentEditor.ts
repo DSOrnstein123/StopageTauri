@@ -4,17 +4,15 @@ import { extensionList } from "../tiptap/extensions/extensionList";
 import TableOfContents, {
   type TableOfContentData,
 } from "@tiptap/extension-table-of-contents";
-import { useWorkspaceStore } from "@/layout/dockview/useWorkspaceStore";
 import { useMemo, useState, type RefObject } from "react";
-import { usePanelContext } from "@/layout/dockview/panel-context/usePanelParams";
-import type { DocumentParams } from "../document.params";
+import { useWorkspaceStore } from "@/core/layout/dockview/useWorkspaceStore";
 
-const useDocumentEditor = (editorRef: RefObject<Editor | null>) => {
+const useDocumentEditor = (
+  tabId: string,
+  editorRef: RefObject<Editor | null>,
+) => {
   const [localTOC, setLocalTOC] = useState<TableOfContentData | null>(null);
   const changeFile = useWorkspaceStore((state) => state.changeFile);
-
-  const panelContext = usePanelContext<DocumentParams>();
-  const panelId = panelContext.api.id;
 
   const extensions = useMemo(
     () => [
@@ -46,7 +44,7 @@ const useDocumentEditor = (editorRef: RefObject<Editor | null>) => {
         if (href?.startsWith("/documents/")) {
           //TODO: change to scalable link
           const documentId = href.split("/documents/")[1];
-          changeFile(panelId, documentId);
+          changeFile(tabId, documentId);
           return true;
         }
 
