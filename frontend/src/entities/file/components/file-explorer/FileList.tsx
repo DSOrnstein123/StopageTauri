@@ -1,7 +1,7 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
 import FileItem from "../FileItem";
-import { useGetFiles } from "@/core/file/hooks/useGetFiles";
+import { useGetFiles } from "@/entities/file/hooks/useGetFiles";
 
 const FileList = () => {
   //TODO: folder
