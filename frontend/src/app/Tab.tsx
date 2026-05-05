@@ -1,4 +1,4 @@
-import TabProvider from "@/shared/tab-context/TabProvider";
+import TabProvider from "@shared/tab-context/TabProvider";
 import File from "@entities/file/components/File";
 import type { IDockviewPanelProps } from "dockview-core";
 import { useEffect, useState } from "react";
