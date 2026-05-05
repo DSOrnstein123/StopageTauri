@@ -1,6 +1,6 @@
 import { Search } from "lucide-react";
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@shared/lib/tailwind-css/utils";
 
 import { useEffect, useState } from "react";
 import useDebounce from "@/shared/hooks/useDebounce";

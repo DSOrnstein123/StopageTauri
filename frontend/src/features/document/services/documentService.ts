@@ -4,7 +4,7 @@ import {
   type DocumentFile,
   type RawDocumentFile,
 } from "../schemas/documentSchema";
-import type { File } from "@/entities/file/schemas/fileSchema";
+import type { File } from "@entities/file/schemas/fileSchema";
 
 export const documentService = {
   getList: async (): Promise<DocumentFile[]> => {

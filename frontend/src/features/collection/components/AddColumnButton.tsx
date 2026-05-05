@@ -1,10 +1,10 @@
-import { Button } from "@/shared/components/shadcn/button";
+import { Button } from "@shared/components/shadcn/button";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@/shared/components/shadcn/popover";
-import { useAddProperty } from "@/features/collection/hooks/useAddProperty";
+} from "@shared/components/shadcn/popover";
+import { useAddProperty } from "@features/collection/hooks/useAddProperty";
 import { COLUMN_TYPES } from "./collection.types";
 
 const AddColumnButton = ({ collectionId }: { collectionId: string }) => {

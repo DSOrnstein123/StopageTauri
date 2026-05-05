@@ -1,4 +1,4 @@
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@shared/lib/tailwind-css/utils";
 import { type Node, type NodeProps, NodeResizer } from "@xyflow/react";
 import React, { memo, useCallback } from "react";
 import ConnectionPoint from "./ConnectionPoint";

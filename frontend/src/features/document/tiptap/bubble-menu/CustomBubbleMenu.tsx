@@ -1,10 +1,10 @@
 import { BubbleMenu } from "@tiptap/react/menus";
 import { Editor, useEditorState } from "@tiptap/react";
-import { Button } from "@/shared/components/shadcn/button";
-import { cn } from "@/shared/lib/utils";
+import { Button } from "@shared/components/shadcn/button";
 import { useState } from "react";
 import LinkSuggestion from "./LinkSuggestion";
-import type { Document } from "@/features/document/schemas/documentSchema";
+import type { DocumentFile } from "@features/document/schemas/documentSchema";
+import { cn } from "@shared/lib/tailwind-css/utils";
 
 //TODO: optimize
 //TODO: fixed position
@@ -27,7 +27,7 @@ const CustomBubbleMenu = ({ editor }: { editor: Editor }) => {
     }),
   });
 
-  const handleSelectDocument = (document: Document) => {
+  const handleSelectDocument = (document: DocumentFile) => {
     editor
       .chain()
       .focus()

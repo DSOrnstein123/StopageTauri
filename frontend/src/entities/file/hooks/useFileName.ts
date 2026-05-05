@@ -1,4 +1,4 @@
-import debounce from "@/shared/utils/debounce";
+import debounce from "@shared/utils/debounce";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { fileKeys } from "../keys/fileKeys";

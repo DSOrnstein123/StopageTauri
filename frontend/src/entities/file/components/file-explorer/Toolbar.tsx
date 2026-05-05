@@ -1,4 +1,4 @@
-import { Button } from "@/shared/components/shadcn/button";
+import { Button } from "@shared/components/shadcn/button";
 import { FolderPlus } from "lucide-react";
 
 const Toolbar = () => {

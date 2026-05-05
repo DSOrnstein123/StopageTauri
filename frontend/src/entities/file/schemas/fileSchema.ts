@@ -1,6 +1,6 @@
-import { featureRegistry } from "@/app/init";
-import { IconDataSchema } from "@/shared/schemas/iconData";
-import { SimpleUUIDSchema } from "@/shared/schemas/simpleUUIDSchema";
+import { featureRegistry } from "@app/init";
+import { IconDataSchema } from "@shared/schemas/iconData";
+import { SimpleUUIDSchema } from "@shared/schemas/simpleUUIDSchema";
 import z from "zod";
 
 const FileSchema = z.object({

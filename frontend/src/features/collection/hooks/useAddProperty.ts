@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { invoke } from "@tauri-apps/api/core";
-import collectionKeys from "@/features/collection/keys/collectionKeys";
+import collectionKeys from "@features/collection/keys/collectionKeys";
 import type { Collection, ColumnSchema } from "../components/collection.types";
 
 export interface AddPropertyParams {

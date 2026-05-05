@@ -1,5 +1,5 @@
 import { CardHeader, CardTitle } from "@/shared/components/shadcn/card";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@shared/lib/tailwind-css/utils";
 import { ChevronRight } from "lucide-react";
 import DraftInput from "./DraftInput";
 import { Link } from "@tanstack/react-router";

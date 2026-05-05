@@ -4,7 +4,7 @@ import useDocumentData from "../hooks/useDocumentData";
 import useDocumentEditor from "../hooks/useDocumentEditor";
 import useWorkspaceSync from "../hooks/useWorkspaceSync";
 import DocumentContent from "./DocumentContent";
-import { useTabContext } from "@/shared/tab-context/TabContext";
+import { useTabContext } from "@shared/tab-context/TabContext";
 
 const DocumentDetail = ({
   editorRef,
