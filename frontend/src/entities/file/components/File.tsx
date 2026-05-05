@@ -1,5 +1,5 @@
 import FileHeader from "./FileHeader";
-import FileProvider from "./context/FileProvider";
+import FileProvider from "../context/FileProvider";
 import type { ComponentType } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fileKeys } from "../keys/fileKeys";

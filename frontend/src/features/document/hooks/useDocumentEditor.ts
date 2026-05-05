@@ -5,7 +5,7 @@ import TableOfContents, {
   type TableOfContentData,
 } from "@tiptap/extension-table-of-contents";
 import { useMemo, useState, type RefObject } from "react";
-import { useWorkspaceStore } from "@/core/layout/dockview/useWorkspaceStore";
+import { useWorkspaceStore } from "@shared/lib/dockview/useWorkspaceStore";
 
 const useDocumentEditor = (
   tabId: string,

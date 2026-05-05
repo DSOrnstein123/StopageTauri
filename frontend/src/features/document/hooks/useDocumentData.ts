@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Editor } from "@tiptap/react";
-import debounce from "@/shared/utils/debounce";
+import debounce from "@shared/utils/debounce";
 import { documentService } from "../services/documentService";
-import { fileService } from "@/entities/file/services/fileService";
-import { useFileContext } from "@/entities/file/components/context/FileContext";
+import { fileService } from "@entities/file/services/fileService";
+import { useFileContext } from "@entities/file/context/FileContext";
 
 const useDocumentData = (editor: Editor | null) => {
   const { id } = useFileContext();

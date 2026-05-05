@@ -1,6 +1,6 @@
-import { useWorkspaceStore } from "@/core/layout/dockview/useWorkspaceStore";
-import { usePrimarySidebarStore } from "@/core/layout/sidebar/primarySidebarStore";
-import { cn } from "@/shared/lib/utils";
+import { usePrimarySidebarStore } from "@core/layout/sidebar/primarySidebarStore";
+import { useWorkspaceStore } from "@shared/lib/dockview/useWorkspaceStore";
+import { cn } from "@shared/lib/tailwind-css/utils";
 
 interface FileItemProps {
   id: string;

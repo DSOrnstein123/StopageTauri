@@ -1,6 +1,6 @@
 import z from "zod";
-import { SimpleUUIDSchema } from "@/shared/schemas/simpleUUIDSchema";
-import { FileSchema } from "@/entities/file/schemas/fileSchema";
+import { SimpleUUIDSchema } from "@shared/schemas/simpleUUIDSchema";
+import { FileSchema } from "@entities/file/schemas/fileSchema";
 import { PropertyListSchema, RawPropertiesSchema } from "./propertySchema";
 
 const BaseDocumentFileSchema = FileSchema.extend({

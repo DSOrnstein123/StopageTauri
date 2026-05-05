@@ -1,7 +1,7 @@
 import { useEffect, useRef, type KeyboardEvent } from "react";
 import useFileName from "../hooks/useFileName";
-import { useTabContext } from "@/shared/tab-context/TabContext";
-import { useFileContext } from "./context/FileContext";
+import { useTabContext } from "@shared/tab-context/TabContext";
+import { useFileContext } from "../context/FileContext";
 
 const FileName = ({
   onKeyDown,
