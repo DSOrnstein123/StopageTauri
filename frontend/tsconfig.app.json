@@ -25,7 +25,6 @@
     "noUncheckedSideEffectImports": true,
 
     "paths": {
-      "@/*": ["./src/*"],
       "@app/*": ["./src/app/*"],
       "@core/*": ["./src/core/*"],
       "@features/*": ["./src/features/*"],
