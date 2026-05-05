@@ -27,7 +27,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
     dockApi.addPanel({
       id: panelId,
-      component: "file",
+      component: "tab",
       title: name,
       tabComponent: "workspace",
       params: { id: id },

@@ -7,7 +7,7 @@ import { useWorkspaceStore } from "@shared/lib/dockview/useWorkspaceStore";
 const loadDefaultLayout = (api: DockviewApi) => {
   api.addPanel({
     id: "welcome_panel",
-    component: "document",
+    component: "tab",
     title: "Welcome",
   });
 };
