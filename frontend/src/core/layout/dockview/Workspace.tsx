@@ -1,8 +1,8 @@
 import { DockviewApi, themeLight } from "dockview-core";
-import { useWorkspaceStore } from "./useWorkspaceStore";
 import { DockviewReact } from "dockview";
 import { components } from "./components";
 import { tabComponents } from "./tabComponents";
+import { useWorkspaceStore } from "@shared/lib/dockview/useWorkspaceStore";
 
 const loadDefaultLayout = (api: DockviewApi) => {
   api.addPanel({
@@ -14,9 +14,6 @@ const loadDefaultLayout = (api: DockviewApi) => {
 
 const Workspace = () => {
   const setDockApi = useWorkspaceStore((state) => state.setDockApi);
-  const setActivePanelInfo = useWorkspaceStore(
-    (state) => state.setActivePanelInfo,
-  );
 
   return (
     <DockviewReact
@@ -37,19 +34,6 @@ const Workspace = () => {
 
         setDockApi(readyApi);
 
-        readyApi.onDidActivePanelChange((panelEvent) => {
-          if (!panelEvent) {
-            setActivePanelInfo(null);
-            return;
-          }
-
-          const { api: panelApi } = panelEvent;
-          setActivePanelInfo({
-            id: panelApi.id || "",
-            type: "document",
-            params: panelEvent.params || null,
-          });
-        });
         readyApi.onDidLayoutChange(() => {
           const currentLayout = readyApi.toJSON();
           localStorage.setItem(

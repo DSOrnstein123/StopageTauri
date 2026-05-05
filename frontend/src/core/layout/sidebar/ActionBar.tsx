@@ -1,7 +1,7 @@
-import { Button } from "@/shared/components/shadcn/button";
+import { Button } from "@shared/components/shadcn/button";
 import { Calendar, FilePlus } from "lucide-react";
-import useCreateDocument from "@/features/document/hooks/useCreateDocument";
-import { useWorkspaceStore } from "../dockview/useWorkspaceStore";
+import useCreateDocument from "@features/document/hooks/useCreateDocument";
+import { useWorkspaceStore } from "@shared/lib/dockview/useWorkspaceStore";
 
 const ActionBar = () => {
   const { mutateAsync: createDocument } = useCreateDocument();
