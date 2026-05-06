@@ -1,14 +1,16 @@
-pub mod core;
-pub mod features;
+pub mod collection;
+pub mod document;
+pub mod file;
+pub mod flashcard;
 
 #[macro_export]
 macro_rules! app_commands {
     () => {{
-        use $crate::commands::core::file::cmd as file;
+        use $crate::commands::file::cmd as file;
 
         // use $crate::commands::features::collection::cmd as collection;
-        use $crate::commands::features::document::cmd as docucment;
-        use $crate::commands::features::flashcard::deck;
+        use $crate::commands::document::cmd as docucment;
+        use $crate::commands::flashcard::deck;
 
         tauri::generate_handler![
             //core/file
