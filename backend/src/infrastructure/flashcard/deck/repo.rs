@@ -12,7 +12,7 @@ pub struct Deck {
 }
 
 #[allow(dead_code)]
-pub async fn get_decks_list(pool: &SqlitePool) -> Result<Vec<Deck>, sqlx::Error> {
+pub async fn get_decks(pool: &SqlitePool) -> Result<Vec<Deck>, sqlx::Error> {
     let decks = query_as!(
         Deck,
         r#"

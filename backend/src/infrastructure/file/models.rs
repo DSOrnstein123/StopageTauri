@@ -2,7 +2,7 @@ use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use sqlx::types::Json;
 
-use crate::features::document::models::DocumentFile;
+use crate::infrastructure::document::models::DocumentFile;
 
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
