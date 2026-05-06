@@ -7,6 +7,7 @@ export const useGetFiles = () => {
     queryKey: fileKeys.list(),
     queryFn: async () => {
       const fileList = await fileService.getList();
+      console.log(fileList);
       return fileList;
     },
     staleTime: Infinity,

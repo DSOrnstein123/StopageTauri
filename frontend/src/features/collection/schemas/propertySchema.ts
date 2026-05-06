@@ -1,4 +1,4 @@
-import { SimpleUUIDSchema } from "@/shared/schemas/simpleUUIDSchema";
+import { SimpleUUIDSchema } from "@shared/schemas/simpleUUIDSchema";
 import z from "zod";
 
 const BasePropertySchema = z.object({

@@ -10,7 +10,6 @@ const FileSchema = z.object({
   type: z.string().refine((val) => featureRegistry.has(val), {
     message: "This file type is not supported",
   }),
-  contentId: z.string(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
