@@ -7,21 +7,18 @@ import type { File } from "../schemas/fileSchema";
 
 const useFileName = (fileId: string, setTitle: (newTitle: string) => void) => {
   const queryClient = useQueryClient();
-  const [currentName, setCurrentName] = useState("");
   const { data: name } = useQuery({
     queryKey: fileKeys.detail(fileId),
     queryFn: () => fileService.getDetail(fileId),
     select: (data) => data.name,
     staleTime: Infinity,
   });
+  const [currentName, setCurrentName] = useState(name || "");
 
   useEffect(() => {
     if (!name) return;
 
-    setTimeout(() => {
-      setCurrentName(name);
-      setTitle(name);
-    }, 0);
+    setTitle(name);
   }, [name, setTitle]);
 
   const saveTitle = useRef(

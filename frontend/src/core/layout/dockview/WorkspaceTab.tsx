@@ -1,11 +1,19 @@
+import { fileKeys } from "@entities/file/keys/fileKeys";
+import { fileService } from "@entities/file/services/fileService";
+import { useQuery } from "@tanstack/react-query";
 import type { IDockviewPanelHeaderProps } from "dockview";
 import { X } from "lucide-react";
-import { useEffect, useState } from "react";
 
 const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
   const { api } = props;
   const isActive = api.isActive;
-  const [title, setTitle] = useState(api.title);
+  const fileId = props.params.id;
+  const { data: fileName } = useQuery({
+    queryKey: fileKeys.detail(fileId),
+    queryFn: () => fileService.getDetail(fileId),
+    select: (data) => data.name,
+    staleTime: Infinity,
+  });
 
   const onTabClick = () => {
     api.setActive();
@@ -15,13 +23,6 @@ const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
     e.stopPropagation();
     api.close();
   };
-
-  useEffect(() => {
-    const disposable = api.onDidTitleChange(() => {
-      setTitle(api.title);
-    });
-    return () => disposable.dispose();
-  }, [api]);
 
   return (
     <div
@@ -33,7 +34,7 @@ const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
       }`}
     >
       <div className="flex items-center gap-2 truncate">
-        <span className="truncate">{title}</span>
+        <span className="truncate">{fileName}</span>
       </div>
 
       <button
