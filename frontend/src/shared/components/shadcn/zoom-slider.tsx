@@ -10,9 +10,9 @@ import {
   type PanelProps,
 } from "@xyflow/react";
 
-import { Slider } from "@/shared/components/shadcn/slider";
-import { Button } from "@/shared/components/shadcn/button";
-import { cn } from "@/shared/lib/utils";
+import { Slider } from "@shared/components/shadcn/slider";
+import { Button } from "@shared/components/shadcn/button";
+import { cn } from "@shared/lib/tailwind-css/utils";
 
 export function ZoomSlider({
   className,

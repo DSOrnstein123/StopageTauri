@@ -8,7 +8,7 @@ interface ISidebarStore {
 
 const createSidebarStore = () =>
   create<ISidebarStore>((set) => ({
-    type: "",
+    type: "document",
 
     setType: (type) => set({ type: type }),
   }));

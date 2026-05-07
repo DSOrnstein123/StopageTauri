@@ -6,7 +6,16 @@ interface FeatureConfig {
   actionButton?: ComponentType;
   parser: (data: unknown) => unknown;
   fetcher: (id: string) => unknown;
+
+  slots?: {
+    toolbar?: ComponentType<{ data: unknown }>;
+    sidebar?: ComponentType<{ data: unknown }>;
+    header?: ComponentType<{ data: unknown }>;
+    footer?: ComponentType<{ data: unknown }>;
+  };
 }
+
+type Slot = keyof NonNullable<FeatureConfig["slots"]>;
 
 export class FeatureRegistry {
   private features = new Map<string, FeatureConfig>();
@@ -20,31 +29,47 @@ export class FeatureRegistry {
     });
   }
 
+  registerSlot(
+    type: string,
+    slot: Slot,
+    component: ComponentType<{ data: unknown }>,
+  ) {
+    const existing = this.features.get(type);
+    if (!existing) return;
+
+    this.features.set(type, {
+      ...existing,
+      slots: {
+        ...existing.slots,
+        [slot]: component,
+      },
+    });
+  }
+
   has(type: string): boolean {
-    return this.features.has(type);
+    if (!this.features.has(type)) {
+      return false;
+    }
+    return true;
   }
 
   getComponent(type: string) {
-    return this.has(type)
-      ? this.features.get(type)?.component
-      : console.error("Type is not defined");
+    if (!this.has(type)) return;
+    return this.features.get(type)?.component;
   }
 
   getSidebarComponent(type: string) {
-    return this.has(type)
-      ? this.features.get(type)?.sidebarComponent
-      : console.error("Type is not defined");
+    if (!this.has(type)) return;
+    return this.features.get(type)?.sidebarComponent;
   }
 
   getParser(type: string) {
-    return this.has(type)
-      ? this.features.get(type)?.parser
-      : console.error("Type is not defined");
+    if (!this.has(type)) return;
+    return this.features.get(type)?.parser;
   }
 
   getFetcher(type: string) {
-    return this.has(type)
-      ? this.features.get(type)?.fetcher
-      : console.error("Type is not defined");
+    if (!this.has(type)) return;
+    return this.features.get(type)?.fetcher;
   }
 }

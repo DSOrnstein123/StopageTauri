@@ -1,9 +1,9 @@
 import {
-  RawDocumentFileSchema,
-  type RawDocumentFile,
-} from "@/features/document/schemas/documentSchema";
+  DocumentFileSchema,
+  type DocumentFile,
+} from "@features/document/schemas/documentSchema";
 
 export const fileValidation = {
-  document: (rawData: unknown): RawDocumentFile =>
-    RawDocumentFileSchema.parse(rawData),
+  document: (rawData: unknown): DocumentFile =>
+    DocumentFileSchema.parse(rawData),
 };

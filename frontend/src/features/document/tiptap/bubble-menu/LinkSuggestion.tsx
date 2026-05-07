@@ -1,18 +1,19 @@
-import documentKeys from "@/features/document/keys/documentKeys";
-import type { Document } from "@/features/document/schemas/documentSchema";
-import { Input } from "@/shared/components/shadcn/input";
+import documentKeys from "@features/document/keys/documentKeys";
+import type { DocumentFile } from "@features/document/schemas/documentSchema";
+import { Input } from "@shared/components/shadcn/input";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 const LinkSuggestion = ({
   onSelect,
 }: {
-  onSelect: (document: Document) => void;
+  onSelect: (document: DocumentFile) => void;
 }) => {
   const [query, setQuery] = useState("");
   const queryClient = useQueryClient();
   const documentList =
-    queryClient.getQueryData<Document[]>(documentKeys.lists()) ?? [];
+    //TODO: fix
+    queryClient.getQueryData<DocumentFile[]>(documentKeys.lists()) ?? [];
   const filtered = documentList.filter((document) =>
     document.title.toLowerCase().includes(query.toLowerCase()),
   );

@@ -1,6 +1,6 @@
-import { featureRegistry } from "@/app/init";
-import { IconDataSchema } from "@/shared/schemas/iconData";
-import { SimpleUUIDSchema } from "@/shared/schemas/simpleUUIDSchema";
+import { featureRegistry } from "@app/init";
+import { IconDataSchema } from "@shared/schemas/iconData";
+import { SimpleUUIDSchema } from "@shared/schemas/simpleUUIDSchema";
 import z from "zod";
 
 const FileSchema = z.object({
@@ -10,7 +10,6 @@ const FileSchema = z.object({
   type: z.string().refine((val) => featureRegistry.has(val), {
     message: "This file type is not supported",
   }),
-  contentId: z.string(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });

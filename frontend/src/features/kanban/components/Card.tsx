@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import invariant from "tiny-invariant";
 import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@shared/lib/tailwind-css/utils";
 
 interface CardProps {
   title: string;
