@@ -14,7 +14,7 @@ const Document = () => {
   };
 
   return (
-    <div className="flex h-full w-full justify-center overflow-auto p-10">
+    <div className="flex h-full w-full justify-center overflow-auto px-10">
       <div className="relative h-full w-full max-w-187.5">
         <FileName onKeyDown={handleKeyDown} />
         <DocumentDetail editorRef={editorRef} />

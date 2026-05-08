@@ -31,7 +31,7 @@ const File = ({
   return (
     <FileProvider props={value}>
       <div className="relative h-full">
-        <FileHeader className="fixed top-0 left-0" />
+        <FileHeader className="fixed top-0 left-0 h-10 w-full" />
         <FileNameLabel className="absolute top-10 left-0" />
 
         <div className="h-full overflow-auto pt-10">

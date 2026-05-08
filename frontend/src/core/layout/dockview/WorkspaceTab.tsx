@@ -42,10 +42,8 @@ const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
   return (
     <div
       onClick={onTabClick}
-      className={`group flex h-full max-w-20 min-w-30 cursor-pointer items-center justify-between border-r border-gray-700/50 px-3 text-sm transition-colors ${
-        isActive
-          ? "bg-gray-800 text-blue-400"
-          : "bg-gray-900 text-gray-400 hover:bg-gray-800/50"
+      className={`group flex h-full max-w-20 min-w-30 cursor-pointer items-center justify-between border-r px-3 text-sm transition-colors ${
+        isActive ? "text-blue-400" : "text-gray-400"
       }`}
     >
       <div className="flex items-center gap-2 truncate">
