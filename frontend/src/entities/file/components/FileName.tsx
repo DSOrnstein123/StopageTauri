@@ -1,38 +1,25 @@
-import { useEffect, useRef, type KeyboardEvent } from "react";
-import useFileName from "../hooks/useFileName";
-import { useTabContext } from "@shared/tab-context/TabContext";
+import useFileName from "../hooks/useRenameFile";
 import { useFileContext } from "../context/FileContext";
+import FileNameInput from "./FileNameInput";
+import type { KeyboardEvent } from "react";
 
 const FileName = ({
   onKeyDown,
 }: {
-  onKeyDown: (e: KeyboardEvent<HTMLHeadingElement>) => void;
+  onKeyDown: (event: KeyboardEvent) => void;
 }) => {
   const { id } = useFileContext();
-  const { setTitle } = useTabContext();
-  const { currentName, handleInput, handleBlur } = useFileName(id, setTitle);
-
-  const h1Ref = useRef<HTMLHeadingElement>(null);
-  useEffect(() => {
-    if (h1Ref.current && h1Ref.current.textContent !== currentName) {
-      h1Ref.current.textContent = currentName;
-    }
-  }, [currentName]);
+  const { name } = useFileName(id);
 
   return (
     <div className="relative mb-2">
-      <h1
-        ref={h1Ref}
-        contentEditable
-        spellCheck={false}
-        suppressContentEditableWarning
-        onInput={handleInput}
-        onBlur={handleBlur}
-        onKeyDown={onKeyDown}
+      <FileNameInput
         className="mb-4 text-5xl font-bold outline-none"
+        onKeyDown={onKeyDown}
       />
-      {!currentName && (
-        <span className="pointer-events-none absolute top-0 left-0 text-4xl font-bold text-gray-400">
+
+      {!name && (
+        <span className="pointer-events-none absolute top-1 left-0 text-5xl font-bold text-gray-400">
           Name
         </span>
       )}

@@ -1,18 +1,33 @@
 import { fileKeys } from "@entities/file/keys/fileKeys";
 import { fileService } from "@entities/file/services/fileService";
+import { useWorkspaceStore } from "@shared/lib/dockview/useWorkspaceStore";
 import { useQuery } from "@tanstack/react-query";
 import type { IDockviewPanelHeaderProps } from "dockview";
 import { X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
+  const dockApi = useWorkspaceStore((state) => state.dockApi);
   const { api } = props;
-  const isActive = api.isActive;
+  const [isActive, setIsActive] = useState(api.isActive);
   const fileId = props.params.id;
   const { data: fileName } = useQuery({
     queryKey: fileKeys.detail(fileId),
     queryFn: () => fileService.getDetail(fileId),
     select: (data) => data.name,
     staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (!dockApi) return;
+
+    const disposable = dockApi?.onDidActivePanelChange((event) => {
+      if (!event) return;
+
+      setIsActive(event.api.isActive);
+    });
+
+    return () => disposable?.dispose();
   });
 
   const onTabClick = () => {
