@@ -1,43 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Editor } from "@tiptap/react";
 import debounce from "@shared/utils/debounce";
 import { documentService } from "../services/documentService";
-import { fileService } from "@entities/file/services/fileService";
-import { useFileContext } from "@entities/file/context/FileContext";
+import useDocumentContent from "./useDocumentContent";
 
-const useDocumentData = (editor: Editor | null) => {
-  const { id } = useFileContext();
-  const [content, setContent] = useState("");
-
+const useDocumentData = (id: string, editor: Editor | null) => {
+  const { data: content } = useDocumentContent(id);
+  const isHydrated = useRef(false);
   useEffect(() => {
-    let cancel = false;
-
-    const getDocumentDetail = async () => {
-      const data = await fileService.getDetail(id);
-      if (cancel) return;
-
-      setContent(data.content);
-    };
-    getDocumentDetail();
-
-    return () => {
-      cancel = true;
-    };
+    isHydrated.current = false;
   }, [id]);
 
   useEffect(() => {
-    if (!editor || !content || editor.isDestroyed) return;
+    if (!editor || !content || editor.isDestroyed || isHydrated.current) return;
 
-    const currentContent = JSON.stringify(editor.getJSON());
-    if (currentContent !== content) {
-      setTimeout(() => {
-        if (!editor.isDestroyed) {
-          queueMicrotask(() => {
-            editor.commands.setContent(JSON.parse(content || '""'));
-          });
-        }
-      }, 0);
-    }
+    const isEmptyObject = Object.keys(content).length === 0;
+    const initialContent = isEmptyObject ? "" : content;
+
+    queueMicrotask(() => {
+      editor.commands.setContent(initialContent, { emitUpdate: false });
+      isHydrated.current = true;
+    });
   }, [editor, content]);
 
   useEffect(() => {

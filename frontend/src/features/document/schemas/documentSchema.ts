@@ -1,12 +1,9 @@
+import { FileDetailSchema } from "@entities/file/schemas/fileSchema";
 import z from "zod";
-import { FileSchema } from "@entities/file/schemas/fileSchema";
 
-const DocumentFileSchema = FileSchema.extend({
+const DocumentFileSchema = FileDetailSchema.extend({
   type: z.literal("document"),
-  content: z
-    .string()
-    .nullish()
-    .transform((value) => value ?? ""),
+  content: z.record(z.string(), z.unknown()),
 });
 type DocumentFile = z.infer<typeof DocumentFileSchema>;
 

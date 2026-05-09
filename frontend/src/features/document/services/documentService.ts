@@ -1,16 +1,12 @@
 import { invoke } from "@tauri-apps/api/core";
 import {
   type DocumentFile,
-  type DocumentFileList,
   DocumentFileSchema,
 } from "../schemas/documentSchema";
-import type { File } from "@entities/file/schemas/fileSchema";
+import type { FileDetail } from "@entities/file/schemas/fileSchema";
 
 export const documentService = {
-  getList: async (): Promise<DocumentFileList> => {
-    return await invoke("get_document_list");
-  },
-  create: async (): Promise<File> => {
+  create: async (): Promise<FileDetail> => {
     return await invoke("create_document");
   },
   updateContent: async (id: string, content: string): Promise<void> => {
