@@ -1,16 +1,18 @@
 import { invoke } from "@tauri-apps/api/core";
-import { FileListSchema } from "../schemas/fileSchema";
-import { fileValidation } from "../schemas/fileValidation";
+import { FileMetadataListSchema, type FileDetail } from "../schemas/fileSchema";
+import { featureRegistry } from "@shared/lib/registry/featureRegitry";
 
 export const fileService = {
-  getDetail: async (fileId: string) => {
+  getDetail: async <T extends FileDetail>(fileId: string): Promise<T> => {
     try {
-      const rawData = await invoke("get_file_detail", { fileId: fileId });
-      const fileType = (rawData as { type: string })
-        ?.type as keyof typeof fileValidation;
+      const rawData = await invoke<FileDetail>("get_file_detail", {
+        fileId: fileId,
+      });
+      const fileType = rawData.type;
       console.log(rawData);
-      const validData = fileValidation[fileType](rawData);
-      return validData;
+      const schema = featureRegistry.getSchema(fileType);
+      const validData = schema.parse(rawData);
+      return validData as T;
     } catch (error) {
       console.log(error);
       throw error;
@@ -19,8 +21,7 @@ export const fileService = {
   getList: async () => {
     try {
       const rawFileList = await invoke("get_files");
-      console.log(rawFileList);
-      return FileListSchema.parse(rawFileList);
+      return FileMetadataListSchema.parse(rawFileList);
     } catch (error) {
       console.error(error);
       throw error;
