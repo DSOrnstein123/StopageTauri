@@ -1,25 +1,34 @@
 use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use sqlx::types::Json;
-
-use crate::infrastructure::document::models::DocumentFile;
 
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct File {
     pub id: String,
-    pub name: String,
+    pub parent_id: Option<String>,
     pub icon: Json<IconData>,
+    pub name: String,
     #[serde(rename = "type")]
     pub file_type: String,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum FileDetail {
-    Document(DocumentFile),
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FileDetail {
+    pub id: String,
+    pub parent_id: Option<String>,
+    pub icon: Json<IconData>,
+    pub name: String,
+    #[serde(rename = "type")]
+    pub file_type: String,
+    pub content: Json<Value>,
+    pub properties: Json<Value>,
+    pub created_at: NaiveDateTime,
+    pub updated_at: NaiveDateTime,
 }
 
 #[derive(Debug, Deserialize, Serialize)]

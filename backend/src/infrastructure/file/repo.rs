@@ -1,39 +1,33 @@
 use anyhow::{Error, Ok};
 use sqlx::{SqlitePool, query, query_as};
 
-use crate::{
-    infrastructure::document::repo::get_document_detail,
-    infrastructure::file::models::{File, FileDetail, IconData},
-};
+use crate::infrastructure::file::models::{File, FileDetail, IconData};
+use serde_json::Value;
 use sqlx::types::Json;
 
 pub async fn get_file_detail(pool: &SqlitePool, id: String) -> Result<FileDetail, Error> {
-    let file_info = query!(
+    let file = query_as!(
+        FileDetail,
         r#"
             SELECT 
-              type as file_type
-            FROM files
-            WHERE id = ?
+              id as "id!: String",
+              parent_id,
+              icon as "icon: Json<IconData>",
+              name,
+              type as file_type,
+              content as "content: Json<Value>",
+              properties as "properties: Json<Value>",
+              created_at,
+              updated_at
+            FROM nodes
+            WHERE id = ? AND is_trashed = 0
         "#,
         id
     )
     .fetch_one(pool)
     .await?;
 
-    let response = match file_info.file_type.as_str() {
-        "document" => {
-            let document_detail = get_document_detail(pool, id).await?;
-            FileDetail::Document(document_detail)
-        }
-        _ => {
-            return Err(anyhow::anyhow!(
-                "Unknown file type: {}",
-                file_info.file_type
-            ));
-        }
-    };
-
-    Ok(response)
+    Ok(file)
 }
 
 pub async fn get_files(pool: &SqlitePool) -> Result<Vec<File>, Error> {
@@ -42,12 +36,14 @@ pub async fn get_files(pool: &SqlitePool) -> Result<Vec<File>, Error> {
         r#"
             SELECT 
               id as "id!: String",
-              name,
+              parent_id,
               icon as "icon: Json<IconData>",
+              name,
               type as file_type,
               created_at,
               updated_at
-            FROM files
+            FROM nodes
+            WHERE is_trashed = 0
         "#
     )
     .fetch_all(pool)
@@ -63,7 +59,7 @@ pub async fn update_file_name(
 ) -> Result<(), Error> {
     query!(
         r#"
-            UPDATE files
+            UPDATE nodes
             SET name = ?
             WHERE id = ? 
         "#,
