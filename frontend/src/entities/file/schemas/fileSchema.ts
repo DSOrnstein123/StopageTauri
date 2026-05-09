@@ -11,8 +11,10 @@ const FileMetadataSchema = z.object({
   type: z.string().refine((val) => featureRegistry.has(val), {
     message: "This file type is not supported",
   }),
+  isTemplate: z.boolean(),
   createdAt: z.string(),
   updatedAt: z.string(),
+  isTrashed: z.boolean(),
 });
 type FileMetadata = z.infer<typeof FileMetadataSchema>;
 const FileMetadataListSchema = z.array(FileMetadataSchema);
