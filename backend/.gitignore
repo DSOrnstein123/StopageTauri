@@ -1,5 +1,6 @@
 /target
 /src/main.rs
 /src/database/pool.rs
+/src/database/connect.rs
 
 .env
