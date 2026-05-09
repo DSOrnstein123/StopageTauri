@@ -1,6 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { FileMetadataListSchema, type FileDetail } from "../schemas/fileSchema";
 import { featureRegistry } from "@shared/lib/registry/featureRegitry";
+import { resolveNodeType } from "@shared/lib/registry/resolveNodeType";
 
 export const fileService = {
   getDetail: async <T extends FileDetail>(fileId: string): Promise<T> => {
@@ -8,7 +9,7 @@ export const fileService = {
       const rawData = await invoke<FileDetail>("get_file_detail", {
         fileId: fileId,
       });
-      const fileType = rawData.type;
+      const fileType = resolveNodeType(rawData.type, rawData.isTemplate);
       console.log(rawData);
       const schema = featureRegistry.getSchema(fileType);
       const validData = schema.parse(rawData);
