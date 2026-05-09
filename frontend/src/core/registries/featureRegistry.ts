@@ -1,11 +1,11 @@
 import type { ComponentType } from "react";
+import type { ZodType } from "zod";
 
 interface FeatureConfig {
   component: ComponentType<{ data: unknown }>;
-  sidebarComponent?: ComponentType;
+  schema: ZodType;
   actionButton?: ComponentType;
-  parser: (data: unknown) => unknown;
-  fetcher: (id: string) => unknown;
+  sidebarComponent?: ComponentType;
 
   slots?: {
     toolbar?: ComponentType<{ data: unknown }>;
@@ -22,10 +22,7 @@ export class FeatureRegistry {
 
   register(type: string, config: FeatureConfig) {
     this.features.set(type, {
-      component: config.component,
-      sidebarComponent: config.sidebarComponent,
-      parser: config.parser,
-      fetcher: config.fetcher,
+      ...config,
     });
   }
 
@@ -47,29 +44,56 @@ export class FeatureRegistry {
   }
 
   has(type: string): boolean {
-    if (!this.features.has(type)) {
-      return false;
-    }
-    return true;
+    return this.features.has(type);
   }
 
   getComponent(type: string) {
-    if (!this.has(type)) return;
-    return this.features.get(type)?.component;
+    const feature = this.features.get(type);
+    if (!feature || !feature.component) {
+      throw new Error(
+        `[FeatureRegistry] Cannot find component for type '${type}'`,
+      );
+    }
+    return feature.component;
+  }
+
+  getSchema(type: string) {
+    const feature = this.features.get(type);
+    if (!feature || !feature.schema) {
+      throw new Error(
+        `[FeatureRegistry] Cannot find schema for type '${type}'`,
+      );
+    }
+    return feature.schema;
   }
 
   getSidebarComponent(type: string) {
-    if (!this.has(type)) return;
-    return this.features.get(type)?.sidebarComponent;
+    const feature = this.features.get(type);
+    if (!feature) {
+      throw new Error(
+        `[FeatureRegistry] Feature type '${type}' is not registered`,
+      );
+    }
+    return feature.sidebarComponent;
   }
 
-  getParser(type: string) {
-    if (!this.has(type)) return;
-    return this.features.get(type)?.parser;
+  getActionButton(type: string) {
+    const feature = this.features.get(type);
+    if (!feature) {
+      throw new Error(
+        `[FeatureRegistry] Feature type '${type}' is not registered`,
+      );
+    }
+    return feature.actionButton;
   }
 
-  getFetcher(type: string) {
-    if (!this.has(type)) return;
-    return this.features.get(type)?.fetcher;
+  getSlot(type: string, slot: Slot) {
+    const feature = this.features.get(type);
+    if (!feature) {
+      throw new Error(
+        `[FeatureRegistry] Feature type '${type}' is not registered`,
+      );
+    }
+    return feature.slots?.[slot];
   }
 }

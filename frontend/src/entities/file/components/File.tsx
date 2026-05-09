@@ -1,18 +1,12 @@
 import FileHeader from "./FileHeader";
 import FileProvider from "../context/FileProvider";
-import type { ComponentType } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fileKeys } from "../keys/fileKeys";
 import { fileService } from "../services/fileService";
 import FileNameLabel from "./FileNameLabel";
+import { resolveComponent } from "@shared/lib/registry/resolveComponent";
 
-const File = ({
-  id,
-  resolveComponent,
-}: {
-  id: string;
-  resolveComponent: (type: string) => ComponentType<{ data: unknown }> | null;
-}) => {
+const File = ({ id }: { id: string }) => {
   const value = {
     id: id,
   };

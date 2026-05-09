@@ -2,7 +2,6 @@ import TabProvider from "@shared/tab-context/TabProvider";
 import File from "@entities/file/components/File";
 import type { IDockviewPanelProps } from "dockview-core";
 import { useEffect, useState } from "react";
-import { resolveComponent } from "./resolveComponent";
 
 interface TabParams {
   id: string;
@@ -27,7 +26,7 @@ const Tab = (props: IDockviewPanelProps<TabParams>) => {
 
   return (
     <TabProvider props={value}>
-      <File id={props.params.id} resolveComponent={resolveComponent} />
+      <File id={props.params.id} />
     </TabProvider>
   );
 };

@@ -1,4 +1,4 @@
-import { featureRegistry } from "./init";
+import { featureRegistry } from "./featureRegitry";
 
 export const resolveSidebarComponent = (type: string) => {
   const ContentComponent = featureRegistry.getSidebarComponent(type);

@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "@app/init";
-import "@app/featureRegister.ts";
+import "@shared/lib/registry/featureRegitry.ts";
+import "@features/document/register.ts";
 import App from "./App.tsx";
 import "./index.css";
 import "@features/document/tiptap/tiptap.css";

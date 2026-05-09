@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useRightSidebarStore } from "@shared/useSidebarStore";
-import { resolveSidebarComponent } from "./resolveSidebarComponent";
+import { resolveSidebarComponent } from "../shared/lib/registry/resolveSidebarComponent";
 
 const RightSidebar = () => {
   const rightSidebarRef = useRef<HTMLDivElement | null>(null);
