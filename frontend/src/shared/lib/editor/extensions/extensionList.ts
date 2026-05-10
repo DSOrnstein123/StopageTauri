@@ -9,6 +9,7 @@ import { ColumnContainer } from "./column/columnContainer";
 import { CustomCodeBlock } from "./custom-code-block/CustomCodeBlock";
 import { createLowlight, all } from "lowlight";
 import CollectionNode from "./collection/CollectionNode";
+import { extensionRegistry } from "../extensionRegistry";
 
 const lowlight = createLowlight(all);
 
@@ -36,4 +37,5 @@ export const extensionList = [
     lowlight,
   }),
   CollectionNode,
+  ...extensionRegistry.getAllExtensions(),
 ];
