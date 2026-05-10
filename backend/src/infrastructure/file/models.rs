@@ -27,8 +27,10 @@ pub struct FileDetail {
     pub file_type: String,
     pub content: Json<Value>,
     pub properties: Json<Value>,
+    pub is_template: bool,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
+    pub is_trashed: bool,
 }
 
 #[derive(Debug, Deserialize, Serialize)]

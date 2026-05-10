@@ -1,12 +1,12 @@
 use crate::AppState;
-use backend::infrastructure::file::models::File;
+use backend::infrastructure::document::models::DocumentFile;
 use tauri::State;
 
 #[tauri::command]
 pub async fn create_document(
     state: State<'_, AppState>,
     parent_id: Option<String>,
-) -> Result<File, String> {
+) -> Result<DocumentFile, String> {
     backend::infrastructure::document::repo::create_document(&state.db, parent_id)
         .await
         .map_err(|e| e.to_string())

@@ -17,8 +17,10 @@ pub async fn get_file_detail(pool: &SqlitePool, id: String) -> Result<FileDetail
               type as file_type,
               content as "content: Json<Value>",
               properties as "properties: Json<Value>",
+              is_template,
               created_at,
-              updated_at
+              updated_at,
+              is_trashed
             FROM nodes
             WHERE id = ? AND is_trashed = 0
         "#,
@@ -43,7 +45,7 @@ pub async fn get_files(pool: &SqlitePool) -> Result<Vec<File>, Error> {
               created_at,
               updated_at
             FROM nodes
-            WHERE is_trashed = 0
+            WHERE is_trashed = 0 AND is_template = 0
         "#
     )
     .fetch_all(pool)
