@@ -1,6 +1,6 @@
 import { Editor, useEditor } from "@tiptap/react";
-import { syncAlignAttrs } from "../editor/extensions/dnd/floatDragExtension";
-import { extensionList } from "../editor/extensions/extensionList";
+import { syncAlignAttrs } from "../../../shared/lib/editor/extensions/dnd/floatDragExtension";
+import { extensionList } from "../../../shared/lib/editor/extensions/extensionList";
 import TableOfContents, {
   type TableOfContentData,
 } from "@tiptap/extension-table-of-contents";
