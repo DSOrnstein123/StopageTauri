@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@shared/lib/tailwind-css/utils";
+import { cn } from "@system/lib/tailwind-css/utils";
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (

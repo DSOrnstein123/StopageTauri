@@ -1,11 +1,11 @@
 import { Editor, useEditor } from "@tiptap/react";
-import { syncAlignAttrs } from "../../../shared/lib/editor/extensions/dnd/floatDragExtension";
-import { extensionList } from "../../../shared/lib/editor/extensions/extensionList";
 import TableOfContents, {
   type TableOfContentData,
 } from "@tiptap/extension-table-of-contents";
 import { useMemo, useState, type RefObject } from "react";
-import { useWorkspaceStore } from "@shared/lib/dockview/useWorkspaceStore";
+import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
+import { extensionList } from "@system/lib/editor/extensions/extensionList";
+import { syncAlignAttrs } from "@system/lib/editor/extensions/dnd/floatDragExtension";
 
 const useDocumentEditor = (
   tabId: string,

@@ -1,11 +1,11 @@
-import { Button } from "@shared/components/shadcn/button";
+import { Button } from "@system/components/shadcn/button";
 import { Calendar, FilePlus } from "lucide-react";
 import useCreateDocument from "@features/document/hooks/useCreateDocument";
-import { useWorkspaceStore } from "@shared/lib/dockview/useWorkspaceStore";
+import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
 
 const ActionBar = () => {
   const { mutateAsync: createDocument } = useCreateDocument();
-  const openFile = useWorkspaceStore((state) => state.openFile);
+  const openTab = useWorkspaceStore((state) => state.openTab);
 
   return (
     <aside className="bg-primary/20 flex h-full w-10 flex-col items-center gap-y-px py-1">
@@ -15,7 +15,7 @@ const ActionBar = () => {
         className="relative size-8 p-0"
         onClick={async () => {
           const data = await createDocument();
-          openFile(data.id, data.name);
+          openTab(data.id, data.name);
         }}
       >
         <FilePlus />

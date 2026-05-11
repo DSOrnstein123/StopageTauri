@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Editor } from "@tiptap/react";
-import debounce from "@shared/utils/debounce";
+import debounce from "@system/utils/debounce";
 import { documentService } from "../services/documentService";
 import useDocumentContent from "./useDocumentContent";
 

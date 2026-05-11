@@ -1,6 +1,6 @@
-import { fileKeys } from "@entities/file/keys/fileKeys";
-import { fileService } from "@entities/file/services/fileService";
-import { useWorkspaceStore } from "@shared/lib/dockview/useWorkspaceStore";
+import { nodeKeys } from "@system/domain/node/keys/nodeKeys";
+import { nodeService } from "@system/domain/node/services/nodeService";
+import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
 import { useQuery } from "@tanstack/react-query";
 import type { IDockviewPanelHeaderProps } from "dockview";
 import { X } from "lucide-react";
@@ -12,8 +12,8 @@ const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
   const [isActive, setIsActive] = useState(api.isActive);
   const fileId = props.params.id;
   const { data: fileName } = useQuery({
-    queryKey: fileKeys.detail(fileId),
-    queryFn: () => fileService.getDetail(fileId),
+    queryKey: nodeKeys.detail(fileId),
+    queryFn: () => nodeService.getDetail(fileId),
     select: (data) => data.name,
     staleTime: Infinity,
   });

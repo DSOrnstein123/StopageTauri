@@ -1,13 +1,13 @@
+import { featureRegistry } from "@system/registries/featureRegitry";
+import { useRightSidebarStore } from "@system/stores/useSidebarStore";
 import { useRef } from "react";
-import { useRightSidebarStore } from "@shared/useSidebarStore";
-import { resolveSidebarComponent } from "../shared/lib/registry/resolveSidebarComponent";
 
 const RightSidebar = () => {
   const rightSidebarRef = useRef<HTMLDivElement | null>(null);
   const type = useRightSidebarStore((state) => state.type);
 
   /* eslint-disable react-hooks/static-components */
-  const SidebarContent = resolveSidebarComponent(type);
+  const SidebarContent = featureRegistry.getSidebarComponent(type);
   if (!SidebarContent) return null;
 
   return (

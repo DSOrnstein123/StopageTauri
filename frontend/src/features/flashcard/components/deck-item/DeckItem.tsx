@@ -1,6 +1,6 @@
 import { Card } from "@/shared/components/shadcn/card";
 import { useState } from "react";
-import { cn } from "@shared/lib/tailwind-css/utils";
+import { cn } from "@system/lib/tailwind-css/utils";
 import { useParams } from "@tanstack/react-router";
 import DeckItemHeader from "./DeckItemHeader";
 import DeckItemChildren from "./DeckItemChildren";

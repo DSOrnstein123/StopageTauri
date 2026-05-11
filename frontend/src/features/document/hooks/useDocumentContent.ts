@@ -1,11 +1,11 @@
-import { fileKeys } from "@entities/file/keys/fileKeys";
-import { fileService } from "@entities/file/services/fileService";
+import { nodeKeys } from "@system/domain/node/keys/nodeKeys";
+import { nodeService } from "@system/domain/node/services/nodeService";
 import { useQuery } from "@tanstack/react-query";
 
 const useDocumentContent = (id: string) => {
   return useQuery({
-    queryKey: fileKeys.detail(id),
-    queryFn: () => fileService.getDetail(id),
+    queryKey: nodeKeys.detail(id),
+    queryFn: () => nodeService.getDetail(id),
     select: (data) => data.content,
     staleTime: Infinity,
   });

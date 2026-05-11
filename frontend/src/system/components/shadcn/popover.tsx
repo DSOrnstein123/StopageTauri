@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Popover as PopoverPrimitive } from "radix-ui";
 
-import { cn } from "@shared/lib/tailwind-css/utils";
+import { cn } from "@system/lib/tailwind-css/utils";
 
 function Popover({
   ...props

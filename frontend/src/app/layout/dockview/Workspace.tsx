@@ -2,7 +2,7 @@ import { DockviewApi, themeLight } from "dockview-core";
 import { DockviewReact } from "dockview";
 import { components } from "./components";
 import { tabComponents } from "./tabComponents";
-import { useWorkspaceStore } from "@shared/lib/dockview/useWorkspaceStore";
+import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
 
 const loadDefaultLayout = (api: DockviewApi) => {
   api.addPanel({

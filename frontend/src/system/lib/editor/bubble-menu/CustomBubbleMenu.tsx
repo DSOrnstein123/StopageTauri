@@ -1,10 +1,10 @@
 import { BubbleMenu } from "@tiptap/react/menus";
 import { Editor, useEditorState } from "@tiptap/react";
-import { Button } from "@shared/components/shadcn/button";
+import { Button } from "@system/components/shadcn/button";
 import { useState } from "react";
 import LinkSuggestion from "./LinkSuggestion";
 import type { DocumentFile } from "@features/document/schemas/documentSchema";
-import { cn } from "@shared/lib/tailwind-css/utils";
+import { cn } from "@system/lib/tailwind-css/utils";
 
 //TODO: optimize
 //TODO: fixed position

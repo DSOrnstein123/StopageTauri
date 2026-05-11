@@ -1,6 +1,6 @@
 import documentKeys from "@features/document/keys/documentKeys";
 import type { DocumentFile } from "@features/document/schemas/documentSchema";
-import { Input } from "@shared/components/shadcn/input";
+import { Input } from "@system/components/shadcn/input";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -15,7 +15,7 @@ const LinkSuggestion = ({
     //TODO: fix
     queryClient.getQueryData<DocumentFile[]>(documentKeys.lists()) ?? [];
   const filtered = documentList.filter((document) =>
-    document.title.toLowerCase().includes(query.toLowerCase()),
+    document.name.toLowerCase().includes(query.toLowerCase()),
   );
 
   return (
@@ -30,7 +30,7 @@ const LinkSuggestion = ({
       <div className="mt-2 flex max-h-20 flex-col gap-x-1 overflow-x-auto">
         {filtered.map((document) => (
           <div key={document.id} onClick={() => onSelect(document)}>
-            {document.title}
+            {document.name}
           </div>
         ))}
       </div>

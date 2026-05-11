@@ -4,15 +4,15 @@ import useDocumentData from "../hooks/useDocumentData";
 import useDocumentEditor from "../hooks/useDocumentEditor";
 import useWorkspaceSync from "../hooks/useWorkspaceSync";
 import DocumentContent from "./DocumentContent";
-import { useTabContext } from "@shared/tab-context/TabContext";
-import { useFileContext } from "@entities/file/context/FileContext";
+import { useNodeContext } from "@system/domain/node/context/NodeContext";
+import { useTabContext } from "@system/tab-context/TabContext";
 
 const DocumentDetail = ({
   editorRef,
 }: {
   editorRef: RefObject<Editor | null>;
 }) => {
-  const { id } = useFileContext();
+  const { id } = useNodeContext();
   const { isActive } = useTabContext();
   const { editor, localTOC } = useDocumentEditor(id, editorRef);
   useDocumentData(id, editor);

@@ -1,4 +1,4 @@
-import { cn } from "@shared/lib/tailwind-css/utils";
+import { cn } from "@system/lib/tailwind-css/utils";
 import { type Node, type NodeProps } from "@xyflow/react";
 import { memo } from "react";
 

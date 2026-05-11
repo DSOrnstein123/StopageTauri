@@ -1,10 +1,10 @@
 import type { PropertyType } from "./collection.types";
 import { useEffect, useMemo, useState } from "react";
-import debounce from "@shared/utils/debounce";
+import debounce from "@system/utils/debounce";
 import { invoke } from "@tauri-apps/api/core";
 
 interface CellProps {
-  data: any;
+  data: unknown;
   documentId: string;
   propertyId: string;
   propertyType: PropertyType;

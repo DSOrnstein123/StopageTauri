@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { documentService } from "../services/documentService";
-import type { File } from "@entities/file/schemas/fileSchema";
-import { fileKeys } from "@entities/file/keys/fileKeys";
+import { nodeKeys } from "@system/domain/node/keys/nodeKeys";
+import type { NodeMetadataList } from "@system/domain/node/schemas/nodeSchema";
 
 const useCreateDocument = () => {
   const queryClient = useQueryClient();
@@ -10,10 +10,10 @@ const useCreateDocument = () => {
     mutationFn: () => documentService.create(),
 
     onSuccess: (newDoc) => {
-      queryClient.setQueryData<File[]>(fileKeys.list(), (oldData = []) => [
-        ...oldData,
-        newDoc,
-      ]);
+      queryClient.setQueryData<NodeMetadataList>(
+        nodeKeys.list(),
+        (oldData = []) => [...oldData, newDoc],
+      );
     },
   });
 };

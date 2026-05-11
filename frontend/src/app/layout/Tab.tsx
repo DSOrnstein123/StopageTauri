@@ -1,5 +1,5 @@
-import TabProvider from "@shared/tab-context/TabProvider";
-import File from "@entities/file/components/File";
+import Node from "@system/domain/node/components/Node";
+import TabProvider from "@system/tab-context/TabProvider";
 import type { IDockviewPanelProps } from "dockview-core";
 import { useEffect, useState } from "react";
 
@@ -26,7 +26,7 @@ const Tab = (props: IDockviewPanelProps<TabParams>) => {
 
   return (
     <TabProvider props={value}>
-      <File id={props.params.id} />
+      <Node id={props.params.id} />
     </TabProvider>
   );
 };

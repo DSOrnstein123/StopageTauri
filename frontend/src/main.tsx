@@ -4,10 +4,10 @@ import "@system/registries/featureRegitry.ts";
 import "@features/document/register.ts";
 import App from "./App.tsx";
 import "./index.css";
-import "@shared/lib/editor/editor.css";
+import "@system/lib/editor/editor.css";
 import "highlight.js/styles/github-dark.css";
 import "dockview/dist/styles/dockview.css";
-import "@core/layout/dockview/custom-dockview.css";
+import "@app/layout/dockview/custom-dockview.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

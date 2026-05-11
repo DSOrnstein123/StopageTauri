@@ -1,4 +1,4 @@
-import { Button } from "@shared/components/shadcn/button";
+import { Button } from "@system/components/shadcn/button";
 
 const CreateTemplateButton = () => {
   return <Button variant="ghost">Create Template</Button>;
