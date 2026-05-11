@@ -8,10 +8,25 @@ interface WorkspaceState {
   setDockApi: (api: DockviewApi) => void;
   setSplitApi: (api: SplitviewApi) => void;
 
-  openFile: (id: string, name: string, icon?: string) => void;
+  openTab: (config: TabConfig) => void;
   changeFile: (panelId: string, newFileId: string) => void;
   // toggleSidebar: (side: "left" | "right") => void;
 }
+
+interface DynamicTabConfig {
+  id: string;
+  icon?: string;
+  name: string;
+  mode: "dynamic";
+}
+
+interface StaticTabConfig {
+  icon?: string;
+  name: string;
+  mode: "static";
+}
+
+type TabConfig = DynamicTabConfig | StaticTabConfig;
 
 export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   dockApi: null,
@@ -19,18 +34,18 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
   setDockApi: (api) => set({ dockApi: api }),
   setSplitApi: (api) => set({ splitApi: api }),
-  openFile: (id, name) => {
+  openTab: (config) => {
     const { dockApi } = get();
     if (!dockApi) return;
 
     const panelId = `${Date.now()}`;
-
+    const params = config.mode == "dynamic" ? { id: config.id } : {};
     dockApi.addPanel({
       id: panelId,
       component: "tab",
-      title: name,
+      title: config.name,
       tabComponent: "workspace",
-      params: { id: id },
+      params: params,
     });
   },
   changeFile: (panelId, newFileId) => {
