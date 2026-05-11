@@ -1,16 +1,16 @@
 import type { KeyboardEvent } from "react";
-import { useFileContext } from "../context/FileContext";
-import useRenameFile from "../hooks/useRenameFile";
+import { useNodeContext } from "../context/NodeContext";
+import useRenameNode from "../hooks/useRenameNode";
 
-const FileNameInput = ({
+const NodeNameInput = ({
   className,
   onKeyDown,
 }: {
   className?: string;
   onKeyDown?: (event: KeyboardEvent) => void;
 }) => {
-  const { id } = useFileContext();
-  const { name, updateName, handleBlur } = useRenameFile(id);
+  const { id } = useNodeContext();
+  const { name, updateName, handleBlur } = useRenameNode(id);
 
   return (
     <input
@@ -26,4 +26,4 @@ const FileNameInput = ({
   );
 };
 
-export default FileNameInput;
+export default NodeNameInput;

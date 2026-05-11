@@ -1,20 +1,8 @@
-import { featureRegistry } from "@shared/lib/registry/featureRegitry";
-import { IconDataSchema } from "@shared/schemas/iconData";
-import { SimpleUUIDSchema } from "@shared/schemas/simpleUUIDSchema";
 import z from "zod";
+import { NodeMetadataSchema } from "./nodeSchema";
 
-const FileMetadataSchema = z.object({
-  id: SimpleUUIDSchema,
-  parentId: SimpleUUIDSchema.nullable(),
-  icon: IconDataSchema,
-  name: z.string(),
-  type: z.string().refine((val) => featureRegistry.has(val), {
-    message: "This file type is not supported",
-  }),
-  isTemplate: z.boolean(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  isTrashed: z.boolean(),
+const FileMetadataSchema = NodeMetadataSchema.extend({
+  isTemplate: z.literal(false),
 });
 type FileMetadata = z.infer<typeof FileMetadataSchema>;
 const FileMetadataListSchema = z.array(FileMetadataSchema);

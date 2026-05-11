@@ -1,14 +1,14 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
-import FileItem from "../FileItem";
-import { useGetFiles } from "@entities/file/hooks/useGetFiles";
+import FileItem from "../NodeItem";
+import { useGetNodes } from "../../hooks/useGetNodes";
 
 const FileList = () => {
   //TODO: folder
   //TODO: fix getfileList type
   const scrollElementRef = useRef<HTMLDivElement>(null);
 
-  const { data: fileList = [] } = useGetFiles();
+  const { data: fileList = [] } = useGetNodes();
 
   const virtualizer = useVirtualizer({
     count: fileList.length,
