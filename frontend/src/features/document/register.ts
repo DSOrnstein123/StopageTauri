@@ -1,8 +1,8 @@
 import { Document, DocumentSidebar } from "@features/document";
 import { DocumentFileSchema } from "@features/document/schemas/documentSchema";
-import { featureRegistry } from "@shared/lib/registry/featureRegitry";
-import { TemplateFileSchema } from "../template-manager/schemas/templateSchema";
+import { TemplateFileSchema } from "@system/domain/node/schemas/templateSchema";
 
+import { featureRegistry } from "@system/registries/featureRegitry";
 featureRegistry.register("document", {
   component: Document,
   schema: DocumentFileSchema,

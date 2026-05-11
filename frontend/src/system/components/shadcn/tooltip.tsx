@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
-import { cn } from "@shared/lib/tailwind-css/utils";
+import { cn } from "@system/lib/tailwind-css/utils";
 
 function TooltipProvider({
   delayDuration = 0,

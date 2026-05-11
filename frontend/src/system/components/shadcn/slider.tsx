@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Slider as SliderPrimitive } from "radix-ui";
 
-import { cn } from "@shared/lib/tailwind-css/utils";
+import { cn } from "@system/lib/tailwind-css/utils";
 
 function Slider({
   className,

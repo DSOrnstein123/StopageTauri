@@ -97,3 +97,5 @@ export class FeatureRegistry {
     return feature.slots?.[slot];
   }
 }
+
+export const featureRegistry = new FeatureRegistry();

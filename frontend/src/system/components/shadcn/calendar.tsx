@@ -6,8 +6,8 @@ import {
 } from "lucide-react";
 import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker";
 
-import { cn } from "@shared/lib/tailwind-css/utils";
-import { Button, buttonVariants } from "@shared/components/shadcn/button";
+import { cn } from "@system/lib/tailwind-css/utils";
+import { Button, buttonVariants } from "@system/components/shadcn/button";
 
 function Calendar({
   className,

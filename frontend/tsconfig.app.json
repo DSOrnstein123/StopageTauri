@@ -26,10 +26,9 @@
 
     "paths": {
       "@app/*": ["./src/app/*"],
-      "@core/*": ["./src/core/*"],
       "@features/*": ["./src/features/*"],
       "@entities/*": ["./src/entities/*"],
-      "@shared/*": ["./src/shared/*"]
+      "@system/*": ["./src/system/*"]
     }
   },
   "include": ["src"]

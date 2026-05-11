@@ -1,4 +1,4 @@
-import { usePrimarySidebarStore } from "@core/layout/sidebar/primarySidebarStore";
+import { usePrimarySidebarStore } from "@app/layout/sidebar/primarySidebarStore";
 import { useWorkspaceStore } from "@shared/lib/dockview/useWorkspaceStore";
 import { cn } from "@shared/lib/tailwind-css/utils";
 

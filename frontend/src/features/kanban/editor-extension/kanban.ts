@@ -1,6 +1,6 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import { ReactNodeViewRenderer } from "@tiptap/react";
-import Kanban from "./Kanban.tsx";
+import Kanban from "./kanban.ts";
 
 const KanbanNode = Node.create({
   name: "kanban",
