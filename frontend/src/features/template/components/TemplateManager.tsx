@@ -1,5 +1,12 @@
+import useGetTemplates from "../hooks/useGetTemplates";
+import TemplateGallery from "./TemplateGallery";
+
 const TemplateManager = () => {
-  return (  );
-}
- 
+  const { data: templates } = useGetTemplates();
+
+  if (!templates) return null;
+
+  return <TemplateGallery templateList={templates}></TemplateGallery>;
+};
+
 export default TemplateManager;
