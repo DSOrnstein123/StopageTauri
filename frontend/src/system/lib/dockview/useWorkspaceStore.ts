@@ -23,6 +23,7 @@ interface DynamicTabConfig {
 interface StaticTabConfig {
   icon?: string;
   name: string;
+  type: string;
   mode: "static";
 }
 
@@ -39,12 +40,13 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
     if (!dockApi) return;
 
     const panelId = `${Date.now()}`;
-    const params = config.mode == "dynamic" ? { id: config.id } : {};
+    const params =
+      config.mode == "dynamic" ? { id: config.id } : { type: config.type };
     dockApi.addPanel({
       id: panelId,
-      component: "tab",
       title: config.name,
       tabComponent: "workspace",
+      component: "tab",
       params: params,
     });
   },
