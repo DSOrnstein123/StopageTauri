@@ -1,5 +1,5 @@
 import Node from "@system/domain/node/components/Node";
-import TabProvider from "@system/tab-context/TabProvider";
+import TabProvider from "@system/tab-system/context/TabProvider";
 import type { IDockviewPanelProps } from "dockview-core";
 import { useEffect, useState } from "react";
 

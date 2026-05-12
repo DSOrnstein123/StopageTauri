@@ -1,7 +1,7 @@
 import { Separator } from "@system/components/shadcn/separator";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const NodeHeader = ({ className }: { className: string }) => {
+const TabHeader = ({ className }: { className: string }) => {
   return (
     <div className={`${className} relative flex items-center bg-white p-2`}>
       <div className="flex h-full items-center">
@@ -16,4 +16,4 @@ const NodeHeader = ({ className }: { className: string }) => {
   );
 };
 
-export default NodeHeader;
+export default TabHeader;
