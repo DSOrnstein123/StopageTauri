@@ -1,17 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import documentKeys from "../keys/documentKeys";
-import { documentService } from "../services/documentService";
+import { nodeService } from "@system/domain/node/services/nodeService";
+import { nodeKeys } from "@system/domain/node/keys/nodeKeys";
+import { pluginRegistry } from "@system/registries/pluginRegistry";
 
 const useGetDocumentList = () => {
   return useQuery({
-    queryKey: documentKeys.lists(),
+    queryKey: nodeKeys.list("file"),
     queryFn: async () => {
-      const raw = await documentService.getList();
-      // const result = zodCheck(DocumentListSchema, raw);
-      return raw;
+      const rawData = await nodeService.getList({
+        includeGroups: "file",
+        includeTypes: "document",
+      });
+      const schema = pluginRegistry.getSchema("document");
+      if (!schema) throw new Error();
+      return schema.parse(rawData);
     },
-    staleTime: Infinity,
     gcTime: Infinity,
+    staleTime: Infinity,
   });
 };
 

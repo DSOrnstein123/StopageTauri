@@ -14,8 +14,11 @@ interface Payload {
 }
 
 interface GetListOption {
-  includeTypes?: NodeGroup | NodeGroup[];
-  excludeTypes?: NodeGroup | NodeGroup[];
+  includeGroups?: NodeGroup | NodeGroup[];
+  excludeGroups?: NodeGroup | NodeGroup[];
+  includeTypes?: string | string[];
+  excludeTypes?: string | string[];
+  isTrashed?: boolean;
 }
 
 export const nodeService = {

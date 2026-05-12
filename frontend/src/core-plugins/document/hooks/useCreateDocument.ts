@@ -11,7 +11,7 @@ const useCreateDocument = () => {
 
     onSuccess: (newDoc) => {
       queryClient.setQueryData<NodeMetadataList>(
-        nodeKeys.list(),
+        nodeKeys.list("file"),
         (oldData = []) => [...oldData, newDoc],
       );
     },
