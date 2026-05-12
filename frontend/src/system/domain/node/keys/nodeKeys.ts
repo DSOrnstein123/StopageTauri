@@ -1,5 +1,7 @@
+import type { NodeGroup } from "../schemas/nodeSchema";
+
 export const nodeKeys = {
   all: ["nodes"],
-  list: () => [...nodeKeys.all, "list"],
+  list: (group: NodeGroup) => [...nodeKeys.all, "list", group],
   detail: (id: string) => [...nodeKeys.all, "detail", id],
 };

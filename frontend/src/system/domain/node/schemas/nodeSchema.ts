@@ -3,6 +3,8 @@ import { IconDataSchema } from "@system/schemas/iconData";
 import { SimpleUUIDSchema } from "@system/schemas/simpleUUIDSchema";
 import z from "zod";
 
+export type NodeGroup = "file" | "folder" | "template";
+
 const NodeMetadataSchema = z.object({
   id: SimpleUUIDSchema,
   parentId: SimpleUUIDSchema.nullable(),

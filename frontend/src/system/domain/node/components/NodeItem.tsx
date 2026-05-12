@@ -12,7 +12,11 @@ const NodeItem = ({ id, name }: NodeItemProps) => {
   const isSelected = usePrimarySidebarStore((state) => state.selectedId === id);
 
   const handleOnClick = async () => {
-    openTab(id, name);
+    openTab({
+      id: id,
+      name: name,
+      mode: "dynamic",
+    });
   };
 
   return (
