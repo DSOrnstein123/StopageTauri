@@ -1,4 +1,4 @@
-import { featureRegistry } from "@system/registries/featureRegitry";
+import { pluginRegistry } from "@system/registries/pluginRegistry";
 import { useRightSidebarStore } from "@system/stores/useSidebarStore";
 import { useRef } from "react";
 
@@ -7,7 +7,7 @@ const RightSidebar = () => {
   const type = useRightSidebarStore((state) => state.type);
 
   /* eslint-disable react-hooks/static-components */
-  const SidebarContent = featureRegistry.getSidebarComponent(type);
+  const SidebarContent = pluginRegistry.getSidebarComponent(type);
   if (!SidebarContent) return null;
 
   return (

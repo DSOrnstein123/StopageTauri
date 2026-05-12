@@ -1,4 +1,4 @@
-import { featureRegistry } from "@system/registries/featureRegitry";
+import { pluginRegistry } from "@system/registries/pluginRegistry";
 import { IconDataSchema } from "@system/schemas/iconData";
 import { SimpleUUIDSchema } from "@system/schemas/simpleUUIDSchema";
 import z from "zod";
@@ -10,7 +10,7 @@ const NodeMetadataSchema = z.object({
   parentId: SimpleUUIDSchema.nullable(),
   icon: IconDataSchema,
   name: z.string(),
-  type: z.string().refine((val) => featureRegistry.has(val), {
+  type: z.string().refine((val) => pluginRegistry.has(val), {
     message: "This node type is not supported",
   }),
   isTemplate: z.boolean(),

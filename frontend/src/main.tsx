@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "@system/registries/featureRegitry.ts";
+import "@system/registries/pluginRegistry.ts";
 import "@features/document/register.ts";
 import App from "./App.tsx";
 import "./index.css";

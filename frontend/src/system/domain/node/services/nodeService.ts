@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { resolveNodeType } from "../utils/resolveNodeType";
-import { featureRegistry } from "@system/registries/featureRegitry";
+import { pluginRegistry } from "@system/registries/pluginRegistry";
 import {
   NodeMetadataListSchema,
   type NodeDetail,
@@ -26,7 +26,7 @@ export const nodeService = {
       });
       const nodeType = resolveNodeType(rawData.type, rawData.isTemplate);
       console.log(rawData);
-      const schema = featureRegistry.getSchema(nodeType);
+      const schema = pluginRegistry.getSchema(nodeType);
       const validData = schema.parse(rawData);
       return validData as T;
     } catch (error) {
