@@ -2,45 +2,53 @@ import { invoke } from "@tauri-apps/api/core";
 import { resolveNodeType } from "../utils/resolveNodeType";
 import { pluginRegistry } from "@system/registries/pluginRegistry";
 import {
-  NodeMetadataListSchema,
+  NodeMetadataSchema,
   type NodeDetail,
-  type NodeGroup,
+  type NodeMetadataList,
 } from "../schemas/nodeSchema";
+import type { NodeFilterOptions, NodeKind } from "../types/node";
 
 interface Payload {
   parentId: string;
   name: string;
-  group: NodeGroup;
-}
-
-interface GetListOption {
-  includeGroups?: NodeGroup | NodeGroup[];
-  excludeGroups?: NodeGroup | NodeGroup[];
-  includeTypes?: string | string[];
-  excludeTypes?: string | string[];
-  isTrashed?: boolean;
+  kind: NodeKind;
 }
 
 export const nodeService = {
   getDetail: async <T extends NodeDetail>(id: string): Promise<T> => {
-    try {
-      const rawData = await invoke<NodeDetail>("get_node_detail", {
-        fileId: id,
-      });
-      const nodeType = resolveNodeType(rawData.type, rawData.isTemplate);
-      console.log(rawData);
-      const schema = pluginRegistry.getSchema(nodeType);
-      const validData = schema.parse(rawData);
-      return validData as T;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    const rawData = await invoke<NodeDetail>("get_node_detail", {
+      fileId: id,
+    });
+    const nodeType = resolveNodeType(rawData.type, rawData.isTemplate);
+    console.log(rawData);
+    const schema = pluginRegistry.getSchema(nodeType);
+    const validData = schema.parse(rawData);
+    return validData as T;
   },
-  getList: async (option?: GetListOption) => {
+  getList: async (option?: NodeFilterOptions) => {
     try {
-      const rawFileList = await invoke("get_nodes", { option: option });
-      return NodeMetadataListSchema.parse(rawFileList);
+      const rawData = await invoke<NodeMetadataList>("get_nodes", {
+        option: option,
+      });
+      return rawData.reduce((validItems: unknown[], item) => {
+        const schema = pluginRegistry.getSchema(item.type);
+
+        try {
+          if (schema) {
+            validItems.push(schema.parse(item));
+          } else {
+            const fallbackItem = NodeMetadataSchema.parse(item);
+            validItems.push({ ...fallbackItem, isUnsupported: true });
+          }
+        } catch (error) {
+          console.error(
+            `[Data Error] Failed to parse node (ID: ${item.id}):`,
+            error,
+          );
+        }
+
+        return validItems;
+      }, []);
     } catch (error) {
       console.error(error);
       throw error;

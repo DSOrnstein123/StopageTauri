@@ -3,21 +3,23 @@ import { nodeService } from "@system/domain/node/services/nodeService";
 import { nodeKeys } from "@system/domain/node/keys/nodeKeys";
 import { pluginRegistry } from "@system/registries/pluginRegistry";
 
-const useGetDocumentList = () => {
+const useGetDocuments = () => {
   return useQuery({
-    queryKey: nodeKeys.list("file"),
+    queryKey: nodeKeys.list({
+      includeKinds: ["file"],
+      includeTypes: ["document"],
+    }),
     queryFn: async () => {
       const rawData = await nodeService.getList({
-        includeGroups: "file",
-        includeTypes: "document",
+        includeKinds: ["file"],
+        includeTypes: ["document"],
       });
       const schema = pluginRegistry.getSchema("document");
       if (!schema) throw new Error();
       return schema.parse(rawData);
     },
-    gcTime: Infinity,
     staleTime: Infinity,
   });
 };
 
-export { useGetDocumentList };
+export default useGetDocuments;

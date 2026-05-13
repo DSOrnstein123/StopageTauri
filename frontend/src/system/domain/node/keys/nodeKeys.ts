@@ -1,8 +1,8 @@
-import type { NodeGroup } from "../schemas/nodeSchema";
+import type { NodeFilterOptions } from "../types/node";
 
 export const nodeKeys = {
   all: ["nodes"] as const,
   lists: () => [...nodeKeys.all, "list"],
-  list: (group: NodeGroup) => [...nodeKeys.lists(), group],
+  list: (filter?: NodeFilterOptions) => [...nodeKeys.lists(), filter],
   detail: (id: string) => [...nodeKeys.all, "detail", id],
 };
