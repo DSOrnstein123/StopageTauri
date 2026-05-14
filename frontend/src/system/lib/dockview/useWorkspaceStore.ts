@@ -17,6 +17,7 @@ interface DynamicTabConfig {
   id: string;
   icon?: string;
   name: string;
+  type?: string;
   mode: "dynamic";
 }
 
@@ -41,7 +42,9 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
     const panelId = `${Date.now()}`;
     const params =
-      config.mode == "dynamic" ? { id: config.id } : { type: config.type };
+      config.mode == "dynamic"
+        ? { id: config.id, type: config.type }
+        : { type: config.type };
     dockApi.addPanel({
       id: panelId,
       title: config.name,
