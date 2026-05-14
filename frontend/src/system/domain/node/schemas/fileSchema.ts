@@ -1,8 +1,8 @@
 import z from "zod";
-import { NodeMetadataSchema } from "./nodeSchema";
+import { NodeKindSchema, NodeMetadataSchema } from "./nodeSchema";
 
 const FileMetadataSchema = NodeMetadataSchema.extend({
-  isTemplate: z.literal(false),
+  kind: z.literal(NodeKindSchema.enum.file),
 });
 type FileMetadata = z.infer<typeof FileMetadataSchema>;
 const FileMetadataListSchema = z.array(FileMetadataSchema);
