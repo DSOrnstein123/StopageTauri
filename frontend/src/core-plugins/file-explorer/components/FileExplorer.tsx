@@ -1,7 +1,7 @@
-import FileList from "./NodeList";
+import FileList from "./FileList";
 import Toolbar from "./Toolbar";
 
-const NodeExplorer = () => {
+const FileExplorer = () => {
   return (
     <div className="relative z-20 h-full space-y-0.5 p-2">
       <Toolbar />
@@ -10,4 +10,4 @@ const NodeExplorer = () => {
   );
 };
 
-export default NodeExplorer;
+export default FileExplorer;

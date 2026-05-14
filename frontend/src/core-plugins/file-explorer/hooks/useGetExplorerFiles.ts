@@ -1,9 +1,9 @@
 import { useGetNodes } from "@system/domain/node/hooks/useGetNodes";
 
-const useGetExplorerNodes = () => {
+const useGetExplorerFiles = () => {
   return useGetNodes({
     includeKinds: ["folder", "file"],
   });
 };
 
-export default useGetExplorerNodes;
+export default useGetExplorerFiles;

@@ -1,17 +1,17 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
-import FileItem from "./NodeItem";
-import useGetExplorerNodes from "../hooks/useGetExplorerNodes";
+import FileItem from "./FileItem";
+import useGetExplorerFiles from "../hooks/useGetExplorerFiles";
 
-const NodeList = () => {
+const FileList = () => {
   //TODO: folder
-  //TODO: fix getNodeList type
+  //TODO: fix getFileList type
   const scrollElementRef = useRef<HTMLDivElement>(null);
 
-  const { data: nodeList = [] } = useGetExplorerNodes();
+  const { data: FileList = [] } = useGetExplorerFiles();
 
   const virtualizer = useVirtualizer({
-    count: nodeList.length,
+    count: FileList.length,
     estimateSize: () => 32,
     getScrollElement: () => scrollElementRef.current,
     overscan: 5,
@@ -29,7 +29,7 @@ const NodeList = () => {
         style={{ height: `${virtualizer.getTotalSize()}px` }}
       >
         {virtualizerItems.map((virtualizerItem) => {
-          const node = nodeList[virtualizerItem.index];
+          const File = FileList[virtualizerItem.index];
 
           return (
             <div
@@ -41,7 +41,7 @@ const NodeList = () => {
               }}
               data-index={virtualizerItem.index}
             >
-              <FileItem id={node.id} name={node.name} />
+              <FileItem id={File.id} name={File.name} />
             </div>
           );
         })}
@@ -50,4 +50,4 @@ const NodeList = () => {
   );
 };
 
-export default NodeList;
+export default FileList;

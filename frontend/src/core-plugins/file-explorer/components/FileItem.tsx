@@ -2,7 +2,7 @@ import { usePrimarySidebarStore } from "@app/layout/sidebar/primarySidebarStore"
 import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
 import { cn } from "@system/lib/tailwind-css/utils";
 
-const NodeItem = ({ id, name }: { id: string; name: string }) => {
+const FileItem = ({ id, name }: { id: string; name: string }) => {
   const openTab = useWorkspaceStore((state) => state.openTab);
   const isSelected = usePrimarySidebarStore((state) => state.selectedId === id);
 
@@ -27,4 +27,4 @@ const NodeItem = ({ id, name }: { id: string; name: string }) => {
   );
 };
 
-export default NodeItem;
+export default FileItem;
