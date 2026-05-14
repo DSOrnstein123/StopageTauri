@@ -49,15 +49,15 @@ pub async fn create_template(pool: &SqlitePool) -> Result<TemplateFile, Error> {
     let document_file = query_as!(
         TemplateFile,
         r#"
-            INSERT INTO nodes (id, name, icon, type, is_template)
-            VALUES (?, 'Untitled', ?, 'document', 1)
+            INSERT INTO nodes (id, name, icon, type)
+            VALUES (?, 'Untitled', ?, 'document')
             RETURNING
                 id as "id!: String",
-                name,
                 icon as "icon: Json<IconData>",
-                type as file_type,
+                name,
+                kind,
+                type as node_type,
                 content,
-                is_template,
                 created_at,
                 updated_at
         "#,
