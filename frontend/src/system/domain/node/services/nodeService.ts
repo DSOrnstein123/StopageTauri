@@ -19,7 +19,7 @@ export const nodeService = {
     const rawData = await invoke<NodeDetail>("get_node_detail", {
       fileId: id,
     });
-    const nodeType = resolveNodeType(rawData.type, rawData.isTemplate);
+    const nodeType = resolveNodeType(rawData.type);
     console.log(rawData);
     const schema = pluginRegistry.getSchema(nodeType);
     const validData = schema.parse(rawData);
