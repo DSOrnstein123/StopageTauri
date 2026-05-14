@@ -43,11 +43,3 @@ pub struct NodeFilterOptions {
     pub exclude_kinds: Option<Vec<String>>,
     pub exclude_types: Option<Vec<String>>,
 }
-
-#[derive(Debug, Deserialize, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct IconData {
-    #[serde(rename = "type")]
-    pub icon_type: String,
-    pub value: String,
-}

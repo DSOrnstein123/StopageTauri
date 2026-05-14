@@ -1,5 +1,5 @@
 use crate::infrastructure::document::models::{DocumentFile, TemplateFile};
-use crate::infrastructure::file::models::IconData;
+use crate::infrastructure::node::models::IconData;
 use sqlx::types::Json;
 use sqlx::{Error, SqlitePool, query, query_as};
 use uuid::Uuid;
