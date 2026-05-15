@@ -1,10 +1,12 @@
 use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
+use sqlx::prelude::Type;
 
 use crate::domain::models::icon_data::IconData;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Type)]
+#[sqlx(rename_all = "lowercase")]
 pub enum NodeKind {
     Folder,
     File,
