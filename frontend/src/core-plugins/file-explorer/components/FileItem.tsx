@@ -1,8 +1,10 @@
 import { usePrimarySidebarStore } from "@app/layout/sidebar/primarySidebarStore";
+import type { FileMetadata } from "@system/domain/node/schemas/fileSchema";
 import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
 import { cn } from "@system/lib/tailwind-css/utils";
 
-const FileItem = ({ id, name }: { id: string; name: string }) => {
+const FileItem = ({ data }: { data: FileMetadata }) => {
+  const { id, name, type } = data;
   const openTab = useWorkspaceStore((state) => state.openTab);
   const isSelected = usePrimarySidebarStore((state) => state.selectedId === id);
 
@@ -10,6 +12,7 @@ const FileItem = ({ id, name }: { id: string; name: string }) => {
     openTab({
       id: id,
       name: name,
+      type: type,
       mode: "dynamic",
     });
   };

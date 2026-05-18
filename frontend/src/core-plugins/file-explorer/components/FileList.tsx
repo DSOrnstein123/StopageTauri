@@ -8,10 +8,10 @@ const FileList = () => {
   //TODO: fix getFileList type
   const scrollElementRef = useRef<HTMLDivElement>(null);
 
-  const { data: FileList = [] } = useGetExplorerFiles();
+  const { data: fileList = [] } = useGetExplorerFiles();
 
   const virtualizer = useVirtualizer({
-    count: FileList.length,
+    count: fileList.length,
     estimateSize: () => 32,
     getScrollElement: () => scrollElementRef.current,
     overscan: 5,
@@ -29,7 +29,7 @@ const FileList = () => {
         style={{ height: `${virtualizer.getTotalSize()}px` }}
       >
         {virtualizerItems.map((virtualizerItem) => {
-          const File = FileList[virtualizerItem.index];
+          const file = fileList[virtualizerItem.index];
 
           return (
             <div
@@ -41,7 +41,7 @@ const FileList = () => {
               }}
               data-index={virtualizerItem.index}
             >
-              <FileItem id={File.id} name={File.name} />
+              <FileItem data={file} />
             </div>
           );
         })}
