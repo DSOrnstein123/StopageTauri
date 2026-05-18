@@ -1,4 +1,5 @@
 import Node from "@system/domain/node/components/Node";
+import TabHeader from "@system/tab-system/components/TabHeader";
 import TabProvider from "@system/tab-system/context/TabProvider";
 import type { IDockviewPanelProps } from "dockview-core";
 import { useEffect, useState } from "react";
@@ -25,9 +26,12 @@ const Tab = (props: IDockviewPanelProps<TabParams>) => {
   };
 
   return (
-    <TabProvider props={value}>
-      <Node id={props.params.id} />
-    </TabProvider>
+    <div className="flex h-full flex-col">
+      <TabProvider props={value}>
+        <TabHeader className="h-10" />
+        <Node className="flex-1" id={props.params.id} />
+      </TabProvider>
+    </div>
   );
 };
 

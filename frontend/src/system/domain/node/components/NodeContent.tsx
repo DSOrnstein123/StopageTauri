@@ -17,7 +17,11 @@ const NodeContent = () => {
   const Content = pluginRegistry.getComponent(data.type);
   if (!Content) return null;
 
-  return <Content data={data} />;
+  return (
+    <div className="pt-0">
+      <Content data={data} />
+    </div>
+  );
 };
 
 export default NodeContent;

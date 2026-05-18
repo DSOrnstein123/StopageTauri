@@ -2,17 +2,17 @@ import NodeProvider from "../context/NodeProvider";
 import NodeContent from "./NodeContent";
 import NodeNameLabel from "./NodeNameLabel";
 
-const Node = ({ id }: { id: string }) => {
+const Node = ({ id, className }: { id: string; className: string }) => {
   const value = {
     id: id,
   };
 
   return (
     <NodeProvider props={value}>
-      <div className="relative h-full">
-        <NodeNameLabel className="absolute top-10 left-0" />
+      <div className={`${className} relative overflow-auto`}>
+        <NodeNameLabel className="fixed top-18.75 left-0" />
 
-        <div className="h-full overflow-auto pt-10">
+        <div className="pt-8">
           <NodeContent />
         </div>
       </div>
