@@ -1,12 +1,17 @@
-use backend::database::{migrate::migrate, pool};
+use backend::{
+    database::{migrate::migrate, pool},
+    infrastructure::node::repo::SqliteNodeRepository,
+};
 use sqlx::SqlitePool;
 use tauri::Manager;
 
 pub mod commands;
+pub mod dtos;
 
 #[allow(dead_code)]
 pub struct AppState {
     db: SqlitePool,
+    pub node_repo: SqliteNodeRepository,
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -25,7 +30,10 @@ pub fn run() {
                 let db = pool::connect().await;
                 migrate(&db).await?;
 
-                app.manage(AppState { db });
+                app.manage(AppState {
+                    db: db.clone(),
+                    node_repo: SqliteNodeRepository::new(db.clone()),
+                });
 
                 Ok::<(), Box<dyn std::error::Error>>(())
             })?;
