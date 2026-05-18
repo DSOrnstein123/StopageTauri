@@ -1,22 +1,21 @@
 // pub mod collection;
 pub mod document;
-pub mod file;
 pub mod flashcard;
+pub mod node;
 
 #[macro_export]
 macro_rules! app_commands {
     () => {{
-        use $crate::commands::file::cmd as file;
-
         // use $crate::commands::features::collection::cmd as collection;
         use $crate::commands::document::cmd as docucment;
         use $crate::commands::flashcard::deck;
+        use $crate::commands::node;
 
         tauri::generate_handler![
-            //core/file
-            file::get_files,
-            file::get_file_detail,
-            file::update_file_name,
+            //core/node
+            node::get_nodes,
+            node::get_node_detail,
+            node::update_node_name,
             // flashcard
             deck::get_decks,
             deck::get_cards_from_deck,
