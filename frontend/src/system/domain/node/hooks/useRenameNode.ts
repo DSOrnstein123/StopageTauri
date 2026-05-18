@@ -2,13 +2,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import { nodeKeys } from "../keys/nodeKeys";
 import { nodeService } from "../services/nodeService";
-import usenodeName from "./useNodeName";
+import useNodeName from "./useNodeName";
 import debounce from "@system/utils/debounce";
 import type { NodeDetail, NodeMetadataList } from "../schemas/nodeSchema";
 
 const useRenameNode = (nodeId: string) => {
   const queryClient = useQueryClient();
-  const { data: name } = usenodeName(nodeId);
+  const { data: name } = useNodeName(nodeId);
   const saveTitle = useRef(
     debounce<(id: string, title: string) => void>((id, newName) => {
       nodeService.updateName(id, newName);

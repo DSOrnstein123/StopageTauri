@@ -1,11 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { resolveNodeType } from "../utils/resolveNodeType";
 import { pluginRegistry } from "@system/registries/pluginRegistry";
-import {
-  NodeMetadataSchema,
-  type NodeDetail,
-  type NodeMetadataList,
-} from "../schemas/nodeSchema";
+import { NodeMetadataListSchema, type NodeDetail } from "../schemas/nodeSchema";
 import type { NodeFilterOptions, NodeKind } from "../types/node";
 
 interface Payload {
@@ -16,41 +12,27 @@ interface Payload {
 
 export const nodeService = {
   getDetail: async <T extends NodeDetail>(id: string): Promise<T> => {
-    const rawData = await invoke<NodeDetail>("get_node_detail", {
-      fileId: id,
-    });
-    const nodeType = resolveNodeType(rawData.type);
-    console.log(rawData);
-    const schema = pluginRegistry.getSchema(nodeType);
-    const validData = schema.parse(rawData);
-    return validData as T;
-  },
-  getList: async (option?: NodeFilterOptions) => {
     try {
-      const rawData = await invoke<NodeMetadataList>("get_nodes", {
-        option: option,
+      const rawData = await invoke<NodeDetail>("get_node_detail", {
+        id: id,
       });
-      return rawData.reduce((validItems: unknown[], item) => {
-        const schema = pluginRegistry.getSchema(item.type);
-
-        try {
-          if (schema) {
-            validItems.push(schema.parse(item));
-          } else {
-            const fallbackItem = NodeMetadataSchema.parse(item);
-            validItems.push({ ...fallbackItem, isUnsupported: true });
-          }
-        } catch (error) {
-          console.error(
-            `[Data Error] Failed to parse node (ID: ${item.id}):`,
-            error,
-          );
-        }
-
-        return validItems;
-      }, []);
+      const nodeType = resolveNodeType(rawData.kind, rawData.type);
+      console.log(rawData);
+      const schema = pluginRegistry.getSchema(nodeType);
+      const validData = schema.parse(rawData);
+      return validData as T;
     } catch (error) {
-      console.error(error);
+      console.error("getDetail failed:", error);
+      throw error;
+    }
+  },
+  getList: async (options?: NodeFilterOptions) => {
+    try {
+      const rawData = await invoke("get_nodes", { options });
+      console.log(rawData);
+      return NodeMetadataListSchema.parse(rawData);
+    } catch (error) {
+      console.error("getList failed:", error);
       throw error;
     }
   },
@@ -64,5 +46,5 @@ export const nodeService = {
     }
   },
   updateName: (id: string, newName: string) =>
-    invoke("update_file_name", { id: id, newName: newName }),
+    invoke("update_node_name", { id: id, newName: newName }),
 };
