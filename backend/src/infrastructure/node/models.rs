@@ -4,7 +4,7 @@ use serde_json::Value;
 use sqlx::{prelude::FromRow, types::Json};
 
 use crate::domain::models::{
-    icon_data::IconData,
+    icon::IconData,
     node::{NodeDetail, NodeKind, NodeMetadata},
 };
 

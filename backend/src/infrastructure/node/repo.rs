@@ -1,4 +1,4 @@
-use crate::domain::models::icon_data::IconData;
+use crate::domain::models::icon::IconData;
 use crate::domain::models::node::{NodeDetail, NodeFilterOptions, NodeKind, NodeMetadata};
 use crate::domain::ports::node_repository::NodeRepository;
 use crate::infrastructure::node::models::{DbNodeDetail, DbNodeMetadata};
@@ -60,7 +60,6 @@ impl NodeRepository for SqliteNodeRepository {
             name,
             kind,
             type as node_type,
-            is_readonly,
             is_trashed,
             created_at,
             updated_at
