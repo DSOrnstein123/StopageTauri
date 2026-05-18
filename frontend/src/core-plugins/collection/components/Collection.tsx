@@ -9,13 +9,13 @@ import ColumnHeaderWithConfiguration from "./ColumnHeaderWithConfiguration";
 import AddColumnButton from "./AddColumnButton";
 import type { Collection as CollectionType } from "./collection.types";
 import { useQuery } from "@tanstack/react-query";
-import collectionKeys from "@features/collection/keys/collectionKeys";
+import collectionKeys from "@core-plugins/collection/keys/collectionKeys";
 import AddDocumentButton from "./AddDocumentButton";
 import Cell from "./Cell";
 import { collectionService } from "../services/collectionService";
 import { useCollectionNode } from "../context/useCollectionNodeContext";
 import { Trash } from "lucide-react";
-import type { DocumentFile } from "@features/document/schemas/documentSchema";
+import type { DocumentFile } from "@core-plugins/document/schemas/documentSchema";
 
 const columnHelper = createColumnHelper<DocumentFile>();
 

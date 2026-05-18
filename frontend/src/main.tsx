@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "@system/registries/pluginRegistry.ts";
-import "@features/document/register.ts";
+import "@core-plugins/document/register.ts";
 import App from "./App.tsx";
 import "./index.css";
 import "@system/lib/editor/editor.css";

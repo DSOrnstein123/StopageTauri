@@ -8,7 +8,7 @@ import { Column } from "./column/column";
 import { ColumnContainer } from "./column/columnContainer";
 import { CustomCodeBlock } from "./custom-code-block/CustomCodeBlock";
 import { createLowlight, all } from "lowlight";
-import CollectionNode from "@features/collection/editor-extension/CollectionNode";
+import CollectionNode from "@core-plugins/collection/editor-extension/CollectionNode";
 import { extensionRegistry } from "../extensionRegistry";
 
 const lowlight = createLowlight(all);

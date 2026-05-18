@@ -1,21 +1,17 @@
-import documentKeys from "@features/document/keys/documentKeys";
-import type { DocumentFile } from "@features/document/schemas/documentSchema";
 import { Input } from "@system/components/shadcn/input";
-import { useQueryClient } from "@tanstack/react-query";
+import useGetFiles from "@system/domain/node/hooks/useGetFiles";
+import type { FileMetadata } from "@system/domain/node/schemas/fileSchema";
 import { useState } from "react";
 
 const LinkSuggestion = ({
   onSelect,
 }: {
-  onSelect: (document: DocumentFile) => void;
+  onSelect: (file: FileMetadata) => void;
 }) => {
   const [query, setQuery] = useState("");
-  const queryClient = useQueryClient();
-  const documentList =
-    //TODO: fix
-    queryClient.getQueryData<DocumentFile[]>(documentKeys.lists()) ?? [];
-  const filtered = documentList.filter((document) =>
-    document.name.toLowerCase().includes(query.toLowerCase()),
+  const { data: fileList } = useGetFiles();
+  const filtered = fileList?.filter((file) =>
+    file.name.toLowerCase().includes(query.toLowerCase()),
   );
 
   return (
@@ -28,9 +24,9 @@ const LinkSuggestion = ({
       />
 
       <div className="mt-2 flex max-h-20 flex-col gap-x-1 overflow-x-auto">
-        {filtered.map((document) => (
-          <div key={document.id} onClick={() => onSelect(document)}>
-            {document.name}
+        {filtered?.map((file) => (
+          <div key={file.id} onClick={() => onSelect(file)}>
+            {file.name}
           </div>
         ))}
       </div>

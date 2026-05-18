@@ -4,7 +4,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@system/components/shadcn/popover";
-import { useAddProperty } from "@features/collection/hooks/useAddProperty";
+import { useAddProperty } from "@core-plugins/collection/hooks/useAddProperty";
 import { COLUMN_TYPES } from "./collection.types";
 
 const AddColumnButton = ({ collectionId }: { collectionId: string }) => {

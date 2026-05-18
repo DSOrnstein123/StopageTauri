@@ -1,8 +1,9 @@
-import { Document, DocumentSidebar } from "@features/document";
-import { DocumentFileSchema } from "@features/document/schemas/documentSchema";
-import { TemplateFileSchema } from "@system/domain/node/schemas/templateSchema";
-
 import { pluginRegistry } from "@system/registries/pluginRegistry";
+import { DocumentFileSchema } from "./schemas/documentSchema";
+import Document from "./components/DocumentView";
+import DocumentSidebar from "./components/DocumentSidebar";
+import { TemplateMetadataSchema } from "@system/domain/node/schemas/templateSchema";
+
 pluginRegistry.register("document", {
   component: Document,
   schema: DocumentFileSchema,
@@ -11,6 +12,6 @@ pluginRegistry.register("document", {
 
 pluginRegistry.register("document:template", {
   component: Document,
-  schema: TemplateFileSchema,
+  schema: TemplateMetadataSchema,
   sidebarComponent: DocumentSidebar,
 });

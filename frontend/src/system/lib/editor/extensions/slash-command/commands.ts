@@ -9,10 +9,10 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { type Editor, type Range } from "@tiptap/react";
-import type { Collection } from "../../../../../features/collection/components/collection.types";
+import type { Collection } from "@core-plugin/collection/components/collection.types";
 import { queryClient } from "@app/init";
-import collectionKeys from "@features/collection/keys/collectionKeys";
-import { collectionService } from "@features/collection/services/collectionService";
+import collectionKeys from "@core-plugins/collection/keys/collectionKeys";
+import { collectionService } from "@core-plugins/collection/services/collectionService";
 
 interface CommandItemProps {
   name: string;

@@ -26,7 +26,7 @@
 
     "paths": {
       "@app/*": ["./src/app/*"],
-      "@features/*": ["./src/features/*"],
+      "@core-plugins/*": ["./src/core-plugins/*"],
       "@entities/*": ["./src/entities/*"],
       "@system/*": ["./src/system/*"]
     }

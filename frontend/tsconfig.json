@@ -7,7 +7,7 @@
   "compilerOptions": {
     "paths": {
       "@app/*": ["./src/app/*"],
-      "@features/*": ["./src/features/*"],
+      "@core-plugins/*": ["./src/core-plugins/*"],
       "@system/*": ["./src/system/*"]
     }
   }

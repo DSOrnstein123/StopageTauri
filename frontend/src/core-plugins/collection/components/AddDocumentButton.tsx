@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCollectionNode } from "../context/useCollectionNodeContext";
 import { invoke } from "@tauri-apps/api/core";
-import type { DocumentFile } from "@features/document/schemas/documentSchema";
-import collectionKeys from "@features/collection/keys/collectionKeys";
-import documentKeys from "@features/document/keys/documentKeys";
+import type { DocumentFile } from "@core-plugins/document/schemas/documentSchema";
+import collectionKeys from "@core-plugins/collection/keys/collectionKeys";
+import { nodeKeys } from "@system/domain/node/keys/nodeKeys";
+import type { NodeMetadataList } from "@system/domain/node/schemas/nodeSchema";
 
 const AddDocumentButton = () => {
   const { collectionId } = useCollectionNode();
@@ -14,12 +15,12 @@ const AddDocumentButton = () => {
         collectionId: collectionId,
       }),
     onSuccess: (data) => {
-      queryClient.setQueryData<DocumentFile[]>(
+      queryClient.setQueryData<NodeMetadataList>(
         collectionKeys.documentList(collectionId),
         (oldData) => [...(oldData ?? []), data],
       );
-      queryClient.setQueryData<DocumentFile[]>(
-        documentKeys.lists(),
+      queryClient.setQueryData<NodeMetadataList>(
+        nodeKeys.lists(),
         (oldData) => [...(oldData ?? []), data],
       );
     },

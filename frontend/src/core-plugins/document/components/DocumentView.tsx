@@ -3,7 +3,7 @@ import { Editor } from "@tiptap/react";
 import DocumentDetail from "./DocumentDetail";
 import NodeName from "@system/domain/node/components/NodeName";
 
-const Document = () => {
+const DocumentView = () => {
   const editorRef = useRef<Editor | null>(null);
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -23,4 +23,4 @@ const Document = () => {
   );
 };
 
-export default Document;
+export default DocumentView;

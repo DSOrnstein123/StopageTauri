@@ -1,6 +1,6 @@
 import { Button } from "@system/components/shadcn/button";
 import { Calendar, FilePlus } from "lucide-react";
-import useCreateDocument from "@features/document/hooks/useCreateDocument";
+import useCreateDocument from "@core-plugins/document/hooks/useCreateDocument";
 import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
 
 const ActionBar = () => {
