@@ -1,7 +1,7 @@
 import { useRef, type KeyboardEvent } from "react";
 import { Editor } from "@tiptap/react";
 import DocumentDetail from "./DocumentDetail";
-import NodeName from "@system/domain/node/components/NodeName";
+import NodeNameHeader from "@system/domain/node/components/NodeNameHeader";
 
 const DocumentView = () => {
   const editorRef = useRef<Editor | null>(null);
@@ -16,7 +16,7 @@ const DocumentView = () => {
   return (
     <div className="flex h-full w-full justify-center overflow-auto px-10">
       <div className="relative h-full w-full max-w-187.5">
-        <NodeName onKeyDown={handleKeyDown} />
+        <NodeNameHeader onKeyDown={handleKeyDown} />
         <DocumentDetail editorRef={editorRef} />
       </div>
     </div>
