@@ -12,5 +12,3 @@ const NodeName = () => {
     </div>
   );
 };
-
-export default NodeName;
