@@ -1,18 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { nodeKeys } from "../keys/nodeKeys";
-import { nodeService } from "../services/nodeService";
-import { useNodeContext } from "../context/NodeContext";
 import { pluginRegistry } from "@system/registries/pluginRegistry";
+import type { NodeDetail } from "../schemas/nodeSchema";
 
-const NodeContent = () => {
-  const { id } = useNodeContext();
-  const { data } = useQuery({
-    queryKey: nodeKeys.detail(id),
-    queryFn: () => nodeService.getDetail(id),
-    staleTime: Infinity,
-  });
-  if (!data) return null;
-
+const NodeContent = ({ data }: { data: NodeDetail }) => {
   /* eslint-disable react-hooks/static-components */
   const Content = pluginRegistry.getComponent(data.type);
   if (!Content) return null;
