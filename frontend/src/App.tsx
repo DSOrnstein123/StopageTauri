@@ -1,6 +1,6 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { queryClient } from "./app/init";
+import { queryClient } from "./system/queryClient";
 import MainLayout from "./app/layout/MainLayout";
 import { TooltipProvider } from "@system/components/shadcn/tooltip";
 
