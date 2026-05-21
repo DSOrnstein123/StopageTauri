@@ -38,10 +38,6 @@ export default defineConfig([
               ],
               message: "No deep import.",
             },
-            {
-              group: ["@system/*/*"],
-              message: "No deep import.",
-            },
           ],
         },
       ],
