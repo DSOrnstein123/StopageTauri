@@ -1,5 +1,5 @@
 import { pluginRegistry } from "@system/registries/pluginRegistry";
-import { IconDataSchema } from "@system/schemas/iconData";
+import { IconDataSchema } from "@system/icon/schemas/iconData";
 import { SimpleUUIDSchema } from "@system/schemas/simpleUUIDSchema";
 import z from "zod";
 

@@ -1,3 +1,4 @@
+import type { IconData } from "@system/icon/schemas/iconData";
 import type { ComponentType } from "react";
 import type { ZodType } from "zod";
 
@@ -5,8 +6,10 @@ interface FeatureConfig {
   defaultIcon?: string;
   component: ComponentType<{ data: unknown }>;
   schema: ZodType;
-  actionButton?: ComponentType;
-  sidebarComponent?: ComponentType;
+  actionButton?: {
+    icon: IconData;
+    action: () => void;
+  };
 
   slots?: {
     toolbar?: ComponentType<{ data: unknown }>;
@@ -64,16 +67,6 @@ export class PluginRegistry {
       throw new Error(`[PluginRegistry] Cannot find schema for type '${type}'`);
     }
     return feature.schema;
-  }
-
-  getSidebarComponent(type: string) {
-    const feature = this.features.get(type);
-    if (!feature) {
-      throw new Error(
-        `[PluginRegistry] Feature type '${type}' is not registered`,
-      );
-    }
-    return feature.sidebarComponent;
   }
 
   getActionButton(type: string) {

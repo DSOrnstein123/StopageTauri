@@ -1,4 +1,4 @@
-import type { IconData } from "@system/schemas/iconData";
+import type { IconData } from "@system/icon/schemas/iconData";
 import LuicideDynamicIcon from "./LuicideDynamicIcon";
 
 const Icon = ({ data }: { data: IconData }) => {
