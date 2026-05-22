@@ -1,5 +1,5 @@
 import FileExplorer from "@core-plugins/file-explorer/components/FileExplorer";
-import OpenTemplateManagerButton from "@core-plugins/template/components/OpenTemplateManagerButton";
+import OpenTemplateManagerButton from "@core-plugins/template-manager/components/OpenTemplateManagerButton";
 
 const LeftSidebar = () => {
   return (
