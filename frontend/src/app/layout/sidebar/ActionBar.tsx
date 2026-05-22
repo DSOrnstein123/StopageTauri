@@ -1,25 +1,18 @@
 import { Button } from "@system/components/shadcn/button";
-import { Calendar, FilePlus } from "lucide-react";
-import useCreateDocument from "@core-plugins/document/hooks/useCreateDocument";
-import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
+import { pluginRegistry } from "@system/registries/pluginRegistry";
+import Icon from "@system/icon/components/Icon";
+
+const actionButtons = pluginRegistry.getActionButtons();
 
 const ActionBar = () => {
-  const { mutateAsync: createDocument } = useCreateDocument();
-  const openTab = useWorkspaceStore((state) => state.openTab);
-
   return (
     <aside className="bg-primary/20 flex h-full w-10 flex-col items-center gap-y-px py-1">
       {/* document */}
-      <Button
-        variant="ghost"
-        className="relative size-8 p-0"
-        onClick={async () => {
-          const data = await createDocument();
-          openTab(data.id, data.name);
-        }}
-      >
-        <FilePlus />
-      </Button>
+      {actionButtons.map((button) => (
+        <Button onClick={button.action}>
+          <Icon data={button.icon}></Icon>
+        </Button>
+      ))}
 
       {/* flashcard */}
       <Button
@@ -62,13 +55,13 @@ const ActionBar = () => {
       </Button>
 
       {/* calendar */}
-      <Button
+      {/* <Button
         variant="ghost"
         className="relative size-8"
         onClick={() => openFile("planner", "Planner")}
       >
         <Calendar />
-      </Button>
+      </Button> */}
 
       {/* spine */}
       <Button variant="ghost" className="relative size-8">
@@ -80,7 +73,7 @@ const ActionBar = () => {
         pdf
       </button>
 
-      <button onClick={() => openFile("canvas", "canvas")}>Canvas</button>
+      {/* <button onClick={() => openFile("canvas", "canvas")}>Canvas</button> */}
     </aside>
   );
 };
