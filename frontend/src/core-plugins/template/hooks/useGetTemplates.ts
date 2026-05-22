@@ -1,13 +1,9 @@
-import { nodeKeys } from "@system/domain/node/keys/nodeKeys";
-import { nodeService } from "@system/domain/node/services/nodeService";
-import { useQuery } from "@tanstack/react-query";
+import type { TemplateMetadataList } from "@system/domain/node/schemas/templateSchema";
+import { TEMPLATE_CONFIG } from "../constants";
+import { useGetNodes } from "@system/domain/node/hooks/useGetNodes";
 
 const useGetTemplates = () => {
-  return useQuery({
-    queryKey: nodeKeys.list("template"),
-    queryFn: () => nodeService.getList({ includeTypes: "template" }),
-    staleTime: Infinity,
-  });
+  return useGetNodes<TemplateMetadataList>(TEMPLATE_CONFIG);
 };
 
 export default useGetTemplates;
