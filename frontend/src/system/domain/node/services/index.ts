@@ -2,13 +2,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { resolveNodeType } from "../utils/resolveNodeType";
 import { pluginRegistry } from "@system/registries/pluginRegistry";
 import { NodeMetadataListSchema, type NodeDetail } from "../schemas/nodeSchema";
-import type { NodeFilterOptions, NodeKind } from "../types/node";
-
-interface Payload {
-  parentId: string;
-  name: string;
-  kind: NodeKind;
-}
+import type { CreateNodePayload, NodeFilterOptions } from "../types";
 
 export const nodeService = {
   getDetail: async <T extends NodeDetail>(id: string): Promise<T> => {
@@ -36,10 +30,10 @@ export const nodeService = {
       throw error;
     }
   },
-  create: async (payload: Payload) => {
+  create: async <T extends NodeDetail>(payload: CreateNodePayload) => {
     try {
       const data = await invoke("create_node", { payload: payload });
-      return data;
+      return data as T;
     } catch (error) {
       console.error(error);
       throw error;

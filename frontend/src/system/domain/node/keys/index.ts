@@ -1,4 +1,4 @@
-import type { NodeFilterOptions } from "../types/node";
+import type { NodeFilterOptions } from "../types";
 
 export const nodeKeys = {
   all: ["nodes"] as const,
