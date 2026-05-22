@@ -6,14 +6,15 @@ interface FeatureConfig {
   defaultIcon?: string;
   component: ComponentType<{ data: unknown }>;
   schema: ZodType;
-  actionButton?: {
+  actionButtons?: {
+    id: string;
     icon: IconData;
     action: () => void;
-  };
+  }[];
 
   slots?: {
     toolbar?: ComponentType<{ data: unknown }>;
-    sidebar?: ComponentType<{ data: unknown }>;
+    sidebar?: ComponentType;
     header?: ComponentType<{ data: unknown }>;
     footer?: ComponentType<{ data: unknown }>;
   };
@@ -22,23 +23,23 @@ interface FeatureConfig {
 type Slot = keyof NonNullable<FeatureConfig["slots"]>;
 
 export class PluginRegistry {
-  private features = new Map<string, FeatureConfig>();
+  private plugins = new Map<string, FeatureConfig>();
 
-  register(type: string, config: FeatureConfig) {
-    this.features.set(type, {
+  register(id: string, config: FeatureConfig) {
+    this.plugins.set(id, {
       ...config,
     });
   }
 
   registerSlot(
-    type: string,
+    id: string,
     slot: Slot,
     component: ComponentType<{ data: unknown }>,
   ) {
-    const existing = this.features.get(type);
+    const existing = this.plugins.get(id);
     if (!existing) return;
 
-    this.features.set(type, {
+    this.plugins.set(id, {
       ...existing,
       slots: {
         ...existing.slots,
@@ -47,44 +48,49 @@ export class PluginRegistry {
     });
   }
 
-  has(type: string): boolean {
-    return this.features.has(type);
+  has(id: string): boolean {
+    return this.plugins.has(id);
   }
 
-  getComponent(type: string) {
-    const feature = this.features.get(type);
+  getComponent(id: string) {
+    const feature = this.plugins.get(id);
     if (!feature || !feature.component) {
       throw new Error(
-        `[PluginRegistry] Cannot find component for type '${type}'`,
+        `[PluginRegistry] Cannot find component for plugin '${id}'`,
       );
     }
     return feature.component;
   }
 
-  getSchema(type: string) {
-    const feature = this.features.get(type);
+  getSchema(id: string) {
+    const feature = this.plugins.get(id);
     if (!feature || !feature.schema) {
-      throw new Error(`[PluginRegistry] Cannot find schema for type '${type}'`);
+      throw new Error(`[PluginRegistry] Cannot find schema for plugin '${id}'`);
     }
     return feature.schema;
   }
 
-  getActionButton(type: string) {
-    const feature = this.features.get(type);
+  getActionButton(id: string) {
+    const feature = this.plugins.get(id);
     if (!feature) {
-      throw new Error(
-        `[PluginRegistry] Feature type '${type}' is not registered`,
-      );
+      throw new Error(`[PluginRegistry] Plugin '${id}' is not registered`);
     }
-    return feature.actionButton;
+    return feature.actionButtons;
   }
 
-  getSlot(type: string, slot: Slot) {
-    const feature = this.features.get(type);
+  getActionButtons() {
+    return Array.from(this.plugins.values()).flatMap((config) => {
+      if (!config.actionButtons) return [];
+      return config.actionButtons.map((button) => ({
+        ...button,
+      }));
+    });
+  }
+
+  getSlot(id: string, slot: Slot) {
+    const feature = this.plugins.get(id);
     if (!feature) {
-      throw new Error(
-        `[PluginRegistry] Feature type '${type}' is not registered`,
-      );
+      throw new Error(`[PluginRegistry] Plugin '${id}' is not registered`);
     }
     return feature.slots?.[slot];
   }
