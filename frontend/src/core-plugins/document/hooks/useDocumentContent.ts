@@ -1,5 +1,5 @@
-import { nodeKeys } from "@system/domain/node/keys/nodeKeys";
-import { nodeService } from "@system/domain/node/services/nodeService";
+import { nodeKeys } from "@system/domain/node/keys";
+import { nodeService } from "@system/domain/node/services";
 import { useQuery } from "@tanstack/react-query";
 
 const useDocumentContent = (id: string) => {

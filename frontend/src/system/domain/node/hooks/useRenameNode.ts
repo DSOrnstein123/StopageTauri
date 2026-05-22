@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
-import { nodeKeys } from "../keys/nodeKeys";
-import { nodeService } from "../services/nodeService";
+import { nodeKeys } from "../keys";
+import { nodeService } from "../services";
 import useNodeName from "./useNodeName";
 import debounce from "@system/utils/debounce";
 import type { NodeDetail, NodeMetadataList } from "../schemas/nodeSchema";

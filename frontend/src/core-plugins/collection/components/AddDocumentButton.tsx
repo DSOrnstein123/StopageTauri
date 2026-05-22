@@ -3,7 +3,7 @@ import { useCollectionNode } from "../context/useCollectionNodeContext";
 import { invoke } from "@tauri-apps/api/core";
 import type { DocumentFile } from "@core-plugins/document/schemas/documentSchema";
 import collectionKeys from "@core-plugins/collection/keys/collectionKeys";
-import { nodeKeys } from "@system/domain/node/keys/nodeKeys";
+import { nodeKeys } from "@system/domain/node/keys";
 import type { NodeMetadataList } from "@system/domain/node/schemas/nodeSchema";
 
 const AddDocumentButton = () => {
