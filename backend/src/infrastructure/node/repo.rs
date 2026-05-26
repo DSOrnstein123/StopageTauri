@@ -1,8 +1,8 @@
+use crate::domain::errors::node::NodeError;
 use crate::domain::models::icon::IconData;
-use crate::domain::models::node::{NodeDetail, NodeFilterOptions, NodeKind, NodeMetadata};
+use crate::domain::models::node::{Node, NodeDetail, NodeFilterOptions, NodeMetadata};
 use crate::domain::ports::node_repository::NodeRepository;
 use crate::infrastructure::node::models::{DbNodeDetail, DbNodeMetadata};
-use anyhow::{Error, Ok};
 use async_trait::async_trait;
 use serde_json::Value;
 use sqlx::types::Json;
@@ -20,7 +20,7 @@ impl SqliteNodeRepository {
 
 #[async_trait]
 impl NodeRepository for SqliteNodeRepository {
-    async fn get_detail(&self, id: &str) -> Result<NodeDetail, Error> {
+    async fn get_detail(&self, id: &str) -> Result<NodeDetail, NodeError> {
         let db_node = query_as!(
             DbNodeDetail,
             r#"
@@ -29,7 +29,7 @@ impl NodeRepository for SqliteNodeRepository {
                 parent_id,
                 icon as "icon: Json<IconData>",
                 name,
-                kind as "kind: NodeKind",
+                kind,
                 type as node_type,
                 content as "content: Json<Value>",
                 properties as "properties: Json<Value>",
@@ -42,7 +42,11 @@ impl NodeRepository for SqliteNodeRepository {
             id
         )
         .fetch_one(&self.pool)
-        .await?;
+        .await
+        .map_err(|e| match e {
+            sqlx::Error::RowNotFound => NodeError::NotFound(id.to_string()),
+            e => NodeError::Database(e.to_string()),
+        })?;
 
         Ok(db_node.into())
     }
@@ -50,22 +54,22 @@ impl NodeRepository for SqliteNodeRepository {
     async fn get_list(
         &self,
         options: Option<NodeFilterOptions>,
-    ) -> Result<Vec<NodeMetadata>, Error> {
+    ) -> Result<Vec<NodeMetadata>, NodeError> {
         let mut builder: QueryBuilder<Sqlite> = QueryBuilder::new(
             r#"
-        SELECT 
-            id,
-            parent_id,
-            icon,
-            name,
-            kind,
-            type as node_type,
-            is_trashed,
-            created_at,
-            updated_at
-        FROM nodes
-        WHERE is_trashed = 0
-        "#,
+            SELECT 
+                id,
+                parent_id,
+                icon,
+                name,
+                kind,
+                type as node_type,
+                is_trashed,
+                created_at,
+                updated_at
+            FROM nodes
+            WHERE is_trashed = 0
+            "#,
         );
 
         if let Some(opts) = options {
@@ -74,7 +78,7 @@ impl NodeRepository for SqliteNodeRepository {
                     builder.push(" AND kind IN (");
                     let mut separated = builder.separated(", ");
                     for k in kinds {
-                        separated.push_bind(k);
+                        separated.push_bind(k.to_string()); // ✅ NodeKind → String
                     }
                     separated.push_unseparated(")");
                 }
@@ -85,7 +89,7 @@ impl NodeRepository for SqliteNodeRepository {
                     builder.push(" AND kind NOT IN (");
                     let mut separated = builder.separated(", ");
                     for k in kinds {
-                        separated.push_bind(k);
+                        separated.push_bind(k.to_string()); // ✅
                     }
                     separated.push_unseparated(")");
                 }
@@ -117,23 +121,86 @@ impl NodeRepository for SqliteNodeRepository {
         let nodes = builder
             .build_query_as::<DbNodeMetadata>()
             .fetch_all(&self.pool)
-            .await?;
+            .await
+            .map_err(|e| NodeError::Database(e.to_string()))?;
 
         Ok(nodes.into_iter().map(Into::into).collect())
     }
 
-    async fn update_name(&self, id: &str, new_name: &str) -> Result<(), Error> {
+    async fn create(&self, node: &Node) -> Result<NodeDetail, NodeError> {
+        let icon = Json(IconData {
+            icon_type: "lucide".to_string(),
+            value: "FileText".to_string(),
+        });
+        let kind = node.kind.to_string();
+
+        let db_node = query_as!(
+            DbNodeDetail,
+            r#"
+            INSERT INTO nodes (id, parent_id, name, icon, kind, type)
+            VALUES (?, ?, ?, ?, ?, ?)
+            RETURNING
+                id as "id!: String",
+                parent_id,
+                name,
+                icon as "icon: Json<IconData>",
+                kind,
+                type as node_type,
+                content as "content: Json<Value>",
+                properties as "properties: Json<Value>",
+                created_at,
+                updated_at,
+                is_trashed
+        "#,
+            node.id,
+            node.parent_id,
+            node.name,
+            icon,
+            kind,
+            node.node_type,
+        )
+        .fetch_one(&self.pool)
+        .await
+        .map_err(|e| NodeError::Database(e.to_string()))?;
+
+        Ok(db_node.into())
+    }
+
+    async fn update_name(&self, id: &str, new_name: &str) -> Result<(), NodeError> {
         query!(
             r#"
             UPDATE nodes
             SET name = ?
-            WHERE id = ? 
+            WHERE id = ?
         "#,
             new_name,
             id,
         )
         .execute(&self.pool)
-        .await?;
+        .await
+        .map_err(|e| match e {
+            sqlx::Error::RowNotFound => NodeError::NotFound(id.to_string()),
+            e => NodeError::Database(e.to_string()),
+        })?;
+
+        Ok(())
+    }
+
+    async fn update_content(&self, id: &str, new_content: Value) -> Result<(), NodeError> {
+        let content = Json(new_content); // ✅ wrap thành Json<Value>
+
+        query!(
+            r#"
+            UPDATE nodes 
+            SET content = ?
+            WHERE id = ?
+        "#,
+            content,
+            id,
+        )
+        .execute(&self.pool)
+        .await
+        .map_err(|e| NodeError::Database(e.to_string()))?;
 
         Ok(())
     }
