@@ -1,3 +1,4 @@
+import type { TabConfig } from "@system/tab-system/types";
 import type { DockviewApi, SplitviewApi } from "dockview-core";
 import { create } from "zustand";
 
@@ -12,23 +13,6 @@ interface WorkspaceState {
   changeFile: (panelId: string, newFileId: string) => void;
   // toggleSidebar: (side: "left" | "right") => void;
 }
-
-interface DynamicTabConfig {
-  id: string;
-  icon?: string;
-  name: string;
-  type?: string;
-  mode: "dynamic";
-}
-
-interface StaticTabConfig {
-  icon?: string;
-  name: string;
-  type: string;
-  mode: "static";
-}
-
-type TabConfig = DynamicTabConfig | StaticTabConfig;
 
 export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   dockApi: null,

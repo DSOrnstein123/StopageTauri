@@ -41,4 +41,6 @@ export const nodeService = {
   },
   updateName: (id: string, newName: string) =>
     invoke("update_node_name", { id: id, newName: newName }),
+  updateContent: (id: string, newContent: Record<string, unknown>) =>
+    invoke("update_node_content", { id: id, newContent: newContent }),
 };

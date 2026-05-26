@@ -1,11 +1,14 @@
-import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
 import createDocument from "../functions/createDocument";
+import { systemApi } from "@system/apis";
 
-const handleCreateDocument = async () => {
+const handleCreateDocument = async (type: string) => {
   const data = await createDocument();
-  useWorkspaceStore
-    .getState()
-    .openTab({ id: data.id, name: data.name, mode: "dynamic" });
+  systemApi.workspace.openTab({
+    id: data.id,
+    name: data.name,
+    type: type,
+    mode: "dynamic",
+  });
 };
 
 export default handleCreateDocument;

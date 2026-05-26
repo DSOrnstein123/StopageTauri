@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Editor } from "@tiptap/react";
 import debounce from "@system/utils/debounce";
-import { documentService } from "../services/documentService";
 import useDocumentContent from "./useDocumentContent";
+import { systemApi } from "@system/apis";
 
 const useDocumentData = (id: string, editor: Editor | null) => {
   const { data: content } = useDocumentContent(id);
@@ -29,7 +29,7 @@ const useDocumentData = (id: string, editor: Editor | null) => {
     const handleUpdate = debounce<(props: { editor: Editor }) => void>(
       (props) => {
         const content = props.editor.getJSON();
-        documentService.updateContent(id, JSON.stringify(content));
+        systemApi.node.updateContent(id, content);
       },
       500,
     );

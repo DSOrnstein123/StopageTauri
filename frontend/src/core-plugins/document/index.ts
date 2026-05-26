@@ -6,12 +6,12 @@ import handleCreateDocument from "./handlers/handleCreateDocument";
 
 export { DocumentView, DocumentSidebar };
 
-export const documentPlugin: Plugin = {
+export const DocumentPlugin: Plugin = {
   id: "core.document",
   name: "document" as const,
 
   onRegister: (ctx) => {
-    ctx.register(documentPlugin.name, {
+    ctx.register(DocumentPlugin.name, {
       component: DocumentView,
       schema: DocumentFileSchema,
       actionButtons: [
@@ -21,7 +21,7 @@ export const documentPlugin: Plugin = {
             type: "lucide",
             value: "FilePlus",
           },
-          action: handleCreateDocument,
+          action: () => handleCreateDocument(DocumentPlugin.id),
         },
       ],
       slots: {
