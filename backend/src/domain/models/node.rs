@@ -1,17 +1,65 @@
+use crate::domain::{errors::node::NodeError, models::icon::IconData};
 use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use sqlx::prelude::Type;
+use std::str::FromStr;
+use uuid::Uuid;
 
-use crate::domain::models::icon::IconData;
-
-#[derive(Debug, Serialize, Deserialize, Type)]
-#[sqlx(rename_all = "lowercase")]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum NodeKind {
     Folder,
     File,
     Template,
+}
+
+impl FromStr for NodeKind {
+    type Err = NodeError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "folder" => Ok(NodeKind::Folder),
+            "file" => Ok(NodeKind::File),
+            "template" => Ok(NodeKind::Template),
+            _ => Err(NodeError::InvalidKind(s.to_string())),
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct Node {
+    pub id: String,
+    pub parent_id: Option<String>,
+    pub name: String,
+    pub kind: NodeKind,
+    pub node_type: String,
+    pub content: Option<Value>,
+    pub properties: Option<Value>,
+}
+
+impl Node {
+    pub fn create(
+        parent_id: Option<String>,
+        name: String,
+        kind: NodeKind,
+        node_type: String,
+        content: Option<Value>,
+        properties: Option<Value>,
+    ) -> Result<Self, NodeError> {
+        // if name.trim().is_empty() {
+        //     return Err(Error);
+        // }
+
+        Ok(Self {
+            id: Uuid::new_v4().to_string(),
+            parent_id,
+            name,
+            kind,
+            node_type,
+            content,
+            properties,
+        })
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -36,8 +84,18 @@ pub struct NodeDetail {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct NodeFilterOptions {
-    pub include_kinds: Option<Vec<String>>,
+    pub include_kinds: Option<Vec<NodeKind>>,
     pub include_types: Option<Vec<String>>,
-    pub exclude_kinds: Option<Vec<String>>,
+    pub exclude_kinds: Option<Vec<NodeKind>>,
     pub exclude_types: Option<Vec<String>>,
+}
+
+impl std::fmt::Display for NodeKind {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            NodeKind::Folder => write!(f, "folder"),
+            NodeKind::File => write!(f, "file"),
+            NodeKind::Template => write!(f, "template"),
+        }
+    }
 }
