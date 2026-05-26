@@ -2,7 +2,7 @@ import z from "zod";
 import { NodeKindSchema, NodeMetadataSchema } from "./nodeSchema";
 
 const TemplateMetadataSchema = NodeMetadataSchema.extend({
-  kinde: z.literal(NodeKindSchema.enum.template),
+  kind: z.literal(NodeKindSchema.enum.template),
 });
 type TemplateMetadata = z.infer<typeof TemplateMetadataSchema>;
 const TemplateMetadataListSchema = z.array(TemplateMetadataSchema);
