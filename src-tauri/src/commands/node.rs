@@ -1,9 +1,15 @@
 use backend::{
-    application::{
-        queries::node_query::NodeQuery, use_cases::update_node_name::UpdateNodeNameUseCase,
+    application::node::{
+        dtos::CreateNodeInput,
+        queries::node_query::NodeQuery,
+        use_cases::{
+            create_node::CreateNodeUseCase, update_node_content::UpdateNodeContentUseCase,
+            update_node_name::UpdateNodeNameUseCase,
+        },
     },
     domain::models::node::NodeFilterOptions,
 };
+use serde_json::Value;
 use tauri::State;
 
 use crate::{
@@ -40,6 +46,17 @@ pub async fn get_node_detail(
 }
 
 #[tauri::command]
+pub async fn create_node(state: State<'_, AppState>, input: CreateNodeInput) -> Result<(), String> {
+    let use_case = CreateNodeUseCase::new(&state.node_repo);
+
+    use_case
+        .execute(input)
+        .await
+        .map(|_| ())
+        .map_err(|err| err.to_string())
+}
+
+#[tauri::command]
 pub async fn update_node_name(
     state: State<'_, AppState>,
     id: &str,
@@ -49,6 +66,21 @@ pub async fn update_node_name(
 
     use_case
         .execute(id, new_name)
+        .await
+        .map(|_| ())
+        .map_err(|err| err.to_string())
+}
+
+#[tauri::command]
+pub async fn update_node_content(
+    state: State<'_, AppState>,
+    id: &str,
+    new_content: Value,
+) -> Result<(), String> {
+    let use_case = UpdateNodeContentUseCase::new(&state.node_repo);
+
+    use_case
+        .execute(id, new_content)
         .await
         .map(|_| ())
         .map_err(|err| err.to_string())

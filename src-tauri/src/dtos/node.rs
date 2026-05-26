@@ -1,5 +1,5 @@
 use backend::domain::models::node::{NodeDetail, NodeKind, NodeMetadata};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 use crate::dtos::icon::IconDataDto;
@@ -52,4 +52,13 @@ impl From<NodeDetail> for NodeDetailDto {
             properties: domain.properties,
         }
     }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CreateNodePayload {
+    pub parent_id: Option<String>,
+    pub name: String,
+    pub node_type: String,
+    pub content: Option<Value>,
+    pub properties: Option<Value>,
 }

@@ -15,7 +15,9 @@ macro_rules! app_commands {
             //core/node
             node::get_nodes,
             node::get_node_detail,
+            node::create_node,
             node::update_node_name,
+            node::update_node_content,
             // flashcard
             deck::get_decks,
             deck::get_cards_from_deck,
