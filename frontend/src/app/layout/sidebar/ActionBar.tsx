@@ -2,13 +2,18 @@ import { Button } from "@system/components/shadcn/button";
 import { pluginRegistry } from "@system/registries/pluginRegistry";
 import Icon from "@system/icon/components/Icon";
 
-const actionButtons = pluginRegistry.getActionButtons();
-
 const ActionBar = () => {
+  const actionButtons = pluginRegistry.getActionButtons();
+
   return (
     <aside className="bg-primary/20 flex h-full w-10 flex-col items-center gap-y-px py-1">
       {actionButtons.map((button) => (
-        <Button key={button.id} onClick={button.action}>
+        <Button
+          key={button.id}
+          variant="ghost"
+          className="relative size-8"
+          onClick={button.action}
+        >
           <Icon data={button.icon} />
         </Button>
       ))}

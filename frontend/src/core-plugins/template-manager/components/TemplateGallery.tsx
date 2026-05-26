@@ -9,7 +9,7 @@ const TemplateGallery = ({
   return (
     <div className="grid grid-cols-3">
       {templateList.map((template) => (
-        <Card>{template.name}</Card>
+        <Card key={template.id}>{template.name}</Card>
       ))}
     </div>
   );

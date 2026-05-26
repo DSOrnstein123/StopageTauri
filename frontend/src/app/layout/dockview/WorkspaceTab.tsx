@@ -1,22 +1,14 @@
-import { nodeKeys } from "@system/domain/node/keys";
-import { nodeService } from "@system/domain/node/services";
 import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
-import { useQuery } from "@tanstack/react-query";
 import type { IDockviewPanelHeaderProps } from "dockview";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
+import DynamicTitle from "./DynamicTitle";
 
 const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
   const dockApi = useWorkspaceStore((state) => state.dockApi);
-  const { api } = props;
+  const { api, params } = props;
   const [isActive, setIsActive] = useState(api.isActive);
-  const fileId = props.params.id;
-  const { data: fileName } = useQuery({
-    queryKey: nodeKeys.detail(fileId),
-    queryFn: () => nodeService.getDetail(fileId),
-    select: (data) => data.name,
-    staleTime: Infinity,
-  });
+  const tabMode = params.mode;
 
   useEffect(() => {
     if (!dockApi) return;
@@ -47,7 +39,9 @@ const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
       }`}
     >
       <div className="flex items-center gap-2 truncate">
-        <span className="truncate">{fileName}</span>
+        <span className="truncate">
+          {tabMode == "dynamic" ? <DynamicTitle id={params.id} /> : api.title}
+        </span>
       </div>
 
       <button

@@ -1,35 +1,47 @@
-import Node from "@system/domain/node/components/Node";
 import TabHeader from "@system/tab-system/components/TabHeader";
 import TabProvider from "@system/tab-system/context/TabProvider";
+import type { TabMode } from "@system/tab-system/types";
 import type { IDockviewPanelProps } from "dockview-core";
 import { useEffect, useState } from "react";
+import DynamicTabContent from "./DynamicContent";
+import StaticTabContent from "./StaticTabContent";
 
 interface TabParams {
   id: string;
+  mode: TabMode;
+  type: string;
 }
 
 const Tab = (props: IDockviewPanelProps<TabParams>) => {
-  const [isActive, setIsActive] = useState(props.api.isActive);
+  const tabApi = props.api;
+  const tabParams = props.params;
+  const tabMode = props.params.mode;
+  const [isActive, setIsActive] = useState(tabApi.isActive);
 
   useEffect(() => {
-    const disposable = props.api.onDidActiveChange((event) => {
+    const disposable = tabApi.onDidActiveChange((event) => {
       setIsActive(event.isActive);
     });
 
     return () => disposable.dispose();
-  }, [props.api]);
+  }, [tabApi]);
 
   const value = {
-    id: props.api.id,
+    id: tabApi.id,
     isActive: isActive,
-    setTitle: (title: string) => props.api.setTitle(title),
+    setTitle: (title: string) => tabApi.setTitle(title),
   };
 
   return (
     <div className="flex h-full flex-col">
       <TabProvider props={value}>
         <TabHeader className="h-10" />
-        <Node className="flex-1" id={props.params.id} />
+
+        {tabMode == "dynamic" ? (
+          <DynamicTabContent id={tabParams.id} />
+        ) : (
+          <StaticTabContent id={tabParams.type} />
+        )}
       </TabProvider>
     </div>
   );

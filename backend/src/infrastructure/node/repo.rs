@@ -78,7 +78,7 @@ impl NodeRepository for SqliteNodeRepository {
                     builder.push(" AND kind IN (");
                     let mut separated = builder.separated(", ");
                     for k in kinds {
-                        separated.push_bind(k.to_string()); // ✅ NodeKind → String
+                        separated.push_bind(k.to_string());
                     }
                     separated.push_unseparated(")");
                 }
@@ -89,7 +89,7 @@ impl NodeRepository for SqliteNodeRepository {
                     builder.push(" AND kind NOT IN (");
                     let mut separated = builder.separated(", ");
                     for k in kinds {
-                        separated.push_bind(k.to_string()); // ✅
+                        separated.push_bind(k.to_string());
                     }
                     separated.push_unseparated(")");
                 }

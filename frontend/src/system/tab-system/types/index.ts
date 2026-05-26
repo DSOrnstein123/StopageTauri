@@ -1,14 +1,18 @@
-export interface DynamicTabConfig {
-  id: string;
+export type TabMode = "dynamic" | "static";
+
+interface BaseTabConfig {
   icon?: string;
   name: string;
+  mode: TabMode;
+}
+
+export interface DynamicTabConfig extends BaseTabConfig {
+  id: string;
   type?: string;
   mode: "dynamic";
 }
 
-export interface StaticTabConfig {
-  icon?: string;
-  name: string;
+export interface StaticTabConfig extends BaseTabConfig {
   type: string;
   mode: "static";
 }

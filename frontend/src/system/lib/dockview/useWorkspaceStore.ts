@@ -27,8 +27,9 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
     const panelId = `${Date.now()}`;
     const params =
       config.mode == "dynamic"
-        ? { id: config.id, type: config.type }
-        : { type: config.type };
+        ? { id: config.id, type: config.type, mode: "dynamic" }
+        : { type: config.type, mode: "static" };
+
     dockApi.addPanel({
       id: panelId,
       title: config.name,
