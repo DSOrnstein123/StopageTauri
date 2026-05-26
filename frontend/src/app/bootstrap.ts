@@ -1,7 +1,8 @@
-import { documentPlugin } from "@core-plugins/document";
+import { DocumentPlugin } from "@core-plugins/document";
+import { TemplateManagerPlugin } from "@core-plugins/template-manager";
 import type { PluginRegistry } from "@system/registries/pluginRegistry";
 
-const plugins = [documentPlugin];
+const plugins = [DocumentPlugin, TemplateManagerPlugin];
 
 export const bootstrapPlugin = (registry: PluginRegistry) => {
   plugins.forEach((plugin) => plugin.onRegister(registry));
