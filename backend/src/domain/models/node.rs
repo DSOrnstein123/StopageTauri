@@ -83,6 +83,7 @@ pub struct NodeDetail {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct NodeFilterOptions {
     pub include_kinds: Option<Vec<NodeKind>>,
     pub include_types: Option<Vec<String>>,
