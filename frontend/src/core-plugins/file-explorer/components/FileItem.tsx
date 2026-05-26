@@ -1,5 +1,5 @@
 import { usePrimarySidebarStore } from "@app/layout/sidebar/primarySidebarStore";
-import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
+import { useWorkspaceStore } from "@system/features/workspace/stores/useWorkspaceStore";
 import { cn } from "@system/lib/tailwind-css/utils";
 import type { ExplorerItem } from "../schemas/explorerItemSchema";
 

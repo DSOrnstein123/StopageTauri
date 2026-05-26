@@ -1,4 +1,4 @@
-import { useGetNodes } from "@system/domain/node/hooks/useGetNodes";
+import { useGetNodes } from "@system/features/node/hooks/useGetNodes";
 import { EXPLORER_CONFIG } from "../constants";
 
 const useGetExplorerFiles = () => {

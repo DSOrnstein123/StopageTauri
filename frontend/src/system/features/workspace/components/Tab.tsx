@@ -1,9 +1,9 @@
-import TabHeader from "@system/tab-system/components/TabHeader";
-import TabProvider from "@system/tab-system/context/TabProvider";
-import type { TabMode } from "@system/tab-system/types";
+import TabHeader from "@system/features/workspace/components/TabHeader";
+import TabProvider from "@system/features/workspace/context/TabProvider";
+import type { TabMode } from "@system/features/workspace/types";
 import type { IDockviewPanelProps } from "dockview-core";
 import { useEffect, useState } from "react";
-import DynamicTabContent from "./DynamicContent";
+import DynamicTabContent from "./DynamicTabContent";
 import StaticTabContent from "./StaticTabContent";
 
 interface TabParams {
@@ -15,7 +15,6 @@ interface TabParams {
 const Tab = (props: IDockviewPanelProps<TabParams>) => {
   const tabApi = props.api;
   const tabParams = props.params;
-  const tabMode = props.params.mode;
   const [isActive, setIsActive] = useState(tabApi.isActive);
 
   useEffect(() => {
@@ -37,10 +36,10 @@ const Tab = (props: IDockviewPanelProps<TabParams>) => {
       <TabProvider props={value}>
         <TabHeader className="h-10" />
 
-        {tabMode == "dynamic" ? (
+        {tabParams.mode == "dynamic" ? (
           <DynamicTabContent id={tabParams.id} />
         ) : (
-          <StaticTabContent id={tabParams.type} />
+          <StaticTabContent type={tabParams.type} />
         )}
       </TabProvider>
     </div>

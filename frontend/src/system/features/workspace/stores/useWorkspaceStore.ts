@@ -1,4 +1,4 @@
-import type { TabConfig } from "@system/tab-system/types";
+import type { TabConfig } from "@system/features/workspace/types";
 import type { DockviewApi, SplitviewApi } from "dockview-core";
 import { create } from "zustand";
 

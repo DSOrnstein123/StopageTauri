@@ -1,10 +1,10 @@
-import { nodeService } from "@system/domain/node/services";
+import { nodeService } from "@system/features/node/services";
 import type {
   CreateNodePayload,
   NodeFilterOptions,
-} from "@system/domain/node/types";
-import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
-import type { TabConfig } from "@system/tab-system/types";
+} from "@system/features/node/types";
+import { useWorkspaceStore } from "@system/features/workspace/stores/useWorkspaceStore";
+import type { TabConfig } from "@system/features/workspace/types";
 
 export const systemApi = {
   workspace: {

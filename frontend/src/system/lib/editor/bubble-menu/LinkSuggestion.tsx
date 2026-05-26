@@ -1,6 +1,6 @@
-import { Input } from "@system/components/shadcn/input";
-import useGetFiles from "@system/domain/node/hooks/useGetFiles";
-import type { FileMetadata } from "@system/domain/node/schemas/fileSchema";
+import { Input } from "@system/ui/shadcn/input";
+import useGetFiles from "@system/features/node/hooks/useGetFiles";
+import type { FileMetadata } from "@system/features/node/schemas/fileSchema";
 import { useState } from "react";
 
 const LinkSuggestion = ({

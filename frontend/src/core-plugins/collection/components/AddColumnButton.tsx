@@ -1,9 +1,9 @@
-import { Button } from "@system/components/shadcn/button";
+import { Button } from "@system/ui/shadcn/button";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@system/components/shadcn/popover";
+} from "@system/ui/shadcn/popover";
 import { useAddProperty } from "@core-plugins/collection/hooks/useAddProperty";
 import { COLUMN_TYPES } from "./collection.types";
 

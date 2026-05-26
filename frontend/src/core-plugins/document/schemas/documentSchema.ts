@@ -1,4 +1,4 @@
-import { FileDetailSchema } from "@system/domain/node/schemas/fileSchema";
+import { FileDetailSchema } from "@system/features/node/schemas/fileSchema";
 import z from "zod";
 
 const DocumentFileSchema = FileDetailSchema.extend({

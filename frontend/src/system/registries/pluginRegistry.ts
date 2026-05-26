@@ -1,4 +1,4 @@
-import type { IconData } from "@system/icon/schemas/iconData";
+import type { IconData } from "@system/schemas/iconData";
 import type { ComponentType } from "react";
 import type { ZodType } from "zod";
 

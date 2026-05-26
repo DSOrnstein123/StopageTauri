@@ -2,12 +2,12 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@system/components/shadcn/popover";
+} from "@system/ui/shadcn/popover";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@system/components/shadcn/hover-card";
+} from "@system/ui/shadcn/hover-card";
 import { COLUMN_TYPES, type ColumnSchema } from "./collection.types";
 
 const ColumnHeaderWithConfiguration = ({

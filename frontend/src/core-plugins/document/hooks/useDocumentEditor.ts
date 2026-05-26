@@ -3,7 +3,7 @@ import TableOfContents, {
   type TableOfContentData,
 } from "@tiptap/extension-table-of-contents";
 import { useMemo, useState, type RefObject } from "react";
-import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
+import { useWorkspaceStore } from "@system/features/workspace/stores/useWorkspaceStore";
 import { extensionList } from "@system/lib/editor/extensions/extensionList";
 import { syncAlignAttrs } from "@system/lib/editor/extensions/dnd/floatDragExtension";
 

@@ -1,6 +1,6 @@
 import { BubbleMenu } from "@tiptap/react/menus";
 import { Editor, useEditorState } from "@tiptap/react";
-import { Button } from "@system/components/shadcn/button";
+import { Button } from "@system/ui/shadcn/button";
 import { useState } from "react";
 import LinkSuggestion from "./LinkSuggestion";
 import type { DocumentFile } from "@core-plugins/document/schemas/documentSchema";

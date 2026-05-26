@@ -1,4 +1,4 @@
-import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
+import { useWorkspaceStore } from "@system/features/workspace/stores/useWorkspaceStore";
 import type { IDockviewPanelHeaderProps } from "dockview";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";

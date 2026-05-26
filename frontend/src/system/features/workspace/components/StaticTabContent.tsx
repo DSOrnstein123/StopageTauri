@@ -1,8 +1,8 @@
 import { pluginRegistry } from "@system/registries/pluginRegistry";
 
-const StaticTabContent = ({ id }: { id: string }) => {
+const StaticTabContent = ({ type }: { type: string }) => {
   /* eslint-disable react-hooks/static-components */
-  const Content = pluginRegistry.getComponent(id);
+  const Content = pluginRegistry.getComponent(type);
   if (!Content) return null;
 
   return (

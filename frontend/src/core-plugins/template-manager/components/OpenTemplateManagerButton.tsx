@@ -1,4 +1,4 @@
-import { useWorkspaceStore } from "@system/lib/dockview/useWorkspaceStore";
+import { useWorkspaceStore } from "@system/features/workspace/stores/useWorkspaceStore";
 
 const OpenTemplateManagerButton = ({ className }: { className: string }) => {
   const openTab = useWorkspaceStore((state) => state.openTab);

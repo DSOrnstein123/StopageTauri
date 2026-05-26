@@ -11,7 +11,7 @@ import {
 } from "@xyflow/react";
 
 import { Slider } from "@shared/components/shadcn/slider";
-import { Button } from "@system/components/shadcn/button";
+import { Button } from "@system/ui/shadcn/button";
 import { cn } from "@system/lib/tailwind-css/utils";
 
 export function ZoomSlider({

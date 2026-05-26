@@ -4,8 +4,8 @@ import useDocumentData from "../hooks/useDocumentData";
 import useDocumentEditor from "../hooks/useDocumentEditor";
 import useWorkspaceSync from "../hooks/useWorkspaceSync";
 import DocumentContent from "./DocumentContent";
-import { useNodeContext } from "@system/domain/node/context/NodeContext";
-import { useTabContext } from "@system/tab-system/context/TabContext";
+import { useNodeContext } from "@system/features/node/context/NodeContext";
+import { useTabContext } from "@system/features/workspace/context/TabContext";
 
 const DocumentDetail = ({
   editorRef,

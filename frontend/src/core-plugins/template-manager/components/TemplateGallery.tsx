@@ -1,5 +1,5 @@
-import { Card } from "@system/components/shadcn/card";
-import type { TemplateMetadataList } from "@system/domain/node/schemas/templateSchema";
+import { Card } from "@system/ui/shadcn/card";
+import type { TemplateMetadataList } from "@system/features/node/schemas/templateSchema";
 
 const TemplateGallery = ({
   templateList,

@@ -1,4 +1,4 @@
-import Icon from "@system/icon/components/Icon";
+import Icon from "@system/ui/icon/Icon";
 import NodeNameInput from "./NodeNameInput";
 import { useNodeContext } from "../context/NodeContext";
 

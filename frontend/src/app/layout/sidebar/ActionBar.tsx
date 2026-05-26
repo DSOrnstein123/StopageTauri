@@ -1,6 +1,6 @@
-import { Button } from "@system/components/shadcn/button";
+import { Button } from "@system/ui/shadcn/button";
 import { pluginRegistry } from "@system/registries/pluginRegistry";
-import Icon from "@system/icon/components/Icon";
+import Icon from "@system/ui/icon/Icon";
 
 const ActionBar = () => {
   const actionButtons = pluginRegistry.getActionButtons();
