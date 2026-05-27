@@ -1,4 +1,4 @@
-import type { TabConfig } from "@system/features/workspace/types";
+import type { TabConfig } from "@system/features/workspace/types/tabConfig";
 import type { DockviewApi, SplitviewApi } from "dockview-core";
 import { create } from "zustand";
 
@@ -11,7 +11,6 @@ interface WorkspaceState {
 
   openTab: (config: TabConfig) => void;
   changeFile: (panelId: string, newFileId: string) => void;
-  // toggleSidebar: (side: "left" | "right") => void;
 }
 
 export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
@@ -27,12 +26,12 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
     const panelId = `${Date.now()}`;
     const params =
       config.mode == "dynamic"
-        ? { id: config.id, type: config.type, mode: "dynamic" }
+        ? { id: config.nodeId, type: config.type, mode: "dynamic" }
         : { type: config.type, mode: "static" };
 
     dockApi.addPanel({
       id: panelId,
-      title: config.name,
+      title: config.title,
       tabComponent: "workspace",
       component: "tab",
       params: params,

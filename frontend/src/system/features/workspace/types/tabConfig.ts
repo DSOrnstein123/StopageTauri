@@ -2,12 +2,14 @@ export type TabMode = "dynamic" | "static";
 
 interface BaseTabConfig {
   icon?: string;
-  name: string;
+  title?: string;
   mode: TabMode;
+  isActive: boolean;
+  setTitle: (newTitle: string) => void;
 }
 
 export interface DynamicTabConfig extends BaseTabConfig {
-  id: string;
+  nodeId: string;
   type?: string;
   mode: "dynamic";
 }

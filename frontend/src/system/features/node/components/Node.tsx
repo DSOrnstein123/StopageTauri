@@ -3,7 +3,7 @@ import { useGetNodeDetail } from "../hooks/useGetNodeDetail";
 import NodeContent from "./NodeContent";
 import NodeNameLabel from "./NodeNameLabel";
 
-const Node = ({ id, className }: { id: string; className: string }) => {
+const Node = ({ id }: { id: string }) => {
   const { data } = useGetNodeDetail(id);
   if (!data) return null;
 
@@ -14,7 +14,7 @@ const Node = ({ id, className }: { id: string; className: string }) => {
 
   return (
     <NodeProvider props={value}>
-      <div className={`${className} relative overflow-auto`}>
+      <div className={`relative h-full overflow-auto`}>
         <NodeNameLabel className="fixed top-18.75 left-0" />
 
         <div className="pt-8">

@@ -4,7 +4,7 @@ import type { ZodType } from "zod";
 
 interface FeatureConfig {
   defaultIcon?: string;
-  component: ComponentType<{ data: unknown }>;
+  component: ComponentType;
   schema?: ZodType;
   actionButtons?: {
     id: string;

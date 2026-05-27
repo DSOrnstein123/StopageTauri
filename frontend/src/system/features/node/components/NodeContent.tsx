@@ -8,7 +8,7 @@ const NodeContent = ({ data }: { data: NodeDetail }) => {
 
   return (
     <div className="pt-0">
-      <Content data={data} />
+      <Content />
     </div>
   );
 };
