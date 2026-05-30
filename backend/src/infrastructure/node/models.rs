@@ -15,7 +15,7 @@ pub struct DbNode {
     pub name: String,
     pub kind: String,
     pub node_type: String,
-    pub content: Option<String>,
+    pub data: Option<String>,
     pub properties: Option<String>,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
@@ -30,9 +30,7 @@ impl From<DbNode> for Node {
             name: db.name,
             kind: db.kind.parse().expect("Invalid NodeKind"),
             node_type: db.node_type,
-            content: db
-                .content
-                .and_then(|value| serde_json::from_str(&value).ok()),
+            data: db.data.and_then(|value| serde_json::from_str(&value).ok()),
             properties: db
                 .properties
                 .and_then(|value| serde_json::from_str(&value).ok()),
@@ -81,7 +79,7 @@ pub struct DbNodeDetail {
     pub kind: String,
     #[serde(rename = "type")]
     pub node_type: String,
-    pub content: Json<Value>,
+    pub data: Json<Value>,
     pub properties: Json<Value>,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
@@ -102,7 +100,7 @@ impl From<DbNodeDetail> for NodeDetail {
                 updated_at: db.updated_at,
                 is_trashed: db.is_trashed,
             },
-            content: db.content.0,
+            data: db.data.0,
             properties: db.properties.0,
         }
     }

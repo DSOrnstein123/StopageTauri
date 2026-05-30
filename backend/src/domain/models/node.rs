@@ -33,7 +33,7 @@ pub struct Node {
     pub name: String,
     pub kind: NodeKind,
     pub node_type: String,
-    pub content: Option<Value>,
+    pub data: Option<Value>,
     pub properties: Option<Value>,
 }
 
@@ -43,7 +43,7 @@ impl Node {
         name: String,
         kind: NodeKind,
         node_type: String,
-        content: Option<Value>,
+        data: Option<Value>,
         properties: Option<Value>,
     ) -> Result<Self, NodeError> {
         // if name.trim().is_empty() {
@@ -56,7 +56,7 @@ impl Node {
             name,
             kind,
             node_type,
-            content,
+            data,
             properties,
         })
     }
@@ -78,7 +78,7 @@ pub struct NodeMetadata {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct NodeDetail {
     pub metadata: NodeMetadata,
-    pub content: Value,
+    pub data: Value,
     pub properties: Value,
 }
 

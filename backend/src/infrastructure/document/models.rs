@@ -13,7 +13,7 @@ pub struct DocumentFile {
     #[serde(rename = "type")]
     pub file_type: String,
     pub icon: Json<IconData>,
-    pub content: Option<String>,
+    pub data: Option<String>,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
 }

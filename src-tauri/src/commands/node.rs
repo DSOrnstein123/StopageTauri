@@ -3,7 +3,7 @@ use backend::{
         dtos::CreateNodeInput,
         queries::node_query::NodeQuery,
         use_cases::{
-            create_node::CreateNodeUseCase, update_node_content::UpdateNodeContentUseCase,
+            create_node::CreateNodeUseCase, update_node_data::UpdateNodeDataUseCase,
             update_node_name::UpdateNodeNameUseCase,
         },
     },
@@ -72,15 +72,15 @@ pub async fn update_node_name(
 }
 
 #[tauri::command]
-pub async fn update_node_content(
+pub async fn update_node_data(
     state: State<'_, AppState>,
     id: &str,
-    new_content: Value,
+    new_data: Value,
 ) -> Result<(), String> {
-    let use_case = UpdateNodeContentUseCase::new(&state.node_repo);
+    let use_case = UpdateNodeDataUseCase::new(&state.node_repo);
 
     use_case
-        .execute(id, new_content)
+        .execute(id, new_data)
         .await
         .map(|_| ())
         .map_err(|err| err.to_string())

@@ -16,7 +16,7 @@ pub async fn create_template(pool: &SqlitePool) -> Result<TemplateFile, Error> {
                 name,
                 kind,
                 type as node_type,
-                content,
+                data,
                 created_at,
                 updated_at
         "#,

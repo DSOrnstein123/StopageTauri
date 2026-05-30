@@ -25,7 +25,7 @@ pub async fn create_document(
                 name,
                 icon as "icon: Json<IconData>",
                 type as file_type,
-                content,
+                data,
                 created_at,
                 updated_at
         "#,
@@ -39,18 +39,18 @@ pub async fn create_document(
     Ok(document_file)
 }
 
-pub async fn update_document_content(
+pub async fn update_document_data(
     pool: &SqlitePool,
     id: String,
-    content: String,
+    data: String,
 ) -> Result<(), Error> {
     query!(
         r#"
             UPDATE nodes 
-            SET content = ?
+            SET data = ?
             WHERE id = ?
         "#,
-        content,
+        data,
         id,
     )
     .execute(pool)

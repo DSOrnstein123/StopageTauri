@@ -22,7 +22,7 @@ impl<'a, R: NodeRepository> CreateNodeUseCase<'a, R> {
             input.name,
             input.kind,
             input.node_type,
-            input.content,
+            input.data,
             input.properties,
         )?;
 

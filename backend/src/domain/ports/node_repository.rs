@@ -14,5 +14,5 @@ pub trait NodeRepository: Send + Sync {
     async fn get_detail(&self, id: &str) -> Result<NodeDetail, NodeError>;
     async fn create(&self, node: &Node) -> Result<NodeDetail, NodeError>;
     async fn update_name(&self, id: &str, new_name: &str) -> Result<(), NodeError>;
-    async fn update_content(&self, id: &str, new_content: Value) -> Result<(), NodeError>;
+    async fn update_data(&self, id: &str, new_data: Value) -> Result<(), NodeError>;
 }

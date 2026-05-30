@@ -31,7 +31,7 @@ impl NodeRepository for SqliteNodeRepository {
                 name,
                 kind,
                 type as node_type,
-                content as "content: Json<Value>",
+                data as "data: Json<Value>",
                 properties as "properties: Json<Value>",
                 created_at,
                 updated_at,
@@ -146,7 +146,7 @@ impl NodeRepository for SqliteNodeRepository {
                 icon as "icon: Json<IconData>",
                 kind,
                 type as node_type,
-                content as "content: Json<Value>",
+                data as "data: Json<Value>",
                 properties as "properties: Json<Value>",
                 created_at,
                 updated_at,
@@ -186,16 +186,16 @@ impl NodeRepository for SqliteNodeRepository {
         Ok(())
     }
 
-    async fn update_content(&self, id: &str, new_content: Value) -> Result<(), NodeError> {
-        let content = Json(new_content); // ✅ wrap thành Json<Value>
+    async fn update_data(&self, id: &str, new_data: Value) -> Result<(), NodeError> {
+        let data = Json(new_data); // ✅ wrap thành Json<Value>
 
         query!(
             r#"
             UPDATE nodes 
-            SET content = ?
+            SET data = ?
             WHERE id = ?
         "#,
-            content,
+            data,
             id,
         )
         .execute(&self.pool)

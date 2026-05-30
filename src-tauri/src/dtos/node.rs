@@ -40,7 +40,7 @@ impl From<NodeMetadata> for NodeMetadataDto {
 pub struct NodeDetailDto {
     #[serde(flatten)]
     pub metadata: NodeMetadataDto,
-    pub content: Value,
+    pub data: Value,
     pub properties: Value,
 }
 
@@ -48,7 +48,7 @@ impl From<NodeDetail> for NodeDetailDto {
     fn from(domain: NodeDetail) -> Self {
         Self {
             metadata: domain.metadata.into(),
-            content: domain.content,
+            data: domain.data,
             properties: domain.properties,
         }
     }
@@ -59,6 +59,6 @@ pub struct CreateNodePayload {
     pub parent_id: Option<String>,
     pub name: String,
     pub node_type: String,
-    pub content: Option<Value>,
+    pub data: Option<Value>,
     pub properties: Option<Value>,
 }

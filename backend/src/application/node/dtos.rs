@@ -9,6 +9,6 @@ pub struct CreateNodeInput {
     pub name: String,
     pub kind: NodeKind,
     pub node_type: String,
-    pub content: Option<Value>,
+    pub data: Option<Value>,
     pub properties: Option<Value>,
 }

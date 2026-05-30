@@ -16,9 +16,9 @@ pub async fn create_document(
 pub async fn update_document(
     state: State<'_, AppState>,
     id: String,
-    content: String,
+    data: String,
 ) -> Result<(), String> {
-    backend::infrastructure::document::repo::update_document_content(&state.db, id, content)
+    backend::infrastructure::document::repo::update_document_data(&state.db, id, data)
         .await
         .map_err(|e| e.to_string())
 }
