@@ -1,22 +1,20 @@
-import { useWorkspaceStore } from "@system/features/workspace/stores/useWorkspaceStore";
 import type { IDockviewPanelHeaderProps } from "dockview";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import DynamicTitle from "./DynamicTitle";
 
 const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
-  const dockApi = useWorkspaceStore((state) => state.dockApi);
   const { api, params } = props;
   const [isActive, setIsActive] = useState(api.isActive);
   const tabMode = params.mode;
 
   useEffect(() => {
-    if (!dockApi) return;
+    if (!api) return;
 
-    const disposable = dockApi?.onDidActivePanelChange((event) => {
+    const disposable = api?.onDidActiveChange((event) => {
       if (!event) return;
 
-      setIsActive(event.api.isActive);
+      setIsActive(event.isActive);
     });
 
     return () => disposable?.dispose();
@@ -40,7 +38,11 @@ const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
     >
       <div className="flex items-center gap-2 truncate">
         <span className="truncate">
-          {tabMode == "dynamic" ? <DynamicTitle id={params.id} /> : api.title}
+          {tabMode == "dynamic" ? (
+            <DynamicTitle id={params.nodeId} />
+          ) : (
+            api.title
+          )}
         </span>
       </div>
 

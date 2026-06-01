@@ -3,16 +3,15 @@ import TableOfContents, {
   type TableOfContentData,
 } from "@tiptap/extension-table-of-contents";
 import { useMemo, useState, type RefObject } from "react";
-import { useWorkspaceStore } from "@system/features/workspace/stores/useWorkspaceStore";
 import { extensionList } from "@system/lib/editor/extensions/extensionList";
 import { syncAlignAttrs } from "@system/lib/editor/extensions/dnd/floatDragExtension";
+import { systemApi } from "@system/apis";
 
 const useDocumentEditor = (
   tabId: string,
   editorRef: RefObject<Editor | null>,
 ) => {
   const [localTOC, setLocalTOC] = useState<TableOfContentData | null>(null);
-  const changeFile = useWorkspaceStore((state) => state.changeFile);
 
   const extensions = useMemo(
     () => [
@@ -42,9 +41,9 @@ const useDocumentEditor = (
         const href = anchor.getAttribute("href");
 
         if (href?.startsWith("/documents/")) {
-          //TODO: change to scalable link
-          const documentId = href.split("/documents/")[1];
-          changeFile(tabId, documentId);
+          // TODO: change to scalable link
+          const nodeId = href.split("/documents/")[1];
+          systemApi.workspace.navigate(tabId, nodeId);
           return true;
         }
 

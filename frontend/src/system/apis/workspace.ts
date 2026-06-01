@@ -1,8 +1,8 @@
-import { useWorkspaceStore } from "@system/features/workspace/stores/useWorkspaceStore";
-import type { TabConfig } from "@system/features/workspace/types/tabConfig";
+import { workspaceService } from "@system/features/workspace/services";
+import type { OpenTabParams } from "@system/features/workspace/types/tabParams";
 
 export const workspaceApi = {
-  openTab: (config: TabConfig) => {
-    useWorkspaceStore.getState().openTab(config);
-  },
+  openTab: (config: OpenTabParams) => workspaceService.openTab(config),
+  navigate: (panelId: string, path: string) =>
+    workspaceService.navigate(panelId, path),
 };

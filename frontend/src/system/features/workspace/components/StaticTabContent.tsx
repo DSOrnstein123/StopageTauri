@@ -7,7 +7,7 @@ const StaticTabContent = ({ type }: { type: string }) => {
 
   return (
     <div className="pt-0">
-      <Content data={{}} />
+      <Content />
     </div>
   );
 };

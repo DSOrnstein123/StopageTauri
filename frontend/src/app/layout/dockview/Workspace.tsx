@@ -2,7 +2,7 @@ import { DockviewApi, themeLight } from "dockview-core";
 import { DockviewReact } from "dockview";
 import { components } from "./components";
 import { tabComponents } from "./tabComponents";
-import { useWorkspaceStore } from "@system/features/workspace/stores/useWorkspaceStore";
+import { workspaceService } from "@system/features/workspace/services";
 
 const loadDefaultLayout = (api: DockviewApi) => {
   api.addPanel({
@@ -13,29 +13,50 @@ const loadDefaultLayout = (api: DockviewApi) => {
 };
 
 const Workspace = () => {
-  const setDockApi = useWorkspaceStore((state) => state.setDockApi);
-
   return (
     <DockviewReact
       theme={themeLight}
       onReady={(readyEvent) => {
-        const { api: readyApi } = readyEvent;
+        const { api: dockApi } = readyEvent;
         const savedLayout = localStorage.getItem("workspace-layout");
         if (savedLayout) {
           try {
-            readyApi.fromJSON(JSON.parse(savedLayout));
+            dockApi.fromJSON(JSON.parse(savedLayout));
           } catch (error) {
             console.error("Failed to load layout:", error);
-            loadDefaultLayout(readyApi);
+            loadDefaultLayout(dockApi);
           }
         } else {
-          loadDefaultLayout(readyApi);
+          loadDefaultLayout(dockApi);
         }
 
-        setDockApi(readyApi);
+        workspaceService.setEngine({
+          openTab: (params) => {
+            const panelId = `${Date.now()}`;
+            const tabParams =
+              params.mode == "dynamic"
+                ? { nodeId: params.nodeId, type: params.type, mode: "dynamic" }
+                : { type: params.type, mode: "static" };
 
-        readyApi.onDidLayoutChange(() => {
-          const currentLayout = readyApi.toJSON();
+            dockApi.addPanel({
+              id: panelId,
+              title: params.title,
+              tabComponent: "workspace",
+              component: "tab",
+              params: tabParams,
+            });
+          },
+
+          navigate: (panelId, path) => {
+            const mainPanel = dockApi.getPanel(panelId);
+            if (mainPanel) {
+              mainPanel.api.updateParameters({ fileId: path });
+            }
+          },
+        });
+
+        dockApi.onDidLayoutChange(() => {
+          const currentLayout = dockApi.toJSON();
           localStorage.setItem(
             "workspace-layout",
             JSON.stringify(currentLayout),

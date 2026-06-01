@@ -6,7 +6,7 @@ const useDocumentContent = (id: string) => {
   return useQuery({
     queryKey: nodeKeys.detail(id),
     queryFn: () => nodeService.getDetail(id),
-    select: (data) => data.content,
+    select: (res) => res.data,
     staleTime: Infinity,
   });
 };

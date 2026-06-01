@@ -1,17 +1,16 @@
 import { usePrimarySidebarStore } from "@app/layout/sidebar/primarySidebarStore";
-import { useWorkspaceStore } from "@system/features/workspace/stores/useWorkspaceStore";
 import { cn } from "@system/lib/tailwind-css/utils";
 import type { ExplorerItem } from "../schemas/explorerItemSchema";
+import { systemApi } from "@system/apis";
 
 const FileItem = ({ data }: { data: ExplorerItem }) => {
   const { id, name, type } = data;
-  const openTab = useWorkspaceStore((state) => state.openTab);
   const isSelected = usePrimarySidebarStore((state) => state.selectedId === id);
 
   const handleOnClick = async () => {
-    openTab({
-      id: id,
-      name: name,
+    systemApi.workspace.openTab({
+      nodeId: id,
+      title: name,
       type: type,
       mode: "dynamic",
     });

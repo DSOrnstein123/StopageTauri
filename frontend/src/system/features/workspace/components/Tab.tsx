@@ -2,9 +2,9 @@ import TabHeader from "@system/features/workspace/components/TabHeader";
 import TabProvider from "@system/features/workspace/context/TabProvider";
 import DynamicTabContent from "./DynamicTabContent";
 import StaticTabContent from "./StaticTabContent";
-import type { TabConfig } from "../types/tabConfig";
+import type { TabProps } from "../types/tabProps";
 
-const Tab = (props: TabConfig) => {
+const Tab = (props: TabProps) => {
   const { mode, isActive, setTitle } = props;
 
   const value = {
