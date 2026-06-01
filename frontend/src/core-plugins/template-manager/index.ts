@@ -1,6 +1,7 @@
 import type { Plugin } from "@system/registries/plugin";
 import TemplateManager from "./components/TemplateManager";
 import handleOpenTemplateManager from "./handlers/handleOpenTemplateManager";
+import { commandBus } from "@system/bus/commandBus";
 
 export const TemplateManagerPlugin: Plugin = {
   id: "core.template-manager",
@@ -24,3 +25,7 @@ export const TemplateManagerPlugin: Plugin = {
     });
   },
 };
+
+// commandBus.register("get-templates", (payload) => {
+
+// })
