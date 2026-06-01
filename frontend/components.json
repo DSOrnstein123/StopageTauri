@@ -13,10 +13,10 @@
   "iconLibrary": "lucide",
   "aliases": {
     "components": "@/components",
-    "utils": "@/shared/lib/utils",
-    "ui": "@/shared/components/shadcn",
-    "lib": "@/shared/lib",
-    "hooks": "@/shared/hooks"
+    "utils": "@system/lib/tailwind-css",
+    "ui": "@system/ui/shadcn",
+    "lib": "@system/lib/tailwind-css/utils",
+    "hooks": "@system/ui/shadcn"
   },
   "registries": {}
 }
