@@ -9,7 +9,7 @@ const TemplateManager = () => {
 
   return (
     <div className="flex flex-col">
-      <CreateModal></CreateModal>
+      <CreateModal />
 
       <TemplateGallery templateList={templates}></TemplateGallery>
     </div>

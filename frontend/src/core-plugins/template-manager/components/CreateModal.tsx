@@ -1,11 +1,15 @@
-import { Dialog, DialogContent, DialogTrigger } from "@system/ui/shadcn/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@system/ui/shadcn/dialog";
 import { Controller } from "react-hook-form";
 import {
   Field,
   FieldContent,
   FieldGroup,
   FieldLabel,
-  FieldLegend,
   FieldSet,
 } from "@system/ui/shadcn/field";
 import { Input } from "@system/ui/shadcn/input";
@@ -27,11 +31,11 @@ const CreateModal = ({
       </DialogTrigger>
 
       <DialogContent>
+        <DialogTitle>New Template</DialogTitle>
+
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <FieldSet>
-              <FieldLegend className="text-2xl">New Template</FieldLegend>
-
               <FieldGroup>
                 <Controller
                   control={form.control}

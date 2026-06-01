@@ -11,14 +11,15 @@ const useCreateTemplateForm = () => {
     resolver: zodResolver(CreateTemplateSchema),
     defaultValues: {
       name: "Untitled",
+      defaultName: "",
       duplicateName: true,
     },
   });
 
-  const { mutateAsync } = useCreateTemplateMutation();
+  const { mutateAsync: createTemplate } = useCreateTemplateMutation();
 
   const onSubmit = (values: CreateTemplateValues) => {
-    mutateAsync({
+    createTemplate({
       name: values.name,
       kind: "template",
       type: "document",
