@@ -1,4 +1,5 @@
 import useGetTemplates from "../hooks/useGetTemplates";
+import CreateModal from "./CreateModal";
 import TemplateGallery from "./TemplateGallery";
 
 const TemplateManager = () => {
@@ -6,7 +7,13 @@ const TemplateManager = () => {
 
   if (!templates) return null;
 
-  return <TemplateGallery templateList={templates}></TemplateGallery>;
+  return (
+    <div className="flex flex-col">
+      <CreateModal></CreateModal>
+
+      <TemplateGallery templateList={templates}></TemplateGallery>
+    </div>
+  );
 };
 
 export default TemplateManager;
