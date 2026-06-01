@@ -1,5 +1,6 @@
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogTitle,
   DialogTrigger,
@@ -89,7 +90,9 @@ const CreateModal = ({
                     )}
                   />
 
-                  <Button type="submit">Create</Button>
+                  <DialogClose>
+                    <Button type="submit">Create</Button>
+                  </DialogClose>
                 </Field>
               </FieldGroup>
             </FieldSet>
