@@ -2,7 +2,7 @@ import type { IconData } from "@system/schemas/iconData";
 import type { ComponentType } from "react";
 import type { ZodType } from "zod";
 
-interface FeatureConfig {
+interface PluginConfig {
   defaultIcon?: string;
   component: ComponentType;
   schema?: ZodType;
@@ -12,6 +12,10 @@ interface FeatureConfig {
     action: () => void;
   }[];
 
+  api?: {
+    hooks?: Record<string, (...args: unknown[]) => unknown>;
+  };
+
   slots?: {
     toolbar?: ComponentType<{ data: unknown }>;
     sidebar?: ComponentType;
@@ -20,12 +24,12 @@ interface FeatureConfig {
   };
 }
 
-type Slot = keyof NonNullable<FeatureConfig["slots"]>;
+type Slot = keyof NonNullable<PluginConfig["slots"]>;
 
 export class PluginRegistry {
-  private plugins = new Map<string, FeatureConfig>();
+  private plugins = new Map<string, PluginConfig>();
 
-  register(id: string, config: FeatureConfig) {
+  register(id: string, config: PluginConfig) {
     this.plugins.set(id, {
       ...config,
     });
@@ -93,6 +97,14 @@ export class PluginRegistry {
       throw new Error(`[PluginRegistry] Plugin '${id}' is not registered`);
     }
     return feature.slots?.[slot];
+  }
+
+  getApi(id: string) {
+    const feature = this.plugins.get(id);
+    if (!feature) {
+      throw new Error(`[PluginRegistry] Plugin '${id}' is not registered`);
+    }
+    return feature.api;
   }
 }
 
