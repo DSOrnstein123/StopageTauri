@@ -11,4 +11,6 @@ export interface CreateNodePayload {
   parentId?: string;
   name: string;
   kind: NodeKind;
+  type: string;
+  data?: Record<string, unknown>;
 }

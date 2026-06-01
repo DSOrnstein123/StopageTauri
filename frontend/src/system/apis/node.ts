@@ -9,6 +9,6 @@ export const nodeApi = {
   getList: (options?: NodeFilterOptions) => nodeService.getList(options),
   create: (payload: CreateNodePayload) => nodeService.create(payload),
   rename: (id: string, name: string) => nodeService.updateName(id, name),
-  updateContent: (id: string, newContent: Record<string, unknown>) =>
-    nodeService.updateContent(id, newContent),
+  updateData: (id: string, newData: Record<string, unknown>) =>
+    nodeService.updateData(id, newData),
 };

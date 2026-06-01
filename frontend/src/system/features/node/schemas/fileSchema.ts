@@ -9,7 +9,7 @@ const FileMetadataListSchema = z.array(FileMetadataSchema);
 type FileMetadataList = z.infer<typeof FileMetadataListSchema>;
 
 const FileDetailSchema = FileMetadataSchema.extend({
-  content: z.record(z.string(), z.string()),
+  data: z.record(z.string(), z.unknown()),
   properties: z.record(z.string(), z.string()),
 });
 type FileDetail = z.infer<typeof FileDetailSchema>;

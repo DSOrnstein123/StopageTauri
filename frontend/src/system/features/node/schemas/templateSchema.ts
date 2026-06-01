@@ -9,7 +9,10 @@ const TemplateMetadataListSchema = z.array(TemplateMetadataSchema);
 type TemplateMetadataList = z.infer<typeof TemplateMetadataListSchema>;
 
 const TemplateDetailSchema = TemplateMetadataSchema.extend({
-  content: z.record(z.string(), z.string()),
+  data: z.object({
+    defaultName: z.string(),
+    defaultContent: z.record(z.string(), z.unknown()),
+  }),
   properties: z.record(z.string(), z.string()),
 });
 type TemplateDetail = z.infer<typeof TemplateDetailSchema>;

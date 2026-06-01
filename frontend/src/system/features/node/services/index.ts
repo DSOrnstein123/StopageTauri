@@ -10,6 +10,7 @@ export const nodeService = {
       const rawData = await invoke<NodeDetail>("get_node_detail", {
         id: id,
       });
+      console.log(rawData);
       const nodeType = resolveNodeType(rawData.kind, rawData.type);
       const schema = pluginRegistry.getSchema(nodeType);
       const validData = schema.parse(rawData);
@@ -39,6 +40,6 @@ export const nodeService = {
   },
   updateName: (id: string, newName: string) =>
     invoke("update_node_name", { id: id, newName: newName }),
-  updateContent: (id: string, newContent: Record<string, unknown>) =>
-    invoke("update_node_content", { id: id, newContent: newContent }),
+  updateData: (id: string, newData: Record<string, unknown>) =>
+    invoke("update_node_data", { id: id, newData: newData }),
 };

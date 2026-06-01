@@ -24,7 +24,7 @@ const NodeMetadataListSchema = z.array(NodeMetadataSchema);
 type NodeMetadataList = z.infer<typeof NodeMetadataListSchema>;
 
 const NodeDetailSchema = NodeMetadataSchema.extend({
-  content: z.record(z.string(), z.string()),
+  data: z.record(z.string(), z.unknown()),
   properties: z.record(z.string(), z.string()),
 });
 type NodeDetail = z.infer<typeof NodeDetailSchema>;

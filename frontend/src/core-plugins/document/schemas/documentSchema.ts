@@ -3,7 +3,7 @@ import z from "zod";
 
 const DocumentFileSchema = FileDetailSchema.extend({
   type: z.literal("document"),
-  content: z.record(z.string(), z.unknown()),
+  data: z.record(z.string(), z.unknown()),
 });
 type DocumentFile = z.infer<typeof DocumentFileSchema>;
 

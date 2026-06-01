@@ -29,7 +29,7 @@ const useDocumentData = (id: string, editor: Editor | null) => {
     const handleUpdate = debounce<(props: { editor: Editor }) => void>(
       (props) => {
         const content = props.editor.getJSON();
-        systemApi.node.updateContent(id, content);
+        systemApi.node.updateData(id, content);
       },
       500,
     );
