@@ -137,8 +137,8 @@ impl NodeRepository for SqliteNodeRepository {
         let db_node = query_as!(
             DbNodeDetail,
             r#"
-            INSERT INTO nodes (id, parent_id, name, icon, kind, type)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO nodes (id, parent_id, name, icon, kind, type, data)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
             RETURNING
                 id as "id!: String",
                 parent_id,
@@ -158,6 +158,7 @@ impl NodeRepository for SqliteNodeRepository {
             icon,
             kind,
             node.node_type,
+            node.data
         )
         .fetch_one(&self.pool)
         .await

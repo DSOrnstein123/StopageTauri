@@ -8,6 +8,7 @@ pub struct CreateNodeInput {
     pub parent_id: Option<String>,
     pub name: String,
     pub kind: NodeKind,
+    #[serde(rename = "type")]
     pub node_type: String,
     pub data: Option<Value>,
     pub properties: Option<Value>,

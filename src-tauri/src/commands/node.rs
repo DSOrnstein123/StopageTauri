@@ -46,11 +46,14 @@ pub async fn get_node_detail(
 }
 
 #[tauri::command]
-pub async fn create_node(state: State<'_, AppState>, input: CreateNodeInput) -> Result<(), String> {
+pub async fn create_node(
+    state: State<'_, AppState>,
+    payload: CreateNodeInput,
+) -> Result<(), String> {
     let use_case = CreateNodeUseCase::new(&state.node_repo);
 
     use_case
-        .execute(input)
+        .execute(payload)
         .await
         .map(|_| ())
         .map_err(|err| err.to_string())

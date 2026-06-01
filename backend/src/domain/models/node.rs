@@ -51,7 +51,7 @@ impl Node {
         // }
 
         Ok(Self {
-            id: Uuid::new_v4().to_string(),
+            id: Uuid::new_v4().simple().to_string(),
             parent_id,
             name,
             kind,
