@@ -2,6 +2,9 @@ import type { IconData } from "@system/schemas/iconData";
 import type { ComponentType } from "react";
 import type { ZodType } from "zod";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface PluginApi {}
+
 interface PluginConfig {
   defaultIcon?: string;
   component: ComponentType;
@@ -99,12 +102,14 @@ export class PluginRegistry {
     return feature.slots?.[slot];
   }
 
-  getApi(id: string) {
+  getApi<K extends keyof PluginApi>(
+    id: K,
+  ): PluginApi[K] extends { api: infer A } ? A : never {
     const feature = this.plugins.get(id);
     if (!feature) {
       throw new Error(`[PluginRegistry] Plugin '${id}' is not registered`);
     }
-    return feature.api;
+    return feature.api as PluginApi[K] extends { api: infer A } ? A : never;
   }
 }
 
