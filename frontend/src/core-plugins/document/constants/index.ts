@@ -6,4 +6,5 @@ export const DEFAULT_DOCUMENT_VALUES: CreateNodePayload = {
   name: "Untitled",
   kind: "file",
   type: PLUGIN_ID,
+  data: {},
 };

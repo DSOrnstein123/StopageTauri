@@ -1,88 +1,68 @@
-import type { IconData } from "@system/schemas/iconData";
-import type { ComponentType } from "react";
-import type { ZodType } from "zod";
-
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface PluginApi {}
-
-interface PluginConfig {
-  defaultIcon?: string;
-  component: ComponentType;
-  schema?: ZodType;
-  actionButtons?: {
-    id: string;
-    icon: IconData;
-    action: () => void;
-  }[];
-
-  api?: {
-    hooks?: Record<string, (...args: unknown[]) => unknown>;
-  };
-
-  slots?: {
-    toolbar?: ComponentType<{ data: unknown }>;
-    sidebar?: ComponentType;
-    header?: ComponentType<{ data: unknown }>;
-    footer?: ComponentType<{ data: unknown }>;
-  };
-}
-
-type Slot = keyof NonNullable<PluginConfig["slots"]>;
+import type {
+  Plugin,
+  PluginManifest,
+  PluginPublicApi,
+  Slot,
+  NodeConfig,
+} from "./plugin";
 
 export class PluginRegistry {
-  private plugins = new Map<string, PluginConfig>();
+  private plugins = new Map<string, PluginManifest>();
+  private nodeTypes = new Map<string, NodeConfig>();
 
-  register(id: string, config: PluginConfig) {
-    this.plugins.set(id, {
-      ...config,
-    });
+  register(plugin: Plugin) {
+    const { id: pluginId, nodes, ...metadata } = plugin;
+    if (this.plugins.has(pluginId)) return;
+
+    this.plugins.set(pluginId, metadata);
+
+    if (nodes) {
+      Object.entries(nodes).forEach(([nodeType, nodeConfig]) => {
+        if (this.nodeTypes.has(nodeType)) {
+          throw new Error(`Node type "${nodeType}" already registered`);
+        }
+
+        this.nodeTypes.set(nodeType, nodeConfig);
+      });
+    }
   }
 
-  registerSlot(
-    id: string,
-    slot: Slot,
-    component: ComponentType<{ data: unknown }>,
-  ) {
-    const existing = this.plugins.get(id);
-    if (!existing) return;
-
-    this.plugins.set(id, {
-      ...existing,
-      slots: {
-        ...existing.slots,
-        [slot]: component,
-      },
-    });
-  }
-
-  has(id: string): boolean {
-    return this.plugins.has(id);
-  }
-
-  getComponent(id: string) {
-    const feature = this.plugins.get(id);
-    if (!feature || !feature.component) {
+  getNodeComponent(nodeType: string) {
+    const nodeConfig = this.nodeTypes.get(nodeType);
+    if (!nodeConfig || !nodeConfig.component) {
       throw new Error(
-        `[PluginRegistry] Cannot find component for plugin '${id}'`,
+        `[PluginRegistry] Cannot find component for node type '${nodeType}'`,
       );
     }
-    return feature.component;
+    return nodeConfig.component;
   }
 
-  getSchema(id: string) {
-    const feature = this.plugins.get(id);
-    if (!feature || !feature.schema) {
-      throw new Error(`[PluginRegistry] Cannot find schema for plugin '${id}'`);
+  getNodeSchema(nodeType: string) {
+    const nodeConfig = this.nodeTypes.get(nodeType);
+    if (!nodeConfig || !nodeConfig.schema) {
+      throw new Error(
+        `[PluginRegistry] Cannot find schema for node type '${nodeType}'`,
+      );
     }
-    return feature.schema;
+    return nodeConfig.schema;
   }
 
   getActionButton(id: string) {
-    const feature = this.plugins.get(id);
-    if (!feature) {
+    const plugin = this.plugins.get(id);
+    if (!plugin) {
       throw new Error(`[PluginRegistry] Plugin '${id}' is not registered`);
     }
-    return feature.actionButtons;
+    return plugin.actionButtons;
+  }
+
+  getNodeActionButton(nodeType: string) {
+    const nodeConfig = this.nodeTypes.get(nodeType);
+    if (!nodeConfig) {
+      throw new Error(
+        `[PluginRegistry] node type '${nodeType}' is not registered`,
+      );
+    }
+    return nodeConfig.actionButtons;
   }
 
   getActionButtons() {
@@ -94,22 +74,40 @@ export class PluginRegistry {
     });
   }
 
-  getSlot(id: string, slot: Slot) {
-    const feature = this.plugins.get(id);
-    if (!feature) {
-      throw new Error(`[PluginRegistry] Plugin '${id}' is not registered`);
+  getNodeSlot(nodeType: string, slot: Slot) {
+    const nodeConfig = this.nodeTypes.get(nodeType);
+    if (!nodeConfig) {
+      throw new Error(
+        `[PluginRegistry] node type '${nodeType}' is not registered`,
+      );
     }
-    return feature.slots?.[slot];
+    return nodeConfig.slots?.[slot];
   }
 
-  getApi<K extends keyof PluginApi>(
+  getApi<K extends keyof PluginPublicApi>(
     id: K,
-  ): PluginApi[K] extends { api: infer A } ? A : never {
-    const feature = this.plugins.get(id);
-    if (!feature) {
+  ): PluginPublicApi[K] extends { api: infer A } ? A : never {
+    const plugin = this.plugins.get(id);
+    if (!plugin) {
       throw new Error(`[PluginRegistry] Plugin '${id}' is not registered`);
     }
-    return feature.api as PluginApi[K] extends { api: infer A } ? A : never;
+    return plugin.api as PluginPublicApi[K] extends { api: infer A }
+      ? A
+      : never;
+  }
+
+  getNodeApi<K extends keyof PluginPublicApi>(
+    nodeType: K,
+  ): PluginPublicApi[K] extends { api: infer A } ? A : never {
+    const nodeConfig = this.nodeTypes.get(nodeType);
+    if (!nodeConfig) {
+      throw new Error(
+        `[PluginRegistry] node type '${nodeType}' is not registered`,
+      );
+    }
+    return nodeConfig.api as PluginPublicApi[K] extends { api: infer A }
+      ? A
+      : never;
   }
 }
 
