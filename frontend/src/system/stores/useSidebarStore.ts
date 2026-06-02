@@ -1,14 +1,14 @@
 import { create } from "zustand";
 
 interface ISidebarStore {
-  type: string;
+  type: string | null;
 
-  setType: (type: string) => void;
+  setType: (type: string | null) => void;
 }
 
 const createSidebarStore = () =>
   create<ISidebarStore>((set) => ({
-    type: "document",
+    type: null,
 
     setType: (type) => set({ type: type }),
   }));

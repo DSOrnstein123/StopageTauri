@@ -6,8 +6,10 @@ const RightSidebar = () => {
   const rightSidebarRef = useRef<HTMLDivElement | null>(null);
   const type = useRightSidebarStore((state) => state.type);
 
+  if (!type) return null;
+
   /* eslint-disable react-hooks/static-components */
-  const SidebarContent = pluginRegistry.getSlot(type, "sidebar");
+  const SidebarContent = pluginRegistry.getNodeSlot(type, "sidebar");
   if (!SidebarContent) return null;
 
   return (
