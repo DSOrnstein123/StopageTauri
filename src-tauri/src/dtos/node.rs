@@ -1,6 +1,6 @@
 use backend::domain::models::node::{NodeDetail, NodeKind, NodeMetadata};
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
+use serde_json::{json, Value};
 
 use crate::dtos::icon::IconDataDto;
 
@@ -59,6 +59,11 @@ pub struct CreateNodePayload {
     pub parent_id: Option<String>,
     pub name: String,
     pub node_type: String,
-    pub data: Option<Value>,
+    #[serde(default = "default_node_data")]
+    pub data: Value,
     pub properties: Option<Value>,
+}
+
+fn default_node_data() -> Value {
+    json!({})
 }
