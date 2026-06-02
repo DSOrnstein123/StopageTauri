@@ -1,9 +1,11 @@
 import { pluginRegistry } from "@system/registries/pluginRegistry";
 
 const TemplatePicker = () => {
-  const useGetTemplates = pluginRegistry.getApi("core.template-manager")?.hooks
-    ?.useGetList;
+  const useGetTemplates = pluginRegistry.getApi("core.template-manager").hooks
+    .useGetList;
   const { data: templates } = useGetTemplates();
+
+  if (!templates) return null;
 
   return (
     <div>

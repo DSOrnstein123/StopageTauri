@@ -3,12 +3,13 @@ import type { Plugin } from "@system/registries/plugin";
 import DocumentSidebar from "./components/DocumentSidebar";
 import DocumentView from "./components/DocumentView";
 import handleCreateDocument from "./handlers/handleCreateDocument";
+import { PLUGIN_ID } from "./constants";
 
 export { DocumentView, DocumentSidebar };
 
 export const DocumentPlugin: Plugin = {
-  id: "core.document",
-  name: "document" as const,
+  id: PLUGIN_ID,
+  name: "document",
 
   onRegister: (ctx) => {
     ctx.register(DocumentPlugin.name, {
