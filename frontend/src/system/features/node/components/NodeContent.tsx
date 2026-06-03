@@ -3,7 +3,7 @@ import type { NodeDetail } from "../schemas/nodeSchema";
 
 const NodeContent = ({ data }: { data: NodeDetail }) => {
   /* eslint-disable react-hooks/static-components */
-  const Content = pluginRegistry.getComponent(data.type);
+  const Content = pluginRegistry.getNodeComponent(data.type);
   if (!Content) return null;
 
   return (

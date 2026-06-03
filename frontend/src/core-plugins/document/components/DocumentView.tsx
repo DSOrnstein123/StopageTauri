@@ -1,19 +1,10 @@
-import { useEffect, useRef, type KeyboardEvent } from "react";
+import { useRef, type KeyboardEvent } from "react";
 import { Editor } from "@tiptap/react";
 import DocumentDetail from "./DocumentDetail";
 import NodeNameHeader from "@system/features/node/components/NodeNameHeader";
-import { useRightSidebarStore } from "@system/stores/useSidebarStore";
-import { DOCUMENT_NODE } from "../constants";
 
 const DocumentView = () => {
   const editorRef = useRef<Editor | null>(null);
-  const setType = useRightSidebarStore((state) => state.setType);
-
-  useEffect(() => {
-    setType(DOCUMENT_NODE);
-
-    return () => setType(null);
-  }, [setType]);
 
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key == "Enter") {
