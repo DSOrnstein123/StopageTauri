@@ -1,9 +1,10 @@
 import type {
   Plugin,
   PluginManifest,
-  PluginPublicApi,
   Slot,
   NodeConfig,
+  PluginId,
+  PluginRegistryMap,
 } from "./plugin";
 
 export class PluginRegistry {
@@ -27,6 +28,10 @@ export class PluginRegistry {
     }
   }
 
+  hasNode(value: string) {
+    return this.nodeTypes.has(value);
+  }
+
   getNodeComponent(nodeType: string) {
     const nodeConfig = this.nodeTypes.get(nodeType);
     if (!nodeConfig || !nodeConfig.component) {
@@ -47,10 +52,12 @@ export class PluginRegistry {
     return nodeConfig.schema;
   }
 
-  getActionButton(id: string) {
-    const plugin = this.plugins.get(id);
+  getActionButton(pluginId: string) {
+    const plugin = this.plugins.get(pluginId);
     if (!plugin) {
-      throw new Error(`[PluginRegistry] Plugin '${id}' is not registered`);
+      throw new Error(
+        `[PluginRegistry] Plugin '${pluginId}' is not registered`,
+      );
     }
     return plugin.actionButtons;
   }
@@ -84,28 +91,30 @@ export class PluginRegistry {
     return nodeConfig.slots?.[slot];
   }
 
-  getApi<K extends keyof PluginPublicApi>(
-    id: K,
-  ): PluginPublicApi[K] extends { api: infer A } ? A : never {
-    const plugin = this.plugins.get(id);
+  getApi<P extends PluginId>(
+    pluginId: P,
+  ): PluginRegistryMap[P] extends { api: infer A } ? A : never {
+    const plugin = this.plugins.get(pluginId);
     if (!plugin) {
-      throw new Error(`[PluginRegistry] Plugin '${id}' is not registered`);
+      throw new Error(
+        `[PluginRegistry] Plugin '${pluginId}' is not registered`,
+      );
     }
-    return plugin.api as PluginPublicApi[K] extends { api: infer A }
+    return plugin.api as PluginRegistryMap[P] extends { api: infer A }
       ? A
       : never;
   }
 
-  getNodeApi<K extends keyof PluginPublicApi>(
-    nodeType: K,
-  ): PluginPublicApi[K] extends { api: infer A } ? A : never {
+  getNodeApi<N extends PluginId>(
+    nodeType: N,
+  ): PluginRegistryMap[N] extends { api: infer A } ? A : never {
     const nodeConfig = this.nodeTypes.get(nodeType);
     if (!nodeConfig) {
       throw new Error(
         `[PluginRegistry] node type '${nodeType}' is not registered`,
       );
     }
-    return nodeConfig.api as PluginPublicApi[K] extends { api: infer A }
+    return nodeConfig.api as PluginRegistryMap[N] extends { api: infer A }
       ? A
       : never;
   }

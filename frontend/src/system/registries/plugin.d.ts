@@ -1,5 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface PluginPublicApi {}
+export interface PluginRegistryMap {}
+type ExtractNodeType<T> = T extends { nodes: infer N } ? keyof N : never;
+
+export type PluginId = keyof PluginRegistryMap;
+type PluginConfigs = PluginRegistryMap[PluginId];
+export type NodeType = ExtractNodeType<PluginConfigs>;
 
 export interface Plugin extends PluginConfig {
   id: string;

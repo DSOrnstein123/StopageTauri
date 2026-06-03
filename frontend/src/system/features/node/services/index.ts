@@ -12,7 +12,7 @@ export const nodeService = {
       });
       console.log(rawData);
       const nodeType = resolveNodeType(rawData.kind, rawData.type);
-      const schema = pluginRegistry.getSchema(nodeType);
+      const schema = pluginRegistry.getNodeSchema(nodeType);
       const validData = schema.parse(rawData);
       return validData as T;
     } catch (error) {

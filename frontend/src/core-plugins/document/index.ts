@@ -7,6 +7,16 @@ import type { Plugin } from "@system/registries/plugin";
 
 export { DocumentView, DocumentSidebar };
 
+declare module "@system/registries/plugin" {
+  interface PluginRegistryMap {
+    "core.document": {
+      nodes: {
+        document: {};
+      };
+    };
+  }
+}
+
 export const DocumentPlugin: Plugin = {
   id: PLUGIN_ID,
   name: "document",
