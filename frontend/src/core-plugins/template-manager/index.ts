@@ -12,6 +12,9 @@ declare module "@system/registries/plugin" {
           useGetList: typeof useGetTemplates;
         };
       };
+      nodes: {
+        "document-template": Record<string, never>;
+      };
     };
   }
 }

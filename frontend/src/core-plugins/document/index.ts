@@ -31,7 +31,7 @@ export const DocumentPlugin = {
             type: "lucide",
             value: "FilePlus",
           },
-          action: () => handleCreateDocument(PLUGIN_ID),
+          action: () => handleCreateDocument(NODES.DOCUMENT),
         },
       ],
       slots: {
