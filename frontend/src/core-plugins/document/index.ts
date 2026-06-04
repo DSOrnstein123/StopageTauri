@@ -2,7 +2,7 @@ import { DocumentFileSchema } from "./schemas/documentSchema";
 import DocumentSidebar from "./components/DocumentSidebar";
 import DocumentView from "./components/DocumentView";
 import handleCreateDocument from "./handlers/handleCreateDocument";
-import { DOCUMENT_NODE, PLUGIN_ID } from "./constants";
+import { NODES, PLUGIN_ID } from "./constants";
 import type { Plugin } from "@system/registries/plugin";
 
 export { DocumentView, DocumentSidebar };
@@ -11,17 +11,17 @@ declare module "@system/registries/plugin" {
   interface PluginRegistryMap {
     "core.document": {
       nodes: {
-        document: {};
+        document: Record<string, never>;
       };
     };
   }
 }
 
-export const DocumentPlugin: Plugin = {
+export const DocumentPlugin = {
   id: PLUGIN_ID,
   name: "document",
   nodes: {
-    [DOCUMENT_NODE]: {
+    [NODES.DOCUMENT]: {
       component: DocumentView,
       schema: DocumentFileSchema,
       actionButtons: [
@@ -31,7 +31,7 @@ export const DocumentPlugin: Plugin = {
             type: "lucide",
             value: "FilePlus",
           },
-          action: () => handleCreateDocument(DocumentPlugin.id),
+          action: () => handleCreateDocument(PLUGIN_ID),
         },
       ],
       slots: {
@@ -39,4 +39,4 @@ export const DocumentPlugin: Plugin = {
       },
     },
   },
-};
+} satisfies Plugin;

@@ -1,7 +1,10 @@
+import type { NodeType, PluginId } from "@system/registries/plugin";
+import type { IconData } from "@system/schemas/iconData";
+
 export type TabMode = "dynamic" | "static";
 
 interface BaseTabProps {
-  icon?: string;
+  icon?: IconData;
   mode: TabMode;
   isActive: boolean;
   setTitle: (newTitle: string) => void;
@@ -9,12 +12,12 @@ interface BaseTabProps {
 
 export interface DynamicTabProps extends BaseTabProps {
   nodeId: string;
-  type?: string;
+  type?: NodeType;
   mode: "dynamic";
 }
 
 export interface StaticTabProps extends BaseTabProps {
-  type: string;
+  type: PluginId;
   mode: "static";
 }
 

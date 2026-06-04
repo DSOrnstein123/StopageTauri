@@ -32,6 +32,16 @@ export class PluginRegistry {
     return this.nodeTypes.has(value);
   }
 
+  getComponent(pluginId: PluginId) {
+    const nodeConfig = this.nodeTypes.get(pluginId);
+    if (!nodeConfig || !nodeConfig.component) {
+      throw new Error(
+        `[PluginRegistry] Cannot find component for plugin '${pluginId}'`,
+      );
+    }
+    return nodeConfig.component;
+  }
+
   getNodeComponent(nodeType: string) {
     const nodeConfig = this.nodeTypes.get(nodeType);
     if (!nodeConfig || !nodeConfig.component) {

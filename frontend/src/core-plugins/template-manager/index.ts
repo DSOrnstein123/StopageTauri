@@ -12,16 +12,14 @@ declare module "@system/registries/plugin" {
           useGetList: typeof useGetTemplates;
         };
       };
-      nodes: {
-        "document-template": {};
-      };
     };
   }
 }
 
-export const TemplateManagerPlugin: Plugin = {
+export const TemplateManagerPlugin = {
   id: PLUGIN_ID,
-  name: "template-manager",
+  name: "Template Manager",
+  component: TemplateManager,
   actionButtons: [
     {
       id: "open-template-manager",
@@ -30,18 +28,13 @@ export const TemplateManagerPlugin: Plugin = {
         value: "LayoutTemplate",
       },
       action: () => {
-        handleOpenTemplateManager(TemplateManagerPlugin.id);
+        handleOpenTemplateManager(PLUGIN_ID);
       },
     },
   ],
-  nodes: {
-    "document-template": {
-      component: TemplateManager,
-      api: {
-        hooks: {
-          useGetList: useGetTemplates,
-        },
-      },
+  api: {
+    hooks: {
+      useGetList: useGetTemplates,
     },
   },
-};
+} satisfies Plugin;

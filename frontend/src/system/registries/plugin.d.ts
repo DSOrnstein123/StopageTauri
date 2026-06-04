@@ -12,6 +12,7 @@ export interface Plugin extends PluginConfig {
 
 interface PluginManifest {
   name: string;
+  component?: ComponentType;
   api?: PluginApi;
   actionButtons?: ActionButton[];
 }
