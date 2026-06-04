@@ -1,4 +1,7 @@
-use backend::domain::models::node::{NodeDetail, NodeKind, NodeMetadata};
+use backend::{
+    application::node::dtos::CreateNodeInput,
+    domain::models::node::{NodeDetail, NodeKind, NodeMetadata},
+};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 
@@ -58,6 +61,8 @@ impl From<NodeDetail> for NodeDetailDto {
 pub struct CreateNodePayload {
     pub parent_id: Option<String>,
     pub name: String,
+    pub kind: NodeKind,
+    #[serde(rename = "type")]
     pub node_type: String,
     #[serde(default = "default_node_data")]
     pub data: Value,
@@ -66,4 +71,21 @@ pub struct CreateNodePayload {
 
 fn default_node_data() -> Value {
     json!({})
+}
+
+impl From<CreateNodePayload> for CreateNodeInput {
+    fn from(payload: CreateNodePayload) -> Self {
+        Self {
+            parent_id: payload.parent_id,
+            name: payload.name,
+            node_type: payload.node_type,
+            kind: payload.kind,
+            data: if payload.data.is_null() {
+                None
+            } else {
+                Some(payload.data)
+            },
+            properties: payload.properties,
+        }
+    }
 }
