@@ -16,7 +16,7 @@ const useCreateTemplateForm = () => {
     },
   });
 
-  const { mutateAsync: createTemplate } = useCreateTemplateMutation();
+  const { mutate: createTemplate } = useCreateTemplateMutation();
 
   const onSubmit = (values: CreateTemplateValues) => {
     createTemplate({
