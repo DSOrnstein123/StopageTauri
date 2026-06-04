@@ -1,19 +1,11 @@
-import { pluginRegistry } from "@system/registries/pluginRegistry";
+import { systemApi } from "@system/apis";
+import TemplateList from "./TemplateList";
 
 const TemplatePicker = () => {
-  const useGetTemplates = pluginRegistry.getApi("core.template-manager").hooks
-    .useGetList;
-  const { data: templates } = useGetTemplates();
+  const templateManagerApi = systemApi.plugin.getApi("core.template-manager");
+  if (!templateManagerApi) return null;
 
-  if (!templates) return null;
-
-  return (
-    <div>
-      {templates.map((template) => (
-        <div>{template.name}</div>
-      ))}
-    </div>
-  );
+  return <TemplateList />;
 };
 
 export default TemplatePicker;

@@ -1,21 +1,27 @@
 import type {
   Plugin,
-  PluginManifest,
   Slot,
   NodeConfig,
   PluginId,
   PluginRegistryMap,
+  PluginConfig,
 } from "./plugin";
 
+type ExtractPluginApi<P extends PluginId> = PluginRegistryMap[P] extends {
+  api: infer A;
+}
+  ? A
+  : never;
+
 export class PluginRegistry {
-  private plugins = new Map<string, PluginManifest>();
+  private plugins = new Map<string, PluginConfig>();
   private nodeTypes = new Map<string, NodeConfig>();
 
   register(plugin: Plugin) {
     const { id: pluginId, nodes, ...metadata } = plugin;
     if (this.plugins.has(pluginId)) return;
 
-    this.plugins.set(pluginId, metadata);
+    this.plugins.set(pluginId, { ...metadata, nodes: nodes });
 
     if (nodes) {
       Object.entries(nodes).forEach(([nodeType, nodeConfig]) => {
@@ -33,7 +39,7 @@ export class PluginRegistry {
   }
 
   getComponent(pluginId: PluginId) {
-    const nodeConfig = this.nodeTypes.get(pluginId);
+    const nodeConfig = this.plugins.get(pluginId);
     if (!nodeConfig || !nodeConfig.component) {
       throw new Error(
         `[PluginRegistry] Cannot find component for plugin '${pluginId}'`,
@@ -84,10 +90,13 @@ export class PluginRegistry {
 
   getActionButtons() {
     return Array.from(this.plugins.values()).flatMap((config) => {
-      if (!config.actionButtons) return [];
-      return config.actionButtons.map((button) => ({
-        ...button,
-      }));
+      const pluginActionButtons = config.actionButtons ?? [];
+      const nodeActionButtons = config.nodes
+        ? Object.values(config.nodes).flatMap(
+            (config) => config.actionButtons ?? [],
+          )
+        : [];
+      return [...pluginActionButtons, ...nodeActionButtons];
     });
   }
 
@@ -101,18 +110,14 @@ export class PluginRegistry {
     return nodeConfig.slots?.[slot];
   }
 
-  getApi<P extends PluginId>(
-    pluginId: P,
-  ): PluginRegistryMap[P] extends { api: infer A } ? A : never {
+  getApi<P extends PluginId>(pluginId: P): ExtractPluginApi<P> {
     const plugin = this.plugins.get(pluginId);
     if (!plugin) {
       throw new Error(
         `[PluginRegistry] Plugin '${pluginId}' is not registered`,
       );
     }
-    return plugin.api as PluginRegistryMap[P] extends { api: infer A }
-      ? A
-      : never;
+    return plugin.api as ExtractPluginApi<P>;
   }
 
   getNodeApi<N extends PluginId>(

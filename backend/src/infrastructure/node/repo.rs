@@ -188,7 +188,7 @@ impl NodeRepository for SqliteNodeRepository {
     }
 
     async fn update_data(&self, id: &str, new_data: Value) -> Result<(), NodeError> {
-        let data = Json(new_data); // ✅ wrap thành Json<Value>
+        let data = Json(new_data);
 
         query!(
             r#"

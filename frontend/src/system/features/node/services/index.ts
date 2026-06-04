@@ -23,6 +23,7 @@ export const nodeService = {
   getList: async (options?: NodeFilterOptions) => {
     try {
       const rawData = await invoke("get_nodes", { options });
+      console.log(rawData);
       return NodeMetadataListSchema.parse(rawData);
     } catch (error) {
       console.error("getList failed:", error);

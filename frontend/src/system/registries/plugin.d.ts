@@ -10,14 +10,11 @@ export interface Plugin extends PluginConfig {
   id: string;
 }
 
-interface PluginManifest {
+interface PluginConfig {
   name: string;
   component?: ComponentType;
   api?: PluginApi;
   actionButtons?: ActionButton[];
-}
-
-export interface PluginConfig extends PluginManifest {
   nodes?: Record<string, NodeConfig>;
 }
 
