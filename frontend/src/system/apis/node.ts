@@ -1,3 +1,4 @@
+import { nodeKeys } from "@system/features/node/keys";
 import { nodeService } from "@system/features/node/services";
 import type {
   CreateNodePayload,
@@ -5,6 +6,8 @@ import type {
 } from "@system/features/node/types";
 
 export const nodeApi = {
+  keys: nodeKeys,
+
   get: (id: string) => nodeService.getDetail(id),
   getList: (options?: NodeFilterOptions) => nodeService.getList(options),
   create: (payload: CreateNodePayload) => nodeService.create(payload),

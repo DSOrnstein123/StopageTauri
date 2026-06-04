@@ -2,6 +2,7 @@ import { usePrimarySidebarStore } from "@app/layout/sidebar/primarySidebarStore"
 import { cn } from "@system/lib/tailwind-css/utils";
 import type { ExplorerItem } from "../schemas/explorerItemSchema";
 import { systemApi } from "@system/apis";
+import Icon from "@system/ui/icon/Icon";
 
 const FileItem = ({ data }: { data: ExplorerItem }) => {
   const { id, name, type } = data;
@@ -20,10 +21,11 @@ const FileItem = ({ data }: { data: ExplorerItem }) => {
     <div
       onClick={handleOnClick}
       className={cn(
-        "h-7 rounded-md px-2 py-1 text-sm hover:bg-[#e3e3e3]/50",
+        "flex h-7 items-center gap-x-1 rounded-md px-2 py-1 text-sm hover:bg-[#e3e3e3]/50",
         isSelected ? "bg-[#e3e3e3] font-medium" : "",
       )}
     >
+      <Icon data={data.icon} size={17} />
       <div>{name ? name : "New document"}</div>
     </div>
   );

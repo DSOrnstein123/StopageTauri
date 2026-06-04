@@ -33,6 +33,7 @@ export const nodeService = {
   create: async <T extends NodeDetail>(payload: CreateNodePayload) => {
     try {
       const data = await invoke("create_node", { payload: payload });
+      console.log(data);
       return data as T;
     } catch (error) {
       console.error(error);

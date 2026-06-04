@@ -1,7 +1,7 @@
 import z from "zod";
 
 const IconDataSchema = z.object({
-  type: z.enum(["lucide"]),
+  type: z.enum(["lucide", "standard"]),
   value: z.string(),
 });
 
