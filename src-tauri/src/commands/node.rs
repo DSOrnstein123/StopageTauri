@@ -13,7 +13,7 @@ use serde_json::Value;
 use tauri::State;
 
 use crate::{
-    dtos::node::{NodeDetailDto, NodeMetadataDto},
+    dtos::node::{CreateNodePayload, NodeDetailDto, NodeMetadataDto},
     AppState,
 };
 
@@ -48,14 +48,16 @@ pub async fn get_node_detail(
 #[tauri::command]
 pub async fn create_node(
     state: State<'_, AppState>,
-    payload: CreateNodeInput,
-) -> Result<(), String> {
+    payload: CreateNodePayload,
+) -> Result<NodeDetailDto, String> {
+    let input: CreateNodeInput = payload.into();
+
     let use_case = CreateNodeUseCase::new(&state.node_repo);
 
     use_case
-        .execute(payload)
+        .execute(input)
         .await
-        .map(|_| ())
+        .map(Into::into)
         .map_err(|err| err.to_string())
 }
 
