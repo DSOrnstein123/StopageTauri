@@ -21,7 +21,7 @@ declare module "@system/registries/plugin" {
 
 export const TemplateManagerPlugin = {
   id: PLUGIN_ID,
-  name: "Template Manager",
+  name: "Template manager",
   component: TemplateManager,
   actionButtons: [
     {

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { nodeService } from "@system/features/node/services";
 import { nodeKeys } from "@system/features/node/keys";
-import { pluginRegistry } from "@system/registries/pluginRegistry";
+import { systemApi } from "@system/apis";
 
 const useGetDocuments = () => {
   return useQuery({
@@ -14,7 +14,7 @@ const useGetDocuments = () => {
         includeKinds: ["file"],
         includeTypes: ["document"],
       });
-      const schema = pluginRegistry.getSchema("document");
+      const schema = systemApi.plugin.getSchema("document");
       if (!schema) throw new Error();
       return schema.parse(rawData);
     },

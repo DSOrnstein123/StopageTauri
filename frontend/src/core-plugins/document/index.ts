@@ -19,7 +19,7 @@ declare module "@system/registries/plugin" {
 
 export const DocumentPlugin = {
   id: PLUGIN_ID,
-  name: "document",
+  name: "Document",
   nodes: {
     [NODES.DOCUMENT]: {
       component: DocumentView,
