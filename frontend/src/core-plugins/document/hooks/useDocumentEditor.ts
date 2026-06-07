@@ -3,8 +3,8 @@ import TableOfContents, {
   type TableOfContentData,
 } from "@tiptap/extension-table-of-contents";
 import { useMemo, useState, type RefObject } from "react";
-import { extensionList } from "@system/lib/editor/extensions/extensionList";
-import { syncAlignAttrs } from "@system/lib/editor/extensions/dnd/floatDragExtension";
+import { extensionList } from "@system/lib/tiptap/extensions/extensionList";
+import { syncAlignAttrs } from "@system/lib/tiptap/extensions/dnd/floatDragExtension";
 import { systemApi } from "@system/apis";
 
 const useDocumentEditor = (

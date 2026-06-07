@@ -1,5 +1,5 @@
 import { Editor, EditorContent, useEditorState } from "@tiptap/react";
-import { CustomBubbleMenu as BubbleMenu } from "@system/lib/editor/bubble-menu/CustomBubbleMenu";
+import { CustomBubbleMenu as BubbleMenu } from "@system/lib/tiptap/bubble-menu/CustomBubbleMenu";
 import TemplatePicker from "./TemplatePicker";
 
 const DocumentContent = ({ editor }: { editor: Editor }) => {
