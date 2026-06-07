@@ -1,3 +1,5 @@
+import type { IconData } from "@system/schemas/iconData";
+
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PluginRegistryMap {}
 type ExtractNodeType<T> = T extends { nodes: infer N } ? keyof N : never;
@@ -7,12 +9,13 @@ type PluginConfigs = PluginRegistryMap[PluginId];
 export type NodeType = ExtractNodeType<PluginConfigs>;
 
 export interface Plugin extends PluginConfig {
-  id: string;
+  id: PluginId;
 }
 
 interface PluginConfig {
   name: string;
   component?: ComponentType;
+  icon?: IconData;
   api?: PluginApi;
   actionButtons?: ActionButton[];
   nodes?: Record<string, NodeConfig>;

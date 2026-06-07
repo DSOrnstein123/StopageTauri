@@ -1,8 +1,8 @@
-import type { PluginId } from "@system/registries/plugin";
+import type { NodeType, PluginId } from "@system/registries/plugin";
 import { pluginRegistry } from "@system/registries/pluginRegistry";
 
 export const pluginApi = {
-  getApi: <P extends PluginId>(id: P) => {
-    return pluginRegistry.getApi(id);
-  },
+  getAllPlugins: () => pluginRegistry.getPlugins(),
+  getApi: <P extends PluginId>(id: P) => pluginRegistry.getApi(id),
+  getSchema: (type: NodeType) => pluginRegistry.getNodeSchema(type),
 };

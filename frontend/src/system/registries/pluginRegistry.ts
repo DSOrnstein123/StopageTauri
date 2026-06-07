@@ -38,6 +38,10 @@ export class PluginRegistry {
     return this.nodeTypes.has(value);
   }
 
+  getPlugins() {
+    return this.plugins;
+  }
+
   getComponent(pluginId: PluginId) {
     const nodeConfig = this.plugins.get(pluginId);
     if (!nodeConfig || !nodeConfig.component) {
