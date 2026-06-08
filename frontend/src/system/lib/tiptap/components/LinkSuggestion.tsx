@@ -1,17 +1,17 @@
 import { Input } from "@system/ui/shadcn/input";
 import useGetFiles from "@system/features/node/hooks/useGetFiles";
-import type { FileMetadata } from "@system/features/node/schemas/fileSchema";
 import { useState } from "react";
+import type { NodeMetadata } from "@system/features/node/schemas/nodeSchema";
 
 const LinkSuggestion = ({
   onSelect,
 }: {
-  onSelect: (file: FileMetadata) => void;
+  onSelect: (nodeMetadata: NodeMetadata) => void;
 }) => {
   const [query, setQuery] = useState("");
   const { data: fileList } = useGetFiles();
-  const filtered = fileList?.filter((file) =>
-    file.name.toLowerCase().includes(query.toLowerCase()),
+  const filtered = fileList?.filter((nodeMetadata) =>
+    nodeMetadata.name.toLowerCase().includes(query.toLowerCase()),
   );
 
   return (

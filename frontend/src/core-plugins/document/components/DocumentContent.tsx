@@ -1,6 +1,6 @@
-import { Editor, EditorContent, useEditorState } from "@tiptap/react";
-import { CustomBubbleMenu as BubbleMenu } from "@system/lib/tiptap/bubble-menu/CustomBubbleMenu";
+import { Editor, useEditorState } from "@tiptap/react";
 import TemplatePicker from "./TemplatePicker";
+import RichTextEditor from "@system/features/text-editor/components/RichTextEditor";
 
 const DocumentContent = ({ editor }: { editor: Editor }) => {
   const isEmpty = useEditorState({
@@ -10,8 +10,7 @@ const DocumentContent = ({ editor }: { editor: Editor }) => {
 
   return (
     <>
-      <BubbleMenu editor={editor} />
-      <EditorContent editor={editor} spellCheck={false} />
+      <RichTextEditor editor={editor} />
 
       {isEmpty && <TemplatePicker />}
     </>

@@ -3,8 +3,8 @@ import { Editor, useEditorState } from "@tiptap/react";
 import { Button } from "@system/ui/shadcn/button";
 import { useState } from "react";
 import LinkSuggestion from "./LinkSuggestion";
-import type { DocumentFile } from "@core-plugins/document/schemas/documentSchema";
 import { cn } from "@system/lib/tailwind-css/utils";
+import type { NodeMetadata } from "@system/features/node/schemas/nodeSchema";
 
 //TODO: optimize
 //TODO: fixed position
@@ -27,14 +27,14 @@ const CustomBubbleMenu = ({ editor }: { editor: Editor }) => {
     }),
   });
 
-  const handleSelectDocument = (document: DocumentFile) => {
+  const handleSelect = (nodeMetadata: NodeMetadata) => {
     editor
       .chain()
       .focus()
       .setMark("link", {
-        href: `/documents/${document.id}`,
+        href: `/documents/${nodeMetadata}`,
         "data-type": "note",
-        "data-document-id": document.id,
+        "data-document-id": nodeMetadata,
       })
       .run();
 
@@ -84,9 +84,7 @@ const CustomBubbleMenu = ({ editor }: { editor: Editor }) => {
                 {button.label}
               </Button>
 
-              {showLinkSuggestion && (
-                <LinkSuggestion onSelect={handleSelectDocument} />
-              )}
+              {showLinkSuggestion && <LinkSuggestion onSelect={handleSelect} />}
             </div>
           ) : (
             <Button
@@ -106,4 +104,4 @@ const CustomBubbleMenu = ({ editor }: { editor: Editor }) => {
   );
 };
 
-export { CustomBubbleMenu };
+export { CustomBubbleMenu as BubbleMenu };
