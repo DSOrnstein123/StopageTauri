@@ -1,8 +1,7 @@
-import { tiptapAdapter, type TextEditor } from "@system/lib/tiptap/adapter";
+import { EditorContent, type Editor } from "@system/lib/tiptap";
+import { BubbleMenu } from "./BubbleMenu";
 
-const RichTextEditor = ({ editor }: { editor: TextEditor }) => {
-  const { EditorContent, BubbleMenu } = tiptapAdapter;
-
+const RichTextEditor = ({ editor }: { editor: Editor }) => {
   return (
     <>
       <BubbleMenu editor={editor} />

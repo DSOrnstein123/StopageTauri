@@ -1,0 +1,37 @@
+div[data-type="column"] {
+  display: flow-root !important;
+}
+
+.ProseMirror .react-renderer.node-content-block[data-align="left"] {
+  float: left !important;
+  width: 48% !important;
+  margin-right: 4% !important;
+  margin-bottom: 0.5rem !important;
+  clear: none !important;
+}
+
+.ProseMirror .react-renderer.node-content-block[data-align="right"] {
+  float: right !important;
+  width: 48% !important;
+  margin-left: 4% !important;
+  margin-bottom: 0.5rem !important;
+  clear: none !important;
+}
+
+.ProseMirror .react-renderer.node-content-block[data-align="center"] {
+  float: none !important;
+  width: 100% !important;
+  clear: both !important;
+}
+
+.ProseMirror p {
+  clear: none !important;
+}
+
+div[data-type="column"] p {
+  min-height: 1.5em;
+}
+
+.ProseMirror > *:not(p):not(.react-renderer[data-align="left"]):not(.react-renderer[data-align="right"]) {
+  clear: both;
+}

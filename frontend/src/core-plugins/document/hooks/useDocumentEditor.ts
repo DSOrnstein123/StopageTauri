@@ -3,9 +3,9 @@ import TableOfContents, {
   type TableOfContentData,
 } from "@tiptap/extension-table-of-contents";
 import { useMemo, useState, type RefObject } from "react";
-import { syncAlignAttrs } from "@system/lib/tiptap/extensions/dnd/floatDragExtension";
+import { syncAlignAttrs } from "@system/features/text-editor/extensions/dnd/floatDragExtension";
 import { systemApi } from "@system/apis";
-import { extensionList } from "@system/lib/tiptap/extensions";
+import { baseExtensionList } from "@system/features/text-editor/extensions";
 
 const useDocumentEditor = (
   tabId: string,
@@ -15,7 +15,7 @@ const useDocumentEditor = (
 
   const extensions = useMemo(
     () => [
-      ...extensionList,
+      ...baseExtensionList,
       TableOfContents.configure({
         onUpdate: (content) => {
           setLocalTOC((prev) => (prev === content ? prev : content));

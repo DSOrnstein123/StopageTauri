@@ -1,9 +1,9 @@
-import { Editor, useEditorState } from "@tiptap/react";
+import { tiptapAdapter, type TextEditor } from "@system/lib/tiptap/adapter";
 import TemplatePicker from "./TemplatePicker";
 import RichTextEditor from "@system/features/text-editor/components/RichTextEditor";
 
-const DocumentContent = ({ editor }: { editor: Editor }) => {
-  const isEmpty = useEditorState({
+const DocumentContent = ({ editor }: { editor: TextEditor }) => {
+  const isEmpty = tiptapAdapter.useEditorState({
     editor: editor,
     selector: ({ editor }) => editor.isEmpty,
   });
