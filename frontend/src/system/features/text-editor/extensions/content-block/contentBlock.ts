@@ -1,5 +1,8 @@
-import { mergeAttributes, Node } from "@tiptap/core";
-import { ReactNodeViewRenderer } from "@tiptap/react";
+import {
+  mergeAttributes,
+  Node,
+  ReactNodeViewRenderer,
+} from "@system/lib/tiptap";
 import ContentBlockView from "./ContentBlockView.tsx";
 
 const ContentBlock = Node.create({

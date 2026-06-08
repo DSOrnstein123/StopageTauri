@@ -1,5 +1,9 @@
-import { Extension, ReactRenderer } from "@tiptap/react";
-import Suggestion, { type SuggestionOptions } from "@tiptap/suggestion";
+import {
+  Extension,
+  ReactRenderer,
+  Suggestion,
+  type SuggestionOptions,
+} from "@system/lib/tiptap";
 import tippy, { type Instance } from "tippy.js";
 import SlashCommandsList from "./SlashCommandsList";
 import { commands } from "./commands";

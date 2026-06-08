@@ -2,7 +2,7 @@ import {
   NodeViewWrapper,
   NodeViewContent,
   type ReactNodeViewProps,
-} from "@tiptap/react";
+} from "@system/lib/tiptap";
 import { useRef, useState } from "react";
 
 const ColumnContainerView = ({

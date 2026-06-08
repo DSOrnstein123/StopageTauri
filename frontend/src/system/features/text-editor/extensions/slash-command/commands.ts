@@ -8,7 +8,7 @@ import {
   RectangleHorizontal,
   type LucideIcon,
 } from "lucide-react";
-import { type Editor, type Range } from "@tiptap/react";
+import { type Editor, type Range } from "@system/lib/tiptap";
 import type { Collection } from "@core-plugin/collection/components/collection.types";
 import { queryClient } from "@system/config/queryClient";
 import collectionKeys from "@core-plugins/collection/keys/collectionKeys";

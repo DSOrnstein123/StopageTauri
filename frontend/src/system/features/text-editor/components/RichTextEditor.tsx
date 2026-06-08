@@ -1,4 +1,4 @@
-import { EditorContent, type Editor } from "@system/lib/tiptap";
+import { EditorContent, Editor } from "@system/lib/tiptap";
 import { BubbleMenu } from "./BubbleMenu";
 
 const RichTextEditor = ({ editor }: { editor: Editor }) => {

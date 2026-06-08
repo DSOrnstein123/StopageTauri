@@ -2,7 +2,7 @@ import {
   NodeViewContent,
   NodeViewWrapper,
   type NodeViewProps,
-} from "@tiptap/react";
+} from "@system/lib/tiptap";
 import { GripVertical } from "lucide-react";
 
 const CodeBlockView = ({

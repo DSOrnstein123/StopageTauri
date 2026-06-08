@@ -1,4 +1,4 @@
-import { NodeViewContent, NodeViewWrapper } from "@tiptap/react";
+import { NodeViewContent, NodeViewWrapper } from "@system/lib/tiptap";
 import { GripVertical } from "lucide-react";
 
 const ContentBlockView = () => {

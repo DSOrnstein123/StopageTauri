@@ -1,4 +1,4 @@
-import Link from "@tiptap/extension-link";
+import { Link } from "@system/lib/tiptap";
 
 const CustomLink = Link.extend({
   addAttributes() {

@@ -1,5 +1,5 @@
 import type { CommandItemProps } from "./commands";
-import { type Editor, type Range } from "@tiptap/react";
+import { type Editor, type Range } from "@system/lib/tiptap";
 
 interface SlashCommandsListProps {
   items: CommandItemProps[];

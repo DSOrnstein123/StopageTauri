@@ -1,5 +1,8 @@
-import { Node, mergeAttributes } from "@tiptap/core";
-import { ReactNodeViewRenderer } from "@tiptap/react";
+import {
+  Node,
+  mergeAttributes,
+  ReactNodeViewRenderer,
+} from "@system/lib/tiptap";
 import ColumnContainerView from "./ColumnContainerView";
 
 export const ColumnContainer = Node.create({

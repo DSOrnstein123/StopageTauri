@@ -1,5 +1,4 @@
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import { ReactNodeViewRenderer } from "@tiptap/react";
+import { ReactNodeViewRenderer, CodeBlockLowlight } from "@system/lib/tiptap";
 import CodeBlockView from "./CodeBlockView";
 
 export const CustomCodeBlock = CodeBlockLowlight.extend({

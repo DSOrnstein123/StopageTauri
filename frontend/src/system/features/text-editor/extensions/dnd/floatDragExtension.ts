@@ -1,6 +1,10 @@
-import { Extension } from "@tiptap/core";
-import { NodeSelection, Plugin, PluginKey } from "@tiptap/pm/state";
-import type { EditorView } from "@tiptap/pm/view";
+import {
+  Extension,
+  NodeSelection,
+  Plugin,
+  PluginKey,
+  type EditorView,
+} from "@system/lib/tiptap";
 
 const getDragIndicator = () => {
   let el = document.getElementById("tiptap-drag-indicator");
