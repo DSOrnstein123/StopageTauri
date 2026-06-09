@@ -1,18 +1,12 @@
-import {
-  Editor,
-  TableOfContents,
-  type TableOfContentData,
-} from "@system/lib/tiptap";
-import { useMemo, useState, type RefObject } from "react";
+import { TableOfContents, type TableOfContentData } from "@system/lib/tiptap";
+import { useMemo, useState } from "react";
 import { syncAlignAttrs } from "@system/features/text-editor/extensions/dnd/floatDragExtension";
 import { systemApi } from "@system/apis";
 import { richTextEditorExtensions } from "@system/features/text-editor/extensions";
 import { useRichTextEditor } from "@system/features/text-editor";
+import type { SetEditorRef } from "@system/features/node/context/NodeEditorContext";
 
-const useDocumentEditor = (
-  tabId: string,
-  editorRef: RefObject<Editor | null>,
-) => {
+const useDocumentEditor = (tabId: string, setEditorRef: SetEditorRef) => {
   const [localTOC, setLocalTOC] = useState<TableOfContentData | null>(null);
 
   const extensions = useMemo(
@@ -30,6 +24,9 @@ const useDocumentEditor = (
   const editor = useRichTextEditor({
     extensions: extensions,
     editorProps: {
+      attributes: {
+        class: "focus:outline-none prose-mirror-container",
+      },
       handleClick(_view, _pos, event) {
         const target = event.target as HTMLElement;
         const anchor = target.closest("a");
@@ -54,7 +51,7 @@ const useDocumentEditor = (
       },
     },
     onCreate: ({ editor }) => {
-      editorRef.current = editor;
+      setEditorRef(editor);
 
       setTimeout(() => {
         if (!editor.isDestroyed) {
@@ -63,7 +60,7 @@ const useDocumentEditor = (
       }, 0);
     },
     onDestroy: () => {
-      editorRef.current = null;
+      setEditorRef(null);
     },
   });
 

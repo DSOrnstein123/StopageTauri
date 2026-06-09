@@ -1,15 +1,15 @@
 import type { Plugin } from "@system/registries/plugin";
 import TemplateManager from "./components/TemplateManager";
 import handleOpenTemplateManager from "./handlers/handleOpenTemplateManager";
-import useGetTemplates from "./hooks/useGetTemplates";
 import { PLUGIN_ID } from "./constants";
+import useGetTemplatesQuery from "./hooks/useGetTemplatesQuery";
 
 declare module "@system/registries/plugin" {
   interface PluginRegistryMap {
     "core.template-manager": {
       api: {
         hooks: {
-          useGetList: typeof useGetTemplates;
+          useGetList: typeof useGetTemplatesQuery;
         };
       };
       nodes: {
@@ -37,7 +37,7 @@ export const TemplateManagerPlugin = {
   ],
   api: {
     hooks: {
-      useGetList: useGetTemplates,
+      useGetList: useGetTemplatesQuery,
     },
   },
 } satisfies Plugin;

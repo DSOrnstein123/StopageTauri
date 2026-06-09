@@ -1,20 +1,16 @@
-import { Editor } from "@tiptap/react";
-import { type RefObject } from "react";
 import useDocumentData from "../hooks/useDocumentData";
 import useDocumentEditor from "../hooks/useDocumentEditor";
 import useWorkspaceSync from "../hooks/useWorkspaceSync";
 import DocumentContent from "./DocumentContent";
 import { useNodeContext } from "@system/features/node/context/NodeContext";
 import { useTabContext } from "@system/features/workspace/context/TabContext";
+import { useNodeEditorContext } from "@system/features/node/context/NodeEditorContext";
 
-const DocumentDetail = ({
-  editorRef,
-}: {
-  editorRef: RefObject<Editor | null>;
-}) => {
+const DocumentDetail = () => {
   const { id } = useNodeContext();
   const { isActive } = useTabContext();
-  const { editor, localTOC } = useDocumentEditor(id, editorRef);
+  const { setEditorRef } = useNodeEditorContext();
+  const { editor, localTOC } = useDocumentEditor(id, setEditorRef);
   useDocumentData(id, editor);
   useWorkspaceSync(isActive, editor, localTOC);
 
