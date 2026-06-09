@@ -2,8 +2,8 @@ import type { TemplateMetadataList } from "@system/features/node/schemas/templat
 import { TEMPLATE_CONFIG } from "../constants";
 import { useGetNodes } from "@system/features/node/hooks/useGetNodes";
 
-const useGetTemplates = () => {
+const useGetTemplatesQuery = () => {
   return useGetNodes<TemplateMetadataList>(TEMPLATE_CONFIG);
 };
 
-export default useGetTemplates;
+export default useGetTemplatesQuery;

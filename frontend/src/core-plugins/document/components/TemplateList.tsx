@@ -1,9 +1,9 @@
 import { systemApi } from "@system/apis";
 
 const TemplateList = () => {
-  const useGetTemplates = systemApi.plugin.getApi("core.template-manager").hooks
-    .useGetList;
-  const { data: templates } = useGetTemplates();
+  const useGetTemplatesQuery = systemApi.plugin.getApi("core.template-manager")
+    .hooks.useGetList;
+  const { data: templates } = useGetTemplatesQuery();
 
   if (!templates) return null;
 

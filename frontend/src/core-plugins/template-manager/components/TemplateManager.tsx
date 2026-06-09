@@ -1,9 +1,9 @@
-import useGetTemplates from "../hooks/useGetTemplates";
+import useGetTemplatesQuery from "../hooks/useGetTemplatesQuery";
 import CreateModal from "./CreateModal";
 import TemplateGallery from "./TemplateGallery";
 
 const TemplateManager = () => {
-  const { data: templates } = useGetTemplates();
+  const { data: templates } = useGetTemplatesQuery();
 
   if (!templates) return null;
 
