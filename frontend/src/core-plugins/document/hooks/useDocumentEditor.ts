@@ -1,11 +1,13 @@
-import { Editor, useEditor } from "@tiptap/react";
-import TableOfContents, {
+import {
+  Editor,
+  TableOfContents,
   type TableOfContentData,
-} from "@tiptap/extension-table-of-contents";
+} from "@system/lib/tiptap";
 import { useMemo, useState, type RefObject } from "react";
 import { syncAlignAttrs } from "@system/features/text-editor/extensions/dnd/floatDragExtension";
 import { systemApi } from "@system/apis";
-import { baseExtensionList } from "@system/features/text-editor/extensions";
+import { richTextEditorExtensions } from "@system/features/text-editor/extensions";
+import { useRichTextEditor } from "@system/features/text-editor";
 
 const useDocumentEditor = (
   tabId: string,
@@ -15,7 +17,7 @@ const useDocumentEditor = (
 
   const extensions = useMemo(
     () => [
-      ...baseExtensionList,
+      ...richTextEditorExtensions,
       TableOfContents.configure({
         onUpdate: (content) => {
           setLocalTOC((prev) => (prev === content ? prev : content));
@@ -25,13 +27,9 @@ const useDocumentEditor = (
     [],
   );
 
-  const editor = useEditor({
-    immediatelyRender: false,
+  const editor = useRichTextEditor({
     extensions: extensions,
     editorProps: {
-      attributes: {
-        class: "focus:outline-none prose-mirror-container",
-      },
       handleClick(_view, _pos, event) {
         const target = event.target as HTMLElement;
         const anchor = target.closest("a");
