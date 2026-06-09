@@ -1,5 +1,5 @@
-import { Card } from "@system/ui/shadcn/card";
 import type { TemplateMetadataList } from "@system/features/node/schemas/templateSchema";
+import TemplateItem from "./TemplateItem";
 
 const TemplateGallery = ({
   templateList,
@@ -9,7 +9,7 @@ const TemplateGallery = ({
   return (
     <div className="grid grid-cols-3">
       {templateList.map((template) => (
-        <Card key={template.id}>{template.name}</Card>
+        <TemplateItem key={template.id} id={template.id} name={template.name} />
       ))}
     </div>
   );
