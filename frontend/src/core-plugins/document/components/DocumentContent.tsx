@@ -1,19 +1,12 @@
-import { Editor, useEditorState } from "@system/lib/tiptap";
-import TemplatePicker from "./TemplatePicker";
+import { Editor } from "@system/lib/tiptap";
 import RichTextEditor from "@system/features/text-editor/components/RichTextEditor";
+import EmptyPlaceholderSlot from "./EmptyPlaceholderSlot";
 
 const DocumentContent = ({ editor }: { editor: Editor }) => {
-  const isEmpty = useEditorState({
-    editor: editor,
-    selector: ({ editor }) => editor.isEmpty,
-  });
-
   return (
-    <>
-      <RichTextEditor editor={editor} />
-
-      {isEmpty && <TemplatePicker />}
-    </>
+    <RichTextEditor editor={editor}>
+      <EmptyPlaceholderSlot />
+    </RichTextEditor>
   );
 };
 

@@ -4,6 +4,7 @@ import DocumentView from "./components/DocumentView";
 import handleCreateDocument from "./handlers/handleCreateDocument";
 import { NODES, PLUGIN_ID } from "./constants";
 import type { Plugin } from "@system/registries/plugin";
+import type { ComponentType } from "react";
 
 export { DocumentView, DocumentSidebar };
 
@@ -11,7 +12,11 @@ declare module "@system/registries/plugin" {
   interface PluginRegistryMap {
     "core.document": {
       nodes: {
-        document: Record<string, never>;
+        document: {
+          slots: {
+            emptyPlaceholder: ComponentType<{ data?: unknown }>;
+          };
+        };
       };
     };
   }

@@ -3,6 +3,8 @@ import TemplateManager from "./components/TemplateManager";
 import handleOpenTemplateManager from "./handlers/handleOpenTemplateManager";
 import { PLUGIN_ID } from "./constants";
 import useGetTemplatesQuery from "./hooks/useGetTemplatesQuery";
+import { systemApi } from "@system/apis";
+import DocumentTemplatePicker from "./components/DocumentTemplatePicker";
 
 declare module "@system/registries/plugin" {
   interface PluginRegistryMap {
@@ -39,5 +41,11 @@ export const TemplateManagerPlugin = {
     hooks: {
       useGetList: useGetTemplatesQuery,
     },
+  },
+  onRegister: () => {
+    systemApi.plugin.registerSlot("document", {
+      emptyPlaceholder: DocumentTemplatePicker,
+    });
+    console.log("ok");
   },
 } satisfies Plugin;
