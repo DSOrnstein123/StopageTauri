@@ -12,9 +12,16 @@ const DEFAULT_RICH_TEXT_EDITOR_OPTIONS: Partial<UseEditorOptions> = {
 };
 
 export const useRichTextEditor = (options?: Partial<UseEditorOptions>) => {
-  const defaultClass =
-    DEFAULT_RICH_TEXT_EDITOR_OPTIONS.editorProps?.attributes?.class || "";
-  const customClass = options?.editorProps?.attributes?.class || "";
+  const defaultAttributes = DEFAULT_RICH_TEXT_EDITOR_OPTIONS.editorProps
+    ?.attributes as Record<string, string>;
+  const defaultClass = defaultAttributes.class;
+
+  const customAttributes = options?.editorProps?.attributes as Record<
+    string,
+    string
+  >;
+  const customClass = customAttributes.class;
+
   const mergedClass = `${defaultClass} ${customClass}`.trim();
 
   return useEditor({

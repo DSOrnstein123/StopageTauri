@@ -3,10 +3,34 @@ import type { IconData } from "@system/schemas/iconData";
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PluginRegistryMap {}
 type ExtractNodeType<T> = T extends { nodes: infer N } ? keyof N : never;
+type ExtractNodeSlot<T> = T extends { slots: infer S } ? keyof S : never;
 
 export type PluginId = keyof PluginRegistryMap;
 type PluginConfigs = PluginRegistryMap[PluginId];
 export type NodeType = ExtractNodeType<PluginConfigs>;
+
+type UnionToIntersection<U> = (
+  U extends unknown ? (k: U) => void : never
+) extends (k: infer I) => void
+  ? I
+  : never;
+
+type NodeMap = UnionToIntersection<
+  PluginRegistryMap[PluginId] extends {
+    nodes: infer N;
+  }
+    ? N
+    : never
+>;
+
+type CustomSlots<N extends NodeType> = NodeMap[N] extends {
+  slots: infer S;
+}
+  ? S
+  : Record<string, never>;
+
+type NodeSlotMap<N extends NodeType> = DefaultSlots & CustomSlots<N>;
+export type NodeSlots<N extends NodeType> = Partial<NodeSlotMap<N>>;
 
 export interface Plugin extends PluginConfig {
   id: PluginId;
@@ -31,13 +55,13 @@ interface ActionButton {
   action: () => void;
 }
 
-interface Slots {
-  toolbar?: ComponentType<{ data: unknown }>;
-  sidebar?: ComponentType;
-  header?: ComponentType<{ data: unknown }>;
-  footer?: ComponentType<{ data: unknown }>;
+interface DefaultSlots {
+  toolbar?: ComponentType<{ data?: unknown }>;
+  sidebar?: ComponentType<{ data?: unknown }>;
+  header?: ComponentType<{ data?: unknown }>;
+  footer?: ComponentType<{ data?: unknown }>;
 }
-type Slot = keyof Slots;
+type DefaultSlot = keyof DefaultSlots;
 
 type NodeApi = PluginApi;
 
@@ -47,5 +71,5 @@ interface NodeConfig {
   schema?: ZodType;
   actionButtons?: ActionButton[];
   api?: NodeApi;
-  slots?: Slots;
+  slots?: Record<string, ComponentType<{ data?: unknown }>>;
 }

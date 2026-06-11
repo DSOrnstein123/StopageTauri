@@ -1,10 +1,11 @@
 import type {
   Plugin,
-  Slot,
   NodeConfig,
   PluginId,
   PluginRegistryMap,
   PluginConfig,
+  NodeType,
+  NodeSlots,
 } from "./plugin";
 
 type ExtractPluginApi<P extends PluginId> = PluginRegistryMap[P] extends {
@@ -32,6 +33,20 @@ export class PluginRegistry {
         this.nodeTypes.set(nodeType, nodeConfig);
       });
     }
+  }
+
+  registerNodeSlot<N extends NodeType>(nodeType: N, slots: NodeSlots<N>) {
+    const nodeConfig = this.nodeTypes.get(nodeType);
+    if (!nodeConfig) {
+      throw new Error(
+        `[PluginRegistry] node type '${nodeType}' is not registered`,
+      );
+    }
+
+    nodeConfig.slots = {
+      ...nodeConfig.slots,
+      ...slots,
+    };
   }
 
   hasNode(value: string) {
@@ -104,14 +119,17 @@ export class PluginRegistry {
     });
   }
 
-  getNodeSlot(nodeType: string, slot: Slot) {
+  getNodeSlot<N extends NodeType, S extends keyof NodeSlots<N> & string>(
+    nodeType: N,
+    slot: S,
+  ): NodeSlots<N>[S] {
     const nodeConfig = this.nodeTypes.get(nodeType);
     if (!nodeConfig) {
       throw new Error(
         `[PluginRegistry] node type '${nodeType}' is not registered`,
       );
     }
-    return nodeConfig.slots?.[slot];
+    return nodeConfig.slots?.[slot] as NodeSlots<N>[S];
   }
 
   getApi<P extends PluginId>(pluginId: P): ExtractPluginApi<P> {

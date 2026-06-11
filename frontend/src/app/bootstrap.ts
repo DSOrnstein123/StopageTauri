@@ -5,5 +5,10 @@ import type { PluginRegistry } from "@system/registries/pluginRegistry";
 const plugins = [DocumentPlugin, TemplateManagerPlugin];
 
 export const bootstrapPlugin = (registry: PluginRegistry) => {
-  plugins.forEach((plugin) => registry.register(plugin));
+  plugins.forEach((plugin) => {
+    registry.register(plugin);
+    if (plugin.onRegister) {
+      plugin.onRegister();
+    }
+  });
 };
