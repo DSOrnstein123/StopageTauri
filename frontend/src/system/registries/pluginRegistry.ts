@@ -1,11 +1,9 @@
+import type { NodeConfig, NodeSlots, NodeType } from "./node";
 import type {
   Plugin,
-  NodeConfig,
   PluginId,
   PluginRegistryMap,
   PluginConfig,
-  NodeType,
-  NodeSlots,
 } from "./plugin";
 
 type ExtractPluginApi<P extends PluginId> = PluginRegistryMap[P] extends {
