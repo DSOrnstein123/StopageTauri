@@ -1,9 +1,11 @@
-import type { NodeType, PluginId } from "@system/registries/plugin";
+import type { NodeType } from "@system/registries/node";
+import type { PluginId } from "@system/registries/plugin";
 import type { IconData } from "@system/schemas/iconData";
 
 export type TabMode = "dynamic" | "static";
 
 interface BaseTabProps {
+  tabId: string;
   icon?: IconData;
   mode: TabMode;
   isActive: boolean;

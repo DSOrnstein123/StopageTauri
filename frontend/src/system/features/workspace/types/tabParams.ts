@@ -1,4 +1,6 @@
+import type { NodeType } from "@system/registries/node";
 import type { TabMode } from "./tabProps";
+import type { PluginId } from "@system/registries/plugin";
 
 interface BaseTabParams {
   title: string;
@@ -7,12 +9,12 @@ interface BaseTabParams {
 
 export interface DynamicTabParams extends BaseTabParams {
   nodeId: string;
-  type?: string;
+  type?: NodeType;
   mode: "dynamic";
 }
 
 export interface StaticTabParams extends BaseTabParams {
-  type: string;
+  type: PluginId;
   mode: "static";
 }
 

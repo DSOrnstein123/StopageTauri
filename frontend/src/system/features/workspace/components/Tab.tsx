@@ -5,14 +5,15 @@ import StaticTabContent from "./StaticTabContent";
 import type { TabProps } from "../types/tabProps";
 
 const Tab = (props: TabProps) => {
-  const { mode, isActive, setTitle } = props;
+  const { tabId, mode, isActive, setTitle } = props;
 
   const value = {
+    tabId: tabId,
     id: mode === "dynamic" ? props.nodeId : props.type,
     isActive: isActive,
     setTitle: setTitle,
   };
-
+  console.log(value);
   return (
     <div className="flex h-full flex-col">
       <TabProvider props={value}>

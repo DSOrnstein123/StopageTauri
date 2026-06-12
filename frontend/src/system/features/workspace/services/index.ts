@@ -1,8 +1,9 @@
+import type { NavigateTarget } from "../types/navigate";
 import type { OpenTabParams } from "../types/tabParams";
 
 export interface WorkspaceEngine {
   openTab: (params: OpenTabParams) => void;
-  navigate: (panelId: string, path: string) => void;
+  navigate: (panelId: string, path: NavigateTarget) => void;
 }
 
 class WorkspaceService {
@@ -19,11 +20,11 @@ class WorkspaceService {
     this.engine.openTab(params);
   }
 
-  public navigate(panelId: string, path: string) {
+  public navigate(panelId: string, target: NavigateTarget) {
     if (!this.engine) {
       return;
     }
-    this.engine.navigate(panelId, path);
+    this.engine.navigate(panelId, target);
   }
 }
 

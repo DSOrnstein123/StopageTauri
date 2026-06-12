@@ -3,6 +3,7 @@ import { DockviewReact } from "dockview";
 import { components } from "./components";
 import { tabComponents } from "./tabComponents";
 import { workspaceService } from "@system/features/workspace/services";
+import type { NavigateTarget } from "@system/features/workspace/types/navigate";
 
 const loadDefaultLayout = (api: DockviewApi) => {
   api.addPanel({
@@ -47,10 +48,23 @@ const Workspace = () => {
             });
           },
 
-          navigate: (panelId, path) => {
+          navigate: (panelId, target: NavigateTarget) => {
             const mainPanel = dockApi.getPanel(panelId);
+
+            const newParams =
+              target.mode == "dynamic"
+                ? {
+                    mode: "dynamic",
+                    type: target.type,
+                    nodeId: target.nodeId,
+                  }
+                : {
+                    mode: "static",
+                    type: target.type,
+                  };
             if (mainPanel) {
-              mainPanel.api.updateParameters({ fileId: path });
+              mainPanel.api.updateParameters(newParams);
+              console.log("param", mainPanel.params);
             }
           },
         });

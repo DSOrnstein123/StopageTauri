@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
 
 export interface ITabContext {
+  tabId: string;
   id: string;
   isActive: boolean;
   setTitle: (newTitle: string) => void;

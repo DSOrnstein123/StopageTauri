@@ -10,6 +10,7 @@ const TabWrapper = (props: IDockviewPanelProps<TabParams>) => {
   return (
     <Tab
       {...params}
+      tabId={props.api.id}
       isActive={isActive}
       setTitle={(newTitle) => api.setTitle(newTitle)}
     />
