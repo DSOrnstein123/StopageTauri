@@ -1,4 +1,4 @@
-import { systemApi } from "@system/apis";
+import { systemApi } from "@system/api";
 
 const handleOpenTemplateManager = (type: string) => {
   systemApi.workspace.openTab({

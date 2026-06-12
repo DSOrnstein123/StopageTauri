@@ -1,7 +1,7 @@
 import { TableOfContents, type TableOfContentData } from "@system/lib/tiptap";
 import { useMemo, useState } from "react";
 import { syncAlignAttrs } from "@system/features/text-editor/extensions/dnd/floatDragExtension";
-import { systemApi } from "@system/apis";
+import { systemApi } from "@system/api";
 import { useRichTextEditor } from "@system/features/text-editor";
 import type { SetEditorRef } from "@system/features/node/context/NodeEditorContext";
 

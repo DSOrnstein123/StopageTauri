@@ -1,4 +1,4 @@
-import { systemApi } from "@system/apis";
+import { systemApi } from "@system/api";
 import { useTabContext } from "@system/features/workspace/context/TabContext";
 import { Card } from "@system/ui/shadcn/card";
 

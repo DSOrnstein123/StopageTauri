@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { nodeService } from "@system/features/node/services";
 import { nodeKeys } from "@system/features/node/keys";
-import { systemApi } from "@system/apis";
+import { systemApi } from "@system/api";
 
 const useGetDocuments = () => {
   return useQuery({

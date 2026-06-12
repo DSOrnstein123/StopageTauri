@@ -3,7 +3,7 @@ import TemplateManager from "./components/TemplateManager";
 import handleOpenTemplateManager from "./handlers/handleOpenTemplateManager";
 import { PLUGIN_ID } from "./constants";
 import useGetTemplatesQuery from "./hooks/useGetTemplatesQuery";
-import { systemApi } from "@system/apis";
+import { systemApi } from "@system/api";
 import DocumentTemplatePicker from "./components/DocumentTemplatePicker";
 
 declare module "@system/registries/plugin" {

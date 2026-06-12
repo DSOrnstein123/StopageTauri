@@ -1,4 +1,4 @@
-import { systemApi } from "@system/apis";
+import { systemApi } from "@system/api";
 import type { CreateNodePayload } from "@system/features/node/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { TEMPLATE_CONFIG } from "../constants";

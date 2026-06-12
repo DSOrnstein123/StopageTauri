@@ -1,6 +1,6 @@
 import type { NodeType } from "@system/registries/plugin";
 import createDocument from "../functions/createDocument";
-import { systemApi } from "@system/apis";
+import { systemApi } from "@system/api";
 
 const handleCreateDocument = async (type: NodeType) => {
   const data = await createDocument();

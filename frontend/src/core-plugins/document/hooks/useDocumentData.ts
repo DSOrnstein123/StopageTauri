@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { Editor } from "@tiptap/react";
 import debounce from "@system/utils/debounce";
 import useDocumentContent from "./useDocumentContent";
-import { systemApi } from "@system/apis";
+import { systemApi } from "@system/api";
 
 const useDocumentData = (id: string, editor: Editor | null) => {
   const { data: content } = useDocumentContent(id);

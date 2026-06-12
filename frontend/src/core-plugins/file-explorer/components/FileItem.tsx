@@ -1,7 +1,7 @@
 import { usePrimarySidebarStore } from "@app/layout/sidebar/primarySidebarStore";
 import { cn } from "@system/lib/tailwind-css/utils";
 import type { ExplorerItem } from "../schemas/explorerItemSchema";
-import { systemApi } from "@system/apis";
+import { systemApi } from "@system/api";
 import Icon from "@system/ui/icon/Icon";
 
 const FileItem = ({ data }: { data: ExplorerItem }) => {
