@@ -3,7 +3,7 @@ import DocumentSidebar from "./components/DocumentSidebar";
 import DocumentView from "./components/DocumentView";
 import handleCreateDocument from "./handlers/handleCreateDocument";
 import { NODES, PLUGIN_ID } from "./constants";
-import type { Plugin } from "@system/registries/plugin";
+import type { PluginManifest } from "@system/registries/plugin";
 import type { ComponentType } from "react";
 
 export { DocumentView, DocumentSidebar };
@@ -14,7 +14,7 @@ declare module "@system/registries/plugin" {
       nodes: {
         document: {
           slots: {
-            emptyPlaceholder: ComponentType<{ data?: unknown }>;
+            emptyPlaceholder?: ComponentType<{ data?: unknown }>;
           };
         };
       };
@@ -44,4 +44,4 @@ export const DocumentPlugin = {
       },
     },
   },
-} satisfies Plugin;
+} satisfies PluginManifest;

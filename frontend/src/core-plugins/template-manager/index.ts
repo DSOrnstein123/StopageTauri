@@ -1,10 +1,12 @@
-import type { Plugin } from "@system/registries/plugin";
+import type { PluginManifest } from "@system/registries/plugin";
 import TemplateManager from "./components/TemplateManager";
 import handleOpenTemplateManager from "./handlers/handleOpenTemplateManager";
-import { PLUGIN_ID } from "./constants";
+import { NODES, PLUGIN_ID } from "./constants";
 import useGetTemplatesQuery from "./hooks/useGetTemplatesQuery";
 import { systemApi } from "@system/api";
 import DocumentTemplatePicker from "./components/DocumentTemplatePicker";
+import TemplateView from "./components/TemplateView";
+import { DocumentTemplateDetailSchema } from "./schemas/documentTemplateSchema";
 
 declare module "@system/registries/plugin" {
   interface PluginRegistryMap {
@@ -42,10 +44,15 @@ export const TemplateManagerPlugin = {
       useGetList: useGetTemplatesQuery,
     },
   },
+  nodes: {
+    [NODES.DOCUMENT_TEMPLATE]: {
+      component: TemplateView,
+      schema: DocumentTemplateDetailSchema,
+    },
+  },
   onRegister: () => {
     systemApi.plugin.registerSlot("document", {
       emptyPlaceholder: DocumentTemplatePicker,
     });
-    console.log("ok");
   },
-} satisfies Plugin;
+} satisfies PluginManifest;
