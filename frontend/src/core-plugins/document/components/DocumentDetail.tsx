@@ -1,5 +1,5 @@
 import useDocumentData from "../hooks/useDocumentData";
-import useDocumentEditor from "../hooks/useDocumentEditor";
+import useDocumentEditor from "../../../system/features/text-editor/hooks/useDocumentEditor";
 import useWorkspaceSync from "../hooks/useWorkspaceSync";
 import DocumentContent from "./DocumentContent";
 import { useNodeContext } from "@system/features/node/context/NodeContext";

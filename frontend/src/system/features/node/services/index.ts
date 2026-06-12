@@ -1,5 +1,4 @@
 import { invoke } from "@tauri-apps/api/core";
-import { resolveNodeType } from "../utils/resolveNodeType";
 import { pluginRegistry } from "@system/registries/pluginRegistry";
 import { NodeMetadataListSchema, type NodeDetail } from "../schemas/nodeSchema";
 import type { CreateNodePayload, NodeFilterOptions } from "../types";
@@ -11,8 +10,8 @@ export const nodeService = {
         id: id,
       });
       console.log(rawData);
-      const nodeType = resolveNodeType(rawData.kind, rawData.type);
-      const schema = pluginRegistry.getNodeSchema(nodeType);
+      const schema = pluginRegistry.getNodeSchema(rawData.type);
+      console.log(schema);
       const validData = schema.parse(rawData);
       return validData as T;
     } catch (error) {
