@@ -4,6 +4,7 @@ import { components } from "./components";
 import { tabComponents } from "./tabComponents";
 import { workspaceService } from "@system/features/workspace/services";
 import type { NavigateTarget } from "@system/features/workspace/types/navigate";
+import useWorkspaceStore from "@system/features/workspace/stores/useWorkspaceStore";
 
 const loadDefaultLayout = (api: DockviewApi) => {
   api.addPanel({
@@ -14,6 +15,8 @@ const loadDefaultLayout = (api: DockviewApi) => {
 };
 
 const Workspace = () => {
+  const setActiveTabId = useWorkspaceStore((state) => state.setActiveTabId);
+
   return (
     <DockviewReact
       theme={themeLight}
@@ -30,6 +33,20 @@ const Workspace = () => {
         } else {
           loadDefaultLayout(dockApi);
         }
+
+        dockApi.onDidActivePanelChange((e) => {
+          if (!e) return;
+
+          setActiveTabId(e?.id);
+        });
+
+        dockApi.onDidLayoutChange(() => {
+          const currentLayout = dockApi.toJSON();
+          localStorage.setItem(
+            "workspace-layout",
+            JSON.stringify(currentLayout),
+          );
+        });
 
         workspaceService.setEngine({
           openTab: (params) => {
@@ -67,14 +84,6 @@ const Workspace = () => {
               console.log("param", mainPanel.params);
             }
           },
-        });
-
-        dockApi.onDidLayoutChange(() => {
-          const currentLayout = dockApi.toJSON();
-          localStorage.setItem(
-            "workspace-layout",
-            JSON.stringify(currentLayout),
-          );
         });
       }}
       components={components}

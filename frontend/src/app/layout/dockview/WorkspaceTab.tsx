@@ -1,24 +1,12 @@
 import type { IDockviewPanelHeaderProps } from "dockview";
 import { X } from "lucide-react";
-import { useEffect, useState } from "react";
 import DynamicTitle from "./DynamicTitle";
+import useIsActiveTab from "@system/features/workspace/hooks/useIsActiveTab";
 
 const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
   const { api, params } = props;
-  const [isActive, setIsActive] = useState(api.isActive);
+  const isActive = useIsActiveTab(api.id);
   const tabMode = params.mode;
-
-  useEffect(() => {
-    if (!api) return;
-
-    const disposable = api?.onDidActiveChange((event) => {
-      if (!event) return;
-
-      setIsActive(event.isActive);
-    });
-
-    return () => disposable?.dispose();
-  });
 
   const onTabClick = () => {
     api.setActive();
