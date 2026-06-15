@@ -13,7 +13,7 @@ const Tab = (props: TabProps) => {
     isActive: isActive,
     setTitle: setTitle,
   };
-  console.log(value);
+
   return (
     <div className="flex h-full flex-col">
       <TabProvider props={value}>

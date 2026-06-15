@@ -7,6 +7,7 @@ import { systemApi } from "@system/api";
 const useDocumentData = (id: string, editor: Editor | null) => {
   const { data: content } = useDocumentContent(id);
   const isHydrated = useRef(false);
+
   useEffect(() => {
     isHydrated.current = false;
   }, [id]);
