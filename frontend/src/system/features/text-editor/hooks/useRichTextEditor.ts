@@ -1,47 +1,66 @@
 import { useEditor, type UseEditorOptions } from "@tiptap/react";
 import { richTextEditorExtensions } from "../extensions";
+import { useMemo } from "react";
+import { TableOfContents, type TableOfContentData } from "@system/lib/tiptap";
 
-const DEFAULT_RICH_TEXT_EDITOR_OPTIONS: Partial<UseEditorOptions> = {
-  immediatelyRender: false,
-  extensions: richTextEditorExtensions,
-  editorProps: {
-    attributes: {
-      class: "focus:outline-none prose-mirror-container",
-    },
-  },
-};
+interface EditorOptions extends Partial<UseEditorOptions> {
+  onTOCUpdate?: (data: TableOfContentData, isCreate?: boolean) => void;
+}
 
-export const useRichTextEditor = (options?: Partial<UseEditorOptions>) => {
-  const defaultAttributes = DEFAULT_RICH_TEXT_EDITOR_OPTIONS.editorProps
-    ?.attributes as Record<string, string>;
-  const defaultClass = defaultAttributes.class;
+export const useRichTextEditor = (options?: EditorOptions) => {
+  const customAttributes = options?.editorProps?.attributes as
+    | Record<string, string>
+    | undefined;
+  const customClass = customAttributes?.class;
 
-  const customAttributes = options?.editorProps?.attributes as Record<
-    string,
-    string
-  >;
-  const customClass = customAttributes.class;
-
-  const mergedClass = `${defaultClass} ${customClass}`.trim();
+  const configuredExtensions = useMemo(
+    () => [
+      TableOfContents.configure({
+        onUpdate: options?.onTOCUpdate,
+      }),
+    ],
+    [options?.onTOCUpdate],
+  );
 
   return useEditor({
-    ...DEFAULT_RICH_TEXT_EDITOR_OPTIONS,
+    immediatelyRender: false,
     ...options,
 
     extensions: [
-      ...(DEFAULT_RICH_TEXT_EDITOR_OPTIONS.extensions || []),
+      ...richTextEditorExtensions,
+      ...configuredExtensions,
       ...(options?.extensions || []),
     ],
 
     editorProps: {
-      ...DEFAULT_RICH_TEXT_EDITOR_OPTIONS.editorProps,
       ...options?.editorProps,
 
       attributes: {
-        ...DEFAULT_RICH_TEXT_EDITOR_OPTIONS.editorProps?.attributes,
+        class: `focus:outline-none prose-mirror-container ${customClass}`,
         ...options?.editorProps?.attributes,
-        class: mergedClass,
       },
+      // handleClick(_view, _pos, event) {
+      //   const target = event.target as HTMLElement;
+      //   const anchor = target.closest("a");
+
+      //   if (!anchor) return false;
+
+      //   const href = anchor.getAttribute("href");
+
+      //   if (href?.startsWith("/documents/")) {
+      //     // TODO: change to scalable link
+      //     const nodeId = href.split("/documents/")[1];
+      //     systemApi.workspace.navigate(tabId, nodeId);
+      //     return true;
+      //   }
+
+      //   if (href) {
+      //     window.open(href, "_blank");
+      //     return true;
+      //   }
+
+      //   return false;
+      // },
     },
   });
 };
