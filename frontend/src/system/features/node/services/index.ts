@@ -11,7 +11,6 @@ export const nodeService = {
       });
       console.log(rawData);
       const schema = pluginRegistry.getNodeSchema(rawData.type);
-      console.log(schema);
       const validData = schema.parse(rawData);
       return validData as T;
     } catch (error) {

@@ -6,7 +6,6 @@ class WorkspaceTabRegistry {
 
   register<N extends NodeType>(tabId: string, api: TabApiMap<N>) {
     this.apisMap.set(tabId, api);
-    console.log(this.apisMap);
   }
 
   getApi<N extends NodeType>(tabId: string): TabApiMap<N> {

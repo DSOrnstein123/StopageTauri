@@ -17,7 +17,6 @@ const DocumentView = () => {
     systemApi.workspace.registerTabApi<"document">(tabId, {
       controller: controller,
     });
-    console.log("register", controller, documentStore);
   }, [tabId, controller, documentStore]);
 
   return (

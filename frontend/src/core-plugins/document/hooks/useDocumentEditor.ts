@@ -7,7 +7,6 @@ const useDocumentEditor = (documentId: string) => {
   const controller = useDocumentContext();
   const editor = useRichTextEditor({
     onTOCUpdate: (data) => {
-      console.log("TOC UPDATE", controller.getStore()?.getState().tocContent);
       controller.getStore()?.getState().setTOCContent(data);
     },
   });
