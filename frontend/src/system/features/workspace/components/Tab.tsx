@@ -5,12 +5,11 @@ import StaticTabContent from "./StaticTabContent";
 import type { TabProps } from "../types/tabProps";
 
 const Tab = (props: TabProps) => {
-  const { tabId, mode, isActive, setTitle } = props;
+  const { tabId, mode, setTitle } = props;
 
   const value = {
     tabId: tabId,
     id: mode === "dynamic" ? props.nodeId : props.type,
-    isActive: isActive,
     setTitle: setTitle,
   };
 

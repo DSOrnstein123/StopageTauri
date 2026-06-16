@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
-import { TabContext, type ITabContext } from "./TabContext";
+import { TabContext } from "./TabContext";
 
 const TabProvider = ({
   props,
   children,
 }: {
-  props: ITabContext;
+  props: TabContext;
   children: ReactNode;
 }) => {
   return <TabContext.Provider value={props}>{children}</TabContext.Provider>;
