@@ -8,14 +8,14 @@ interface BaseTabParams {
 }
 
 export interface DynamicTabParams extends BaseTabParams {
+  mode: "dynamic";
   nodeId: string;
   type?: NodeType;
-  mode: "dynamic";
 }
 
 export interface StaticTabParams extends BaseTabParams {
-  type: PluginId;
   mode: "static";
+  type: PluginId;
 }
 
 export type TabParams = DynamicTabParams | StaticTabParams;

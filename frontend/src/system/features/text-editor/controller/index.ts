@@ -1,7 +1,7 @@
 import { Editor } from "@system/lib/tiptap";
 import type { StoreApi } from "zustand";
 import type { EditorStore } from "../stores/createEditorStore";
-import { BaseController } from "@system/features/workspace/registries/baseController";
+import { BaseController } from "@system/features/workspace/types/registries/baseController";
 
 export class EditorController extends BaseController {
   private editor: Editor | null = null;

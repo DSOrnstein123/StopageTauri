@@ -1,5 +1,5 @@
-import type { TabApiMap } from "@system/features/workspace/registries/tabApi";
-import { workspaceTabRegistry } from "@system/features/workspace/registries/workspaceContentRegistry";
+import type { TabApiMap } from "@system/features/workspace/types/registries/tabApi";
+import { workspaceTabRegistry } from "@system/features/workspace/types/registries/workspaceContentRegistry";
 import { workspaceService } from "@system/features/workspace/services";
 import type { NavigateTarget } from "@system/features/workspace/types/navigate";
 import type { OpenTabParams } from "@system/features/workspace/types/tabParams";

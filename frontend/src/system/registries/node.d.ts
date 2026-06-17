@@ -7,7 +7,7 @@ import {
 } from "./plugin";
 import type { ZodType } from "zod";
 import type { UnionToIntersection } from "@system/utils/unionToIntersection";
-import type { ControllerClass } from "@system/features/workspace/registries/tabApi";
+import type { ControllerClass } from "@system/features/workspace/types/registries/tabApi";
 
 export interface NodeConfig {
   defaultIcon?: string;
