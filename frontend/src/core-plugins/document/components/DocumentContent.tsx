@@ -1,12 +1,17 @@
-import { Editor } from "@system/lib/tiptap";
-import RichTextEditor from "@system/features/text-editor/components/RichTextEditor";
 import EmptyPlaceholderSlot from "./EmptyPlaceholderSlot";
+import RichTextEditorView from "@system/features/text-editor/components/RichTextEditorView";
+import { type JSONContent } from "@tiptap/react";
+import useGetCurrentContentQuery from "../hooks/useGetCurrentContentQuery";
+import useUpdateCurrentContent from "../hooks/useUpdateCurrentContent";
 
-const DocumentContent = ({ editor }: { editor: Editor }) => {
+const DocumentContent = () => {
+  const { data: content } = useGetCurrentContentQuery() as JSONContent;
+  const saveContent = useUpdateCurrentContent();
+
   return (
-    <RichTextEditor editor={editor}>
+    <RichTextEditorView content={content} onContentChange={saveContent}>
       <EmptyPlaceholderSlot />
-    </RichTextEditor>
+    </RichTextEditorView>
   );
 };
 

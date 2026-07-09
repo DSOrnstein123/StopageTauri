@@ -1,3 +1,5 @@
 import { EditorController } from "@system/features/text-editor/controller";
 
-export class DocumentNodeController extends EditorController {}
+class DocumentNodeController extends EditorController {}
+
+export const createDocumentController = () => new DocumentNodeController();

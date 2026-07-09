@@ -1,5 +1,5 @@
 import { createEditorStore } from "@system/features/text-editor/stores/createEditorStore";
 
-const useDocumentStore = () => createEditorStore();
+const createDocumentStore = createEditorStore;
 
-export default useDocumentStore;
+export default createDocumentStore;
