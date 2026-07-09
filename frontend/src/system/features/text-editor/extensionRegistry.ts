@@ -1,4 +1,4 @@
-import { type AnyExtension } from "@tiptap/react";
+import { type AnyExtension } from "@system/lib/tiptap";
 
 class ExtensionRegistry {
   private definitions = new Map<string, AnyExtension[]>();

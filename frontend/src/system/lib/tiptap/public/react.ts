@@ -5,6 +5,8 @@ export {
   type NodeViewProps,
   type Range,
   type JSONContent,
+  type UseEditorOptions,
+  type AnyExtension,
   EditorContent,
   NodeViewWrapper,
   useEditor,

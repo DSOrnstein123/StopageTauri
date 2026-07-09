@@ -1,6 +1,6 @@
-import { Plugin, PluginKey } from "@tiptap/pm/state";
-import { Decoration, DecorationSet } from "@tiptap/pm/view";
-import { Extension } from "@tiptap/react";
+import { Plugin, PluginKey } from "@system/lib/tiptap/pm/state";
+import { Decoration, DecorationSet } from "@system/lib/tiptap/pm/view";
+import { Extension } from "@system/lib/tiptap/react";
 
 export const TemplatePickerKey = new PluginKey("templatePicker");
 

@@ -1,8 +1,7 @@
-import StarterKit from "@tiptap/starter-kit";
+import { StarterKit, Placeholder } from "@system/lib/tiptap";
 import CustomLink from "./custom-link/customLink";
 import SlashCommandExtension from "./slash-command/slashCommands";
 import ContentBlock from "./content-block/contentBlock";
-import { Placeholder } from "@tiptap/extensions";
 import { FloatDragExtension } from "./dnd/floatDragExtension";
 import { Column } from "./column/column";
 import { ColumnContainer } from "./column/columnContainer";

@@ -1,6 +1,9 @@
 import Collection from "@core-plugins/collection/components/Collection";
 import CollectionNodeProvider from "@core-plugins/collection/context/CollectionNodeProvider";
-import { NodeViewWrapper, type ReactNodeViewProps } from "@tiptap/react";
+import {
+  NodeViewWrapper,
+  type ReactNodeViewProps,
+} from "@system/lib/tiptap/react";
 import { GripVertical } from "lucide-react";
 
 const CollectionView = (props: ReactNodeViewProps) => {

@@ -1,6 +1,6 @@
 import EmptyPlaceholderSlot from "./EmptyPlaceholderSlot";
 import RichTextEditorView from "@system/features/text-editor/components/RichTextEditorView";
-import { type JSONContent } from "@tiptap/react";
+import { type JSONContent } from "@system/lib/tiptap";
 import useGetCurrentContentQuery from "../hooks/useGetCurrentContentQuery";
 import useUpdateCurrentContent from "../hooks/useUpdateCurrentContent";
 

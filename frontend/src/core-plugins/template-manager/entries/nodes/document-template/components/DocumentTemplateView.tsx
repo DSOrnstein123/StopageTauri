@@ -3,9 +3,10 @@ import useGetCurrentContentQuery from "../hooks/useGetCurrentContentQuery";
 import DocumentTemplatePicker from "../../../../entries/tools/template-manager/components/DocumentTemplatePicker";
 import useUpdateCurrentContent from "../hooks/useUpdateCurrentContent";
 import { DocumentLayout } from "@core-plugins/document";
+import { type JSONContent } from "@system/lib/tiptap";
 
 const DocumentTemplateView = () => {
-  const content = useGetCurrentContentQuery();
+  const { data: content } = useGetCurrentContentQuery() as JSONContent;
   const saveContent = useUpdateCurrentContent();
 
   return (

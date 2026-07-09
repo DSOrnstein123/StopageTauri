@@ -1,5 +1,5 @@
 import { createStore } from "zustand";
-import type { TableOfContentData } from "@tiptap/extension-table-of-contents";
+import type { TableOfContentData } from "@system/lib/tiptap/extension-table-of-contents";
 
 export interface EditorStore {
   tocContent: TableOfContentData | null;

@@ -1,5 +1,5 @@
-import { mergeAttributes, Node } from "@tiptap/core";
-import { ReactNodeViewRenderer } from "@tiptap/react";
+import { mergeAttributes, Node } from "@system/lib/tiptap/core";
+import { ReactNodeViewRenderer } from "@system/lib/tiptap/react";
 import CollectionView from "./CollectionView";
 
 const CollectionNode = Node.create({

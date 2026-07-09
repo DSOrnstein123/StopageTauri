@@ -1,5 +1,4 @@
-import { TextSelection } from "@tiptap/pm/state";
-import { Editor } from "@system/lib/tiptap";
+import { TextSelection, Editor } from "@system/lib/tiptap";
 import { useCallback } from "react";
 
 const useTOCNavigation = (editor: Editor | null) => {

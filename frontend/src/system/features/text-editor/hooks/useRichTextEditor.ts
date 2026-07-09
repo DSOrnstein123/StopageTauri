@@ -12,6 +12,8 @@ const useRichTextEditor = () => {
   // }
 
   useEffect(() => {
+    if (!tabApi) return;
+
     tabApi.setEditor(editor);
   }, [tabApi, editor]);
 

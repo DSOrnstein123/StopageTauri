@@ -1,5 +1,4 @@
-import { Editor, useEditorState } from "@tiptap/react";
-import { BubbleMenu } from "@system/lib/tiptap";
+import { BubbleMenu, Editor, useEditorState } from "@system/lib/tiptap";
 import { Button } from "@system/ui/shadcn/button";
 import { useState } from "react";
 import LinkSuggestion from "./LinkSuggestion";

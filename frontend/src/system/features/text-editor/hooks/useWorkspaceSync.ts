@@ -1,6 +1,6 @@
 // import { useEffect } from "react";
-// import { Editor } from "@tiptap/react";
-// import type { TableOfContentData } from "@tiptap/extension-table-of-contents";
+// import { Editor } from "@system/lib/tiptap/react";
+// import type { TableOfContentData } from "@system/lib/tiptap/extension-table-of-contents";
 // import { useDocumentStore } from "../../../../core-plugins/document/store/useDocumentStore";
 
 // const useWorkspaceSync = (

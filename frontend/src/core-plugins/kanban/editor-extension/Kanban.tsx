@@ -1,4 +1,4 @@
-import { NodeViewWrapper } from "@tiptap/react";
+import { NodeViewWrapper } from "@system/lib/tiptap/react";
 
 const cols = [
   {

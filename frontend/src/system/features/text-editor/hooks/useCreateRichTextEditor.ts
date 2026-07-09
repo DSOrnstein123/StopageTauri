@@ -1,4 +1,4 @@
-import { useEditor, type UseEditorOptions } from "@tiptap/react";
+import { useEditor, type UseEditorOptions } from "@system/lib/tiptap";
 import { richTextEditorExtensions } from "../extensions";
 import { useMemo } from "react";
 import { TableOfContents, type TableOfContentData } from "@system/lib/tiptap";

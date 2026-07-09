@@ -1,1 +1,6 @@
-export { NodeSelection, Plugin, PluginKey } from "@tiptap/pm/state";
+export {
+  NodeSelection,
+  Plugin,
+  PluginKey,
+  TextSelection,
+} from "@tiptap/pm/state";

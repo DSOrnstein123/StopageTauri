@@ -1,6 +1,6 @@
 import { useMemo, type ReactNode } from "react";
 import { CollectionNodeContext } from "./collectionNodeContext";
-import type { ReactNodeViewProps } from "@tiptap/react";
+import type { ReactNodeViewProps } from "@system/lib/tiptap";
 
 const CollectionNodeProvider = ({
   props,
