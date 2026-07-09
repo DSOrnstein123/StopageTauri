@@ -1,1 +1,1 @@
-export { useRichTextEditor } from "../hooks/useRichTextEditor";
+export { useCreateRichTextEditor } from "../hooks/useCreateRichTextEditor";
