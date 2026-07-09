@@ -3,10 +3,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "./system/config/queryClient";
 import MainLayout from "./app/layout/MainLayout";
 import { TooltipProvider } from "@system/ui/shadcn/tooltip";
-import { pluginRegistry } from "@system/registries/pluginRegistry";
+import { pluginManager } from "@system/registries/pluginManager";
 import { bootstrapPlugin } from "@app/bootstrap";
 
-bootstrapPlugin(pluginRegistry);
+bootstrapPlugin(pluginManager);
 
 function App() {
   return (

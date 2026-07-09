@@ -1,7 +1,8 @@
-import { pluginRegistry } from "@system/registries/pluginRegistry";
+import { systemApi } from "@system/api";
 import { useRightSidebarStore } from "@system/stores/useSidebarStore";
 import { useRef } from "react";
 
+//TODO: add auxiliary later
 const RightSidebar = () => {
   const rightSidebarRef = useRef<HTMLDivElement | null>(null);
   const type = useRightSidebarStore((state) => state.type);
@@ -9,7 +10,7 @@ const RightSidebar = () => {
   if (!type) return null;
 
   /* eslint-disable react-hooks/static-components */
-  const SidebarContent = pluginRegistry.getNodeSlot(type, "sidebar");
+  const SidebarContent = systemApi.plugin.getNodeSlot(type, "sidebar");
   if (!SidebarContent) return null;
 
   return (
@@ -18,7 +19,7 @@ const RightSidebar = () => {
       className="group/sidebar bg-primary/5 relative z-20 h-full flex-col space-y-0.5"
     >
       <div className="h-full overflow-x-hidden overflow-y-auto p-2">
-        <SidebarContent data={{}} />
+        {/* <SidebarContent /> */}
       </div>
     </aside>
   );
