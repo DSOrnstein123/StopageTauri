@@ -1,14 +1,13 @@
-import type { NodeType } from "@system/registries/node";
 import createDocument from "../functions/createDocument";
 import { systemApi } from "@system/api";
 
-const handleCreateDocument = async (type: NodeType) => {
+const handleCreateDocument = async () => {
   const data = await createDocument();
   systemApi.workspace.openTab({
-    mode: "dynamic",
-    type: type,
-    nodeId: data.id,
+    entryCategory: "node",
     title: data.name,
+    nodeId: data.id,
+    nodeType: "document",
   });
 };
 
