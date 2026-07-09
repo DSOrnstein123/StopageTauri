@@ -43,7 +43,11 @@ export const nodeService = {
   },
   updateName: (id: string, newName: string) =>
     invoke("update_node_name", { id: id, newName: newName }),
-  updateData: <N extends NodeType>(
+  putData: <N extends NodeType>(
+    id: string,
+    newData: NodeDetailMap<N>["data"],
+  ) => invoke("update_node_data", { id: id, newData: newData }),
+  patchData: <N extends NodeType>(
     id: string,
     newData: Partial<NodeDetailMap<N>["data"]>,
   ) => invoke("update_node_data", { id: id, newData: newData }),
