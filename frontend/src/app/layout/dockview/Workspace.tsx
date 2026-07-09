@@ -1,90 +1,19 @@
-import { DockviewApi, themeLight } from "dockview-core";
+import { themeLight } from "dockview-core";
 import { DockviewReact } from "dockview";
 import { components } from "./components";
 import { tabComponents } from "./tabComponents";
-import { workspaceService } from "@system/features/workspace/services";
-import type { NavigateTarget } from "@system/features/workspace/types/navigate";
-import useWorkspaceStore from "@system/features/workspace/stores/useWorkspaceStore";
-
-const loadDefaultLayout = (api: DockviewApi) => {
-  api.addPanel({
-    id: "welcome_panel",
-    component: "tab",
-    title: "Welcome",
-  });
-};
+import { systemApi } from "@system/api";
+import { DockviewWorkspaceHost } from "./WorkspaceHost";
 
 const Workspace = () => {
-  const setActiveTabId = useWorkspaceStore((state) => state.setActiveTabId);
-
   return (
     <DockviewReact
       theme={themeLight}
       onReady={(readyEvent) => {
         const { api: dockApi } = readyEvent;
-        const savedLayout = localStorage.getItem("workspace-layout");
-        if (savedLayout) {
-          try {
-            dockApi.fromJSON(JSON.parse(savedLayout));
-          } catch (error) {
-            console.error("Failed to load layout:", error);
-            loadDefaultLayout(dockApi);
-          }
-        } else {
-          loadDefaultLayout(dockApi);
-        }
-
-        dockApi.onDidActivePanelChange((e) => {
-          if (!e) return;
-
-          setActiveTabId(e?.id);
-        });
-
-        dockApi.onDidLayoutChange(() => {
-          const currentLayout = dockApi.toJSON();
-          localStorage.setItem(
-            "workspace-layout",
-            JSON.stringify(currentLayout),
-          );
-        });
-
-        workspaceService.setEngine({
-          openTab: (params) => {
-            const panelId = `${Date.now()}`;
-            const tabParams =
-              params.mode == "dynamic"
-                ? { nodeId: params.nodeId, type: params.type, mode: "dynamic" }
-                : { type: params.type, mode: "static" };
-
-            dockApi.addPanel({
-              id: panelId,
-              title: params.title,
-              tabComponent: "workspace",
-              component: "tab",
-              params: tabParams,
-            });
-          },
-
-          navigate: (panelId, target: NavigateTarget) => {
-            const mainPanel = dockApi.getPanel(panelId);
-
-            const newParams =
-              target.mode == "dynamic"
-                ? {
-                    mode: "dynamic",
-                    type: target.type,
-                    nodeId: target.nodeId,
-                  }
-                : {
-                    mode: "static",
-                    type: target.type,
-                  };
-            if (mainPanel) {
-              mainPanel.api.updateParameters(newParams);
-              console.log("param", mainPanel.params);
-            }
-          },
-        });
+        const dockviewWorkspaceHost = new DockviewWorkspaceHost(dockApi);
+        systemApi.workspace.setHost(dockviewWorkspaceHost);
+        dockviewWorkspaceHost.init();
       }}
       components={components}
       tabComponents={tabComponents}

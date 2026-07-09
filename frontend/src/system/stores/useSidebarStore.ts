@@ -1,9 +1,10 @@
+import type { NodeType } from "@system/registries/plugin";
 import { create } from "zustand";
 
 interface SidebarStore {
-  type: string | null;
+  type: NodeType | null;
 
-  setType: (type: string | null) => void;
+  setType: (type: NodeType | null) => void;
 }
 
 const createSidebarStore = () =>
