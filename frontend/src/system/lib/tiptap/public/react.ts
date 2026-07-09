@@ -4,6 +4,7 @@ export {
   type ReactNodeViewProps,
   type NodeViewProps,
   type Range,
+  type JSONContent,
   EditorContent,
   NodeViewWrapper,
   useEditor,

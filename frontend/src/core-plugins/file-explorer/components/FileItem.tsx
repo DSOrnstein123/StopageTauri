@@ -8,12 +8,12 @@ const FileItem = ({ data }: { data: ExplorerItem }) => {
   const { id, name, type } = data;
   const isSelected = usePrimarySidebarStore((state) => state.selectedId === id);
 
-  const handleOnClick = async () => {
-    systemApi.workspace.openTab({
-      nodeId: id,
+  const handleOnClick = () => {
+    systemApi.workspace.openEntry({
+      entryCategory: "node",
       title: name,
-      type: type,
-      mode: "dynamic",
+      nodeId: id,
+      nodeType: type,
     });
   };
 

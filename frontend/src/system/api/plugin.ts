@@ -1,14 +1,18 @@
-import type { NodeSlots, NodeType, PluginId } from "@system/registries/plugin";
-import { pluginRegistry } from "@system/registries/pluginRegistry";
+import type { NodeType, PluginId } from "@system/registries/plugin";
+import type { NodeSlots } from "@system/registries/node";
+import { pluginManager } from "@system/registries/pluginManager";
 
 export const pluginApi = {
-  getAllPlugins: () => pluginRegistry.getPlugins(),
-  getApi: <P extends PluginId>(id: P) => pluginRegistry.getApi(id),
-  getSchema: (type: NodeType) => pluginRegistry.getNodeSchema(type),
-  registerSlot: <N extends NodeType>(nodeType: N, slots: NodeSlots<N>) =>
-    pluginRegistry.registerNodeSlot(nodeType, slots),
+  getPluginConfigs: () => pluginManager.getPluginConfigs(),
+  getApi: <P extends PluginId>(id: P) => pluginManager.getApi(id),
+  getActionButtons: () => pluginManager.getActionButtons(),
+  getSchema: (type: NodeType) => pluginManager.getNodeSchema(type),
+  registerSlot: <N extends NodeType>(
+    nodeType: N,
+    slots: Partial<NodeSlots<N>>,
+  ) => pluginManager.registerNodeSlot(nodeType, slots),
   getNodeSlot: <N extends NodeType, S extends keyof NodeSlots<N> & string>(
     nodeType: N,
     slot: S,
-  ): NodeSlots<N>[S] => pluginRegistry.getNodeSlot(nodeType, slot),
+  ): NodeSlots<N>[S] => pluginManager.getNodeSlot(nodeType, slot),
 };

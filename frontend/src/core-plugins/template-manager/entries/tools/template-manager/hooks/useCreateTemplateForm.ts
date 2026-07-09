@@ -2,10 +2,10 @@ import { useForm } from "react-hook-form";
 import {
   CreateTemplateSchema,
   type CreateTemplateValues,
-} from "../schemas/createTemplateSchema";
+} from "../../../nodes/document-template/schemas/createTemplateSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useCreateTemplateMutation from "./useCreateTemplateMutation";
-import { NODES } from "../constants";
+import { NODES } from "../../../../constants";
 
 const useCreateTemplateForm = () => {
   const form = useForm({
@@ -26,6 +26,7 @@ const useCreateTemplateForm = () => {
       type: NODES.DOCUMENT_TEMPLATE,
       data: {
         defaultName: values.defaultName,
+        defaultContent: {},
       },
     });
   };

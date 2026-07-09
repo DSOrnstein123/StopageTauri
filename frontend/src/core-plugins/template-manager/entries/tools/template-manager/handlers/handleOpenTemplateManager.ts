@@ -1,10 +1,11 @@
 import { systemApi } from "@system/api";
+import { TOOLS } from "../../../../constants";
 
-const handleOpenTemplateManager = (type: string) => {
+const handleOpenTemplateManager = () => {
   systemApi.workspace.openTab({
+    entryCategory: "tool",
     title: "Template manager",
-    type: type,
-    mode: "static",
+    toolType: TOOLS.TEMPLATE_MANAGER,
   });
 };
 
