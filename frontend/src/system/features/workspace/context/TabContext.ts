@@ -1,12 +1,7 @@
 import { createContext, useContext } from "react";
+import type { Tab } from "../classes/tab";
 
-export interface TabContext {
-  tabId: string;
-  id: string;
-  setTitle: (newTitle: string) => void;
-}
-
-export const TabContext = createContext<TabContext | null>(null);
+export const TabContext = createContext<Tab | null>(null);
 
 export const useTabContext = () => {
   const context = useContext(TabContext);

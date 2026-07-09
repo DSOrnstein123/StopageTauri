@@ -1,9 +1,9 @@
+import type { ToolType } from "@system/registries/plugin";
 import { pluginManager } from "@system/registries/pluginManager";
-import type { NodeDetail } from "../schemas/nodeSchema";
 
-const NodeContent = ({ data }: { data: NodeDetail }) => {
+const ToolTab = ({ toolType }: { toolType: ToolType }) => {
   /* eslint-disable react-hooks/static-components */
-  const Content = pluginManager.getNodeView(data.type);
+  const Content = pluginManager.getToolView(toolType);
   if (!Content) return null;
 
   return (
@@ -13,4 +13,4 @@ const NodeContent = ({ data }: { data: NodeDetail }) => {
   );
 };
 
-export default NodeContent;
+export default ToolTab;

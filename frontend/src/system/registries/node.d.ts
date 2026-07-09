@@ -1,30 +1,25 @@
-import type { ComponentType } from "react";
 import {
-  type ActionButton,
+  type BaseEntryConfig,
   type DefaultSlots,
+  type NodeType,
   type PluginApi,
-  type PluginConfigs,
+  type PluginEntries,
 } from "./plugin";
-import type { ZodType } from "zod";
+import type { z, ZodType } from "zod";
 import type { UnionToIntersection } from "@system/utils/unionToIntersection";
-import type { ControllerClass } from "@system/features/workspace/types/registries/tabApi";
 
-export interface NodeConfig {
-  defaultIcon?: string;
-  component: ComponentType;
+export type NodeKind = "folder" | "file" | "template";
+
+export interface NodeConfig extends BaseEntryConfig {
+  kind?: NodeKind;
   schema?: ZodType;
-  actionButtons?: ActionButton[];
-  api?: NodeApi;
-  controller?: ControllerClass;
-  slots?: Record<string, ComponentType<{ data?: unknown }>>;
 }
 
-type NodeApi = PluginApi;
+type NodeApi = PluginApi & {
+  controller: Record<string, (...args: unknown[]) => unknown>;
+};
 
-export type ExtractNodeType<P> = P extends { nodes: infer N } ? keyof N : never;
-export type NodeType = ExtractNodeType<PluginConfigs>;
-
-export type ExtractNodeConfig = PluginConfigs extends { nodes: infer N }
+export type ExtractNodeConfig = PluginEntries extends { nodes: infer N }
   ? N
   : never;
 export type NodeConfigMap = UnionToIntersection<ExtractNodeConfig>;
@@ -45,3 +40,7 @@ export type NodeController<N extends NodeType> =
   }
     ? InstanceType<Extract<C, new (...args: unknown[]) => unknown>>
     : never;
+
+export type NodeDetailMap<N extends NodeType> = z.infer<
+  NodeDetailConfig<N>["schema"]
+>;

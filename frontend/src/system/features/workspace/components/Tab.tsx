@@ -1,28 +1,25 @@
 import TabHeader from "@system/features/workspace/components/TabHeader";
 import TabProvider from "@system/features/workspace/context/TabProvider";
-import DynamicTabContent from "./DynamicTabContent";
-import StaticTabContent from "./StaticTabContent";
+import NodeTab from "./NodeTab";
+import ToolTab from "./ToolTab";
 import type { TabProps } from "../types/tabProps";
+import { systemApi } from "@system/api";
 
 const Tab = (props: TabProps) => {
-  const { tabId, mode, setTitle } = props;
-
-  const value = {
-    tabId: tabId,
-    id: mode === "dynamic" ? props.nodeId : props.type,
-    setTitle: setTitle,
-  };
+  const { tabId, entryCategory } = props;
+  const tab = systemApi.workspace.getTab(tabId);
+  if (!tab) return;
 
   return (
     <div className="flex h-full flex-col">
-      <TabProvider props={value}>
+      <TabProvider value={tab}>
         <TabHeader className="h-10" />
 
         <div className="flex-1">
-          {mode == "dynamic" ? (
-            <DynamicTabContent id={props.nodeId} />
+          {entryCategory == "node" ? (
+            <NodeTab nodeId={props.nodeId} />
           ) : (
-            <StaticTabContent type={props.type} />
+            <ToolTab toolType={props.toolType} />
           )}
         </div>
       </TabProvider>

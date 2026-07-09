@@ -1,23 +1,23 @@
-import type { NodeType } from "@system/registries/node";
-import type { TabMode } from "./tabProps";
-import type { PluginId } from "@system/registries/plugin";
+import type {
+  EntryCategory,
+  NodeType,
+  ToolType,
+} from "@system/registries/plugin";
 
-interface BaseTabParams {
-  title: string;
-  mode: TabMode;
+interface BaseOpenTabParams {
+  title?: string;
+  entryCategory: EntryCategory;
 }
 
-export interface DynamicTabParams extends BaseTabParams {
-  mode: "dynamic";
+export interface OpenNodeTabParams extends BaseOpenTabParams {
+  entryCategory: "node";
   nodeId: string;
-  type?: NodeType;
+  nodeType?: NodeType;
 }
 
-export interface StaticTabParams extends BaseTabParams {
-  mode: "static";
-  type: PluginId;
+export interface OpenToolTabParams extends BaseOpenTabParams {
+  entryCategory: "tool";
+  toolType: ToolType;
 }
 
-export type TabParams = DynamicTabParams | StaticTabParams;
-
-export type OpenTabParams = TabParams;
+export type OpenTabParams = OpenNodeTabParams | OpenToolTabParams;

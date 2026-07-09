@@ -1,15 +1,9 @@
-import { create } from "zustand";
+import { useStore } from "zustand";
+import { workspaceManager } from "../classes/workspaceManager";
+import type { WorkspaceStore } from "./createWorkspaceStore";
 
-interface WorkspaceStore {
-  activeTabId: string | null;
-
-  setActiveTabId: (tabId: string | null) => void;
-}
-
-const useWorkspaceStore = create<WorkspaceStore>((set) => ({
-  activeTabId: null,
-
-  setActiveTabId: (tabId) => set({ activeTabId: tabId }),
-}));
+const useWorkspaceStore = <T>(selector: (state: WorkspaceStore) => T) => {
+  return useStore(workspaceManager.getStore(), selector);
+};
 
 export default useWorkspaceStore;

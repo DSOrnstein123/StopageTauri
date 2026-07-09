@@ -1,10 +1,10 @@
 import { Button } from "@system/ui/shadcn/button";
-import { pluginRegistry } from "@system/registries/pluginRegistry";
 import Icon from "@system/ui/icon/Icon";
 import SettingsButton from "./SettingsButton";
+import { systemApi } from "@system/api";
 
 const ActionBar = () => {
-  const actionButtons = pluginRegistry.getActionButtons();
+  const actionButtons = systemApi.plugin.getActionButtons();
 
   return (
     <aside className="bg-primary/20 relative flex h-full w-10 flex-col items-center gap-y-px py-1">

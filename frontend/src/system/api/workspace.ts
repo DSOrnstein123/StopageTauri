@@ -1,16 +1,16 @@
-import type { TabApiMap } from "@system/features/workspace/types/registries/tabApi";
-import { workspaceTabRegistry } from "@system/features/workspace/types/registries/workspaceContentRegistry";
-import { workspaceService } from "@system/features/workspace/services";
-import type { NavigateTarget } from "@system/features/workspace/types/navigate";
+import { type WorkspaceHost } from "@system/features/workspace/types/workspaceHost";
 import type { OpenTabParams } from "@system/features/workspace/types/tabParams";
-import type { NodeType } from "@system/registries/node";
+import { workspaceManager } from "@system/features/workspace/classes/workspaceManager";
+import type { EntryType } from "@system/registries/plugin";
 
 export const workspaceApi = {
-  openTab: (config: OpenTabParams) => workspaceService.openTab(config),
-  navigate: (panelId: string, target: NavigateTarget) =>
-    workspaceService.navigate(panelId, target),
-  registerTabApi: <N extends NodeType>(tabId: string, api: TabApiMap<N>) =>
-    workspaceTabRegistry.register(tabId, api),
-  getTabApi: <N extends NodeType>(tabId: string) =>
-    workspaceTabRegistry.getApi<N>(tabId),
+  openTab: (params: OpenTabParams) => workspaceManager.openTab(params),
+  closeTab: (id: string) => workspaceManager.closeTab(id),
+  getTab: (id: string) => workspaceManager.getTab(id),
+  getTabEntryApi: <E extends EntryType>(id: string) =>
+    workspaceManager.getTabEntryApi<E>(id),
+  setHost: (host: WorkspaceHost) => workspaceManager.setHost(host),
+  openEntry: (params: OpenTabParams) => workspaceManager.openEntry(params),
+  getActiveTabId: () => workspaceManager.getActiveTabId(),
+  setActiveTabId: (id: string | null) => workspaceManager.setActiveTabId(id),
 };
