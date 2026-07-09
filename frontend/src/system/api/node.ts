@@ -4,6 +4,8 @@ import type {
   CreateNodePayload,
   NodeFilterOptions,
 } from "@system/features/node/types";
+import type { NodeDetailMap } from "@system/registries/node";
+import type { NodeType } from "@system/registries/plugin";
 
 export const nodeApi = {
   keys: nodeKeys,
@@ -12,6 +14,8 @@ export const nodeApi = {
   getList: (options?: NodeFilterOptions) => nodeService.getList(options),
   create: (payload: CreateNodePayload) => nodeService.create(payload),
   rename: (id: string, name: string) => nodeService.updateName(id, name),
-  updateData: (id: string, newData: Record<string, unknown>) =>
-    nodeService.updateData(id, newData),
+  updateData: <N extends NodeType>(
+    id: string,
+    newData: Partial<NodeDetailMap<N>["data"]>,
+  ) => nodeService.updateData(id, newData),
 };

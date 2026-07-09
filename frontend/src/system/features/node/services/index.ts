@@ -1,18 +1,21 @@
 import { invoke } from "@tauri-apps/api/core";
-import { pluginRegistry } from "@system/registries/pluginRegistry";
 import { NodeMetadataListSchema, type NodeDetail } from "../schemas/nodeSchema";
 import type { CreateNodePayload, NodeFilterOptions } from "../types";
+import { pluginManager } from "@system/registries/pluginManager";
+import type { NodeType } from "@system/registries/plugin";
+import type { NodeDetailMap } from "@system/registries/node";
 
 export const nodeService = {
-  getDetail: async <T extends NodeDetail>(id: string): Promise<T> => {
+  //TODO: redefine schema
+  getDetail: async (id: string): Promise<NodeDetail> => {
     try {
       const rawData = await invoke<NodeDetail>("get_node_detail", {
         id: id,
       });
       console.log(rawData);
-      const schema = pluginRegistry.getNodeSchema(rawData.type);
+      const schema = pluginManager.getNodeSchema(rawData.type);
       const validData = schema.parse(rawData);
-      return validData as T;
+      return validData;
     } catch (error) {
       console.error("getDetail failed:", error);
       throw error;
@@ -40,6 +43,8 @@ export const nodeService = {
   },
   updateName: (id: string, newName: string) =>
     invoke("update_node_name", { id: id, newName: newName }),
-  updateData: (id: string, newData: Record<string, unknown>) =>
-    invoke("update_node_data", { id: id, newData: newData }),
+  updateData: <N extends NodeType>(
+    id: string,
+    newData: Partial<NodeDetailMap<N>["data"]>,
+  ) => invoke("update_node_data", { id: id, newData: newData }),
 };

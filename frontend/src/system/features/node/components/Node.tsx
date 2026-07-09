@@ -1,12 +1,12 @@
 import type { PluginId } from "@system/registries/plugin";
 import NodeProvider from "../context/NodeProvider";
-import { useGetNodeQuery } from "../hooks/useGetNodeQuery";
 import useMountSidebar from "../hooks/useMountSidebar";
 import NodeContent from "./NodeContent";
 import NodeNameLabel from "./NodeNameLabel";
+import { useGetNodeDetailQuery } from "../hooks/useGetNodeDetailQuery";
 
 const Node = ({ id }: { id: string }) => {
-  const { data } = useGetNodeQuery(id);
+  const { data } = useGetNodeDetailQuery(id);
   useMountSidebar(data?.type as PluginId);
 
   if (!data) return null;

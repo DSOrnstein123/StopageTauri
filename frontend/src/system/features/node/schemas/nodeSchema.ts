@@ -1,8 +1,8 @@
 import type { NodeType } from "@system/registries/plugin";
-import { pluginRegistry } from "@system/registries/pluginRegistry";
+import { pluginManager } from "@system/registries/pluginManager";
 import { IconDataSchema } from "@system/schemas/iconData";
 import { SimpleUUIDSchema } from "@system/schemas/simpleUUIDSchema";
-import z, { ZodType } from "zod";
+import z from "zod";
 
 const NodeKindSchema = z.enum(["file", "folder", "template"]);
 type NodeKind = z.infer<typeof NodeKindSchema>;
@@ -13,9 +13,13 @@ const NodeMetadataSchema = z.object({
   icon: IconDataSchema,
   name: z.string(),
   kind: NodeKindSchema,
-  type: z.string().refine((val) => pluginRegistry.hasNode(val), {
-    message: "This node type is not supported",
-  }) as ZodType<NodeType>,
+  type: z.custom<NodeType>(
+    (val): val is NodeType =>
+      typeof val === "string" && pluginManager.hasNode(val),
+    {
+      message: "This node type is not supported",
+    },
+  ),
   createdAt: z.string(),
   updatedAt: z.string(),
   isTrashed: z.boolean(),
