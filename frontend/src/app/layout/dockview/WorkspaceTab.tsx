@@ -1,11 +1,11 @@
 import type { IDockviewPanelHeaderProps } from "dockview";
 import { X } from "lucide-react";
 import DynamicTitle from "./DynamicTitle";
-import useIsActiveTab from "@system/features/workspace/hooks/useIsActiveTab";
+import { systemApi } from "@system/api";
 
 const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
   const { api, params } = props;
-  const isActive = useIsActiveTab(api.id);
+  const isActive = api.isActive;
   const tabMode = params.mode;
 
   const onTabClick = () => {
@@ -14,7 +14,7 @@ const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
 
   const onCloseClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    api.close();
+    systemApi.workspace.closeTab(api.id);
   };
 
   return (
