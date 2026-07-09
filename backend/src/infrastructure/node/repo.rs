@@ -192,10 +192,10 @@ impl NodeRepository for SqliteNodeRepository {
 
         query!(
             r#"
-            UPDATE nodes 
-            SET data = ?
-            WHERE id = ?
-        "#,
+                UPDATE nodes
+                SET data = json_patch(data, ?)
+                WHERE id = ?
+            "#,
             data,
             id,
         )
