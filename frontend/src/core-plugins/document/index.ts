@@ -1,10 +1,10 @@
 export * from "./public";
 
-import DocumentSidebar from "./components/DocumentTOCAuxiliary";
-import DocumentView from "./components/DocumentView";
-import { NODES, PLUGIN_ID } from "./constants";
+import DocumentSidebar from "./entries/nodes/document/components/DocumentTOCAuxiliary";
+import DocumentView from "./entries/nodes/document/components/DocumentView";
+import { NODES, PLUGIN_ID } from "./entries/nodes/document/constants";
 import type { PluginManifest } from "@system/registries/plugin";
-import { documentConfig } from "./config/nodes/document";
+import { documentConfig } from "./entries/nodes/document/config";
 
 export { DocumentView, DocumentSidebar };
 

@@ -15,7 +15,7 @@ import Cell from "./Cell";
 import { collectionService } from "../services/collectionService";
 import { useCollectionNode } from "../context/useCollectionNodeContext";
 import { Trash } from "lucide-react";
-import type { DocumentFile } from "@core-plugins/document/schemas/documentSchema";
+import type { DocumentFile } from "@core-plugins/document/entries/nodes/document/schemas/documentSchema";
 
 const columnHelper = createColumnHelper<DocumentFile>();
 

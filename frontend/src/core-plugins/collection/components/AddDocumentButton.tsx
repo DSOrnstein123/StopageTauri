@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCollectionNode } from "../context/useCollectionNodeContext";
 import { invoke } from "@tauri-apps/api/core";
-import type { DocumentFile } from "@core-plugins/document/schemas/documentSchema";
+import type { DocumentFile } from "@core-plugins/document/entries/nodes/document/schemas/documentSchema";
 import collectionKeys from "@core-plugins/collection/keys/collectionKeys";
 import { nodeKeys } from "@system/features/node/keys";
 import type { NodeMetadataList } from "@system/features/node/schemas/nodeSchema";

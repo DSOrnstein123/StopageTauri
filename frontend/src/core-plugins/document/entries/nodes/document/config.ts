@@ -1,10 +1,9 @@
 import type { NodeConfig } from "@system/registries/node";
-import DocumentView from "../../components/DocumentView";
-import { NODES } from "../../constants";
-import { createDocumentController } from "../../controller";
-import handleCreateDocument from "../../handlers/handleCreateDocument";
-import { DocumentFileSchema } from "../../schemas/documentSchema";
-import createDocumentStore from "../../stores/createDocumentStore";
+import DocumentView from "./components/DocumentView";
+import { createDocumentController } from "./controller";
+import handleCreateDocument from "./handlers/handleCreateDocument";
+import { DocumentFileSchema } from "./schemas/documentSchema";
+import createDocumentStore from "./stores/createDocumentStore";
 
 export const documentConfig = {
   view: DocumentView,
@@ -18,7 +17,7 @@ export const documentConfig = {
         type: "lucide",
         value: "FilePlus",
       },
-      action: () => handleCreateDocument(NODES.DOCUMENT),
+      action: () => handleCreateDocument(),
     },
   ],
   slots: {

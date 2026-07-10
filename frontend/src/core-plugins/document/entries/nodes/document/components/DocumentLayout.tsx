@@ -1,7 +1,7 @@
 import { useRef, type KeyboardEvent, type ReactNode } from "react";
 import { Editor } from "@system/lib/tiptap";
-import NodeNameHeader from "../../../system/features/node/components/NodeNameHeader";
-import { NodeEditorContext } from "../../../system/features/node/context/NodeEditorContext";
+import NodeNameHeader from "../../../../../../system/features/node/components/NodeNameHeader";
+import { NodeEditorContext } from "../../../../../../system/features/node/context/NodeEditorContext";
 
 const DocumentLayout = ({ children }: { children: ReactNode }) => {
   const editorRef = useRef<Editor | null>(null);
