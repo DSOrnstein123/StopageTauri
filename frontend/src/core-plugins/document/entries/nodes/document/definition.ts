@@ -5,7 +5,10 @@ import handleCreateDocument from "./handlers/handleCreateDocument";
 import { DocumentFileSchema } from "./schemas/documentSchema";
 import createDocumentStore from "./stores/createDocumentStore";
 
-export const documentConfig = {
+export const TYPE = "document" as const;
+export type TYPE = typeof TYPE;
+
+export const config = {
   view: DocumentView,
   schema: DocumentFileSchema,
   createController: createDocumentController,

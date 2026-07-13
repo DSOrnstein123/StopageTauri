@@ -1,9 +1,15 @@
 import { useRef, type KeyboardEvent, type ReactNode } from "react";
 import { Editor } from "@system/lib/tiptap";
-import NodeNameHeader from "../../../../../../system/features/node/components/NodeNameHeader";
-import { NodeEditorContext } from "../../../../../../system/features/node/context/NodeEditorContext";
+import DocumentContentProvider from "../context/DocumentContentProvider";
+import NodeNameInput from "@system/features/node/components/NodeNameInput";
 
-const DocumentLayout = ({ children }: { children: ReactNode }) => {
+const DocumentShell = ({
+  header,
+  children,
+}: {
+  header?: ReactNode;
+  children: ReactNode;
+}) => {
   const editorRef = useRef<Editor | null>(null);
   const setEditorRef = (editor: Editor | null) => {
     editorRef.current = editor;
@@ -19,14 +25,16 @@ const DocumentLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex h-full w-full justify-center overflow-auto px-10">
       <div className="relative h-full w-full max-w-187.5">
-        <NodeNameHeader onKeyDown={handleKeyDown} />
+        <div className="text-5xl font-bold" onKeyDown={handleKeyDown}>
+          {header || <NodeNameInput />}
+        </div>
 
-        <NodeEditorContext value={{ setEditorRef: setEditorRef }}>
+        <DocumentContentProvider value={{ setEditorRef: setEditorRef }}>
           {children}
-        </NodeEditorContext>
+        </DocumentContentProvider>
       </div>
     </div>
   );
 };
 
-export default DocumentLayout;
+export default DocumentShell;

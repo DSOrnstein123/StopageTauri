@@ -1,20 +1,23 @@
 import RichTextEditorView from "@system/features/text-editor/components/RichTextEditorView";
 import useGetCurrentContentQuery from "../hooks/useGetCurrentContentQuery";
-import DocumentTemplatePicker from "../../../../entries/tools/template-manager/components/DocumentTemplatePicker";
 import useUpdateCurrentContent from "../hooks/useUpdateCurrentContent";
-import { DocumentLayout } from "@core-plugins/document";
+import { DocumentShell } from "@core-plugins/document";
 import { type JSONContent } from "@system/lib/tiptap";
+import Header from "./Header";
+import DocumentTemplatePicker from "../../../../widget/document-template-picker/components/Widget";
 
+//TODO: fix on press Enter
+//TODO: rewrite name input and move to system
 const DocumentTemplateView = () => {
   const { data: content } = useGetCurrentContentQuery() as JSONContent;
   const saveContent = useUpdateCurrentContent();
 
   return (
-    <DocumentLayout>
+    <DocumentShell header={<Header />}>
       <RichTextEditorView content={content} onContentChange={saveContent}>
         <DocumentTemplatePicker />
       </RichTextEditorView>
-    </DocumentLayout>
+    </DocumentShell>
   );
 };
 

@@ -1,5 +1,5 @@
 import DocumentDetail from "./DocumentDetail";
-import DocumentLayout from "./DocumentLayout";
+import DocumentLayout from "./DocumentShell";
 
 const DocumentView = () => {
   return (

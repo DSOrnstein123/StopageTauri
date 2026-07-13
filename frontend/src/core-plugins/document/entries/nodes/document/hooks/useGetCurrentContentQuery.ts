@@ -3,7 +3,7 @@ import useContentQuery from "./useGetContentQuery";
 
 const useGetCurrentContentQuery = () => {
   const id = useCurrentNodeId();
-  return useContentQuery(id!);
+  return useContentQuery(id);
 };
 
 export default useGetCurrentContentQuery;

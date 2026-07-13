@@ -2,9 +2,16 @@ export * from "./public";
 
 import DocumentSidebar from "./entries/nodes/document/components/DocumentTOCAuxiliary";
 import DocumentView from "./entries/nodes/document/components/DocumentView";
-import { NODES, PLUGIN_ID } from "./entries/nodes/document/constants";
+import { PLUGIN_ID } from "./entries/nodes/document/constants";
 import type { PluginManifest } from "@system/registries/plugin";
-import { documentConfig } from "./entries/nodes/document/config";
+import {
+  config as documentConfig,
+  TYPE as DOCUMENT_TYPE,
+} from "./entries/nodes/document/definition";
+import {
+  config as documentTemplateConfig,
+  TYPE as DOCUMENT_TEMPLATE_TYPE,
+} from "./entries/nodes/document-template/definition";
 
 export { DocumentView, DocumentSidebar };
 
@@ -13,7 +20,8 @@ declare module "@system/registries/plugin" {
     "core.document": {
       entries: {
         nodes: {
-          [NODES.DOCUMENT]: typeof documentConfig;
+          [DOCUMENT_TYPE]: typeof documentConfig;
+          [DOCUMENT_TEMPLATE_TYPE]: typeof documentTemplateConfig;
         };
       };
     };
@@ -25,7 +33,8 @@ export const DocumentPlugin = {
   name: "Document",
   entries: {
     nodes: {
-      [NODES.DOCUMENT]: documentConfig,
+      [DOCUMENT_TYPE]: documentConfig,
+      [DOCUMENT_TEMPLATE_TYPE]: documentTemplateConfig,
     },
   },
 } satisfies PluginManifest;

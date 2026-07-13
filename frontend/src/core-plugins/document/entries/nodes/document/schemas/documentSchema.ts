@@ -1,9 +1,9 @@
 import { FileDetailSchema } from "@system/features/node/schemas/fileSchema";
 import z from "zod";
-import { NODES } from "../constants";
+import { TYPE } from "../constants";
 
 const DocumentFileSchema = FileDetailSchema.extend({
-  type: z.literal(NODES.DOCUMENT),
+  type: z.literal(TYPE),
   data: z.record(z.string(), z.unknown()),
 });
 type DocumentFile = z.infer<typeof DocumentFileSchema>;
