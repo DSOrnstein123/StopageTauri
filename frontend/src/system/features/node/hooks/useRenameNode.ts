@@ -1,44 +1,36 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useRef } from "react";
 import { nodeKeys } from "../keys";
 import { nodeService } from "../services";
 import useNodeName from "./useNodeName";
-import debounce from "@system/utils/debounce";
 import type { NodeDetail, NodeMetadataList } from "../schemas/nodeSchema";
+import useOptimisticRename from "@system/hooks/useOptimisticRename";
+import useCurrentNodeId from "@system/features/workspace/hooks/useCurrentNodeId";
 
-const useRenameNode = (nodeId: string) => {
+const useRenameNode = () => {
+  const id = useCurrentNodeId();
+  const { data: name } = useNodeName(id);
   const queryClient = useQueryClient();
-  const { data: name } = useNodeName(nodeId);
-  const saveTitle = useRef(
-    debounce<(id: string, title: string) => void>((id, newName) => {
-      nodeService.updateName(id, newName);
-    }, 500),
-  ).current;
 
-  const handleBlur = () => {
-    if (!name) return;
+  const { rename, commit } = useOptimisticRename({
+    onOptimisticUpdate: (newName) => {
+      queryClient.setQueryData<NodeMetadataList>(nodeKeys.list(), (data = []) =>
+        data.map((node) => (node.id == id ? { ...node, name: newName } : node)),
+      );
+      queryClient.setQueryData<NodeDetail>(
+        nodeKeys.detail(id),
+        (data) =>
+          data && {
+            ...data,
+            name: newName,
+          },
+      );
+    },
+    onCommit: async (newName) => {
+      await nodeService.updateName(id, newName);
+    },
+  });
 
-    saveTitle.flush(nodeId, name);
-  };
-
-  const updateName = (newName: string) => {
-    queryClient.setQueryData<NodeMetadataList>(nodeKeys.list(), (data = []) =>
-      data.map((node) =>
-        node.id == nodeId ? { ...node, name: newName } : node,
-      ),
-    );
-    queryClient.setQueryData<NodeDetail>(
-      nodeKeys.detail(nodeId),
-      (data) =>
-        data && {
-          ...data,
-          name: newName,
-        },
-    );
-    saveTitle(nodeId, newName);
-  };
-
-  return { name, updateName, handleBlur };
+  return { name, rename, commit };
 };
 
 export default useRenameNode;

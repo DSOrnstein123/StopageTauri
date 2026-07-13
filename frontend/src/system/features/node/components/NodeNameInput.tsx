@@ -1,28 +1,15 @@
-import type { KeyboardEvent } from "react";
-import { useNodeContext } from "../context/NodeContext";
+import useCurrentNodeNamePlaceholder from "../hooks/useNodeNamePlaceholder";
 import useRenameNode from "../hooks/useRenameNode";
+import NameInput from "@system/ui/custom/NameInput";
 
-const NodeNameInput = ({
-  className,
-  onKeyDown,
-}: {
-  className?: string;
-  onKeyDown?: (event: KeyboardEvent) => void;
+const NodeNameInput = (props: {
+  textClassName?: string;
+  placeholderClassName?: string;
+  inputClassName?: string;
 }) => {
-  const { id } = useNodeContext();
-  const { name, updateName, handleBlur } = useRenameNode(id);
-
+  const placeholder = useCurrentNodeNamePlaceholder();
   return (
-    <input
-      className={`${className} outline-0`}
-      value={name}
-      onChange={(event) => {
-        updateName(event.target.value);
-      }}
-      onKeyDown={onKeyDown}
-      onBlur={handleBlur}
-      spellCheck={false}
-    />
+    <NameInput {...useRenameNode()} placeholder={placeholder} {...props} />
   );
 };
 
