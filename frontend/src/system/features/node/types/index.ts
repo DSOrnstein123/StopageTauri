@@ -1,16 +1,18 @@
+import type { NodeType } from "@system/registries/plugin";
+
 export type NodeKind = "file" | "folder" | "template";
 
-export interface NodeFilterOptions {
+export interface NodeListOptions {
   includeKinds?: NodeKind[];
-  includeTypes?: string[];
+  includeTypes?: NodeType[];
   excludeKinds?: NodeKind[];
-  excludeTypes?: string[];
+  excludeTypes?: NodeType[];
 }
 
 export interface CreateNodePayload {
   parentId?: string;
   name: string;
   kind: NodeKind;
-  type: string;
+  type: NodeType;
   data?: Record<string, unknown>;
 }
