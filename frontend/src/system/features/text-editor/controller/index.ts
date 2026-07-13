@@ -1,14 +1,23 @@
 import { Editor } from "@system/lib/tiptap";
-import type { EditorSlice } from "../stores/createEditorStore";
-import { StoreController } from "@system/features/workspace/classes/baseController";
+import type { EditorStore } from "../stores/createEditorStore";
+import { NodeStoreController } from "@system/features/node/controller";
 
-export class EditorController extends StoreController<EditorSlice> {
+export class EditorController extends NodeStoreController<EditorStore> {
   private editor: Editor | null = null;
-  readonly api = {
-    getEditor: this.getEditor.bind(this),
-    getTOC: this.getTOCContent.bind(this),
-    setEditor: this.setEditor.bind(this),
-  };
+  get api() {
+    return {
+      ...this.nodeApi(),
+      ...this.editorApi(),
+    };
+  }
+
+  protected editorApi() {
+    return {
+      getEditor: this.getEditor.bind(this),
+      getTOC: this.getTOCContent.bind(this),
+      setEditor: this.setEditor.bind(this),
+    };
+  }
 
   setEditor(editor: Editor) {
     this.editor = editor;
