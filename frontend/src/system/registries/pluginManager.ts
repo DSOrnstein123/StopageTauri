@@ -1,4 +1,9 @@
-import type { NodeConfig, NodeSlots } from "./node";
+import type {
+  NodeConfig,
+  NodeNamePlaceholder,
+  NodeSlots,
+  RegisteredNodeConfig,
+} from "./node";
 import type {
   Plugin,
   PluginId,
@@ -18,7 +23,7 @@ type ExtractPluginApi<P extends PluginId> = PluginRegistryMap[P] extends {
 
 export class PluginManager {
   private pluginConfigs = new Map<PluginId, PluginConfig>();
-  private nodeConfigs = new Map<NodeType, NodeConfig>();
+  private nodeConfigs = new Map<NodeType, RegisteredNodeConfig>();
   private toolConfigs = new Map<ToolType, ToolConfig>();
 
   register(plugin: Plugin) {
@@ -39,6 +44,7 @@ export class PluginManager {
         }
 
         this.nodeConfigs.set(nodeType, {
+          namePlaceholder: "Untitled",
           ...nodeConfig,
           kind: nodeConfig.kind ?? "file",
         });
@@ -69,7 +75,7 @@ export class PluginManager {
     const nodeConfig = this.nodeConfigs.get(nodeType);
     if (!nodeConfig) {
       throw new Error(
-        `[PluginRegistry] node type '${nodeType}' is not registered`,
+        `[PluginManager] node type '${nodeType}' is not registered`,
       );
     }
 
@@ -99,7 +105,7 @@ export class PluginManager {
     const nodeConfig = this.nodeConfigs.get(nodeType);
     if (!nodeConfig || !nodeConfig.view) {
       throw new Error(
-        `[PluginRegistry] Cannot find component for plugin '${nodeType}'`,
+        `[PluginManager] Cannot find component for plugin '${nodeType}'`,
       );
     }
     return nodeConfig.view;
@@ -109,7 +115,7 @@ export class PluginManager {
     const nodeConfig = this.toolConfigs.get(toolType);
     if (!nodeConfig || !nodeConfig.view) {
       throw new Error(
-        `[PluginRegistry] Cannot find component for plugin '${toolType}'`,
+        `[PluginManager] Cannot find component for plugin '${toolType}'`,
       );
     }
     return nodeConfig.view;
@@ -119,7 +125,7 @@ export class PluginManager {
     const nodeConfig = this.nodeConfigs.get(nodeType);
     if (!nodeConfig || !nodeConfig.schema) {
       throw new Error(
-        `[PluginRegistry] Cannot find schema for node type '${nodeType}'`,
+        `[PluginManager] Cannot find schema for node type '${nodeType}'`,
       );
     }
     return nodeConfig.schema;
@@ -128,18 +134,29 @@ export class PluginManager {
   getPluginActionButtons(pluginId: PluginId) {
     const plugin = this.pluginConfigs.get(pluginId);
     if (!plugin) {
-      throw new Error(
-        `[PluginRegistry] Plugin '${pluginId}' is not registered`,
-      );
+      throw new Error(`[PluginManager] Plugin '${pluginId}' is not registered`);
     }
     return plugin.actionButtons;
+  }
+
+  getNodeNamePlaceholder<N extends NodeType, T = NodeNamePlaceholder<N>>(
+    nodeType: N,
+  ) {
+    const nodeConfig = this.nodeConfigs.get(nodeType);
+    if (!nodeConfig) {
+      throw new Error(
+        `[PluginManager] node type '${nodeType}' is not registered`,
+      );
+    }
+
+    return nodeConfig.namePlaceholder as T;
   }
 
   getNodeActionButton(nodeType: NodeType) {
     const nodeConfig = this.nodeConfigs.get(nodeType);
     if (!nodeConfig) {
       throw new Error(
-        `[PluginRegistry] node type '${nodeType}' is not registered`,
+        `[PluginManager] node type '${nodeType}' is not registered`,
       );
     }
     return nodeConfig.actionButtons;
@@ -175,7 +192,7 @@ export class PluginManager {
     const nodeConfig = this.nodeConfigs.get(nodeType);
     if (!nodeConfig) {
       throw new Error(
-        `[PluginRegistry] node type '${nodeType}' is not registered`,
+        `[PluginManager] node type '${nodeType}' is not registered`,
       );
     }
     return nodeConfig.slots?.[slot] as NodeSlots<N>[S];
@@ -184,9 +201,7 @@ export class PluginManager {
   getApi<P extends PluginId>(pluginId: P): ExtractPluginApi<P> {
     const plugin = this.pluginConfigs.get(pluginId);
     if (!plugin) {
-      throw new Error(
-        `[PluginRegistry] Plugin '${pluginId}' is not registered`,
-      );
+      throw new Error(`[PluginManager] Plugin '${pluginId}' is not registered`);
     }
     return plugin.api as ExtractPluginApi<P>;
   }

@@ -13,6 +13,11 @@ export type NodeKind = "folder" | "file" | "template";
 export interface NodeConfig extends BaseEntryConfig {
   kind?: NodeKind;
   schema?: ZodType;
+  namePlaceholder?: string;
+}
+//TODO: use registered type
+export interface RegisteredNodeConfig extends NodeConfig {
+  namePlaceholder: string;
 }
 
 type NodeApi = PluginApi & {
@@ -44,3 +49,6 @@ export type NodeController<N extends NodeType> =
 export type NodeDetailMap<N extends NodeType> = z.infer<
   NodeDetailConfig<N>["schema"]
 >;
+
+export type NodeNamePlaceholder<N extends NodeType> =
+  NodeDetailConfig<N> extends { namePlaceholder: infer P } ? P : "Untitled";
