@@ -1,4 +1,4 @@
-import { TemplateDetailSchema } from "@system/features/node/schemas/templateSchema";
+import { TemplateDetailSchema } from "@system/features/node/template/schemas";
 import z from "zod";
 
 const DocumentTemplateDetailSchema = TemplateDetailSchema.extend({

@@ -1,8 +1,7 @@
-import { useGetNodeQuery } from "@system/features/node/hooks/useGetNodeDetailQuery";
-import type { TemplateDetail } from "@system/features/node/schemas/templateSchema";
+import { useGetNodeDetailQuery } from "@system/features/node/hooks/useGetNodeDetailQuery";
 
 const useGetTemplateQuery = (id: string) => {
-  return useGetNodeQuery<TemplateDetail>(id);
+  return useGetNodeDetailQuery<"document-template">(id);
 };
 
 export default useGetTemplateQuery;

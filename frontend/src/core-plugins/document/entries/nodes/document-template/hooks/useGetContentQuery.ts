@@ -1,4 +1,4 @@
-import { getNodeDetailQueryOptions } from "@system/features/node/hooks/useGetNodeDetailQuery";
+import { getNodeDetailQueryOptions } from "@system/features/node/shared/hooks/useGetNodeDetailQuery";
 import { useQuery } from "@tanstack/react-query";
 
 const useGetContentQuery = (id: string) => {

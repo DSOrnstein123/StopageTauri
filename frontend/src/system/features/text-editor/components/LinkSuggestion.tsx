@@ -1,7 +1,7 @@
 import { Input } from "@system/ui/shadcn/input";
-import useGetFiles from "@system/features/node/hooks/useGetFiles";
+import useGetFiles from "@system/features/node/shared/hooks/useGetFiles";
 import { useState } from "react";
-import type { NodeMetadata } from "@system/features/node/schemas/nodeSchema";
+import type { NodeMetadata } from "@system/features/node/shared/schemas/nodeSchema";
 
 const LinkSuggestion = ({
   onSelect,

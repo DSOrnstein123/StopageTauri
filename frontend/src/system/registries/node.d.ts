@@ -24,10 +24,10 @@ type NodeApi = PluginApi & {
   controller: Record<string, (...args: unknown[]) => unknown>;
 };
 
-export type ExtractNodeConfig = PluginEntries extends { nodes: infer N }
+export type PluginEntriesUnion = UnionToIntersection<PluginEntries>;
+export type NodeConfigMap = PluginEntriesUnion extends { nodes: infer N }
   ? N
   : never;
-export type NodeConfigMap = UnionToIntersection<ExtractNodeConfig>;
 export type NodeDetailConfig<N extends NodeType> = NodeConfigMap[N];
 
 export type CustomSlots<N extends NodeType> =

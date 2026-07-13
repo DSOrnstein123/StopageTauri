@@ -1,6 +1,6 @@
-import { FileDetailSchema } from "@system/features/node/schemas/fileSchema";
 import z from "zod";
 import { TYPE } from "../constants";
+import { FileDetailSchema } from "@system/features/node/file/schemas";
 
 const DocumentFileSchema = FileDetailSchema.extend({
   type: z.literal(TYPE),

@@ -1,5 +1,8 @@
 import z from "zod";
-import { NodeKindSchema, NodeMetadataSchema } from "./nodeSchema";
+import {
+  NodeKindSchema,
+  NodeMetadataSchema,
+} from "../../shared/schemas/nodeSchema";
 
 const FileMetadataSchema = NodeMetadataSchema.extend({
   kind: z.literal(NodeKindSchema.enum.file),

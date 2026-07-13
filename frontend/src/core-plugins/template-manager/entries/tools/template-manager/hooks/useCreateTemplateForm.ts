@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import {
   CreateTemplateSchema,
   type CreateTemplateValues,
-} from "../../../nodes/document-template/schemas/createTemplateSchema";
+} from "../../../../../document/entries/nodes/document-template/schemas/createTemplateSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useCreateTemplateMutation from "./useCreateTemplateMutation";
 import { NODES } from "../../../../constants";

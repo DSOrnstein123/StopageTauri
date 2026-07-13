@@ -1,7 +1,7 @@
 import { Tab } from "./tab";
 import { type WorkspaceHost } from "../types/workspaceHost";
 import { queryClient } from "@system/config/queryClient";
-import { getNodeDetailQueryOptions } from "@system/features/node/hooks/useGetNodeDetailQuery";
+import { getNodeDetailQueryOptions } from "@system/features/node/shared/hooks/useGetNodeDetailQuery";
 import type { OpenTabParams } from "../types/tabParams";
 import type { EntryApi, EntryType } from "@system/registries/plugin";
 import type { StoreApi } from "zustand";

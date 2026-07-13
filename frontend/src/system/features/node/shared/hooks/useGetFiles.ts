@@ -1,4 +1,4 @@
-import type { FileMetadataList } from "../schemas/fileSchema";
+import type { FileMetadataList } from "../../file/schemas";
 import { useGetNodes } from "./useGetNodes";
 
 const useGetFiles = () => {
