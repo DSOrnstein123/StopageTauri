@@ -2,7 +2,12 @@ import useCurrentEntry from "./useCurrentEntry";
 
 const useCurrentNodeId = () => {
   const currentEntry = useCurrentEntry();
-  return currentEntry.entryCategory == "node" ? currentEntry.nodeId : undefined;
+
+  if (!(currentEntry.entryCategory == "node")) {
+    throw new Error("Current entry is not a node.");
+  }
+
+  return currentEntry.nodeId;
 };
 
 export default useCurrentNodeId;
