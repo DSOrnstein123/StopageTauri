@@ -4,6 +4,7 @@ import { workspaceManager } from "@system/features/workspace/classes/workspaceMa
 import type { EntryType } from "@system/registries/plugin";
 
 export const workspaceApi = {
+  init: () => workspaceManager.init(),
   openTab: (params: OpenTabParams) => workspaceManager.openTab(params),
   closeTab: (id: string) => workspaceManager.closeTab(id),
   getTab: (id: string) => workspaceManager.getTab(id),

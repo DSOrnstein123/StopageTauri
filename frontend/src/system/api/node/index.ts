@@ -6,6 +6,7 @@ import type {
 } from "@system/features/node/shared/types";
 import type { NodeDetailMap } from "@system/registries/node";
 import type { NodeType } from "@system/registries/plugin";
+import { templateApi } from "./template";
 
 export const nodeApi = {
   keys: nodeKeys,
@@ -18,4 +19,6 @@ export const nodeApi = {
     id: string,
     newData: Partial<NodeDetailMap<N>["data"]>,
   ) => nodeService.patchData(id, newData),
+
+  template: { ...templateApi },
 };
