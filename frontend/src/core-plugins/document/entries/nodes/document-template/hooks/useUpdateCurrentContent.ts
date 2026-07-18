@@ -10,7 +10,7 @@ const useUpdateCurrentContent = () => {
     (content: JSONContent) => {
       if (!id) return;
       return systemApi.node.updateData<"document-template">(id, {
-        defaultContent: content,
+        defaultData: content,
       });
     },
     [id],

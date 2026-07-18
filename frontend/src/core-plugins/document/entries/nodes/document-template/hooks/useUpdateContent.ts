@@ -6,7 +6,7 @@ const useUpdateContent = (id: string) => {
   return useCallback(
     (content: JSONContent) =>
       systemApi.node.updateData<"document-template">(id, {
-        defaultContent: content,
+        defaultData: content,
       }),
     [id],
   );

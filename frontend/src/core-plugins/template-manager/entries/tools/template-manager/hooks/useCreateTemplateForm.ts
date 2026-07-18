@@ -5,7 +5,6 @@ import {
 } from "../../../../../document/entries/nodes/document-template/schemas/createTemplateSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useCreateTemplateMutation from "./useCreateTemplateMutation";
-import { NODES } from "../../../../constants";
 
 const useCreateTemplateForm = () => {
   const form = useForm({
@@ -23,10 +22,10 @@ const useCreateTemplateForm = () => {
     createTemplate({
       name: values.name,
       kind: "template",
-      type: NODES.DOCUMENT_TEMPLATE,
+      type: "document-template",
       data: {
         defaultName: values.defaultName,
-        defaultContent: {},
+        defaultData: {},
       },
     });
   };

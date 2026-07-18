@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 const useGetContentQuery = (id: string) => {
   return useQuery({
     ...getNodeDetailQueryOptions<"document-template">(id),
-    select: (data) => data.data.defaultContent,
+    select: (data) => data.data.defaultData,
   });
 };
 
