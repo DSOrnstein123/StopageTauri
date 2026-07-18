@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { nodeService } from "@system/features/node/shared/services";
 import useCurrentNodeId from "@system/features/workspace/hooks/useCurrentNodeId";
 import { nodeKeys } from "@system/features/node/shared/keys";
-import type { DocumentTemplateDetail } from "../schemas/documentTemplateSchema";
+import type { DocumentTemplateDetail } from "../schemas";
 import { TEMPLATE_CONFIG } from "../../../../../template-manager/constants";
 import useOptimisticRename from "@system/hooks/useOptimisticRename";
 import useGetCurrentNameQuery from "./useGetCurrentNameQuery";

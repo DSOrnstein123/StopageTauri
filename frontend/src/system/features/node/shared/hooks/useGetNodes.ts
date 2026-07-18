@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { nodeKeys } from "../keys";
 import { nodeService } from "../services";
-import type { NodeFilterOptions } from "../types";
-import type { NodeMetadataList } from "../schemas/nodeSchema";
+import type { NodeListOptions } from "../types";
+import type { NodeMetadataList } from "../schemas";
 
 export const useGetNodes = <N extends NodeMetadataList>(
-  options: NodeFilterOptions = {},
+  options: NodeListOptions = {},
 ) => {
   return useQuery<N>({
     queryKey: nodeKeys.list(options),

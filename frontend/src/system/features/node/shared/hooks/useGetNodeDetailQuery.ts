@@ -7,7 +7,7 @@ import type { NodeDetailMap } from "@system/registries/node";
 export const getNodeDetailQueryOptions = <N extends NodeType>(id: string) =>
   queryOptions({
     queryKey: nodeKeys.detail(id),
-    queryFn: () => nodeService.getDetail(id) as NodeDetailMap<N>,
+    queryFn: () => nodeService.getDetail(id) as Promise<NodeDetailMap<N>>,
     enabled: !!id,
     staleTime: Infinity,
   });

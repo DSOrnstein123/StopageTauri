@@ -1,7 +1,7 @@
 import EXPLORER_CONFIG from "@core-plugins/file-explorer";
-import { nodeKeys } from "@system/features/node/keys";
-import type { NodeMetadataList } from "@system/features/node/schemas/nodeSchema";
-import { nodeService } from "@system/features/node/services";
+import { nodeKeys } from "@system/features/node/shared/keys";
+import type { NodeMetadataList } from "@system/features/node/shared/schemas";
+import { nodeService } from "@system/features/node/shared/services";
 import { queryClient } from "@system/config/queryClient";
 import { DEFAULT_DOCUMENT_VALUES } from "../constants";
 

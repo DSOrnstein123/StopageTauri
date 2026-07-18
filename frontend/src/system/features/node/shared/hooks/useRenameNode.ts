@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { nodeKeys } from "../keys";
 import { nodeService } from "../services";
 import useNodeName from "./useNodeName";
-import type { NodeDetail, NodeMetadataList } from "../schemas/nodeSchema";
+import type { NodeDetail, NodeMetadataList } from "../schemas";
 import useOptimisticRename from "@system/hooks/useOptimisticRename";
 import useCurrentNodeId from "@system/features/workspace/hooks/useCurrentNodeId";
 

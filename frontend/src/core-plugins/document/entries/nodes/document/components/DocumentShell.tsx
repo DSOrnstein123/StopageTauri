@@ -1,7 +1,7 @@
 import { useRef, type KeyboardEvent, type ReactNode } from "react";
 import { Editor } from "@system/lib/tiptap";
 import DocumentContentProvider from "../context/DocumentContentProvider";
-import NodeNameInput from "@system/features/node/components/NodeNameInput";
+import NodeNameInput from "@system/features/node/shared/components/NodeNameInput";
 
 const DocumentShell = ({
   header,

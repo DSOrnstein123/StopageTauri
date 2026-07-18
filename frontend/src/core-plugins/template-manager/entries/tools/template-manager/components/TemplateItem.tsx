@@ -1,4 +1,3 @@
-import { NODES } from "@core-plugins/template-manager/constants";
 import { systemApi } from "@system/api";
 import { Card } from "@system/ui/shadcn/card";
 
@@ -9,7 +8,7 @@ const TemplateItem = ({ id, name }: { id: string; name: string }) => {
         systemApi.workspace.openEntry({
           entryCategory: "node",
           nodeId: id,
-          nodeType: NODES.DOCUMENT_TEMPLATE,
+          nodeType: "document-template",
         });
       }}
     >
