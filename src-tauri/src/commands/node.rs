@@ -3,8 +3,8 @@ use backend::{
         dtos::CreateNodeInput,
         queries::node_query::NodeQuery,
         use_cases::{
-            create_node::CreateNodeUseCase, update_node_data::UpdateNodeDataUseCase,
-            update_node_name::UpdateNodeNameUseCase,
+            apply_template::ApplyTemplateUseCase, create_node::CreateNodeUseCase,
+            update_node_data::UpdateNodeDataUseCase, update_node_name::UpdateNodeNameUseCase,
         },
     },
     domain::models::node::NodeFilterOptions,
@@ -88,5 +88,20 @@ pub async fn update_node_data(
         .execute(id, new_data)
         .await
         .map(|_| ())
+        .map_err(|err| err.to_string())
+}
+
+#[tauri::command]
+pub async fn apply_template(
+    state: State<'_, AppState>,
+    template_id: &str,
+    target_id: &str,
+) -> Result<NodeDetailDto, String> {
+    let use_case = ApplyTemplateUseCase::new(&state.node_repo);
+
+    use_case
+        .execute(template_id, target_id)
+        .await
+        .map(Into::into)
         .map_err(|err| err.to_string())
 }

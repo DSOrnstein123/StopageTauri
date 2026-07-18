@@ -2,7 +2,7 @@ use crate::domain::errors::node::NodeError;
 use crate::domain::models::icon::IconData;
 use crate::domain::models::node::{Node, NodeDetail, NodeFilterOptions, NodeMetadata};
 use crate::domain::ports::node_repository::NodeRepository;
-use crate::infrastructure::node::models::{DbNodeDetail, DbNodeMetadata};
+use crate::infrastructure::node::models::{DbNodeDetail, DbNodeMetadata, TemplateData};
 use async_trait::async_trait;
 use serde_json::Value;
 use sqlx::types::Json;
@@ -204,5 +204,82 @@ impl NodeRepository for SqliteNodeRepository {
         .map_err(|e| NodeError::Database(e.to_string()))?;
 
         Ok(())
+    }
+
+    async fn apply_template(
+        &self,
+        template_id: &str,
+        target_id: &str,
+    ) -> Result<NodeDetail, NodeError> {
+        let mut tx = self
+            .pool
+            .begin()
+            .await
+            .map_err(|error| NodeError::Database(error.to_string()))?;
+
+        let template = query!(
+            r#"
+            SELECT
+                kind AS "kind!",
+                data AS "data: Json<Value>"
+            FROM nodes
+            WHERE id = ?
+            "#,
+            template_id,
+        )
+        .fetch_optional(&mut *tx)
+        .await
+        .map_err(|error| NodeError::Database(error.to_string()))?
+        .ok_or_else(|| NodeError::NotFound(template_id.to_string()))?;
+
+        if template.kind != "template" {
+            return Err(NodeError::InvalidTemplate(template_id.to_string()));
+        }
+
+        let template_data: TemplateData =
+            serde_json::from_value(template.data.0).map_err(|error| {
+                NodeError::InvalidTemplateData {
+                    id: template_id.to_string(),
+                    message: error.to_string(),
+                }
+            })?;
+
+        let default_data = Json(template_data.default_data);
+
+        let result = query_as!(
+            DbNodeDetail,
+            r#"
+            UPDATE nodes
+            SET
+                name = ?,
+                data = ?
+            WHERE id = ?
+            RETURNING
+                id as "id!: String",
+                parent_id,
+                icon as "icon: Json<IconData>",
+                name,
+                kind,
+                type as node_type,
+                data as "data: Json<Value>",
+                properties as "properties: Json<Value>",
+                created_at,
+                updated_at,
+                is_trashed
+            "#,
+            template_data.default_name,
+            default_data,
+            target_id,
+        )
+        .fetch_optional(&mut *tx)
+        .await
+        .map_err(|error| NodeError::Database(error.to_string()))?
+        .ok_or_else(|| NodeError::NotFound(target_id.to_string()))?;
+
+        tx.commit()
+            .await
+            .map_err(|error| NodeError::Database(error.to_string()))?;
+
+        Ok(result.into())
     }
 }

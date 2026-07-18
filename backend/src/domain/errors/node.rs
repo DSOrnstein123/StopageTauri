@@ -19,4 +19,10 @@ pub enum NodeError {
 
     #[error("Database error: {0}")]
     Database(String),
+
+    #[error("Node '{0}' is not a template")]
+    InvalidTemplate(String),
+
+    #[error("Template '{id}' contains invalid data: {message}")]
+    InvalidTemplateData { id: String, message: String },
 }

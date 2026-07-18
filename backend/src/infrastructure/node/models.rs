@@ -114,3 +114,10 @@ pub struct DbNodeFilterOptions {
     pub exclude_kinds: Option<Vec<NodeKind>>,
     pub exclude_types: Option<Vec<String>>,
 }
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TemplateData {
+    pub default_name: String,
+    pub default_data: Value,
+}
