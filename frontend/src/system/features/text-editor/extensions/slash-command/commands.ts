@@ -1,6 +1,6 @@
 import {
+  CircleSmall,
   CodeXml,
-  Database,
   Heading1,
   Heading2,
   Heading3,
@@ -9,10 +9,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { type Editor, type Range } from "@system/lib/tiptap";
-import type { Collection } from "@core-plugin/collection/components/collection.types";
-import { queryClient } from "@system/config/queryClient";
-import collectionKeys from "@core-plugins/collection/keys/collectionKeys";
-import { collectionService } from "@core-plugins/collection/services/collectionService";
 
 interface CommandItemProps {
   name: string;
@@ -22,26 +18,33 @@ interface CommandItemProps {
 }
 
 const commands: CommandItemProps[] = [
-  {
-    name: "Collection",
-    icon: Database,
-    command: async ({ editor, range }) => {
-      const collection = await collectionService.create();
-      queryClient.setQueryData<Collection>(
-        collectionKeys.detail(collection.id),
-        (oldData) => oldData ?? collection,
-      );
+  // {
+  //   name: "Collection",
+  //   icon: Database,
+  //   command: async ({ editor, range }) => {
+  //     const collection = await collectionService.create();
+  //     queryClient.setQueryData<Collection>(
+  //       collectionKeys.detail(collection.id),
+  //       (oldData) => oldData ?? collection,
+  //     );
 
-      editor
-        .chain()
-        .deleteRange(range)
-        .insertContent({
-          type: "collection-node",
-          attrs: {
-            collectionId: collection.id,
-          },
-        })
-        .run();
+  //     editor
+  //       .chain()
+  //       .deleteRange(range)
+  //       .insertContent({
+  //         type: "collection-node",
+  //         attrs: {
+  //           collectionId: collection.id,
+  //         },
+  //       })
+  //       .run();
+  //   },
+  // },
+  {
+    name: "Bullet list",
+    icon: CircleSmall,
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).toggleBulletList().run();
     },
   },
   {

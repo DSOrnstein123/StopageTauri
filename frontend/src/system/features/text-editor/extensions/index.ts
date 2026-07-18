@@ -33,6 +33,8 @@ export const richTextEditorExtensions = [
   ColumnContainer,
   CustomCodeBlock.configure({
     lowlight,
+    enableTabIndentation: true,
+    tabSize: 2,
   }),
   ...extensionRegistry.getAllExtensions(),
 ];

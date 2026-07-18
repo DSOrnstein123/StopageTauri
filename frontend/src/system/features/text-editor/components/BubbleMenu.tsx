@@ -3,7 +3,7 @@ import { Button } from "@system/ui/shadcn/button";
 import { useState } from "react";
 import LinkSuggestion from "./LinkSuggestion";
 import { cn } from "@system/lib/tailwind-css/utils";
-import type { NodeMetadata } from "@system/features/node/schemas/nodeSchema";
+import type { NodeMetadata } from "@system/features/node/shared/schemas";
 
 //TODO: optimize
 //TODO: fixed position
@@ -17,12 +17,13 @@ interface ToolbarButton {
 const CustomBubbleMenu = ({ editor }: { editor: Editor }) => {
   const [showLinkSuggestion, setShowLinkSuggestion] = useState(false);
 
-  const { isBold, isItalic, isStrike } = useEditorState({
+  const { isBold, isItalic, isStrike, isCode } = useEditorState({
     editor: editor,
     selector: ({ editor }) => ({
       isBold: editor.isActive("bold"),
       isItalic: editor.isActive("italic"),
       isStrike: editor.isActive("strike"),
+      isCode: editor.isActive("code"),
     }),
   });
 
@@ -55,6 +56,11 @@ const CustomBubbleMenu = ({ editor }: { editor: Editor }) => {
       label: "Strike",
       highlighted: isStrike,
       action: () => editor.chain().focus().toggleStrike().run(),
+    },
+    {
+      label: "Mark as code",
+      highlighted: isCode,
+      action: () => editor.chain().focus().toggleCode().run(),
     },
     {
       label: "Link",
