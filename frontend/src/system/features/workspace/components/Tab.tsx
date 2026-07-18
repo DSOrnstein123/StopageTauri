@@ -8,6 +8,7 @@ import { systemApi } from "@system/api";
 const Tab = (props: TabProps) => {
   const { tabId, entryCategory } = props;
   const tab = systemApi.workspace.getTab(tabId);
+
   if (!tab) return;
 
   return (

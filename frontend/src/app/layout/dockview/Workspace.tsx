@@ -14,6 +14,7 @@ const Workspace = () => {
         const dockviewWorkspaceHost = new DockviewWorkspaceHost(dockApi);
         systemApi.workspace.setHost(dockviewWorkspaceHost);
         dockviewWorkspaceHost.init();
+        systemApi.workspace.init();
       }}
       components={components}
       tabComponents={tabComponents}

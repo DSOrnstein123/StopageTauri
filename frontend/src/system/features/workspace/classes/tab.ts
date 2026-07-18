@@ -13,8 +13,8 @@ export class Tab {
   private entryFactory = entryFactory;
   private entryRuntime?: EntryRuntime;
 
-  constructor(workspaceHost: WorkspaceHost) {
-    this.id = crypto.randomUUID();
+  constructor(workspaceHost: WorkspaceHost, id?: string) {
+    this.id = id ?? crypto.randomUUID();
     this.tabStore = createTabStore();
     this.workspaceHost = workspaceHost;
   }
@@ -30,6 +30,19 @@ export class Tab {
 
   get entryApi() {
     return this.entryRuntime?.api;
+  }
+
+  static restore(host: WorkspaceHost, id: string, currentEntry: HistoryEntry) {
+    const tab = new Tab(host, id);
+    tab.navigate(currentEntry);
+    return tab;
+  }
+
+  captureState() {
+    return {
+      id: this.id,
+      currentEntry: this.currentEntry,
+    };
   }
 
   setTitle(newTitle: string) {

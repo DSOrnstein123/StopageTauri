@@ -1,9 +1,14 @@
 import type { HistoryEntry } from "@system/features/workspace/types/navigation";
 import type { OpenTabParams } from "@system/features/workspace/types/tabParams";
 import type { WorkspaceHost } from "@system/features/workspace/types/workspaceHost";
-import type { DockviewApi } from "dockview-core";
+import type { DockviewApi, SerializedDockview } from "dockview-core";
 import type { DockviewTabParams } from "./dockviewTabParams";
 import { systemApi } from "@system/api";
+import type { JsonObject } from "@system/types/json";
+import {
+  SerializedDockviewSchema,
+  serializeDockviewLayout,
+} from "./serializedDockviewSchema";
 
 export class DockviewWorkspaceHost implements WorkspaceHost {
   private readonly api: DockviewApi;
@@ -12,7 +17,6 @@ export class DockviewWorkspaceHost implements WorkspaceHost {
   }
 
   init() {
-    this.restoreLayout();
     this.bindEvents();
   }
 
@@ -63,6 +67,11 @@ export class DockviewWorkspaceHost implements WorkspaceHost {
     panel?.api.updateParameters(this.toDockviewParams(entry));
   }
 
+  applyLayout(layout: JsonObject) {
+    const parsed = SerializedDockviewSchema.parse(layout);
+    this.api.fromJSON(parsed as SerializedDockview);
+  }
+
   loadDefaultLayout() {
     this.api.addPanel({
       id: "welcome_panel",
@@ -71,30 +80,17 @@ export class DockviewWorkspaceHost implements WorkspaceHost {
     });
   }
 
-  restoreLayout() {
-    const savedLayout = localStorage.getItem("workspace-layout");
-    if (savedLayout) {
-      try {
-        this.api.fromJSON(JSON.parse(savedLayout));
-      } catch (error) {
-        console.error("Failed to load layout:", error);
-        this.loadDefaultLayout();
-      }
-    } else {
-      this.loadDefaultLayout();
-    }
-  }
-
   bindEvents() {
     this.api.onDidActivePanelChange((e) => {
       if (!e) return;
 
       systemApi.workspace.setActiveTabId(e?.id);
     });
+  }
 
+  onLayoutChange(listener: (layout: JsonObject) => void) {
     this.api.onDidLayoutChange(() => {
-      const currentLayout = this.api.toJSON();
-      localStorage.setItem("workspace-layout", JSON.stringify(currentLayout));
+      listener(serializeDockviewLayout(this.api.toJSON()));
     });
   }
 }
