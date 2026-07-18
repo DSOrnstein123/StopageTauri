@@ -1,27 +1,34 @@
 import { invoke } from "@tauri-apps/api/core";
-import { NodeMetadataListSchema, type NodeDetail } from "../schemas/nodeSchema";
-import type { CreateNodePayload, NodeFilterOptions } from "../types";
+import {
+  NodeDetailSchema,
+  NodeMetadataListSchema,
+  type NodeDetail,
+} from "../schemas";
+import type { CreateNodePayload, NodeListOptions } from "../types";
 import { pluginManager } from "@system/registries/pluginManager";
 import type { NodeType } from "@system/registries/plugin";
 import type { NodeDetailMap } from "@system/registries/node";
 
 export const nodeService = {
-  //TODO: redefine schema
-  getDetail: async (id: string): Promise<NodeDetail> => {
+  getDetail: async (id: string) => {
     try {
       const rawData = await invoke<NodeDetail>("get_node_detail", {
         id: id,
       });
       console.log(rawData);
+      const nodeDetail = NodeDetailSchema.parse(rawData);
       const schema = pluginManager.getNodeSchema(rawData.type);
-      const validData = schema.parse(rawData);
-      return validData;
+      const nodeData = schema.parse(nodeDetail.data);
+      return {
+        ...nodeDetail,
+        data: nodeData,
+      };
     } catch (error) {
       console.error("getDetail failed:", error);
       throw error;
     }
   },
-  getList: async (options?: NodeFilterOptions) => {
+  getList: async (options?: NodeListOptions) => {
     try {
       const rawData = await invoke("get_nodes", { options });
       console.log(rawData);

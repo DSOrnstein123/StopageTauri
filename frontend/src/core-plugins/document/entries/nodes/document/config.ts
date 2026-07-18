@@ -2,15 +2,12 @@ import type { NodeConfig } from "@system/registries/node";
 import DocumentView from "./components/DocumentView";
 import { createDocumentController } from "./controller";
 import handleCreateDocument from "./handlers/handleCreateDocument";
-import { DocumentFileSchema } from "./schemas/documentSchema";
 import createDocumentStore from "./stores/createDocumentStore";
-
-export const TYPE = "document" as const;
-export type TYPE = typeof TYPE;
+import { DataSchema } from "./schemas";
 
 export const config = {
   view: DocumentView,
-  schema: DocumentFileSchema,
+  schema: DataSchema,
   createController: createDocumentController,
   createEntryStore: createDocumentStore,
   actionButtons: [

@@ -4,14 +4,12 @@ import DocumentSidebar from "./entries/nodes/document/components/DocumentTOCAuxi
 import DocumentView from "./entries/nodes/document/components/DocumentView";
 import { PLUGIN_ID } from "./entries/nodes/document/constants";
 import type { PluginManifest } from "@system/registries/plugin";
-import {
-  config as documentConfig,
-  TYPE as DOCUMENT_TYPE,
-} from "./entries/nodes/document/definition";
-import {
-  config as documentTemplateConfig,
-  TYPE as DOCUMENT_TEMPLATE_TYPE,
-} from "./entries/nodes/document-template/definition";
+import { config as documentConfig } from "./entries/nodes/document/config";
+import { config as documentTemplateConfig } from "./entries/nodes/document-template/config";
+import { systemApi } from "@system/api";
+import { DocumentTemplatePickerWidget } from "./widget/document-template-picker/public/components";
+import { TYPE as DOCUMENT_TEMPLATE_TYPE } from "./entries/nodes/document-template/identity";
+import { TYPE as DOCUMENT_TYPE } from "./entries/nodes/document/identity";
 
 export { DocumentView, DocumentSidebar };
 
@@ -36,5 +34,10 @@ export const DocumentPlugin = {
       [DOCUMENT_TYPE]: documentConfig,
       [DOCUMENT_TEMPLATE_TYPE]: documentTemplateConfig,
     },
+  },
+  onRegister: () => {
+    systemApi.plugin.registerSlot("document", {
+      emptyPlaceholder: DocumentTemplatePickerWidget,
+    });
   },
 } satisfies PluginManifest;

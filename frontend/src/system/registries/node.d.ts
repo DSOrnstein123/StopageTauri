@@ -7,6 +7,7 @@ import {
 } from "./plugin";
 import type { z, ZodType } from "zod";
 import type { UnionToIntersection } from "@system/utils/unionToIntersection";
+import type { NodeDetail } from "@system/features/node/shared/schemas";
 
 export type NodeKind = "folder" | "file" | "template";
 
@@ -46,9 +47,14 @@ export type NodeController<N extends NodeType> =
     ? InstanceType<Extract<C, new (...args: unknown[]) => unknown>>
     : never;
 
-export type NodeDetailMap<N extends NodeType> = z.infer<
+export type NodeDataMap<N extends NodeType> = z.infer<
   NodeDetailConfig<N>["schema"]
 >;
+
+export interface NodeDetailMap<N extends NodeType> extends NodeDetail {
+  type: N;
+  data: NodeDataMap<N>;
+}
 
 export type NodeNamePlaceholder<N extends NodeType> =
   NodeDetailConfig<N> extends { namePlaceholder: infer P } ? P : "Untitled";

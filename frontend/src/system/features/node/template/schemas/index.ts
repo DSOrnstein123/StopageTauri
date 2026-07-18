@@ -1,8 +1,5 @@
 import z from "zod";
-import {
-  NodeKindSchema,
-  NodeMetadataSchema,
-} from "../../shared/schemas/nodeSchema";
+import { NodeKindSchema, NodeMetadataSchema } from "../../shared/schemas";
 
 const TemplateMetadataSchema = NodeMetadataSchema.extend({
   kind: z.literal(NodeKindSchema.enum.template),
@@ -14,7 +11,7 @@ type TemplateMetadataList = z.infer<typeof TemplateMetadataListSchema>;
 const TemplateDetailSchema = TemplateMetadataSchema.extend({
   data: z.object({
     defaultName: z.string(),
-    defaultContent: z.record(z.string(), z.unknown()),
+    defaultData: z.record(z.string(), z.unknown()),
   }),
   properties: z.record(z.string(), z.string()),
 });
