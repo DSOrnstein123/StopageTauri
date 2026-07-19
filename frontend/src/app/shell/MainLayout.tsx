@@ -1,7 +1,7 @@
 import LeftSidebar from "@app/shell/LeftSidebar";
 import ActionBar from "@app/shell/sidebar/ActionBar";
 import RightSidebar from "@app/shell/sidebar/RightSidebar";
-import Workspace from "@app/workspace/dockview/Workspace";
+import { DockviewWorkspace } from "@app/workspace/dockview/public";
 import { SplitviewReact, type SplitviewReadyEvent } from "dockview";
 import { Orientation } from "dockview-core";
 
@@ -38,7 +38,7 @@ const MainLayout = () => {
         onReady={onSplitviewReady}
         components={{
           leftDock: LeftSidebar,
-          centerDock: Workspace,
+          centerDock: DockviewWorkspace,
           rightDock: RightSidebar,
         }}
       />

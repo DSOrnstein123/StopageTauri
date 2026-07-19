@@ -21,7 +21,7 @@ const DocumentShell = ({
       editorRef.current?.commands.focus("start");
     }
   };
-
+  //TODO: restyle tab content layout
   return (
     <div className="flex h-full w-full justify-center overflow-auto px-10">
       <div className="relative h-full w-full max-w-187.5">
