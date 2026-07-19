@@ -6,7 +6,7 @@ import "./index.css";
 import "@system/features/text-editor/editor.css";
 import "highlight.js/styles/github-dark.css";
 import "dockview/dist/styles/dockview.css";
-import "@app/layout/dockview/custom-dockview.css";
+import "@app/layout/dockview/dockview.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

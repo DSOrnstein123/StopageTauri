@@ -1,4 +1,4 @@
-import { usePrimarySidebarStore } from "@app/layout/sidebar/primarySidebarStore";
+import { usePrimarySidebarStore } from "@app/shell/sidebar/primarySidebarStore";
 import { cn } from "@system/lib/tailwind-css/utils";
 import type { ExplorerItem } from "../schemas/explorerItemSchema";
 import { systemApi } from "@system/api";

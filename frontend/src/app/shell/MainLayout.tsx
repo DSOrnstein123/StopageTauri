@@ -1,7 +1,7 @@
-import Workspace from "@app/layout/dockview/Workspace";
-import LeftSidebar from "@app/layout/LeftSidebar";
-import ActionBar from "@app/layout/sidebar/ActionBar";
-import RightSidebar from "@app/layout/RightSidebar";
+import LeftSidebar from "@app/shell/LeftSidebar";
+import ActionBar from "@app/shell/sidebar/ActionBar";
+import RightSidebar from "@app/shell/sidebar/RightSidebar";
+import Workspace from "@app/workspace/dockview/Workspace";
 import { SplitviewReact, type SplitviewReadyEvent } from "dockview";
 import { Orientation } from "dockview-core";
 

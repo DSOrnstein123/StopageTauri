@@ -2,13 +2,10 @@ import type { HistoryEntry } from "@system/features/workspace/types/navigation";
 import type { OpenTabParams } from "@system/features/workspace/types/tabParams";
 import type { WorkspaceHost } from "@system/features/workspace/types/workspaceHost";
 import type { DockviewApi, SerializedDockview } from "dockview-core";
-import type { DockviewTabParams } from "./dockviewTabParams";
 import { systemApi } from "@system/api";
 import type { JsonObject } from "@system/types/json";
-import {
-  SerializedDockviewSchema,
-  serializeDockviewLayout,
-} from "./serializedDockviewSchema";
+import { SerializedDockviewSchema, serializeDockviewLayout } from "./schema";
+import type { TabParams } from "./types";
 
 export class DockviewWorkspaceHost implements WorkspaceHost {
   private readonly api: DockviewApi;
@@ -20,9 +17,7 @@ export class DockviewWorkspaceHost implements WorkspaceHost {
     this.bindEvents();
   }
 
-  private toDockviewParams(
-    entry: HistoryEntry | OpenTabParams,
-  ): DockviewTabParams {
+  private toDockviewParams(entry: HistoryEntry | OpenTabParams): TabParams {
     if (entry.entryCategory === "node") {
       return {
         entryCategory: "node",

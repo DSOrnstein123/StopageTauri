@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import DynamicTitle from "./DynamicTitle";
 import { systemApi } from "@system/api";
 
-const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
+const PanelHeader = (props: IDockviewPanelHeaderProps) => {
   const { api, params } = props;
   const isActive = api.isActive;
   const tabMode = params.mode;
@@ -46,4 +46,4 @@ const WorkspaceTab = (props: IDockviewPanelHeaderProps) => {
   );
 };
 
-export default WorkspaceTab;
+export default PanelHeader;
