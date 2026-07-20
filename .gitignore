@@ -15,3 +15,8 @@ target/
 *.log
 
 data/
+
+
+.nx/cache
+.nx/workspace-data
+.nx/migrate-runs
