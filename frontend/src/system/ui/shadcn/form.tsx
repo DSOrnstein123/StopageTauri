@@ -14,7 +14,7 @@ import {
 } from "react-hook-form";
 
 import { cn } from "@system/lib/tailwind-css/utils";
-import { Label } from "@shared/components/shadcn/label";
+import { Label } from "@system/ui/shadcn/label";
 
 const Form = FormProvider;
 

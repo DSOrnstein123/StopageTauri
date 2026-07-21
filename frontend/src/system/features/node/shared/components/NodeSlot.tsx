@@ -1,5 +1,6 @@
 import { systemApi } from "@system/api";
-import type { NodeSlots, NodeType } from "@system/registries/plugin";
+import type { NodeSlots } from "@system/registries/node";
+import type { NodeType } from "@system/registries/plugin";
 import type { ComponentType } from "react";
 
 const NodeSlot = <N extends NodeType, S extends keyof NodeSlots<N> & string>({
