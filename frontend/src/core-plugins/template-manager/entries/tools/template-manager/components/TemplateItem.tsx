@@ -1,5 +1,5 @@
 import { systemApi } from "@system/api";
-import { Card } from "@system/ui/shadcn/card";
+import { Card } from "@system/shared/ui/shadcn/card";
 
 const TemplateItem = ({ id, name }: { id: string; name: string }) => {
   return (

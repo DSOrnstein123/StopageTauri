@@ -1,4 +1,4 @@
-import useCurrentNodeId from "@system/features/workspace/hooks/useCurrentNodeId";
+import useCurrentNodeId from "@system/workbench/tab/hooks/useCurrentNodeId";
 import useContentQuery from "./useGetContentQuery";
 
 const useGetCurrentContentQuery = () => {

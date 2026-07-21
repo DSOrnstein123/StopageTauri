@@ -1,6 +1,6 @@
-import { templateService } from "@system/features/node/template/service";
+import { templateService } from "@system/entry/node/template/service";
 import type { ApplyTemplatePayload } from "@system/features/node/template/types/applyTemplatePayload";
-import type { NodeType } from "@system/registries/plugin";
+import type { NodeType } from "@system/plugin-manager/plugin";
 
 export const templateApi = {
   applyTemplate: <N extends NodeType>(payload: ApplyTemplatePayload) =>

@@ -2,7 +2,7 @@ export * from "./public";
 export { DocumentView };
 import DocumentView from "./entries/nodes/document/components/DocumentView";
 import { PLUGIN_ID } from "./entries/nodes/document/constants";
-import type { PluginManifest } from "@system/registries/plugin";
+import type { PluginManifest } from "@system/plugin-manager/plugin";
 import { config as documentConfig } from "./entries/nodes/document/config";
 import { config as documentTemplateConfig } from "./entries/nodes/document-template/config";
 import { systemApi } from "@system/api";
@@ -10,7 +10,7 @@ import { DocumentTemplatePickerWidget } from "./widget/document-template-picker/
 import { TYPE as DOCUMENT_TEMPLATE_TYPE } from "./entries/nodes/document-template/identity";
 import { TYPE as DOCUMENT_TYPE } from "./entries/nodes/document/identity";
 
-declare module "@system/registries/plugin" {
+declare module "@system/plugin-manager/plugin" {
   interface PluginRegistryMap {
     "core.document": {
       entries: {

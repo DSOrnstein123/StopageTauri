@@ -1,4 +1,4 @@
-import { createEditorStore } from "@system/features/text-editor/stores/createEditorStore";
+import { createEditorStore } from "@system/text-editor/stores/createEditorStore";
 
 const createDocumentStore = createEditorStore;
 

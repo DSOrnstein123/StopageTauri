@@ -14,9 +14,9 @@
   "aliases": {
     "components": "@/components",
     "utils": "@system/lib/tailwind-css",
-    "ui": "@system/ui/shadcn",
+    "ui": "@system/shared/ui/shadcn",
     "lib": "@system/lib/tailwind-css/utils",
-    "hooks": "@system/ui/shadcn"
+    "hooks": "@system/shared/ui/shadcn"
   },
   "registries": {}
 }

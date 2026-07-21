@@ -1,4 +1,4 @@
-import { Button } from "@system/ui/shadcn/button";
+import { Button } from "@system/shared/ui/shadcn/button";
 import { FolderPlus, SortAsc, SortDesc } from "lucide-react";
 import { useState } from "react";
 

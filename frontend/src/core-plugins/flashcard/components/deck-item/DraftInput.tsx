@@ -1,4 +1,4 @@
-import { Input } from "@system/ui/shadcn/input";
+import { Input } from "@system/shared/ui/shadcn/input";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { invoke } from "@tauri-apps/api/core";
 import { useRef } from "react";

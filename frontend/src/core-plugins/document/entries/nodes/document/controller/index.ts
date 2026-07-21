@@ -1,4 +1,4 @@
-import { EditorController } from "@system/features/text-editor/controller";
+import { EditorController } from "@system/text-editor/controller";
 
 class DocumentNodeController extends EditorController {}
 

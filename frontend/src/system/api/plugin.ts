@@ -1,6 +1,6 @@
-import type { NodeType, PluginId } from "@system/registries/plugin";
-import type { NodeSlots } from "@system/registries/node";
-import { pluginManager } from "@system/registries/pluginManager";
+import type { NodeType, PluginId } from "@system/plugin-manager/plugin";
+import type { NodeSlots } from "@system/plugin-manager/node";
+import { pluginManager } from "@system/plugin-manager/pluginManager";
 
 export const pluginApi = {
   getPluginConfigs: () => pluginManager.getPluginConfigs(),

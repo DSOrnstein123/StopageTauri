@@ -1,4 +1,4 @@
-import { Button } from "@system/ui/shadcn/button";
+import { Button } from "@system/shared/ui/shadcn/button";
 
 interface Column {
   type: "text" | "select" | "checkbox";

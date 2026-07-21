@@ -2,8 +2,8 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "./system/config/queryClient";
 import MainLayout from "./app/shell/MainLayout";
-import { TooltipProvider } from "@system/ui/shadcn/tooltip";
-import { pluginManager } from "@system/registries/pluginManager";
+import { TooltipProvider } from "@system/shared/ui/shadcn/tooltip";
+import { pluginManager } from "@system/plugin-manager/pluginManager";
 import { bootstrapPlugin } from "@app/bootstrap";
 
 bootstrapPlugin(pluginManager);

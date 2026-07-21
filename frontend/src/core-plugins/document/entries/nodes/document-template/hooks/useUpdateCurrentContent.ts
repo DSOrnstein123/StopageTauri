@@ -1,7 +1,7 @@
 import { type JSONContent } from "@system/lib/tiptap";
 import { systemApi } from "@system/api";
 import { useCallback } from "react";
-import useCurrentNodeId from "@system/features/workspace/hooks/useCurrentNodeId";
+import useCurrentNodeId from "@system/workbench/tab/hooks/useCurrentNodeId";
 
 //TODO: validate id
 const useUpdateCurrentContent = () => {

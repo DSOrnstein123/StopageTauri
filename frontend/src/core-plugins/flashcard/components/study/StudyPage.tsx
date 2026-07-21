@@ -2,7 +2,7 @@ import {
   Carousel,
   CarouselContent,
   type CarouselApi,
-} from "@system/ui/shadcn/carousel";
+} from "@system/shared/ui/shadcn/carousel";
 import { getRouteApi } from "@tanstack/react-router";
 import CarouselCard from "./CarouselCard";
 import { useState } from "react";

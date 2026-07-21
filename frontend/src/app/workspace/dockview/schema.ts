@@ -1,4 +1,4 @@
-import type { JsonObject } from "@system/types/json";
+import type { JsonObject } from "@system/shared/types/json";
 import z from "zod";
 
 export const SerializedDockviewSchema = z.object({

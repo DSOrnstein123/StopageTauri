@@ -1,7 +1,7 @@
-import Tab from "@system/features/workspace/components/Tab";
+import Tab from "@system/workbench/tab/components/Tab";
 import type { IDockviewPanelProps } from "dockview-core";
 import type { TabParams } from "../types";
-import useWorkspaceStatus from "@system/features/workspace/hooks/useWorkspaceStatus";
+import useWorkspaceStatus from "@system/workbench/workspace/hooks/useWorkspaceStatus";
 
 const TabWrapper = (props: IDockviewPanelProps<TabParams>) => {
   const workspaceStatus = useWorkspaceStatus();

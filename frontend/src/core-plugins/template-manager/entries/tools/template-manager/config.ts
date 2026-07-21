@@ -1,6 +1,6 @@
 import TemplateManager from "./components/TemplateManager";
 import handleOpenTemplateManager from "./handlers/handleOpenTemplateManager";
-import type { ToolConfig } from "@system/registries/tool";
+import type { ToolConfig } from "@system/plugin-manager/tool";
 
 export const templateManagerConfig = {
   view: TemplateManager,

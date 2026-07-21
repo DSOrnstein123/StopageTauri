@@ -2,7 +2,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import Dashboard from "./Dashboard";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { decksFetchQueryOption } from "../../hooks/useDecksFetch";
-import { Button } from "@system/ui/shadcn/button";
+import { Button } from "@system/shared/ui/shadcn/button";
 
 const route = getRouteApi("/(features)/flashcards/$deckId");
 

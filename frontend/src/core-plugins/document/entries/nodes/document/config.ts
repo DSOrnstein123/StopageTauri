@@ -1,4 +1,4 @@
-import type { NodeConfig } from "@system/registries/node";
+import type { NodeConfig } from "@system/plugin-manager/node";
 import DocumentView from "./components/DocumentView";
 import { createDocumentController } from "./controller";
 import handleCreateDocument from "./handlers/handleCreateDocument";

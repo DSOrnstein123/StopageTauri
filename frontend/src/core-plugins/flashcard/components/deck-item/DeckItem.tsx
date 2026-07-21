@@ -4,8 +4,8 @@ import { useParams } from "@tanstack/react-router";
 import DeckItemHeader from "./DeckItemHeader";
 import DeckItemChildren from "./DeckItemChildren";
 import type { DeckNode } from "../../types/flashcard.types";
-import { Separator } from "@system/ui/shadcn/separator";
-import { Card } from "@system/ui/shadcn/card";
+import { Separator } from "@system/shared/ui/shadcn/separator";
+import { Card } from "@system/shared/ui/shadcn/card";
 
 const DeckItem = ({
   data,

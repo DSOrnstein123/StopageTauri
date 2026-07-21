@@ -1,4 +1,4 @@
-import useCurrentNodeId from "@system/features/workspace/hooks/useCurrentNodeId";
+import useCurrentNodeId from "@system/workbench/tab/hooks/useCurrentNodeId";
 import useApplyTemplateMutation from "../hooks/useApplyTemplateMutation";
 import useGetListQuery from "../hooks/useGetListQuery";
 

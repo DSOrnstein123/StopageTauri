@@ -1,4 +1,4 @@
-import type { NodeType } from "@system/registries/plugin";
+import type { NodeType } from "@system/plugin-manager/plugin";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

@@ -1,4 +1,4 @@
-import { Button } from "@system/ui/shadcn/button";
+import { Button } from "@system/shared/ui/shadcn/button";
 import useDeckTreeStore from "../stores/deckTreeStore";
 import SearchDecksBar from "./SearchDecksBar";
 import DecksList from "./views/DecksList";

@@ -1,5 +1,5 @@
 import type { CreateNodePayload } from "@system/features/node/shared/types";
-import type { PluginId } from "@system/registries/plugin";
+import type { PluginId } from "@system/plugin-manager/plugin";
 
 export const PLUGIN_ID: PluginId = "core.document" as const;
 export const TYPE = "document" as const;

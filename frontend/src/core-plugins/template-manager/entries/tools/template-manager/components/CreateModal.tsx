@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from "@system/ui/shadcn/dialog";
+} from "@system/shared/ui/shadcn/dialog";
 import { Controller } from "react-hook-form";
 import {
   Field,
@@ -12,10 +12,10 @@ import {
   FieldGroup,
   FieldLabel,
   FieldSet,
-} from "@system/ui/shadcn/field";
-import { Input } from "@system/ui/shadcn/input";
-import { Checkbox } from "@system/ui/shadcn/checkbox";
-import { Button } from "@system/ui/shadcn/button";
+} from "@system/shared/ui/shadcn/field";
+import { Input } from "@system/shared/ui/shadcn/input";
+import { Checkbox } from "@system/shared/ui/shadcn/checkbox";
+import { Button } from "@system/shared/ui/shadcn/button";
 import useCreateTemplateForm from "../hooks/useCreateTemplateForm";
 
 const CreateModal = ({

@@ -1,5 +1,5 @@
 import DocumentTemplateView from "./components/DocumentTemplateView";
-import type { NodeConfig } from "@system/registries/node";
+import type { NodeConfig } from "@system/plugin-manager/node";
 import { createDocumentTemplateController } from "./controller";
 import { DataSchema } from "./schemas";
 

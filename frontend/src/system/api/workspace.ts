@@ -1,7 +1,7 @@
-import { type WorkspaceHost } from "@system/features/workspace/types/workspaceHost";
-import type { OpenTabParams } from "@system/features/workspace/types/tabParams";
-import { workspaceManager } from "@system/features/workspace/classes/workspaceManager";
-import type { EntryType } from "@system/registries/plugin";
+import { type WorkspaceHost } from "@system/workbench/workspace/types/workspaceHost";
+import type { OpenTabParams } from "@system/workbench/workspace/types/tabParams";
+import { workspaceManager } from "@system/workbench/workspace/workspaceManager";
+import type { EntryType } from "@system/plugin-manager/plugin";
 
 export const workspaceApi = {
   init: () => workspaceManager.init(),

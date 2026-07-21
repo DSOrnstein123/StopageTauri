@@ -1,5 +1,5 @@
-import { Button } from "@system/ui/shadcn/button";
-import Icon from "@system/ui/icon/Icon";
+import { Button } from "@system/shared/ui/shadcn/button";
+import Icon from "@system/shared/ui/icon/Icon";
 import SettingsButton from "./SettingsButton";
 import { systemApi } from "@system/api";
 

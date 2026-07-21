@@ -1,5 +1,5 @@
-import Modal from "@system/features/settings/components/Modal";
-import { Button } from "@system/ui/shadcn/button";
+import Modal from "@system/settings/components/Modal";
+import { Button } from "@system/shared/ui/shadcn/button";
 import { Settings } from "lucide-react";
 
 const SettingsButton = ({ className }: { className: string }) => {

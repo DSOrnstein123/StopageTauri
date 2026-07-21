@@ -1,9 +1,9 @@
-import type { PluginManifest } from "@system/registries/plugin";
+import type { PluginManifest } from "@system/plugin-manager/plugin";
 import { PLUGIN_ID, TOOLS } from "./constants";
 import useGetTemplatesQuery from "./entries/tools/template-manager/hooks/useGetTemplatesQuery";
 import { templateManagerConfig } from "./entries/tools/template-manager/config";
 
-declare module "@system/registries/plugin" {
+declare module "@system/plugin-manager/plugin" {
   interface PluginRegistryMap {
     "core.template-manager": {
       api: {

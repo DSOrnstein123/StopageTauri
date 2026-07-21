@@ -1,5 +1,5 @@
 import useGetNameQuery from "./useGetNameQuery";
-import useCurrentNodeId from "@system/features/workspace/hooks/useCurrentNodeId";
+import useCurrentNodeId from "@system/workbench/tab/hooks/useCurrentNodeId";
 
 const useGetCurrentNameQuery = () => {
   const id = useCurrentNodeId();
