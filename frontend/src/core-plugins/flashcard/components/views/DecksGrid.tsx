@@ -1,21 +1,21 @@
-import DeckItem from "../deck-item/DeckItem";
-import { useDecksFetch } from "../../../../../features/flashcards/hooks/useDecksFetch";
-// import useDeckFiltersStore from "../../stores/deckFiltersStore";
+// import { useDecksFetch } from "@core-plugins/flashcard/hooks/useDecksFetch";
+// import DeckItem from "../deck-item/DeckItem";
+// // import useDeckFiltersStore from "../../stores/deckFiltersStore";
 
-const DecksGrid = () => {
-  const { data: decks = [] } = useDecksFetch();
+// const DecksGrid = () => {
+//   const { data: decks = [] } = useDecksFetch();
 
-  // const { decks = [] } = data || {};
-  // const page = useDeckFiltersStore((state) => state.page);
-  // const setPage = useDeckFiltersStore((state) => state.setPage);
+//   // const { decks = [] } = data || {};
+//   // const page = useDeckFiltersStore((state) => state.page);
+//   // const setPage = useDeckFiltersStore((state) => state.setPage);
 
-  return (
-    <div className="grid grid-cols-2 gap-4">
-      {decks.map((deck) => (
-        <DeckItem data={deck} key={deck.id} />
-      ))}
-    </div>
-  );
-};
+//   return (
+//     <div className="grid grid-cols-2 gap-4">
+//       {decks.map((deck) => (
+//         <DeckItem data={deck} key={deck.id} />
+//       ))}
+//     </div>
+//   );
+// };
 
-export default DecksGrid;
+// export default DecksGrid;

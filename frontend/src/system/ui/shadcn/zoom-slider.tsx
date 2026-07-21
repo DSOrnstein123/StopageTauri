@@ -10,7 +10,7 @@ import {
   type PanelProps,
 } from "@xyflow/react";
 
-import { Slider } from "@shared/components/shadcn/slider";
+import { Slider } from "@system/ui/shadcn/slider";
 import { Button } from "@system/ui/shadcn/button";
 import { cn } from "@system/lib/tailwind-css/utils";
 

@@ -1,6 +1,5 @@
 export * from "./public";
-
-import DocumentSidebar from "./entries/nodes/document/components/DocumentTOCAuxiliary";
+export { DocumentView };
 import DocumentView from "./entries/nodes/document/components/DocumentView";
 import { PLUGIN_ID } from "./entries/nodes/document/constants";
 import type { PluginManifest } from "@system/registries/plugin";
@@ -10,8 +9,6 @@ import { systemApi } from "@system/api";
 import { DocumentTemplatePickerWidget } from "./widget/document-template-picker/public/components";
 import { TYPE as DOCUMENT_TEMPLATE_TYPE } from "./entries/nodes/document-template/identity";
 import { TYPE as DOCUMENT_TYPE } from "./entries/nodes/document/identity";
-
-export { DocumentView, DocumentSidebar };
 
 declare module "@system/registries/plugin" {
   interface PluginRegistryMap {

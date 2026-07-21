@@ -1,11 +1,9 @@
 import { Search } from "lucide-react";
-
 import { cn } from "@system/lib/tailwind-css/utils";
-
 import { useEffect, useState } from "react";
-import useDebounce from "@/shared/hooks/useDebounce";
-import { Input } from "@/shared/components/shadcn/input";
+import { Input } from "@system/ui/shadcn/input";
 import { useDeckFiltersStore } from "../stores/deckFiltersStore";
+import useDebounce from "@system/hooks/useDebounce";
 
 const SearchDecksBar = () => {
   const [query, setQuery] = useState("");

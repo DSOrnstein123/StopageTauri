@@ -1,14 +1,14 @@
+import type { NodeType } from "@system/registries/plugin";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { SidebarType } from "./sidebarComponentList";
 
 interface RightSidebarState {
   width: number;
-  type: SidebarType;
+  type: NodeType | null;
   toggle: boolean;
 
   setWidth: (width: number) => void;
-  setType: (type: SidebarType) => void;
+  setType: (type: NodeType) => void;
 }
 
 const useRightSidebarStore = create<
@@ -19,7 +19,7 @@ const useRightSidebarStore = create<
     (set) => ({
       width: 100,
       toggle: false,
-      type: "none",
+      type: null,
 
       setWidth: (newWidth) => set({ width: newWidth }),
       setType: (type) => set({ type: type }),

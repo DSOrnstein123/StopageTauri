@@ -1,0 +1,38 @@
+// import { Fragment } from "react";
+
+// import {
+//   Breadcrumb,
+//   BreadcrumbList,
+//   BreadcrumbItem,
+//   BreadcrumbSeparator,
+//   BreadcrumbLink,
+// } from "@system/ui/shadcn/breadcrumb";
+// import capitalize from "@system/utils/capitalize";
+
+// const AppBreadCrumb = () => {
+//   const matches = useMatches();
+
+//   const crumbs = [];
+
+//   return (
+//     <Breadcrumb>
+//       <BreadcrumbList>
+//         {crumbs.map((crumb, index) => (
+//           <Fragment key={index}>
+//             <BreadcrumbItem>
+//               <BreadcrumbLink className="text-base/tight" asChild>
+//                 <Link to={crumb.path}>
+//                   {crumb.label ? capitalize(crumb.label) : "Unknown"}
+//                 </Link>
+//               </BreadcrumbLink>
+//             </BreadcrumbItem>
+
+//             {index < crumbs.length - 1 && <BreadcrumbSeparator />}
+//           </Fragment>
+//         ))}
+//       </BreadcrumbList>
+//     </Breadcrumb>
+//   );
+// };
+
+// export { AppBreadCrumb as Breadcrumb };

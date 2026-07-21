@@ -2,11 +2,11 @@ import { useQueryClient } from "@tanstack/react-query";
 import { nodeService } from "@system/features/node/shared/services";
 import useCurrentNodeId from "@system/features/workspace/hooks/useCurrentNodeId";
 import { nodeKeys } from "@system/features/node/shared/keys";
-import type { DocumentTemplateDetail } from "../schemas";
 import { TEMPLATE_CONFIG } from "../../../../../template-manager/constants";
 import useOptimisticRename from "@system/hooks/useOptimisticRename";
 import useGetCurrentNameQuery from "./useGetCurrentNameQuery";
 import type { TemplateMetadataList } from "@system/features/node/template/schemas";
+import type { NodeDetail } from "../types";
 
 const useRename = () => {
   const id = useCurrentNodeId();
@@ -22,7 +22,7 @@ const useRename = () => {
             node.id == id ? { ...node, name: newName } : node,
           ),
       );
-      queryClient.setQueryData<DocumentTemplateDetail>(
+      queryClient.setQueryData<NodeDetail>(
         nodeKeys.detail(id),
         (data) =>
           data && {

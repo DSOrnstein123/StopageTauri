@@ -1,11 +1,11 @@
-import { Card } from "@/shared/components/shadcn/card";
 import { useState } from "react";
 import { cn } from "@system/lib/tailwind-css/utils";
 import { useParams } from "@tanstack/react-router";
 import DeckItemHeader from "./DeckItemHeader";
 import DeckItemChildren from "./DeckItemChildren";
-import { Separator } from "@/shared/components/shadcn/separator";
 import type { DeckNode } from "../../types/flashcard.types";
+import { Separator } from "@system/ui/shadcn/separator";
+import { Card } from "@system/ui/shadcn/card";
 
 const DeckItem = ({
   data,

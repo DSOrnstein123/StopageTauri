@@ -1,5 +1,5 @@
-import type { NodeFilterOptions } from "@system/features/node/types";
+import type { NodeListOptions } from "@system/features/node/shared/types";
 
-export const EXPLORER_CONFIG: NodeFilterOptions = {
+export const EXPLORER_CONFIG: NodeListOptions = {
   includeKinds: ["folder", "file"],
 };

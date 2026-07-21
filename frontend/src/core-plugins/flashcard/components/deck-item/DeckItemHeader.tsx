@@ -1,4 +1,4 @@
-import { CardHeader, CardTitle } from "@/shared/components/shadcn/card";
+import { CardHeader, CardTitle } from "@system/ui/shadcn/card";
 import { cn } from "@system/lib/tailwind-css/utils";
 import { ChevronRight } from "lucide-react";
 import DraftInput from "./DraftInput";

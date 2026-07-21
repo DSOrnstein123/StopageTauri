@@ -1,6 +1,6 @@
-import { Button } from "@/shared/components/shadcn/button";
-import { Separator } from "@/shared/components/shadcn/separator";
-import capitalize from "@/shared/utils/capitalize";
+import { Button } from "@system/ui/shadcn/button";
+import { Separator } from "@system/ui/shadcn/separator";
+import capitalize from "@system/utils/capitalize";
 
 const REVIEW_GRADES = ["again", "hard", "good", "easy"] as const;
 // type ReviewGrade = (typeof REVIEW_GRADES)[number];

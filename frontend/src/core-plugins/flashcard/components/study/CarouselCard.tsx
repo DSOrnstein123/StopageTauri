@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/shared/components/shadcn/card";
-import { CarouselItem } from "@/shared/components/shadcn/carousel";
+import { Card, CardContent } from "@system/ui/shadcn/card";
+import { CarouselItem } from "@system/ui/shadcn/carousel";
 import type { Card as CardType } from "../../schemas/cardSchema";
 
 const CarouselCard = ({

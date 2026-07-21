@@ -1,11 +1,11 @@
-import { Button } from "@/shared/components/shadcn/button";
+import { Button } from "@system/ui/shadcn/button";
 import useDeckTreeStore from "../stores/deckTreeStore";
 import SearchDecksBar from "./SearchDecksBar";
 import DecksList from "./views/DecksList";
 
 const FlashCardsSidebar = () => {
   const setDraft = useDeckTreeStore((state) => state.setDraft);
-  const focusDeck = useDeckTreeStore((state) => state.treeFocusId);
+  // const focusDeck = useDeckTreeStore((state) => state.treeFocusId);
 
   return (
     <div className="pb-2">

@@ -1,4 +1,4 @@
-import { Button } from "@/shared/components/shadcn/button";
+import { Button } from "@system/ui/shadcn/button";
 
 interface Column {
   type: "text" | "select" | "checkbox";
@@ -18,8 +18,6 @@ const cols: Column[] = [
     width: 200,
   },
 ];
-
-const rows = [];
 
 const Table = () => {
   return (

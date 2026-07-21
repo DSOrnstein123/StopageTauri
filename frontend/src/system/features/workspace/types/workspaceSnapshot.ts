@@ -1,4 +1,4 @@
-import type { JsonValue } from "@system/types/json";
+import type { JsonObject } from "@system/types/json";
 import type { HistoryEntry } from "./navigation";
 
 export interface WorkspaceStateSnapshot {
@@ -11,5 +11,5 @@ export interface WorkspaceStateSnapshot {
 
 export interface WorkspaceSnapshot {
   state: WorkspaceStateSnapshot;
-  layout: JsonValue;
+  layout: JsonObject;
 }
