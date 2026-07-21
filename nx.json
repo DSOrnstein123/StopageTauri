@@ -8,6 +8,16 @@
       "options": {
         "targetName": "lint"
       }
+    },
+    {
+      "plugin": "@nx/vite/plugin",
+      "options": {
+        "buildTargetName": "build",
+        "previewTargetName": "preview",
+        "devTargetName": "dev",
+        "serveStaticTargetName": "serve-static",
+        "typecheckTargetName": "typecheck"
+      }
     }
   ]
 }

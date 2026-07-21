@@ -11,10 +11,12 @@
   "type": "commonjs",
   "devDependencies": {
     "@nx/eslint": "23.1.0",
-    "@nx/vite": "^23.1.0",
     "@tauri-apps/cli": "^2.9.6",
     "eslint": "^9.8.0",
     "nx": "23.1.0"
   },
-  "nx": {}
+  "nx": {},
+  "dependencies": {
+    "@nx/vite": "^23.1.0"
+  }
 }
