@@ -18,5 +18,8 @@
   "nx": {},
   "dependencies": {
     "@nx/vite": "^23.1.0"
+  },
+  "optionalDependencies": {
+    "@rolldown/binding-win32-x64-msvc": "1.1.5"
   }
 }
