@@ -1,8 +1,8 @@
 import TabHeader from "@system/workbench/tab/components/TabHeader";
 import TabProvider from "@system/workbench/tab/context/TabProvider";
-import type { TabProps } from "../../workspace/types/tabProps";
 import { systemApi } from "@system/api";
 import TabContent from "./TabContent";
+import type { TabProps } from "../types/tabProps";
 
 const Tab = (props: TabProps) => {
   const { tabId } = props;

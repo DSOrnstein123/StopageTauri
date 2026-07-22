@@ -1,5 +1,5 @@
 import type { IconData } from "@system/shared/schemas/iconData";
-import type { NodeConfig } from "./node";
+import type { NodeConfig } from "../entry/categories/node/core/types";
 import type { ToolConfig } from "./tool";
 import type { ComponentType } from "react";
 import type { BaseController } from "@system/workbench/tab/classes/baseController";

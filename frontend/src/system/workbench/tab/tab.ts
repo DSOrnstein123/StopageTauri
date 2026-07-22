@@ -3,8 +3,8 @@ import type { HistoryEntry } from "./types/navigation";
 import type { WorkspaceHost } from "../workspace/types/workspaceHost";
 import type { EntryType } from "@system/plugin-manager/plugin";
 import { resolveEntryType } from "../workspace/utils/resolveEntryType";
-import { entryFactory } from "@system/plugin-manager/entryFactory";
-import { EntryRuntime } from "@system/plugin-manager/entryRuntime";
+import { EntryRuntime } from "@system/entry/core/entryRuntime";
+import { entryFactory } from "@system/entry/core/entryFactory";
 
 export class Tab {
   readonly id: string;

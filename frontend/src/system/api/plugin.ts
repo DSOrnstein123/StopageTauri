@@ -1,5 +1,5 @@
 import type { NodeType, PluginId } from "@system/plugin-manager/plugin";
-import type { NodeSlots } from "@system/plugin-manager/node";
+import type { NodeSlots } from "@system/entry/categories/node/core/types";
 import { pluginManager } from "@system/plugin-manager/pluginManager";
 
 export const pluginApi = {

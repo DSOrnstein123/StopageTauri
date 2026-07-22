@@ -3,7 +3,7 @@ import type {
   NodeNamePlaceholder,
   NodeSlots,
   RegisteredNodeConfig,
-} from "./node";
+} from "../entry/categories/node/core/types";
 import type {
   Plugin,
   PluginId,

@@ -4,7 +4,7 @@ import type {
   CreateNodePayload,
   NodeListOptions,
 } from "@system/features/node/shared/types";
-import type { NodeDetailMap } from "@system/plugin-manager/node";
+import type { NodeDetailMap } from "@system/entry/categories/node/core/types";
 import type { NodeType } from "@system/plugin-manager/plugin";
 import { templateApi } from "./template";
 
