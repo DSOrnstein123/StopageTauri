@@ -5,6 +5,7 @@ import type { ComponentType } from "react";
 import type { BaseController } from "@system/workbench/tab/classes/baseController";
 import type { StoreApi } from "zustand";
 import type { UnionToIntersection } from "@system/shared/utils/unionToIntersection";
+import type { AuxiliaryConfig } from "@system/entry/auxiliary/auxiliary";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PluginRegistryMap {}
@@ -29,6 +30,7 @@ interface PluginConfig {
     nodes?: Record<string, NodeConfig>;
     tools?: Record<string, ToolConfig>;
   };
+  dependencies?: PluginId[];
 }
 
 interface PluginApi {
@@ -43,6 +45,7 @@ export interface BaseEntryConfig {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   createEntryStore?: () => StoreApi<any>;
   slots?: Record<string, Slot>;
+  auxiliary?: Record<string, AuxiliaryConfig>;
 }
 
 type ExtractPluginEntries<P> = P extends { entries: infer E } ? E : never;

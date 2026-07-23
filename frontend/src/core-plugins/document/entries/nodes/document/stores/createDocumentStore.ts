@@ -1,4 +1,4 @@
-import { createEditorStore } from "@system/text-editor/stores/createEditorStore";
+import { createEditorStore } from "@core-plugins/block-based-editor/provider/stores/createEditorStore";
 
 const createDocumentStore = createEditorStore;
 

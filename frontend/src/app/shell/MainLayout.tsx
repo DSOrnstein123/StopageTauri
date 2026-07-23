@@ -1,6 +1,6 @@
 import LeftSidebar from "@app/shell/LeftSidebar";
 import ActionBar from "@app/shell/sidebar/ActionBar";
-import RightSidebar from "@app/shell/sidebar/RightSidebar";
+import RightSidebar from "./RightSidebar";
 import { DockviewWorkspace } from "@app/workspace/dockview/public";
 import { SplitviewReact, type SplitviewReadyEvent } from "dockview";
 import { Orientation } from "dockview-core";

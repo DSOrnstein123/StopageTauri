@@ -1,5 +1,5 @@
 import { pluginManager } from "@system/plugin-manager/pluginManager";
-import type { NodeDetail } from "../../../categories/node/core/schema";
+import type { NodeDetail } from "../schema";
 
 const NodeContent = ({ data }: { data: NodeDetail }) => {
   /* eslint-disable react-hooks/static-components */

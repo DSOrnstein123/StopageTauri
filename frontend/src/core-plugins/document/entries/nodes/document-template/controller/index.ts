@@ -1,4 +1,4 @@
-import { EditorController } from "@system/text-editor/controller";
+import { EditorController } from "@core-plugins/block-based-editor/provider/controller";
 
 class DocumentTemplateNodeController extends EditorController {}
 

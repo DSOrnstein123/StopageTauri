@@ -1,11 +1,11 @@
 import type { HistoryEntry } from "@system/workbench/tab/types/navigation";
-import type { OpenTabParams } from "@system/workbench/workspace/types/tabParams";
 import type { WorkspaceHost } from "@system/workbench/workspace/types/workspaceHost";
 import type { DockviewApi, SerializedDockview } from "dockview-core";
 import { systemApi } from "@system/api";
 import type { JsonObject } from "@system/shared/types/json";
 import { SerializedDockviewSchema, serializeDockviewLayout } from "./schema";
 import type { TabParams } from "./types";
+import type { OpenTabParams } from "@system/workbench/tab/types/tabParams";
 
 export class DockviewWorkspaceHost implements WorkspaceHost {
   private readonly api: DockviewApi;

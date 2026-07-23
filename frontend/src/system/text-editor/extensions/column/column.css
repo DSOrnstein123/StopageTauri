@@ -1,6 +1,0 @@
-.column-container-wrapper .column-content-core > div[data-node-view-content-react] {
-  display: grid;
-  width: 100%;
-  gap: 1rem; 
-  grid-template-columns: var(--col-left) var(--col-right);
-}

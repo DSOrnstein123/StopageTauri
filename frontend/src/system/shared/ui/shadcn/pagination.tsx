@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@system/lib/tailwind-css/utils";
-import { Button, buttonVariants } from "@shared/components/shadcn/button";
+import { buttonVariants, type Button } from "./button";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (

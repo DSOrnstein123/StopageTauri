@@ -1,4 +1,4 @@
-import type { NodeListOptions } from "../types";
+import type { NodeListOptions } from "./types/payload";
 
 export const nodeKeys = {
   all: ["nodes"] as const,

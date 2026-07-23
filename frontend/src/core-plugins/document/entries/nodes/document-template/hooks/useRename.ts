@@ -7,6 +7,7 @@ import useOptimisticRename from "@system/shared/hooks/useOptimisticRename";
 import useGetCurrentNameQuery from "./useGetCurrentNameQuery";
 import type { NodeDetail } from "../types";
 import type { TemplateMetadataList } from "@system/entry/categories/node/kinds/template/schema";
+import type { TYPE } from "../identity";
 
 const useRename = () => {
   const id = useCurrentNodeId();
@@ -35,7 +36,7 @@ const useRename = () => {
       );
     },
     onCommit: async (newName) => {
-      await nodeService.patchData<"document-template">(id, {
+      await nodeService.patchData<TYPE>(id, {
         defaultName: newName,
       });
     },

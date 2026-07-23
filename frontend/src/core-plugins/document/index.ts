@@ -3,14 +3,10 @@ export { DocumentView };
 import DocumentView from "./entries/nodes/document/components/DocumentView";
 import { PLUGIN_ID } from "./entries/nodes/document/constants";
 import type { PluginManifest } from "@system/plugin-manager/plugin";
-import {
-  TYPE as DOCUMENT_TYPE,
-  config as documentConfig,
-} from "./entries/nodes/document/definition";
-import {
-  TYPE as DOCUMENT_TEMPLATE_TYPE,
-  config as documentTemplateConfig,
-} from "./entries/nodes/document-template/definition";
+import { config as documentConfig } from "./entries/nodes/document/config";
+import { TYPE as DOCUMENT_TYPE } from "./entries/nodes/document/identity";
+import { config as documentTemplateConfig } from "./entries/nodes/document-template/config";
+import { TYPE as DOCUMENT_TEMPLATE_TYPE } from "./entries/nodes/document-template/identity";
 import { systemApi } from "@system/api";
 import { DocumentTemplatePickerWidget } from "./widget/document-template-picker/public/components";
 

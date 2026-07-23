@@ -1,7 +1,7 @@
 import { type WorkspaceHost } from "@system/workbench/workspace/types/workspaceHost";
-import type { OpenTabParams } from "@system/workbench/workspace/types/tabParams";
 import { workspaceManager } from "@system/workbench/workspace/workspaceManager";
 import type { EntryType } from "@system/plugin-manager/plugin";
+import type { OpenTabParams } from "@system/workbench/tab/types/tabParams";
 
 export const workspaceApi = {
   init: () => workspaceManager.init(),

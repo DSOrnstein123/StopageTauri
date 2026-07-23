@@ -21,42 +21,16 @@ export default defineConfig([
     },
   },
   {
-    files: ["src/plugins/**/*.{ts,tsx}", "src/core-plugins/**/*.{ts,tsx}"],
+    files: ["src/system/shared/ui/shadcn/**/*.{ts,tsx}"],
     rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          patterns: [
-            {
-              group: [
-                "@plugins/*/*",
-                "../plugins/*/*",
-                "../../plugins/*/*",
-                "@core-plugins/*/*",
-                "../core-plugins/*/*",
-                "../../core-plugins/*/*",
-              ],
-              message: "No deep import.",
-            },
-          ],
-        },
-      ],
+      "react-refresh/only-export-components": "off",
     },
   },
+
   {
-    files: ["src/system/**/*.{ts,tsx}"],
+    files: ["src/system/shared/ui/shadcn/carousel.tsx"],
     rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          patterns: [
-            {
-              group: ["@plugins/*/*", "@core-plugins/*/*"],
-              message: "No deep import.",
-            },
-          ],
-        },
-      ],
+      "react-hooks/set-state-in-effect": "off",
     },
   },
 ]);

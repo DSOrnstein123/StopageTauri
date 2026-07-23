@@ -1,6 +1,6 @@
 import { getNodeDetailQueryOptions } from "@system/entry/categories/node/core/hooks/useGetNodeDetailQuery";
 import { useQuery } from "@tanstack/react-query";
-import type { TYPE } from "../definition";
+import type { TYPE } from "../identity";
 
 const useGetContentQuery = (id: string) => {
   return useQuery({

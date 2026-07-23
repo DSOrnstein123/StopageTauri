@@ -1,6 +1,6 @@
+import type { TabProps } from "../types/tabProps";
 import NodeTab from "./NodeTab";
 import ToolTab from "./ToolTab";
-import type { TabProps } from "../../workspace/types/tabProps";
 
 const TabContent = ({
   tabProps,

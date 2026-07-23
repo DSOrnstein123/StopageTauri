@@ -5,9 +5,6 @@ import handleCreateDocument from "./handlers/handleCreateDocument";
 import createDocumentStore from "./stores/createDocumentStore";
 import { DataSchema } from "./schemas";
 
-export const TYPE = "document" as const;
-export type TYPE = typeof TYPE;
-
 export const config = {
   view: DocumentView,
   schema: DataSchema,

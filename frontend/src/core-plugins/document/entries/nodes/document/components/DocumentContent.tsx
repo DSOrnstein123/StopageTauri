@@ -1,5 +1,5 @@
 import EmptyPlaceholderSlot from "./EmptyPlaceholderSlot";
-import RichTextEditorView from "@system/text-editor/components/RichTextEditorView";
+import RichTextEditorView from "@core-plugins/block-based-editor/provider/components/RichTextEditorView";
 import { type JSONContent } from "@system/lib/tiptap";
 import useGetCurrentContentQuery from "../hooks/useGetCurrentContentQuery";
 import useUpdateCurrentContent from "../hooks/useUpdateCurrentContent";
