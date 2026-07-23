@@ -1,0 +1,10 @@
+.prose-mirror-container a[data-type="note"] {
+  color: purple;
+  border-bottom: 1px dashed purple;
+  cursor: pointer;
+}
+
+.prose-mirror-container a:not([data-type="note"]) {
+  color: blue;
+  text-decoration: underline;
+}
