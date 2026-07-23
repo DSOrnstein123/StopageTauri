@@ -1,12 +1,12 @@
-import { nodeKeys } from "@system/features/node/shared/keys";
-import { nodeService } from "@system/features/node/shared/services";
-import type {
-  CreateNodePayload,
-  NodeListOptions,
-} from "@system/features/node/shared/types";
+import { nodeKeys } from "@system/entry/categories/node/core/keys";
 import type { NodeDetailMap } from "@system/entry/categories/node/core/types";
 import type { NodeType } from "@system/plugin-manager/plugin";
 import { templateApi } from "./template";
+import { nodeService } from "@system/entry/categories/node/core/service";
+import type {
+  CreateNodePayload,
+  NodeListOptions,
+} from "@system/entry/categories/node/core/types/payload";
 
 export const nodeApi = {
   keys: nodeKeys,

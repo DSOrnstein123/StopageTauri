@@ -1,4 +1,4 @@
-import NodeSlot from "@system/features/node/shared/components/NodeSlot";
+import NodeSlot from "@system/entry/categories/node/core/components/NodeSlot";
 
 const EmptyPlaceholderSlot = () => {
   return <NodeSlot nodeType="document" slot="emptyPlaceholder" />;

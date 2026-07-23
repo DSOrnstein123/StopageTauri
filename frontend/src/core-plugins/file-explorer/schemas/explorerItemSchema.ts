@@ -1,5 +1,5 @@
-import { FileMetadataSchema } from "@system/features/node/file/schemas";
-import { FolderMetadataSchema } from "@system/features/node/folder/schemas";
+import { FileMetadataSchema } from "@system/entry/categories/node/kinds/file/schema";
+import { FolderMetadataSchema } from "@system/entry/categories/node/kinds/folder/schema";
 import z from "zod";
 
 const ExplorerItemSchema = z.discriminatedUnion("kind", [

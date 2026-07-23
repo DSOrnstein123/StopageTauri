@@ -1,6 +1,6 @@
 import { Editor } from "@system/lib/tiptap";
 import type { EditorStore } from "../stores/createEditorStore";
-import { NodeStoreController } from "@system/features/node/shared/controller";
+import { NodeStoreController } from "@system/entry/categories/node/core/controller";
 
 export class EditorController extends NodeStoreController<EditorStore> {
   private editor: Editor | null = null;

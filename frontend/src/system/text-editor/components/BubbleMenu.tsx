@@ -3,7 +3,7 @@ import { Button } from "@system/shared/ui/shadcn/button";
 import { useState } from "react";
 import LinkSuggestion from "./LinkSuggestion";
 import { cn } from "@system/lib/tailwind-css/utils";
-import type { NodeMetadata } from "@system/features/node/shared/schemas";
+import type { NodeMetadata } from "@system/entry/categories/node/core/schema";
 
 //TODO: optimize
 //TODO: fixed position

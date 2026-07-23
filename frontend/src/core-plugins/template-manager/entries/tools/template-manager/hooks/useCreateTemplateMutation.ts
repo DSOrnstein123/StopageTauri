@@ -1,7 +1,7 @@
 import { systemApi } from "@system/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { TEMPLATE_CONFIG } from "../../../../constants";
-import type { CreateNodePayload } from "@system/features/node/shared/types";
+import type { CreateNodePayload } from "@system/entry/categories/node/core/types/payload";
 
 const useCreateTemplateMutation = () => {
   const queryClient = useQueryClient();

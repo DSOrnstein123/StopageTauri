@@ -1,4 +1,4 @@
-import { useGetNodes } from "@system/features/node/shared/hooks/useGetNodes";
+import { useGetNodes } from "@system/entry/categories/node/core/hooks/useGetNodes";
 import { DOCUMENT_TEMPLATE_FILTER } from "../constants";
 
 const useGetListQuery = () => {

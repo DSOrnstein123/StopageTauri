@@ -1,7 +1,7 @@
-import { useGetNodes } from "@system/features/node/shared/hooks/useGetNodes";
+import { useGetNodes } from "@system/entry/categories/node/core/hooks/useGetNodes";
 import { EXPLORER_CONFIG } from "../constants";
-import type { FileMetadataList } from "@system/features/node/file/schemas";
-import type { FolderMetadataList } from "@system/features/node/folder/schemas";
+import type { FileMetadataList } from "@system/entry/categories/node/kinds/file/schema";
+import type { FolderMetadataList } from "@system/entry/categories/node/kinds/folder/schema";
 
 const useGetExplorerFiles = () => {
   return useGetNodes<FileMetadataList | FolderMetadataList>(EXPLORER_CONFIG);

@@ -1,6 +1,6 @@
-import useCurrentNodeNamePlaceholder from "../../../categories/node/kinds/template/hooks/useNodeNamePlaceholder";
-import useRenameNode from "../../../categories/node/kinds/template/hooks/useRenameNode";
 import NameInput from "@system/shared/ui/custom/NameInput";
+import useCurrentNodeNamePlaceholder from "../hooks/useNodeNamePlaceholder";
+import useRenameNode from "../hooks/useRenameNode";
 
 const NodeNameInput = (props: {
   textClassName?: string;

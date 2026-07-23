@@ -1,5 +1,5 @@
 import type { EntryType } from "@system/plugin-manager/plugin";
-import { pluginManager } from "./pluginManager";
+import { pluginManager } from "@system/plugin-manager/pluginManager";
 
 export const entryFactory = {
   create(entryType: EntryType) {

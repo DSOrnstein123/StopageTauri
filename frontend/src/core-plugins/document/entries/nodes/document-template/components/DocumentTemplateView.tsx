@@ -1,4 +1,4 @@
-import RichTextEditorView from "@system/features/text-editor/components/RichTextEditorView";
+import RichTextEditorView from "@system/text-editor/components/RichTextEditorView";
 import useGetCurrentContentQuery from "../hooks/useGetCurrentContentQuery";
 import useUpdateCurrentContent from "../hooks/useUpdateCurrentContent";
 import { DocumentShell } from "@core-plugins/document";

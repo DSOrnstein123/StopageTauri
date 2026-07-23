@@ -1,8 +1,7 @@
 import { Tab } from "../tab/tab";
 import { type WorkspaceHost } from "./types/workspaceHost";
 import { queryClient } from "@system/config/queryClient";
-import { getNodeDetailQueryOptions } from "@system/features/node/shared/hooks/useGetNodeDetailQuery";
-import type { OpenTabParams } from "./types/tabParams";
+import { getNodeDetailQueryOptions } from "@system/entry/categories/node/core/hooks/useGetNodeDetailQuery";
 import type { EntryApi, EntryType } from "@system/plugin-manager/plugin";
 import type { StoreApi } from "zustand";
 import {
@@ -10,6 +9,7 @@ import {
   type WorkspaceStore,
 } from "./stores/createWorkspaceStore";
 import type { WorkspaceSnapshot } from "./types/workspaceSnapshot";
+import type { OpenTabParams } from "../tab/types/tabParams";
 
 class WorkspaceManager {
   private tabs = new Map<string, Tab>();

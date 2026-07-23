@@ -1,5 +1,5 @@
 // import { systemApi } from "@system/api";
-// import useActiveTabId from "@system/features/workspace/hooks/useActiveTabId";
+// import useActiveTabId from "@system/workspace/hooks/useActiveTabId";
 // import DocumentTOCAuxiliaryContent from "./DocumentTOCAuxiliaryContent";
 
 // const DocumentTOCAuxiliary = () => {

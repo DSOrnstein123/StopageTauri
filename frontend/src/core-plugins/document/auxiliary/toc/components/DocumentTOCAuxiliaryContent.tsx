@@ -1,6 +1,6 @@
-// import useTOCContent from "@system/features/text-editor/hooks/useTOCContent";
-// import useTOCNavigation from "@system/features/text-editor/hooks/useTOCNavigation";
-// import type { EditorStore } from "@system/features/text-editor/stores/createEditorStore";
+// import useTOCContent from "@system/text-editor/hooks/useTOCContent";
+// import useTOCNavigation from "@system/text-editor/hooks/useTOCNavigation";
+// import type { EditorStore } from "@system/text-editor/stores/createEditorStore";
 // import { Editor } from "@system/lib/tiptap";
 // import type { StoreApi } from "zustand";
 

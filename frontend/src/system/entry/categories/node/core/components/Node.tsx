@@ -1,9 +1,9 @@
 import type { PluginId } from "@system/plugin-manager/plugin";
-import NodeProvider from "../../../categories/node/core/context/NodeProvider";
-import useMountSidebar from "../../../categories/node/kinds/template/hooks/useMountSidebar";
 import NodeContent from "./NodeContent";
 import NodeNameLabel from "./NodeNameLabel";
-import { useGetNodeDetailQuery } from "../../../categories/node/kinds/template/hooks/useGetNodeDetailQuery";
+import { useGetNodeDetailQuery } from "../hooks/useGetNodeDetailQuery";
+import useMountSidebar from "../hooks/useMountSidebar";
+import NodeProvider from "../context/NodeProvider";
 
 const Node = ({ id }: { id: string }) => {
   const { data } = useGetNodeDetailQuery(id);

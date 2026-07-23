@@ -1,4 +1,4 @@
-import { applyTemplateMutationOptions } from "@system/features/node/template/hooks/applyTemplateMutationOptions";
+import { applyTemplateMutationOptions } from "@system/entry/categories/node/kinds/template/hooks/applyTemplateMutationOptions";
 import { useMutation } from "@tanstack/react-query";
 
 const useApplyTemplateMutation = () => {

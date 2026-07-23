@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { nodeKeys } from "../../../../../node/shared/keys";
+import { nodeKeys } from "../../../../../entry/categories/node/core/keys";
 import { nodeService } from "../service";
 import type { NodeListOptions } from "../types/payload";
 import type { NodeMetadataList } from "../schema";
