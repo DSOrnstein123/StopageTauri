@@ -1,0 +1,5 @@
+{
+  "name": "core-plugin-block-based-editor",
+  "projectType": "library",
+  "sourceRoot": "frontend/src/core-plugins/block-based-editor"
+}

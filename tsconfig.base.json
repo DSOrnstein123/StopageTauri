@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@app/*": ["./frontend/src/app/*"],
+      "@core-plugins/*": ["./frontend/src/core-plugins/*"],
+      "@entities/*": ["./frontend/src/entities/*"],
+      "@system/*": ["./frontend/src/system/*"],
+      "@core-plugins/block-based-editor": [
+        "./frontend/src/core-plugins/block-based-editor/index.ts"
+      ]
+    }
+  }
+}

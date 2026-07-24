@@ -10,16 +10,20 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@nx/eslint": "23.1.0",
+    "@nx/eslint": "^23.1.0",
+    "@nx/react": "^23.1.0",
+    "@nx/vite": "^23.1.0",
+    "@nx/workspace": "^23.1.0",
     "@tauri-apps/cli": "^2.9.6",
     "eslint": "^9.8.0",
-    "nx": "23.1.0"
+    "nx": "^23.1.0"
   },
   "nx": {},
-  "dependencies": {
-    "@nx/vite": "^23.1.0"
-  },
   "optionalDependencies": {
     "@rolldown/binding-win32-x64-msvc": "1.1.5"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

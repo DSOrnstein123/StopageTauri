@@ -1,14 +1,15 @@
 {
+  "extends": "../tsconfig.base.json",
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "paths": {
-      "@app/*": ["./src/app/*"],
-      "@core-plugins/*": ["./src/core-plugins/*"],
-      "@system/*": ["./src/system/*"]
-    }
+    // "paths": {
+    //   "@app/*": ["./src/app/*"],
+    //   "@core-plugins/*": ["./src/core-plugins/*"],
+    //   "@system/*": ["./src/system/*"]
+    // }
   }
 }

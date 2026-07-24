@@ -1,0 +1,5 @@
+{
+  "name": "system",
+  "projectType": "library",
+  "sourceRoot": "frontend/src/system"
+}
