@@ -1,6 +1,5 @@
 export * from "./public";
-export { DocumentView };
-import DocumentView from "./entries/nodes/document/components/DocumentView";
+export { default as DocumentView } from "./entries/nodes/document/View";
 import { PLUGIN_ID } from "./entries/nodes/document/constants";
 import type { PluginManifest } from "@system/plugin-manager/plugin";
 import { config as documentConfig } from "./entries/nodes/document/config";

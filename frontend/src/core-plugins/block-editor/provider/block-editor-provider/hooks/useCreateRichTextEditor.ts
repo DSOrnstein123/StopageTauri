@@ -9,8 +9,7 @@ interface EditorOptions extends Partial<UseEditorOptions> {
 
 export const useCreateRichTextEditor = (options?: EditorOptions) => {
   const customAttributes = options?.editorProps?.attributes as
-    | Record<string, string>
-    | undefined;
+    Record<string, string> | undefined;
   const customClass = customAttributes?.class;
 
   const configuredExtensions = useMemo(

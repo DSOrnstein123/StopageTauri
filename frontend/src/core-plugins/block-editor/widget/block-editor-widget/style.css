@@ -1,4 +1,4 @@
-@import url(./extensions/extensions.css);
+@import url(../../provider/block-editor-provider/extensions/extensions.css);
 
 .tiptap p.is-empty::before {
   content: attr(data-placeholder);
