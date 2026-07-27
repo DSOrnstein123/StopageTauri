@@ -4,6 +4,7 @@ const CustomLink = Link.extend({
   addAttributes() {
     return {
       ...this.parent?.(),
+
       "data-type": {
         default: null,
         parseHTML: (element) => element.getAttribute("data-type"),

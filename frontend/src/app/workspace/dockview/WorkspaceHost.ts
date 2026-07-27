@@ -76,10 +76,10 @@ export class DockviewWorkspaceHost implements WorkspaceHost {
   }
 
   bindEvents() {
-    this.api.onDidActivePanelChange((e) => {
-      if (!e) return;
+    this.api.onDidActivePanelChange((panel) => {
+      if (!panel) return;
 
-      systemApi.workspace.setActiveTabId(e?.id);
+      systemApi.workspace.setActiveTabId(panel.id);
     });
   }
 

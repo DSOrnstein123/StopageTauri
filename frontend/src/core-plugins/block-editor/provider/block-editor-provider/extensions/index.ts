@@ -8,6 +8,7 @@ import { ColumnContainer } from "./column/columnContainer";
 import { CustomCodeBlock } from "./custom-code-block/CustomCodeBlock";
 import { createLowlight, all } from "lowlight";
 import { extensionRegistry } from "../extensionRegistry";
+import { SemanticHighlight } from "./semantic-highlight/semanticHighlight";
 
 const lowlight = createLowlight(all);
 
@@ -36,5 +37,6 @@ export const richTextEditorExtensions = [
     enableTabIndentation: true,
     tabSize: 2,
   }),
+  SemanticHighlight,
   ...extensionRegistry.getAllExtensions(),
 ];
