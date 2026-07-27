@@ -3,7 +3,7 @@ import { Editor } from "@system/lib/tiptap";
 import DocumentContentProvider from "../context/DocumentContentProvider";
 import NodeNameInput from "@system/entry/categories/node/core/components/NodeNameInput";
 
-const DocumentShell = ({
+const Shell = ({
   header,
   children,
 }: {
@@ -37,4 +37,4 @@ const DocumentShell = ({
   );
 };
 
-export default DocumentShell;
+export default Shell;

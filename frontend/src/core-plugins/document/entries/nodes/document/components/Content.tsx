@@ -1,18 +1,20 @@
 import EmptyPlaceholderSlot from "./EmptyPlaceholderSlot";
-import RichTextEditorView from "@core-plugins/block-based-editor/provider/components/RichTextEditorView";
 import { type JSONContent } from "@system/lib/tiptap";
 import useGetCurrentContentQuery from "../hooks/useGetCurrentContentQuery";
 import useUpdateCurrentContent from "../hooks/useUpdateCurrentContent";
+import type { ViewProps } from "../types";
 
-const DocumentContent = () => {
+const Content = ({ EditorView }: ViewProps) => {
   const { data: content } = useGetCurrentContentQuery() as JSONContent;
   const saveContent = useUpdateCurrentContent();
 
   return (
-    <RichTextEditorView content={content} onContentChange={saveContent}>
-      <EmptyPlaceholderSlot />
-    </RichTextEditorView>
+    <EditorView
+      content={content}
+      onContentChange={saveContent}
+      emptyPlaceholder={<EmptyPlaceholderSlot />}
+    />
   );
 };
 
-export default DocumentContent;
+export default Content;

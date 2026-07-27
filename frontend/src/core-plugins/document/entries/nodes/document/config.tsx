@@ -1,12 +1,17 @@
 import type { NodeConfig } from "@system/entry/categories/node/core/types";
-import DocumentView from "./components/DocumentView";
 import { createDocumentController } from "./controller";
 import handleCreateDocument from "./handlers/handleCreateDocument";
 import createDocumentStore from "./stores/createDocumentStore";
-import { DataSchema } from "./schemas";
+import { DataSchema } from "./schema";
+import View from "./View";
+import { BlockEditorView } from "@core-plugins/block-editor";
+import {
+  OUTLINE_SEGMENT,
+  outlineSegmentConfig,
+} from "@core-plugins/document/auxiliary/outline/public";
 
 export const config = {
-  view: DocumentView,
+  view: () => <View EditorView={BlockEditorView} />,
   schema: DataSchema,
   createController: createDocumentController,
   createEntryStore: createDocumentStore,
@@ -23,5 +28,10 @@ export const config = {
   slots: {
     sidebar: {},
     emptyPlaceholder: {},
+  },
+  auxiliary: {
+    segments: {
+      [OUTLINE_SEGMENT]: outlineSegmentConfig,
+    },
   },
 } satisfies NodeConfig;
