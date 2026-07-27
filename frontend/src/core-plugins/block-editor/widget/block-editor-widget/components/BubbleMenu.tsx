@@ -1,112 +1,74 @@
-import { BubbleMenu, Editor, useEditorState } from "@system/lib/tiptap";
+import { BubbleMenu as TiptapBubbleMenu, Editor } from "@system/lib/tiptap";
 import { Button } from "@system/shared/ui/shadcn/button";
-import { useState } from "react";
 import LinkSuggestion from "./LinkSuggestion";
 import { cn } from "@system/lib/tailwind-css/utils";
-import type { NodeMetadata } from "@system/entry/categories/node/core/schema";
+import useBubbleMenu from "../hooks/useBubbleMenu";
 
 //TODO: optimize
 //TODO: fixed position
 //TODO: not appear when select from right to left
-interface ToolbarButton {
-  label: string;
-  highlighted: boolean;
-  action: () => void;
-}
 
-const CustomBubbleMenu = ({ editor }: { editor: Editor }) => {
-  const [showLinkSuggestion, setShowLinkSuggestion] = useState(false);
-
-  const { isBold, isItalic, isStrike, isCode } = useEditorState({
-    editor: editor,
-    selector: ({ editor }) => ({
-      isBold: editor.isActive("bold"),
-      isItalic: editor.isActive("italic"),
-      isStrike: editor.isActive("strike"),
-      isCode: editor.isActive("code"),
-    }),
-  });
-
-  const handleSelect = (nodeMetadata: NodeMetadata) => {
-    editor
-      .chain()
-      .focus()
-      .setMark("link", {
-        href: `/documents/${nodeMetadata}`,
-        "data-type": "note",
-        "data-document-id": nodeMetadata,
-      })
-      .run();
-
-    setShowLinkSuggestion(false);
-  };
-
-  const toolbarButtons: ToolbarButton[] = [
-    {
-      label: "Bold",
-      highlighted: isBold,
-      action: () => editor.chain().focus().toggleBold().run(),
-    },
-    {
-      label: "Italic",
-      highlighted: isItalic,
-      action: () => editor.chain().focus().toggleItalic().run(),
-    },
-    {
-      label: "Strike",
-      highlighted: isStrike,
-      action: () => editor.chain().focus().toggleStrike().run(),
-    },
-    {
-      label: "Mark as code",
-      highlighted: isCode,
-      action: () => editor.chain().focus().toggleCode().run(),
-    },
-    {
-      label: "Link",
-      highlighted: showLinkSuggestion,
-      action: () => setShowLinkSuggestion((prev) => !prev),
-    },
-  ];
+const BubbleMenu = ({ editor }: { editor: Editor }) => {
+  const { actions, showLinkSuggestion, handleSelect } = useBubbleMenu(editor);
 
   return (
-    <BubbleMenu
+    <TiptapBubbleMenu
       editor={editor}
-      options={{ placement: "bottom", offset: 8, flip: true }}
-      className="bg-white"
+      options={{
+        placement: "bottom",
+        offset: 8,
+        flip: true,
+      }}
+      className="z-50"
     >
-      <div className="flex gap-x-1 rounded-md border p-1">
-        {toolbarButtons.map((button, index) =>
-          button.label == "Link" ? (
-            <div key={index} className="relative">
-              <Button
-                onClick={button.action}
-                className={cn(
-                  "hover:bg-secondary rounded-sm border-0 bg-white p-2 text-black shadow-white outline-0",
-                  button.highlighted && "bg-red-400",
-                )}
-              >
-                {button.label}
-              </Button>
+      <div
+        className={cn(
+          "flex items-center gap-0.5 rounded-lg border",
+          "bg-popover text-popover-foreground p-1",
+          "shadow-lg shadow-black/10",
+        )}
+      >
+        {actions.map((action) => {
+          const Icon = action.icon;
+          const isLinkAction = action.id === "link";
 
-              {showLinkSuggestion && <LinkSuggestion onSelect={handleSelect} />}
-            </div>
-          ) : (
-            <Button
-              key={index}
-              onClick={button.action}
+          return (
+            <div
+              key={action.id}
               className={cn(
-                "hover:bg-secondary rounded-sm border-0 bg-white p-2 text-black shadow-white outline-0",
-                button.highlighted && "bg-red-400",
+                "relative flex items-center",
+                action.separated && "ml-1 border-l pl-1",
               )}
             >
-              {button.label}
-            </Button>
-          ),
-        )}
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onMouseDown={(event) => {
+                  event.preventDefault();
+                }}
+                onClick={action.action}
+                className={cn(
+                  "size-8 rounded-md",
+                  "text-muted-foreground",
+                  "hover:bg-accent hover:text-accent-foreground",
+                  action.highlighted && "bg-accent text-accent-foreground",
+                )}
+              >
+                <Icon className="size-4" />
+              </Button>
+
+              {isLinkAction && showLinkSuggestion && (
+                <div className="absolute top-full left-0 z-50 mt-2">
+                  <LinkSuggestion onSelect={handleSelect} />
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
-    </BubbleMenu>
+    </TiptapBubbleMenu>
   );
 };
 
-export { CustomBubbleMenu as BubbleMenu };
+export default BubbleMenu;

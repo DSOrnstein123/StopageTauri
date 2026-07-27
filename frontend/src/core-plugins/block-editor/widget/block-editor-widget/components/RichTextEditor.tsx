@@ -1,5 +1,5 @@
 import { EditorContent, Editor, useEditorState } from "@system/lib/tiptap";
-import { BubbleMenu } from "./BubbleMenu";
+import BubbleMenu from "./BubbleMenu";
 import type { ReactNode } from "react";
 
 const RichTextEditor = ({
