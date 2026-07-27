@@ -1,0 +1,5 @@
+{
+  "name": "core-plugin-canvas",
+  "projecType": "library",
+  "sourceRoot": "frontend/src/core-plugins/canvas"
+}
