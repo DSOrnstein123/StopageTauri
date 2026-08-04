@@ -1,9 +1,10 @@
 import type { SegmentConfig } from "@system/entry/auxiliary/auxiliary";
-import { Tab } from "../tab";
+import { BaseTab } from "../BaseTab";
 import type { WorkbenchHost } from "@system/workbench/core/types/workbenchHost";
 import { createStore, type AuxiliaryTabStore } from "./store";
 
-export class AuxiliaryTab extends Tab {
+export class AuxiliaryTab extends BaseTab {
+  readonly kind = "auxiliary";
   readonly store: AuxiliaryTabStore;
   private segments = new Map<string, SegmentConfig>();
 

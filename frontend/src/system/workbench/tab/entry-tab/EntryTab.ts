@@ -1,5 +1,5 @@
 import type { WorkbenchHost } from "@system/workbench/core/types/workbenchHost";
-import { Tab } from "../tab";
+import { BaseTab } from "../BaseTab";
 import { entryFactory } from "@system/entry/core/entryFactory";
 import { EntryRuntime } from "@system/entry/core/entryRuntime";
 import { createStore, type EntryTabStore } from "./store";
@@ -13,7 +13,8 @@ import type {
 import type { HistoryEntry, HistoryNodeEntry } from "../types/navigation";
 import { resolveEntryType } from "@system/workbench/workspace/utils/resolveEntryType";
 
-export class EntryTab extends Tab {
+export class EntryTab extends BaseTab {
+  readonly kind = "entry";
   readonly store: EntryTabStore;
   private entryFactory = entryFactory;
   private entryRuntime?: EntryRuntime;

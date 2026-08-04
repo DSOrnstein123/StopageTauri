@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { TabContext } from "./TabContext";
-import type { Tab } from "../tab";
+import type { Tab } from "../BaseTab";
 
 const TabProvider = ({
   value,

@@ -1,6 +1,6 @@
 import { TabView } from "@system/lib/dockview";
 import { SegmentContent } from "@system/workbench/segment/public";
-import type { Tab } from "@system/workbench/tab/tab";
+import type { Tab } from "@system/workbench/tab/BaseTab";
 
 const Content = ({ activeTab }: { activeTab: Tab }) => {
   const activeTabStore = activeTab.store;
