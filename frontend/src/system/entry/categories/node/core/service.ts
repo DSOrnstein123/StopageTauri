@@ -17,11 +17,11 @@ export const nodeService = {
       });
       console.log(rawData);
       const nodeDetail = NodeDetailSchema.parse(rawData);
-      const schema = pluginManager.getNodeSchema(rawData.type);
-      const nodeData = schema.parse(nodeDetail.data);
+      // const schema = pluginManager.getNodeSchema(rawData.type);
+      // const nodeData = schema.parse(nodeDetail.data);
       return {
         ...nodeDetail,
-        data: nodeData,
+        // data: nodeData,
       };
     } catch (error) {
       console.error("getDetail failed:", error);

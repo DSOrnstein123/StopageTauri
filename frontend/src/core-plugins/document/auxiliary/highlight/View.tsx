@@ -4,10 +4,10 @@ import useActiveTabId from "@system/workbench/workspace/hooks/useActiveTabId";
 
 const View = () => {
   const activeTabId = useActiveTabId();
-  const activeTabApi = systemApi.workspace.getTabEntryApi<"document">(
+  const activeTabApi = systemApi.workbench.getTabEntryApi<"document">(
     activeTabId!,
   );
-  const activeTab = systemApi.workspace.getTab(activeTabId!);
+  const activeTab = systemApi.workbench.getTab(activeTabId!);
   const editor = activeTabApi.getEditor();
   const activeEntryStore = activeTab!.entryStore;
   const highlights = useHightlights(activeEntryStore!, editor);

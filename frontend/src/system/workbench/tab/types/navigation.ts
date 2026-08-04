@@ -9,13 +9,13 @@ interface BaseHistoryEntry {
   entryCategory: EntryCategory;
 }
 
-interface HistoryNodeEntry extends BaseHistoryEntry {
+export interface HistoryNodeEntry extends BaseHistoryEntry {
   entryCategory: "node";
   nodeId: string;
   nodeType: NodeType;
 }
 
-interface HistoryToolEntry extends BaseHistoryEntry {
+export interface HistoryToolEntry extends BaseHistoryEntry {
   entryCategory: "tool";
   toolType: ToolType;
 }

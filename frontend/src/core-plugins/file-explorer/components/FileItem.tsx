@@ -9,7 +9,8 @@ const FileItem = ({ data }: { data: ExplorerItem }) => {
   const isSelected = usePrimarySidebarStore((state) => state.selectedId === id);
 
   const handleOnClick = () => {
-    systemApi.workspace.openEntry({
+    systemApi.workbench.openEntry({
+      zone: "workspace",
       entryCategory: "node",
       title: name,
       nodeId: id,

@@ -17,4 +17,5 @@ export const pluginApi = {
   ): NodeSlots<N>[S] => pluginManager.getNodeSlot(nodeType, slot),
   getNodeNamePlaceholder: (nodeType: NodeType) =>
     pluginManager.getNodeNamePlaceholder(nodeType),
+  getSegments: (nodeType: NodeType) => pluginManager.getSegments(nodeType),
 };

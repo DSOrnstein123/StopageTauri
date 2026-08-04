@@ -1,3 +1,3 @@
 export { default as DockviewWorkspace } from "./Workspace";
-export { DockviewWorkspaceHost } from "./WorkspaceHost";
+export { dockviewWorkbenchHost } from "./WorkbenchHost";
 export type { TabParams as DockviewTabParams } from "./types";

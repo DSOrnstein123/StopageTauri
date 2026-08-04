@@ -14,7 +14,7 @@ const PanelHeader = (props: IDockviewPanelHeaderProps) => {
 
   const onCloseClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    systemApi.workspace.closeTab(api.id);
+    systemApi.workbench.closeTab(api.id);
   };
 
   return (

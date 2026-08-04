@@ -5,7 +5,7 @@ import useActiveTabId from "@system/workbench/workspace/hooks/useActiveTabId";
 const Outline = () => {
   const activeTabId = useActiveTabId();
 
-  const tabApi = systemApi.workspace.getTabEntryApi<"document">(activeTabId!);
+  const tabApi = systemApi.workbench.getTabEntryApi<"document">(activeTabId!);
   const editor = tabApi.getEditor();
   const outlineContent = tabApi.getTOC();
   const { navigateToSection } = useTOCNavigation(editor);

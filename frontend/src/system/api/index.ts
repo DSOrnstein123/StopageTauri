@@ -1,9 +1,9 @@
-import { workspaceApi } from "./workspace";
+import { workbenchApi } from "./workbench";
 import { nodeApi } from "./node";
 import { pluginApi } from "./plugin";
 
 export const systemApi = {
-  workspace: { ...workspaceApi },
+  workbench: { ...workbenchApi },
   plugin: { ...pluginApi },
   node: { ...nodeApi },
 };

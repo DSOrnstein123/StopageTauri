@@ -1,20 +1,49 @@
-import type { EntryType } from "@system/plugin-manager/plugin";
+import type { NodeType, ToolType } from "@system/plugin-manager/plugin";
 import { pluginManager } from "@system/plugin-manager/pluginManager";
+import type { NodeControllerContext } from "../categories/node/core/types/controllerContext";
+import type { ToolControllerContext } from "../categories/tool/controllerContext";
+
+type EntryCreateParams = NodeCreateParams | ToolCreateParams;
+
+interface NodeCreateParams {
+  category: "node";
+  type: NodeType;
+  context: NodeControllerContext;
+}
+
+interface ToolCreateParams {
+  category: "tool";
+  type: ToolType;
+  context: ToolControllerContext;
+}
 
 export const entryFactory = {
-  create(entryType: EntryType) {
+  create(params: EntryCreateParams) {
+    switch (params.category) {
+      case "node":
+        return this.createNode(params);
+
+      case "tool":
+        return this.createTool(params);
+    }
+  },
+
+  createNode(params: NodeCreateParams) {
+    const nodeConfig = pluginManager.getEntryConfigs(params.type);
+
     return {
-      store: this.createEntryStore(entryType),
-      controller: this.createController(entryType),
+      store: nodeConfig.createEntryStore?.(),
+      controller: nodeConfig.createController?.(params.context),
     };
   },
 
-  createEntryStore(entryType: EntryType) {
-    return pluginManager.getEntryConfigs(entryType).createEntryStore?.();
-  },
+  createTool(params: ToolCreateParams) {
+    const toolConfig = pluginManager.getEntryConfigs(params.type);
 
-  createController(entryType: EntryType) {
-    return pluginManager.getEntryConfigs(entryType).createController?.();
+    return {
+      store: toolConfig.createEntryStore?.(),
+      controller: toolConfig.createController?.(),
+    };
   },
 } as const;
 

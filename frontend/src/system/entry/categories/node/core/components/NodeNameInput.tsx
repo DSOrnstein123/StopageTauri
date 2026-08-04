@@ -8,6 +8,7 @@ const NodeNameInput = (props: {
   inputClassName?: string;
 }) => {
   const placeholder = useCurrentNodeNamePlaceholder();
+
   return (
     <NameInput {...useRenameNode()} placeholder={placeholder} {...props} />
   );

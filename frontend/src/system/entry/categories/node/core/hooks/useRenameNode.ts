@@ -16,6 +16,7 @@ const useRenameNode = () => {
       queryClient.setQueryData<NodeMetadataList>(nodeKeys.list(), (data = []) =>
         data.map((node) => (node.id == id ? { ...node, name: newName } : node)),
       );
+
       queryClient.setQueryData<NodeDetail>(
         nodeKeys.detail(id),
         (data) =>

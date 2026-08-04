@@ -49,7 +49,7 @@ export const useCreateRichTextEditor = (options?: EditorOptions) => {
       //   if (href?.startsWith("/documents/")) {
       //     // TODO: change to scalable link
       //     const nodeId = href.split("/documents/")[1];
-      //     systemApi.workspace.navigate(tabId, nodeId);
+      //     systemApi.workbench.navigate(tabId, nodeId);
       //     return true;
       //   }
 

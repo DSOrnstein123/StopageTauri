@@ -1,4 +1,4 @@
-import useWorkspaceStore from "../stores/useWorkspaceStore";
+import useWorkspaceStore from "../../core/store/useWorkspaceStore";
 
 const useActiveTabId = () => {
   return useWorkspaceStore((state) => state.activeTabId);

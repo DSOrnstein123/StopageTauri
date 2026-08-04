@@ -6,11 +6,7 @@ const NodeContent = ({ data }: { data: NodeDetail }) => {
   const Content = pluginManager.getNodeView(data.type);
   if (!Content) return null;
 
-  return (
-    <div className="pt-0">
-      <Content />
-    </div>
-  );
+  return <Content />;
 };
 
 export default NodeContent;

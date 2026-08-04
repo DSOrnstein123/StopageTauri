@@ -4,7 +4,7 @@ import { DocumentShell } from "@core-plugins/document";
 import { type JSONContent } from "@system/lib/tiptap";
 import Header from "./Header";
 import DocumentTemplatePicker from "../../../../widget/document-template-picker/components/Widget";
-import { RichTextEditorView } from "@core-plugins/block-based-editor";
+import { BlockEditorView } from "@core-plugins/block-editor";
 
 //TODO: fix on press Enter
 //TODO: rewrite name input and move to system
@@ -14,9 +14,11 @@ const DocumentTemplateView = () => {
 
   return (
     <DocumentShell header={<Header />}>
-      <RichTextEditorView content={content} onContentChange={saveContent}>
-        <DocumentTemplatePicker />
-      </RichTextEditorView>
+      <BlockEditorView
+        content={content}
+        onContentChange={saveContent}
+        emptyPlaceholder={<DocumentTemplatePicker />}
+      />
     </DocumentShell>
   );
 };

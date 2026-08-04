@@ -2,9 +2,16 @@ import { BaseController } from "@system/workbench/tab/classes/baseController";
 import type { StoreApi } from "zustand";
 
 export class NodeController extends BaseController {
-  get api() {
-    return { ...this.nodeApi() };
+  readonly nodeId: string;
+
+  constructor(nodeId: string) {
+    super();
+    this.nodeId = nodeId;
   }
+
+  readonly api = {
+    ...this.nodeApi(),
+  };
 
   protected nodeApi() {
     return {};
@@ -12,11 +19,11 @@ export class NodeController extends BaseController {
 }
 
 export abstract class NodeStoreController<
-  Slice extends object,
+  Store extends object,
 > extends NodeController {
-  protected store?: StoreApi<Slice>;
+  protected store?: StoreApi<Store>;
 
-  override setStore(store: StoreApi<Slice>) {
+  setStore(store: StoreApi<Store>) {
     this.store = store;
   }
 }

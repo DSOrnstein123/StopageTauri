@@ -9,8 +9,10 @@ import {
   OUTLINE_SEGMENT,
   outlineSegmentConfig,
 } from "@core-plugins/document/auxiliary/outline/public";
+import { TYPE } from "./identity";
 
 export const config = {
+  type: TYPE,
   view: () => <View EditorView={BlockEditorView} />,
   schema: DataSchema,
   createController: createDocumentController,

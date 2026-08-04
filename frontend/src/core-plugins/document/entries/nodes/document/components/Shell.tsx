@@ -23,7 +23,7 @@ const Shell = ({
   };
   //TODO: restyle tab content layout
   return (
-    <div className="flex h-full w-full justify-center overflow-auto px-10">
+    <div className="flex h-full w-full justify-center overflow-auto px-10 pt-8">
       <div className="relative h-full w-full max-w-187.5">
         <div className="text-5xl font-bold" onKeyDown={handleKeyDown}>
           {header || <NodeNameInput />}

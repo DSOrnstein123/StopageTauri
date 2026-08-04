@@ -7,16 +7,24 @@ import {
 import type { z, ZodType } from "zod";
 import type { UnionToIntersection } from "@system/shared/utils/unionToIntersection";
 import type { NodeDetail, NodeKind } from "../schema";
+import type { NodeControllerContext } from "./controllerContext";
+import type { BaseController } from "@system/workbench/tab/classes/baseController";
 
 export interface NodeConfig extends BaseEntryConfig {
   kind?: NodeKind;
   schema?: ZodType;
   namePlaceholder?: string;
+  createController?: (context: NodeControllerContext) => BaseController;
 }
 //TODO: use registered type
 export interface RegisteredNodeConfig extends NodeConfig {
   namePlaceholder: string;
 }
+
+export type NodeDefinition = Pick<
+  NodeConfig,
+  "type" | "createController" | "createEntryStore"
+>;
 
 export type PluginEntriesUnion = UnionToIntersection<PluginEntries>;
 export type NodeConfigMap = PluginEntriesUnion extends { nodes: infer N }

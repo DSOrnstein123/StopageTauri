@@ -3,8 +3,10 @@ import type {
   NodeType,
   ToolType,
 } from "@system/plugin-manager/plugin";
+import type { WorkbenchZone } from "@system/workbench/core/types/workbenchZone";
 
 interface BaseOpenTabParams {
+  zone: WorkbenchZone;
   title?: string;
   entryCategory: EntryCategory;
 }

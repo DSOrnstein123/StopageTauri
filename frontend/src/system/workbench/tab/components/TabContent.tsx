@@ -1,6 +1,8 @@
+import { useStore } from "zustand";
+import { useTabContext } from "../context/TabContext";
 import type { TabProps } from "../types/tabProps";
-import NodeTab from "./NodeTab";
 import ToolTab from "./ToolTab";
+import Node from "@system/entry/categories/node/core/components/Node";
 
 const TabContent = ({
   tabProps,
@@ -10,11 +12,15 @@ const TabContent = ({
   className: string;
 }) => {
   const { entryCategory } = tabProps;
+  const tab = useTabContext();
+  const entryStatus = useStore(tab.tabStore, (state) => state.entryStatus);
+
+  if (entryStatus === "idle") return null;
 
   return (
     <div className={className}>
       {entryCategory == "node" ? (
-        <NodeTab nodeId={tabProps.nodeId} />
+        <Node id={tabProps.nodeId} store={tab.entryStore} api={tab.entryApi} />
       ) : (
         <ToolTab toolType={tabProps.toolType} />
       )}

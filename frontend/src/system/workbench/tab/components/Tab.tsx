@@ -6,16 +6,16 @@ import type { TabProps } from "../types/tabProps";
 
 const Tab = (props: TabProps) => {
   const { tabId } = props;
-  const tab = systemApi.workspace.getTab(tabId);
+  const tab = systemApi.workbench.getTab(tabId);
 
   if (!tab) return;
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full w-full flex-col">
       <TabProvider value={tab}>
         <TabHeader className="h-10" />
 
-        <TabContent tabProps={props} className="h-full" />
+        <TabContent tabProps={props} className="h-full w-full" />
       </TabProvider>
     </div>
   );

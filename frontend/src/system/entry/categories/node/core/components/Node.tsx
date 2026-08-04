@@ -2,15 +2,25 @@ import NodeContent from "./NodeContent";
 import NodeNameLabel from "./NodeNameLabel";
 import { useGetNodeDetailQuery } from "../hooks/useGetNodeDetailQuery";
 import NodeProvider from "../context/NodeProvider";
+import type { StoreApi } from "zustand";
 
-const Node = ({ id }: { id: string }) => {
+const Node = ({
+  id,
+  store,
+  api,
+}: {
+  id: string;
+  store?: StoreApi<unknown>;
+  api?: unknown;
+}) => {
   const { data } = useGetNodeDetailQuery(id);
 
   if (!data) return null;
 
   const value = {
     id: id,
-    icon: data.icon,
+    store: store,
+    api: api,
   };
 
   return (
@@ -18,7 +28,7 @@ const Node = ({ id }: { id: string }) => {
       <div className={`relative h-full overflow-auto`}>
         <NodeNameLabel className="fixed top-18.75 left-0" />
 
-        <div className="pt-8">
+        <div className="h-full w-full">
           <NodeContent data={data} />
         </div>
       </div>

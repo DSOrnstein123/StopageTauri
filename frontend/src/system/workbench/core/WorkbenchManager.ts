@@ -1,0 +1,212 @@
+import { Tab } from "../tab/tab";
+import { type WorkbenchHost } from "./types/workbenchHost";
+import { queryClient } from "@system/config/queryClient";
+import { getNodeDetailQueryOptions } from "@system/entry/categories/node/core/hooks/useGetNodeDetailQuery";
+import type {
+  EntryApi,
+  EntryType,
+  NodeType,
+} from "@system/plugin-manager/plugin";
+import type { StoreApi } from "zustand";
+import {
+  createWorkspaceStore,
+  type WorkspaceStore,
+} from "./store/createWorkspaceStore";
+import type {
+  WorkbenchSnapshot,
+  WorkbenchStateSnapshot,
+} from "./types/workbenchSnapshot";
+import type { OpenTabParams } from "../tab/types/tabParams";
+import type { TabRecord } from "./types/tabRecord";
+import { AuxiliaryTab } from "../tab/auxiliary-tab/AuxiliaryTab";
+import type { WorkbenchZone } from "./types/workbenchZone";
+
+class WorkbenchManager {
+  private tabRecords = new Map<string, TabRecord>();
+  private host: WorkbenchHost;
+  private readonly store: StoreApi<WorkspaceStore>;
+
+  constructor() {
+    this.store = createWorkspaceStore();
+  }
+
+  init(host: WorkbenchHost) {
+    this.setHost(host);
+
+    this.restoreState();
+    //TODO: optimize save layout by using debounced later
+    this.host.onLayoutChange((currentLayout) => {
+      const snapshot: WorkbenchSnapshot = {
+        state: this.captureState(),
+        layout: currentLayout,
+      };
+
+      localStorage.setItem("workbench-snapshot", JSON.stringify(snapshot));
+    });
+
+    this.host.onActiveTabChange((zone, tabId) => {
+      this.setActiveTabIdByZone(zone, tabId);
+    });
+
+    this.store.setState({ status: "ready" });
+  }
+
+  getTabRecord(id: string) {
+    const tabRecord = this.tabRecords.get(id);
+
+    if (!tabRecord) {
+      throw new Error(`Tab record ${id} does not exist`);
+    }
+
+    return tabRecord;
+  }
+
+  getTab(id: string) {
+    return this.getTabRecord(id).tab;
+  }
+
+  getStore() {
+    return this.store;
+  }
+
+  setHost(host: WorkbenchHost) {
+    this.host = host;
+  }
+
+  getAllActiveTabIds() {
+    return this.store.getState().activeTabIdByZone;
+  }
+
+  getActiveTabIdByZone(zone: WorkbenchZone) {
+    return this.store.getState().activeTabIdByZone[zone];
+  }
+
+  setActiveTabIdByZone(zone: WorkbenchZone, id: string | null) {
+    this.store.setState((state) => ({
+      activeTabIdByZone: {
+        ...state.activeTabIdByZone,
+        [zone]: id,
+      },
+    }));
+  }
+
+  captureState(): WorkbenchStateSnapshot {
+    return {
+      tabRecords: [...this.tabRecords.values()].map((tabRecord) => ({
+        ...tabRecord.tab.captureState(),
+        zone: tabRecord.zone,
+      })),
+      activeTabIdByZone: this.getAllActiveTabIds(),
+    };
+  }
+
+  restoreState() {
+    this.tabRecords.clear();
+    this.getStore().setState({
+      activeTabIdByZone: {
+        workspace: null,
+        "left-sidebar": null,
+        "right-sidebar": null,
+      },
+    });
+
+    const rawSnapshot = localStorage.getItem("workbench-snapshot");
+    if (rawSnapshot) {
+      try {
+        const snapshot = JSON.parse(rawSnapshot) as WorkbenchSnapshot;
+
+        this.getStore().setState({
+          activeTabIdByZone: { ...snapshot.state.activeTabIdByZone },
+        });
+        snapshot.state.tabRecords.forEach((tabRecord) => {
+          const tab = Tab.restore(
+            this.host,
+            tabRecord.id,
+            tabRecord.currentEntry,
+          );
+          this.tabRecords.set(tabRecord.id, {
+            zone: tabRecord.zone,
+            tab: tab,
+          });
+        });
+        this.host.applyLayout(snapshot.layout);
+      } catch (error) {
+        this.host.loadDefaultLayout();
+        console.error("Failed to load snapshot:", error);
+      }
+    } else {
+      console.log(this.host);
+      this.host.loadDefaultLayout();
+    }
+  }
+
+  async openEntry(params: OpenTabParams) {
+    const activeTabId = this.store.getState().activeTabIdByZone.workspace;
+    console.log(this.store.getState().activeTabIdByZone);
+
+    if (!activeTabId) {
+      this.openTab(params);
+      return;
+    }
+
+    const activeTab = this.getTab(activeTabId);
+
+    if (activeTab instanceof AuxiliaryTab) {
+      this.openTab(params);
+      return;
+    }
+
+    if (params.entryCategory === "node") {
+      let nodeType: NodeType | undefined = params.nodeType;
+      if (!nodeType) {
+        const { type } = await queryClient.ensureQueryData(
+          getNodeDetailQueryOptions(params.nodeId),
+        );
+        nodeType = type;
+      }
+
+      activeTab.navigate({ ...params, nodeType: nodeType });
+    } else {
+      activeTab.navigate({ ...params });
+    }
+  }
+
+  async openTab(params: OpenTabParams) {
+    if (!this.host) return;
+
+    const tab = new Tab(this.host);
+    const tabRecord = {
+      zone: params.zone,
+      tab: tab,
+    };
+    this.tabRecords.set(tabRecord.tab.id, tabRecord);
+
+    this.host.openTab(tabRecord, params);
+
+    if (params.entryCategory === "node") {
+      let nodeType: NodeType | undefined = params.nodeType;
+      if (!nodeType) {
+        const { type } = await queryClient.ensureQueryData(
+          getNodeDetailQueryOptions(params.nodeId),
+        );
+        nodeType = type;
+      }
+
+      tab.navigate({ ...params, nodeType: nodeType });
+    } else {
+      tab.navigate({ ...params });
+    }
+  }
+
+  closeTab(id: string) {
+    const tabRecord = this.getTabRecord(id);
+    this.tabRecords.delete(id);
+    this.host.closeTab(tabRecord.zone, id);
+  }
+
+  getTabEntryApi<E extends EntryType>(id: string) {
+    return this.getTab(id).entryApi as EntryApi<E>;
+  }
+}
+
+export const workbenchManager = new WorkbenchManager();

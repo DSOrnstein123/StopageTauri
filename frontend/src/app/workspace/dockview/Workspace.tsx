@@ -1,24 +1,22 @@
 import { themeLight } from "dockview-core";
 import { DockviewReact } from "dockview";
-import { systemApi } from "@system/api";
 import { components } from "./constants/components";
 import { tabComponents } from "./constants/tabComponents";
-import { DockviewWorkspaceHost } from "./WorkspaceHost";
+import { WorkbenchZoneProvider } from "@system/workbench/core";
+import { dockviewWorkbenchHost } from "./WorkbenchHost";
 
 const Workspace = () => {
   return (
-    <DockviewReact
-      theme={themeLight}
-      onReady={(readyEvent) => {
-        const { api: dockApi } = readyEvent;
-        const dockviewWorkspaceHost = new DockviewWorkspaceHost(dockApi);
-        systemApi.workspace.setHost(dockviewWorkspaceHost);
-        dockviewWorkspaceHost.init();
-        systemApi.workspace.init();
-      }}
-      components={components}
-      tabComponents={tabComponents}
-    />
+    <WorkbenchZoneProvider zone="workspace">
+      <DockviewReact
+        theme={themeLight}
+        onReady={(event) => {
+          dockviewWorkbenchHost.registerZoneHost("workspace", event.api);
+        }}
+        components={components}
+        tabComponents={tabComponents}
+      />
+    </WorkbenchZoneProvider>
   );
 };
 

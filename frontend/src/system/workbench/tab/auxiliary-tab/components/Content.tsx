@@ -1,7 +1,10 @@
 import { TabView } from "@system/lib/dockview";
 import { SegmentContent } from "@system/workbench/segment/public";
+import type { Tab } from "@system/workbench/tab/tab";
 
-const Content = () => {
+const Content = ({ activeTab }: { activeTab: Tab }) => {
+  const activeTabStore = activeTab.store;
+
   return (
     <div className="flex">
       <TabView

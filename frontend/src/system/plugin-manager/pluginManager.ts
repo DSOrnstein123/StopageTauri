@@ -205,6 +205,16 @@ export class PluginManager {
     }
     return plugin.api as ExtractPluginApi<P>;
   }
+
+  getSegments(nodeType: NodeType) {
+    const config = this.nodeConfigs.get(nodeType);
+
+    if (!config) {
+      throw new Error(`Node config "${nodeType}" is not registered`);
+    }
+
+    return config.auxiliary?.segments ?? [];
+  }
 }
 
 export const pluginManager = new PluginManager();

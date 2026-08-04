@@ -4,12 +4,11 @@ import { NodeStoreController } from "@system/entry/categories/node/core/controll
 
 export class EditorController extends NodeStoreController<EditorStore> {
   private editor: Editor | null = null;
-  get api() {
-    return {
-      ...this.nodeApi(),
-      ...this.editorApi(),
-    };
-  }
+
+  readonly api = {
+    ...this.nodeApi(),
+    ...this.editorApi(),
+  };
 
   protected editorApi() {
     return {

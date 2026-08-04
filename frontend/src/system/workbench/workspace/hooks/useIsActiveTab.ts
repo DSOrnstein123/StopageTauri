@@ -1,4 +1,4 @@
-import useWorkspaceStore from "../stores/useWorkspaceStore";
+import useWorkspaceStore from "../../core/store/useWorkspaceStore";
 import useTabId from "../../tab/hooks/useTabId";
 
 const useIsActiveTab = () => {

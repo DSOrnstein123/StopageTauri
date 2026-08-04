@@ -1,4 +1,3 @@
-import { AuxiliaryTabContent } from "@system/workbench/auxiliary-tab/public";
 import LeftSidebar from "../../../shell/sidebar/LeftSidebar";
 import TabWrapper from "../components/TabWrapper";
 import RightSidebar from "@app/shell/sidebar/RightSidebar";
@@ -6,6 +5,6 @@ import RightSidebar from "@app/shell/sidebar/RightSidebar";
 export const components = {
   fileList: LeftSidebar,
   tab: TabWrapper,
-  sidebarTab: AuxiliaryTabContent,
+  // sidebarTab: AuxiliaryTabContent,
   rightSidebar: RightSidebar,
 };

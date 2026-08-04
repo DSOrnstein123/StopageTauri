@@ -1,0 +1,5 @@
+{
+  "name": "core-plugin-highlight",
+  "projectTypes": "library",
+  "sourceRoot": "frontend/src/core-plugins/highlight"
+}

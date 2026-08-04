@@ -1,9 +1,13 @@
-import LeftSidebar from "@app/shell/LeftSidebar";
+import LeftSidebar from "@app/workspace/dockview/LeftSidebar";
 import ActionBar from "@app/shell/sidebar/ActionBar";
-import RightSidebar from "./RightSidebar";
-import { DockviewWorkspace } from "@app/workspace/dockview/public";
+import {
+  dockviewWorkbenchHost,
+  DockviewWorkspace,
+} from "@app/workspace/dockview/public";
 import { SplitviewReact, type SplitviewReadyEvent } from "dockview";
 import { Orientation } from "dockview-core";
+import RightSidebar from "@app/workspace/dockview/RightSidebar";
+import { systemApi } from "@system/api";
 
 const MainLayout = () => {
   const onSplitviewReady = (event: SplitviewReadyEvent) => {
@@ -26,6 +30,8 @@ const MainLayout = () => {
       size: 200,
       minimumSize: 100,
     });
+
+    systemApi.workbench.init(dockviewWorkbenchHost);
   };
 
   return (
