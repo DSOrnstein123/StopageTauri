@@ -14,10 +14,13 @@ type ActiveTabChangeListener = (
   tabId: string | null,
 ) => void;
 
+type NavigateListener = (tabId: string) => void;
+
 class DockviewWorkbenchHost implements WorkbenchHost {
   private zoneHosts = new Map<WorkbenchZone, DockviewApi>();
 
   private readonly activeTabListeners = new Set<ActiveTabChangeListener>();
+  private readonly navigateListeners = new Set<NavigateListener>();
 
   private readonly zoneSubscriptions = new Map<WorkbenchZone, IDisposable>();
 
@@ -81,13 +84,17 @@ class DockviewWorkbenchHost implements WorkbenchHost {
   openTab(record: TabRecord, params: OpenTabParams) {
     const host = this.getZoneHost(record.zone);
 
-    host.addPanel({
+    const panel = host.addPanel({
       id: record.tab.id,
       title: params.title,
       component: "tab",
       tabComponent: "header",
       params: this.toDockviewParams(params),
     });
+
+    panel.api.onDidParametersChange(() =>
+      this.navigateListeners.forEach((listener) => listener(record.tab.id)),
+    );
   }
 
   closeTab(zone: WorkbenchZone, id: string) {
@@ -114,6 +121,14 @@ class DockviewWorkbenchHost implements WorkbenchHost {
         title: "Welcome",
       }),
     );
+  }
+
+  onNavigate(listener: NavigateListener) {
+    this.navigateListeners.add(listener);
+
+    return {
+      dispose: () => this.navigateListeners.delete(listener),
+    };
   }
 
   onActiveTabChange(listener: ActiveTabChangeListener) {

@@ -1,4 +1,4 @@
-import { Tab } from "../tab/tab";
+import { Tab } from "../tab/BaseTab";
 import { type WorkbenchHost } from "./types/workbenchHost";
 import { queryClient } from "@system/config/queryClient";
 import { getNodeDetailQueryOptions } from "@system/entry/categories/node/core/hooks/useGetNodeDetailQuery";
@@ -20,11 +20,12 @@ import type { OpenTabParams } from "../tab/types/tabParams";
 import type { TabRecord } from "./types/tabRecord";
 import { AuxiliaryTab } from "../tab/auxiliary-tab/AuxiliaryTab";
 import type { WorkbenchZone } from "./types/workbenchZone";
+import type { HistoryEntry } from "../tab/types/navigation";
 
 class WorkbenchManager {
   private tabRecords = new Map<string, TabRecord>();
-  private host: WorkbenchHost;
   private readonly store: StoreApi<WorkspaceStore>;
+  private host: WorkbenchHost | null = null;
 
   constructor() {
     this.store = createWorkspaceStore();
@@ -32,6 +33,8 @@ class WorkbenchManager {
 
   init(host: WorkbenchHost) {
     this.setHost(host);
+
+    if (!this.host) return;
 
     this.restoreState();
     //TODO: optimize save layout by using debounced later
@@ -46,9 +49,18 @@ class WorkbenchManager {
 
     this.host.onActiveTabChange((zone, tabId) => {
       this.setActiveTabIdByZone(zone, tabId);
+      this.syncCurrentEntryFromTab(tabId);
+    });
+
+    this.host.onNavigate((tabId) => {
+      this.syncCurrentEntryFromTab(tabId);
     });
 
     this.store.setState({ status: "ready" });
+  }
+
+  get currentEntry() {
+    return this.store.getState().currentEntry;
   }
 
   getTabRecord(id: string) {
@@ -90,6 +102,18 @@ class WorkbenchManager {
     }));
   }
 
+  setCurrentEntry(entry: HistoryEntry) {
+    this.store.setState({
+      currentEntry: entry,
+    });
+  }
+
+  syncCurrentEntryFromTab(tabId: string) {
+    const tab = this.getTab(tabId);
+    if (tab.kind !== "entry") return;
+    this.setCurrentEntry(tab.currentEntry);
+  }
+
   captureState(): WorkbenchStateSnapshot {
     return {
       tabRecords: [...this.tabRecords.values()].map((tabRecord) => ({
@@ -101,6 +125,8 @@ class WorkbenchManager {
   }
 
   restoreState() {
+    if (!this.host) return;
+
     this.tabRecords.clear();
     this.getStore().setState({
       activeTabIdByZone: {
@@ -199,6 +225,8 @@ class WorkbenchManager {
   }
 
   closeTab(id: string) {
+    if (!this.host) return;
+
     const tabRecord = this.getTabRecord(id);
     this.tabRecords.delete(id);
     this.host.closeTab(tabRecord.zone, id);
