@@ -2,6 +2,7 @@ import { DockviewReact, themeLight } from "dockview";
 import { components } from "./constants/components";
 import { dockviewWorkbenchHost } from "./WorkbenchHost";
 import { WorkbenchZoneProvider } from "@system/workbench/core";
+import { tabComponents } from "./constants/tabComponents";
 
 const RightSidebar = () => {
   return (
@@ -9,15 +10,10 @@ const RightSidebar = () => {
       <DockviewReact
         theme={themeLight}
         onReady={(event) => {
-          event.api.addPanel({
-            id: "right-sidebar",
-            component: "rightSidebar",
-            title: "Sidebar Tab",
-          });
-
           dockviewWorkbenchHost.registerZoneHost("right-sidebar", event.api);
         }}
         components={components}
+        tabComponents={tabComponents}
       />
     </WorkbenchZoneProvider>
   );

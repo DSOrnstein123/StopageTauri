@@ -1,9 +1,9 @@
-import EXPLORER_CONFIG from "@core-plugins/file-explorer";
 import { nodeKeys } from "@system/entry/categories/node/core/keys";
 import { nodeService } from "@system/entry/categories/node/core/service";
 import { queryClient } from "@system/config/queryClient";
 import { DEFAULT_DOCUMENT_VALUES } from "../constants";
 import type { NodeMetadataList } from "@system/entry/categories/node/core/schema";
+import { EXPLORER_CONFIG } from "@core-plugins/file-explorer/tools/constants";
 
 const createDocument = async () => {
   const data = await nodeService.create(DEFAULT_DOCUMENT_VALUES);
