@@ -1,8 +1,21 @@
 import TabHeader from "@system/workbench/tab/components/TabHeader";
 import TabProvider from "@system/workbench/tab/context/TabProvider";
 import { systemApi } from "@system/api";
-import TabContent from "./TabContent";
 import type { TabProps } from "../types/tabProps";
+import type { TabKind } from "../types/kind";
+import { AuxiliaryTab } from "../auxiliary-tab";
+import { EntryTab } from "../entry-tab";
+
+const renderTabByKind = (kind: TabKind) => {
+  switch (kind) {
+    case "auxiliary":
+      return <AuxiliaryTab />;
+    case "entry":
+      return <EntryTab />;
+    default:
+      return null;
+  }
+};
 
 const Tab = (props: TabProps) => {
   const { tabId } = props;
@@ -15,7 +28,7 @@ const Tab = (props: TabProps) => {
       <TabProvider value={tab}>
         <TabHeader className="h-10" />
 
-        <TabContent tabProps={props} className="h-full w-full" />
+        {renderTabByKind(tab.kind)}
       </TabProvider>
     </div>
   );

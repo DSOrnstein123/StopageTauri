@@ -227,7 +227,7 @@ class WorkbenchManager {
   private openAuxiliaryTab(params: OpenAuxiliaryTabParams) {
     if (!this.host) return;
 
-    const tab = new AuxiliaryTab(this.host);
+    const tab = new AuxiliaryTab(this.host, params.entryType);
     const tabRecord: TabRecord = {
       zone: "right-sidebar",
       tab: tab,

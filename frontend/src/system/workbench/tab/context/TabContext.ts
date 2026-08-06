@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { Tab } from "../BaseTab";
+import type { Tab } from "../types/tab";
 
 export const TabContext = createContext<Tab | null>(null);
 
