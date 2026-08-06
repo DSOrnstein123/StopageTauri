@@ -13,9 +13,9 @@ const TabContent = ({
 }) => {
   const { entryCategory } = tabProps;
   const tab = useTabContext();
-  const entryStatus = useStore(tab.tabStore, (state) => state.entryStatus);
+  // const entryStatus = useStore(tab.tabStore, (state) => state.entryStatus);
 
-  if (entryStatus === "idle") return null;
+  // if (entryStatus === "idle") return null;
 
   return (
     <div className={className}>

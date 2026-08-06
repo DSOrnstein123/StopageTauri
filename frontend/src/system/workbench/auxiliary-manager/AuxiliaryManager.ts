@@ -1,13 +1,38 @@
 import type { EntryType } from "@system/plugin-manager/plugin";
-import type { HistoryEntry } from "../tab/types/navigation";
 import { resolveEntryType } from "../workspace/utils/resolveEntryType";
+import type { WorkbenchApi } from "@system/api/workbench";
+import { systemApi } from "@system/api";
+
+type AuxiliaryWorkbenchApi = Pick<
+  WorkbenchApi,
+  "subscribeCurrentEntry" | "openTab"
+>;
 
 class AuxiliaryManager {
-  private currentEntryType: EntryType | null = null;
+  private entryType: EntryType | null = null;
+  private readonly auxiliaryWorkbenchApi: AuxiliaryWorkbenchApi;
 
-  handleCurrentEntryChange(entry: HistoryEntry) {
-    const entryType = resolveEntryType(entry);
+  constructor(auxiliaryWorkbenchApi: AuxiliaryWorkbenchApi) {
+    this.auxiliaryWorkbenchApi = auxiliaryWorkbenchApi;
+  }
 
-    if (entryType === this.currentEntryType) return;
+  init() {
+    this.auxiliaryWorkbenchApi.subscribeCurrentEntry((currentEntry) => {
+      if (!currentEntry) return;
+
+      const entryType = resolveEntryType(currentEntry);
+
+      if (entryType === this.entryType) return;
+
+      //TODO: fix zone field in open tab params (optional or remove field)
+      this.auxiliaryWorkbenchApi.openTab({
+        kind: "auxiliary",
+        entryType: entryType,
+        zone: "right-sidebar",
+      });
+    });
   }
 }
+
+export const auxiliaryMangager = new AuxiliaryManager(systemApi.workbench);
+auxiliaryMangager.init();

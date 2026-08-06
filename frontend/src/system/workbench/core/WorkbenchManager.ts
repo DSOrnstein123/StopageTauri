@@ -1,4 +1,3 @@
-import { Tab } from "../tab/BaseTab";
 import { type WorkbenchHost } from "./types/workbenchHost";
 import { queryClient } from "@system/config/queryClient";
 import { getNodeDetailQueryOptions } from "@system/entry/categories/node/core/hooks/useGetNodeDetailQuery";
@@ -9,26 +8,32 @@ import type {
 } from "@system/plugin-manager/plugin";
 import type { StoreApi } from "zustand";
 import {
-  createWorkspaceStore,
-  type WorkspaceStore,
-} from "./store/createWorkspaceStore";
+  createWorkbenchStore,
+  type WorkbenchState,
+  type WorkbenchStore,
+} from "./store/createWorkbenchStore";
 import type {
   WorkbenchSnapshot,
   WorkbenchStateSnapshot,
 } from "./types/workbenchSnapshot";
-import type { OpenTabParams } from "../tab/types/tabParams";
+import type {
+  OpenAuxiliaryTabParams,
+  OpenEntryTabParams,
+  OpenTabParams,
+} from "../tab/types/tabParams";
 import type { TabRecord } from "./types/tabRecord";
 import { AuxiliaryTab } from "../tab/auxiliary-tab/AuxiliaryTab";
 import type { WorkbenchZone } from "./types/workbenchZone";
 import type { HistoryEntry } from "../tab/types/navigation";
+import { EntryTab } from "../tab/entry-tab/EntryTab";
 
 class WorkbenchManager {
   private tabRecords = new Map<string, TabRecord>();
-  private readonly store: StoreApi<WorkspaceStore>;
+  private readonly store: WorkbenchStore;
   private host: WorkbenchHost | null = null;
 
   constructor() {
-    this.store = createWorkspaceStore();
+    this.store = createWorkbenchStore();
   }
 
   init(host: WorkbenchHost) {
@@ -166,19 +171,28 @@ class WorkbenchManager {
     }
   }
 
-  async openEntry(params: OpenTabParams) {
+  subscribeCurrentEntry(listener: (entry: HistoryEntry | null) => void) {
+    return this.store.subscribe((state) => state.currentEntry, listener);
+  }
+
+  async openEntry(params: OpenEntryTabParams) {
     const activeTabId = this.store.getState().activeTabIdByZone.workspace;
-    console.log(this.store.getState().activeTabIdByZone);
 
     if (!activeTabId) {
-      this.openTab(params);
+      this.openTab({
+        ...params,
+        kind: "entry",
+      });
       return;
     }
 
     const activeTab = this.getTab(activeTabId);
 
     if (activeTab instanceof AuxiliaryTab) {
-      this.openTab(params);
+      this.openTab({
+        ...params,
+        kind: "entry",
+      });
       return;
     }
 
@@ -200,14 +214,46 @@ class WorkbenchManager {
   async openTab(params: OpenTabParams) {
     if (!this.host) return;
 
-    const tab = new Tab(this.host);
-    const tabRecord = {
+    switch (params.kind) {
+      case "auxiliary":
+        this.openAuxiliaryTab(params);
+        break;
+      case "entry":
+        this.openEntryTab(params);
+        break;
+    }
+  }
+
+  private openAuxiliaryTab(params: OpenAuxiliaryTabParams) {
+    if (!this.host) return;
+
+    const tab = new AuxiliaryTab(this.host);
+    const tabRecord: TabRecord = {
+      zone: "right-sidebar",
+      tab: tab,
+    };
+    this.tabRecords.set(tabRecord.tab.id, tabRecord);
+
+    this.host.openTab(tabRecord, {
+      ...params,
+      kind: "auxiliary",
+    });
+  }
+
+  private async openEntryTab(params: OpenEntryTabParams) {
+    if (!this.host) return;
+
+    const tab = new EntryTab(this.host);
+    const tabRecord: TabRecord = {
       zone: params.zone,
       tab: tab,
     };
     this.tabRecords.set(tabRecord.tab.id, tabRecord);
 
-    this.host.openTab(tabRecord, params);
+    this.host.openTab(tabRecord, {
+      ...params,
+      kind: "entry",
+    });
 
     if (params.entryCategory === "node") {
       let nodeType: NodeType | undefined = params.nodeType;

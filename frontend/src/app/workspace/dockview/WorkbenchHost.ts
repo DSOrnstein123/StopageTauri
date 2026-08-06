@@ -4,7 +4,10 @@ import type { DockviewApi, SerializedDockview } from "dockview-core";
 import type { JsonObject } from "@system/shared/types/json";
 import { SerializedDockviewSchema, serializeDockviewLayout } from "./schema";
 import type { TabParams } from "./types";
-import type { OpenTabParams } from "@system/workbench/tab/types/tabParams";
+import type {
+  OpenEntryTabParams,
+  OpenTabParams,
+} from "@system/workbench/tab/types/tabParams";
 import type { WorkbenchZone } from "@system/workbench/core/types/workbenchZone";
 import type { TabRecord } from "@system/workbench/core/types/tabRecord";
 import type { IDisposable } from "dockview-core/dist/cjs/lifecycle";
@@ -40,7 +43,9 @@ class DockviewWorkbenchHost implements WorkbenchHost {
     });
   }
 
-  private toDockviewParams(entry: HistoryEntry | OpenTabParams): TabParams {
+  private toDockviewParams(
+    entry: HistoryEntry | OpenEntryTabParams,
+  ): TabParams {
     if (entry.entryCategory === "node") {
       return {
         entryCategory: "node",

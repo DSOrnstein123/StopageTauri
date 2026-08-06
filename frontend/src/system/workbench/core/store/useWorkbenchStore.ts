@@ -1,8 +1,8 @@
 import { useStore } from "zustand";
 import { workbenchManager } from "../WorkbenchManager";
-import type { WorkspaceStore } from "./createWorkspaceStore";
+import type { WorkbenchState } from "./createWorkbenchStore";
 
-const useWorkbenchStore = <T>(selector: (state: WorkspaceStore) => T) => {
+const useWorkbenchStore = <T>(selector: (state: WorkbenchState) => T) => {
   return useStore(workbenchManager.getStore(), selector);
 };
 
