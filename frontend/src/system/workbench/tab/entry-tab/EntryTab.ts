@@ -70,10 +70,6 @@ export class EntryTab extends BaseTab {
     };
   }
 
-  setTitle(newTitle: string) {
-    this.workbenchHost.setTitle(this.id, newTitle);
-  }
-
   load(entryCategory: EntryCategory, entryType: EntryType) {
     this.entryRuntime?.destroy();
 

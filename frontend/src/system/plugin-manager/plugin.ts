@@ -21,7 +21,7 @@ export interface PluginManifest extends Plugin {
 
 export type EntryCategory = "node" | "tool";
 
-interface PluginConfig {
+export interface PluginConfig {
   name: string;
   icon?: IconData;
   api?: PluginApi;

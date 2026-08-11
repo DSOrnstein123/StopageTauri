@@ -16,8 +16,4 @@ export abstract class BaseTab {
   abstract restore(host: WorkbenchHost, id: string): BaseTab;
 
   abstract captureState(): void;
-
-  setTitle(newTitle: string) {
-    this.workbenchHost.setTitle(this.id, newTitle);
-  }
 }

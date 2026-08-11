@@ -6,10 +6,8 @@ import type {
   EntryType,
   NodeType,
 } from "@system/plugin-manager/plugin";
-import type { StoreApi } from "zustand";
 import {
   createWorkbenchStore,
-  type WorkbenchState,
   type WorkbenchStore,
 } from "./store/createWorkbenchStore";
 import type {
@@ -26,6 +24,7 @@ import { AuxiliaryTab } from "../tab/auxiliary-tab/AuxiliaryTab";
 import type { WorkbenchZone } from "./types/workbenchZone";
 import type { HistoryEntry } from "../tab/types/navigation";
 import { EntryTab } from "../tab/entry-tab/EntryTab";
+import { AuxiliaryTabFactory } from "../auxiliary-manager/AuxiliaryTabFactory";
 
 class WorkbenchManager {
   private tabRecords = new Map<string, TabRecord>();
@@ -227,7 +226,7 @@ class WorkbenchManager {
   private openAuxiliaryTab(params: OpenAuxiliaryTabParams) {
     if (!this.host) return;
 
-    const tab = new AuxiliaryTab(this.host, params.entryType);
+    const tab = AuxiliaryTabFactory.create(this.host, params.entryType);
     const tabRecord: TabRecord = {
       zone: "right-sidebar",
       tab: tab,

@@ -1,5 +1,9 @@
-import { Provider } from "./context/Provider";
+import Content from "./components/Content";
 
 export const View = () => {
-  return <Provider props={}></Provider>;
+  return (
+    <div className="h-full w-full">
+      <Content />
+    </div>
+  );
 };

@@ -2,6 +2,7 @@ import type { EntryType } from "@system/plugin-manager/plugin";
 import { resolveEntryType } from "../workspace/utils/resolveEntryType";
 import type { WorkbenchApi } from "@system/api/workbench";
 import { systemApi } from "@system/api";
+import { pluginManager } from "@system/plugin-manager/pluginManager";
 
 type AuxiliaryWorkbenchApi = Pick<
   WorkbenchApi,
@@ -23,6 +24,8 @@ class AuxiliaryManager {
       const entryType = resolveEntryType(currentEntry);
 
       if (entryType === this.entryType) return;
+
+      if (!pluginManager.hasAuxiliary(entryType)) return;
 
       //TODO: fix zone field in open tab params (optional or remove field)
       this.auxiliaryWorkbenchApi.openTab({

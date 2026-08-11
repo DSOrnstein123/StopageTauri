@@ -1,3 +1,4 @@
+import type { AuxiliaryConfig } from "@system/entry/auxiliary/auxiliary";
 import type {
   NodeConfig,
   NodeNamePlaceholder,
@@ -8,10 +9,10 @@ import type {
   Plugin,
   PluginId,
   PluginRegistryMap,
-  PluginConfig,
   NodeType,
   ToolType,
   EntryType,
+  PluginConfig,
 } from "./plugin";
 import type { ToolConfig } from "./tool";
 
@@ -89,7 +90,7 @@ export class PluginManager {
     return this.pluginConfigs;
   }
 
-  getEntryConfigs(entryType: EntryType) {
+  getEntryConfig(entryType: EntryType) {
     const config =
       this.nodeConfigs.get(entryType as NodeType) ??
       this.toolConfigs.get(entryType as ToolType);
@@ -206,14 +207,39 @@ export class PluginManager {
     return plugin.api as ExtractPluginApi<P>;
   }
 
-  getSegments(nodeType: NodeType) {
-    const config = this.nodeConfigs.get(nodeType);
+  getAuxiliaryConfigs() {
+    return new Map(
+      [...this.nodeConfigs].reduce<[NodeType, AuxiliaryConfig][]>(
+        (result, [nodeType, nodeConfig]) => {
+          if (nodeConfig.auxiliary) {
+            result.push([nodeType, nodeConfig.auxiliary]);
+          }
+          return result;
+        },
+        [],
+      ),
+    );
+  }
+
+  getAuxiliaryConfig(entryType: EntryType) {
+    const config =
+      this.nodeConfigs.get(entryType) ?? this.toolConfigs.get(entryType);
 
     if (!config) {
-      throw new Error(`Node config "${nodeType}" is not registered`);
+      throw new Error(`Entry ${entryType} is not registered`);
     }
 
-    return config.auxiliary?.segments ?? [];
+    return config.auxiliary;
+  }
+
+  hasAuxiliary(entryType: EntryType) {
+    return Boolean(this.getAuxiliaryConfig(entryType));
+  }
+
+  getSegments(entryType: EntryType) {
+    const auxiliaryConfig = this.getAuxiliaryConfig(entryType);
+
+    return auxiliaryConfig?.segments;
   }
 }
 

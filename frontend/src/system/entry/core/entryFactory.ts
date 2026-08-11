@@ -29,7 +29,7 @@ export const entryFactory = {
   },
 
   createNode(params: NodeCreateParams) {
-    const nodeConfig = pluginManager.getEntryConfigs(params.type);
+    const nodeConfig = pluginManager.getEntryConfig(params.type);
 
     return {
       store: nodeConfig.createEntryStore?.(),
@@ -38,7 +38,7 @@ export const entryFactory = {
   },
 
   createTool(params: ToolCreateParams) {
-    const toolConfig = pluginManager.getEntryConfigs(params.type);
+    const toolConfig = pluginManager.getEntryConfig(params.type);
 
     return {
       store: toolConfig.createEntryStore?.(),

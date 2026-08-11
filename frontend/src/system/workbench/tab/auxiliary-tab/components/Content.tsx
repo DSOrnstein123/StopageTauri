@@ -1,20 +1,30 @@
+import { tabComponents } from "@app/workspace/dockview/constants/tabComponents";
 import { TabView } from "@system/lib/dockview";
-import { SegmentContent } from "@system/workbench/segment/public";
-import type { Tab } from "@system/workbench/tab/BaseTab";
+import { themeLight } from "dockview-core";
+import { useAuxiliaryTabContext } from "../context/useAuxiliaryTabContext";
+import { components } from "@app/workspace/dockview/constants/components";
 
-const Content = ({ activeTab }: { activeTab: Tab }) => {
-  const activeTabStore = activeTab.store;
+const Content = () => {
+  const context = useAuxiliaryTabContext();
+  const segments = context.segments;
 
   return (
-    <div className="flex">
+    <div className="h-full w-full">
       <TabView
-        components={{ segment: SegmentContent }}
+        theme={themeLight}
         onReady={(event) => {
-          event.api.addPanel({
-            id: "segment",
-            component: "segment",
-          });
+          Array.from(segments).forEach(([segmentId, segmentConfig]) =>
+            event.api.addPanel({
+              id: segmentId,
+              title: segmentConfig.name,
+              component: "segment",
+              tabComponent: "verticalHeader",
+            }),
+          );
         }}
+        components={components}
+        tabComponents={tabComponents}
+        defaultHeaderPosition="left"
       />
     </div>
   );

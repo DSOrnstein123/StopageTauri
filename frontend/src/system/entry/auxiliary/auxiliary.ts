@@ -9,6 +9,7 @@ export interface AuxiliaryConfig {
 }
 
 export interface SegmentConfig {
+  name: string;
   icon?: IconData;
   view: ComponentType;
   createController?: () => BaseController;

@@ -1,12 +1,8 @@
-import type { EntryApi } from "@system/plugin-manager/plugin";
-import type { HistoryEntry } from "@system/workbench/tab/types/navigation";
 import { createContext, useContext as useReactContext } from "react";
-import type { StoreApi } from "zustand";
+import type { AuxiliaryTab } from "../AuxiliaryTab";
 
 export interface Context {
-  entryMetadata: HistoryEntry;
-  entryStore: StoreApi<unknown>;
-  entryApi: EntryApi<unknown>;
+  auxiliaryTab: AuxiliaryTab;
 }
 
 export const Context = createContext<Context | null>(null);

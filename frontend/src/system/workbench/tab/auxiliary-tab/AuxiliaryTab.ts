@@ -8,15 +8,27 @@ export class AuxiliaryTab extends BaseTab {
   readonly kind = "auxiliary";
   readonly entryType: EntryType;
   readonly store: AuxiliaryTabStore;
-  private segments = new Map<string, SegmentConfig>();
+  readonly segments: ReadonlyMap<string, SegmentConfig>;
 
-  constructor(workspaceHost: WorkbenchHost, entryType: EntryType, id?: string) {
+  constructor(
+    workspaceHost: WorkbenchHost,
+    entryType: EntryType,
+    segments: Record<string, SegmentConfig>,
+    id?: string,
+  ) {
     super(workspaceHost, id);
     this.entryType = entryType;
     this.store = createStore();
+    this.segments = new Map(Object.entries(segments));
   }
 
-  getSegments() {
-    return this.segments;
+  getSegmentView(id: string) {
+    const segmentConfig = this.segments.get(id);
+
+    if (!segmentConfig) {
+      throw new Error(`Segment ${id} is not registered`);
+    }
+
+    return segmentConfig.view;
   }
 }
