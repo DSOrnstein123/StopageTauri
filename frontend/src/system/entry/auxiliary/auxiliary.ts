@@ -1,3 +1,7 @@
+import type {
+  PluginId,
+  PluginRegistryMap,
+} from "@system/plugin-manager/plugin";
 import type { IconData } from "@system/shared/schemas/iconData";
 import type { BaseController } from "@system/workbench/tab/classes/baseController";
 import type { ComponentType } from "react";
@@ -5,10 +9,11 @@ import type { StoreApi } from "zustand";
 
 export interface AuxiliaryConfig {
   icon?: IconData;
-  segments: Record<string, SegmentConfig>;
+  segments: SegmentId[];
 }
 
 export interface SegmentConfig {
+  id: string;
   name: string;
   icon?: IconData;
   view: ComponentType;
@@ -16,3 +21,15 @@ export interface SegmentConfig {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   createStore?: () => StoreApi<any>;
 }
+
+type ExtractSegmentId<T> = T extends {
+  segments: (infer S)[];
+}
+  ? S extends { id: infer I }
+    ? I
+    : never
+  : never;
+
+export type SegmentId = {
+  [P in PluginId]: ExtractSegmentId<PluginRegistryMap[P]>;
+}[PluginId];

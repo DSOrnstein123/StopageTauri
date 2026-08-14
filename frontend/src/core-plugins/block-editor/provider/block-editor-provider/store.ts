@@ -1,6 +1,6 @@
 import type { TableOfContentData } from "@tiptap/extension-table-of-contents";
 import { createStore } from "zustand";
-import type { HighlightItem } from "./extensions/semantic-highlight/getHighlights";
+import type { HighlightItem } from "./features/highlight/getHighlights";
 
 export interface EditorStore {
   tocContent: TableOfContentData | null;

@@ -7,10 +7,6 @@ export const AuxiliaryTabFactory = {
   create: (workspaceHost: WorkbenchHost, entryType: EntryType) => {
     const segments = pluginManager.getSegments(entryType);
 
-    if (!segments) {
-      throw new Error(`Auxiliary of ${entryType} is not registered`);
-    }
-
     return new AuxiliaryTab(workspaceHost, entryType, segments);
   },
 };

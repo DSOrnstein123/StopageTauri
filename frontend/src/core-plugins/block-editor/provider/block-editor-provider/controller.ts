@@ -4,6 +4,7 @@ import { NodeStoreController } from "@system/entry/categories/node/core/controll
 
 export class EditorController extends NodeStoreController<EditorStore> {
   private editor: Editor | null = null;
+  private readonly listeners = new Set<() => void>();
 
   readonly api = {
     ...this.nodeApi(),
@@ -13,21 +14,27 @@ export class EditorController extends NodeStoreController<EditorStore> {
   protected editorApi() {
     return {
       getEditor: this.getEditor.bind(this),
-      getTOC: this.getTOCContent.bind(this),
       setEditor: this.setEditor.bind(this),
+      subcribeEditor: this.subcribeEditor.bind(this),
     };
-  }
-
-  setEditor(editor: Editor) {
-    this.editor = editor;
   }
 
   getEditor() {
     return this.editor;
   }
 
-  getTOCContent() {
-    return this.store?.getState().tocContent;
+  setEditor(editor: Editor) {
+    this.editor = editor;
+
+    this.listeners.forEach((listener) => listener());
+  }
+
+  subcribeEditor(listener: () => void) {
+    this.listeners.add(listener);
+
+    return () => {
+      this.listeners.delete(listener);
+    };
   }
 
   override destroy() {

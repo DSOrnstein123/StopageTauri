@@ -6,7 +6,6 @@ import RightSidebar from "@app/shell/sidebar/RightSidebar";
 export const components = {
   fileList: LeftSidebar,
   tab: TabWrapper,
-  // sidebarTab: AuxiliaryTabContent,
   segment: SegmentWrapper,
   rightSidebar: RightSidebar,
 };

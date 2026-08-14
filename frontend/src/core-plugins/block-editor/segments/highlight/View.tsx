@@ -1,20 +1,24 @@
-import useHightlights from "@core-plugins/block-editor/provider/block-editor-provider/extensions/semantic-highlight/useHighlights";
+import useHightlights from "@core-plugins/block-editor/provider/block-editor-provider/features/highlight/useHighlights";
 import { systemApi } from "@system/api";
 import useActiveTabId from "@system/workbench/workspace/hooks/useActiveTabId";
+import { useSyncExternalStore } from "react";
 
-const View = () => {
+export const View = () => {
+  //TODO: resolve is editor api based on entryApi
   const activeTabId = useActiveTabId();
   const activeTabApi = systemApi.workbench.getTabEntryApi<"document">(
     activeTabId!,
   );
-  const activeTab = systemApi.workbench.getTab(activeTabId!);
-  const editor = activeTabApi.getEditor();
-  const activeEntryStore = activeTab!.entryStore;
-  const highlights = useHightlights(activeEntryStore!, editor);
+
+  const editor = useSyncExternalStore(
+    activeTabApi.subcribeEditor,
+    activeTabApi.getEditor,
+  );
+
+  const highlights = useHightlights(editor);
 
   return (
     <div className="flex flex-col gap-1">
-      Highlight
       {highlights.map((highlight) => (
         <button
           key={highlight.id}
@@ -27,5 +31,3 @@ const View = () => {
     </div>
   );
 };
-
-export default View;

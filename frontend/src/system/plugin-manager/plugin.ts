@@ -5,7 +5,10 @@ import type { ComponentType } from "react";
 import type { BaseController } from "@system/workbench/tab/classes/baseController";
 import type { StoreApi } from "zustand";
 import type { UnionToIntersection } from "@system/shared/utils/unionToIntersection";
-import type { AuxiliaryConfig } from "@system/entry/auxiliary/auxiliary";
+import type {
+  AuxiliaryConfig,
+  SegmentConfig,
+} from "@system/entry/auxiliary/auxiliary";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PluginRegistryMap {}
@@ -30,6 +33,7 @@ export interface PluginConfig {
     nodes?: Record<string, NodeConfig>;
     tools?: Record<string, ToolConfig>;
   };
+  segments?: SegmentConfig[];
   dependencies?: PluginId[];
 }
 

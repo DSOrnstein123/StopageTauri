@@ -1,8 +1,8 @@
 import { createContext, useContext as useReactContext } from "react";
-import type { AuxiliaryTab } from "../AuxiliaryTab";
+import type { EntryApi } from "@system/plugin-manager/plugin";
 
 export interface Context {
-  auxiliaryTab: AuxiliaryTab;
+  entryApi?: EntryApi<unknown>;
 }
 
 export const Context = createContext<Context | null>(null);
@@ -10,8 +10,6 @@ export const Context = createContext<Context | null>(null);
 export const useContext = () => {
   const context = useReactContext(Context);
   if (!context)
-    throw new Error(
-      "Must use useAuxiliaryTabContext inside AuxiliaryTabProvider",
-    );
+    throw new Error("Must use useAuxiliaryContext inside AuxiliaryProvider");
   return context;
 };

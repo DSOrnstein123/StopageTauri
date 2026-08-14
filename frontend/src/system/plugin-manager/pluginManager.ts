@@ -1,4 +1,8 @@
-import type { AuxiliaryConfig } from "@system/entry/auxiliary/auxiliary";
+import type {
+  AuxiliaryConfig,
+  SegmentConfig,
+  SegmentId,
+} from "@system/entry/auxiliary/auxiliary";
 import type {
   NodeConfig,
   NodeNamePlaceholder,
@@ -26,13 +30,22 @@ export class PluginManager {
   private pluginConfigs = new Map<PluginId, PluginConfig>();
   private nodeConfigs = new Map<NodeType, RegisteredNodeConfig>();
   private toolConfigs = new Map<ToolType, ToolConfig>();
+  private segmentConfigs = new Map<SegmentId, SegmentConfig>();
 
   register(plugin: Plugin) {
-    const { id: pluginId, entries, ...metadata } = plugin;
+    //TODO: normalize registerd plugin
+    const { id: pluginId, entries, segments, ...metadata } = plugin;
+
     if (this.pluginConfigs.has(pluginId))
       throw new Error(`Plugin '${pluginId}' already registered`);
 
     this.pluginConfigs.set(pluginId, { ...metadata, entries: entries });
+
+    if (segments) {
+      segments.forEach((segmentConfig) => {
+        this.segmentConfigs.set(segmentConfig.id, segmentConfig);
+      });
+    }
 
     if (!entries) return;
 
@@ -236,10 +249,31 @@ export class PluginManager {
     return Boolean(this.getAuxiliaryConfig(entryType));
   }
 
-  getSegments(entryType: EntryType) {
+  private getSegmentIds(entryType: EntryType) {
     const auxiliaryConfig = this.getAuxiliaryConfig(entryType);
 
-    return auxiliaryConfig?.segments;
+    if (!auxiliaryConfig) {
+      throw new Error(`Auxiliary of ${entryType} is not registered`);
+    }
+
+    return auxiliaryConfig.segments;
+  }
+
+  getSegments(entryType: EntryType) {
+    const segments = new Map<SegmentId, SegmentConfig>();
+    const segmentIds = this.getSegmentIds(entryType);
+
+    segmentIds.forEach((segmentId) => {
+      const segmentConfig = this.segmentConfigs.get(segmentId);
+
+      if (!segmentConfig) {
+        throw new Error(`Segment ${segmentId} is not registered`);
+      }
+
+      segments.set(segmentId, segmentConfig);
+    });
+
+    return segments;
   }
 }
 

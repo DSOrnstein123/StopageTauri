@@ -1,4 +1,7 @@
-import type { SegmentConfig } from "@system/entry/auxiliary/auxiliary";
+import type {
+  SegmentConfig,
+  SegmentId,
+} from "@system/entry/auxiliary/auxiliary";
 import { BaseTab } from "../BaseTab";
 import type { WorkbenchHost } from "@system/workbench/core/types/workbenchHost";
 import { createStore, type AuxiliaryTabStore } from "./store";
@@ -8,21 +11,21 @@ export class AuxiliaryTab extends BaseTab {
   readonly kind = "auxiliary";
   readonly entryType: EntryType;
   readonly store: AuxiliaryTabStore;
-  readonly segments: ReadonlyMap<string, SegmentConfig>;
+  readonly segments: ReadonlyMap<SegmentId, SegmentConfig>;
 
   constructor(
     workspaceHost: WorkbenchHost,
     entryType: EntryType,
-    segments: Record<string, SegmentConfig>,
+    segments: ReadonlyMap<SegmentId, SegmentConfig>,
     id?: string,
   ) {
     super(workspaceHost, id);
     this.entryType = entryType;
     this.store = createStore();
-    this.segments = new Map(Object.entries(segments));
+    this.segments = new Map(segments);
   }
 
-  getSegmentView(id: string) {
+  getSegmentView(id: SegmentId) {
     const segmentConfig = this.segments.get(id);
 
     if (!segmentConfig) {

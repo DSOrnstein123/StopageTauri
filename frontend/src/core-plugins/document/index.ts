@@ -27,7 +27,7 @@ export const DocumentPlugin = {
   name: "Document",
   entries: {
     nodes: {
-      [DOCUMENT_TYPE]: documentConfig,
+      [documentConfig.type]: documentConfig,
       [DOCUMENT_TEMPLATE_TYPE]: documentTemplateConfig,
     },
   },

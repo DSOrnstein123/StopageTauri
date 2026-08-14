@@ -5,10 +5,6 @@ import createDocumentStore from "./stores/createDocumentStore";
 import { DataSchema } from "./schema";
 import View from "./View";
 import { BlockEditorView } from "@core-plugins/block-editor";
-import {
-  OUTLINE_SEGMENT,
-  outlineSegmentConfig,
-} from "@core-plugins/document/auxiliary/outline/public";
 import { TYPE } from "./identity";
 
 export const config = {
@@ -32,8 +28,6 @@ export const config = {
     emptyPlaceholder: {},
   },
   auxiliary: {
-    segments: {
-      [OUTLINE_SEGMENT]: outlineSegmentConfig,
-    },
+    segments: ["core.block-editor.highlight"],
   },
 } satisfies NodeConfig;
