@@ -13,6 +13,8 @@ export const NodeContext = createContext<INodeContext | null>(null);
 
 export const useNodeContext = () => {
   const context = useContext(NodeContext);
+
   if (!context) throw new Error("Must use useNodeContext inside NodeProvider");
+
   return context;
 };

@@ -64,7 +64,6 @@ export const createNodeBindings = <D extends NodeDefinition>(
 
   const useApi = () => {
     const { api } = useRuntime();
-    console.log(api);
 
     if (!api) {
       throw new Error(

@@ -1,2 +1,2 @@
-export const SEGMENT = "document-outline" as const;
-export type SEGMENT = typeof SEGMENT;
+export const SEGMENT_ID = "document-outline" as const;
+export type SEGMENT_ID = typeof SEGMENT_ID;

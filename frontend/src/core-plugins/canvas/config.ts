@@ -1,6 +1,7 @@
 import type { PluginManifest } from "@system/plugin-manager/plugin";
 import { PLUGIN_ID } from "./identity";
 import { CANVAS_TYPE, canvasConfig } from "./entries/nodes/canvas";
+import { documentHighlightImporterSegmentConfig } from "./auxiliary/document-highlight-importer";
 
 declare module "@system/plugin-manager/plugin" {
   interface PluginRegistryMap {
@@ -10,6 +11,7 @@ declare module "@system/plugin-manager/plugin" {
           [CANVAS_TYPE]: typeof canvasConfig;
         };
       };
+      segments: [typeof documentHighlightImporterSegmentConfig];
     };
   }
 }
@@ -22,4 +24,5 @@ export const CanvasPlugin = {
       [CANVAS_TYPE]: canvasConfig,
     },
   },
+  segments: [documentHighlightImporterSegmentConfig],
 } satisfies PluginManifest;

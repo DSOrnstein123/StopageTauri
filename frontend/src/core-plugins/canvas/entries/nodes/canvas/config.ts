@@ -21,6 +21,9 @@ export const config = {
       action: createCanvas,
     },
   ],
+  auxiliary: {
+    segments: ["document-highlight-importer"],
+  },
 } satisfies NodeConfig;
 
 export const { useStore, useApi } = createNodeBindings(config);
