@@ -5,10 +5,12 @@ import { TYPE } from "./identity";
 import { createStore } from "./store";
 import { createController } from "./controller";
 import { createNodeBindings } from "@system/entry/categories/node/core/utils/createNodeBindings";
+import { DataSchema } from "./schema";
 
 export const config = {
   type: TYPE,
   view: View,
+  schema: DataSchema,
   createEntryStore: createStore,
   createController: createController,
   actionButtons: [

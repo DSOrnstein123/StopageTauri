@@ -18,7 +18,15 @@ export const EdgeSchema = z.object({
 });
 export type Edge = z.infer<typeof EdgeSchema>;
 
+export const ResourceImportsByNodeSchema = z.record(
+  z.string(),
+  z.array(z.string()),
+);
+
 export const DataSchema = z.object({
   nodes: z.array(NodeSchema),
+  edges: z.array(NodeSchema),
+
+  resourceImportsByNode: ResourceImportsByNodeSchema,
 });
 export type Data = z.infer<typeof DataSchema>;

@@ -5,6 +5,7 @@ import {
   DialogTrigger,
 } from "@system/shared/ui/shadcn/dialog";
 import type { ReactNode } from "react";
+import { DocumentList } from "./DocumentList";
 
 export const DocumentPicker = ({ children }: { children: ReactNode }) => {
   return (
@@ -13,6 +14,8 @@ export const DocumentPicker = ({ children }: { children: ReactNode }) => {
 
       <DialogContent>
         <DialogHeader>Choose a document</DialogHeader>
+
+        <DocumentList />
       </DialogContent>
     </Dialog>
   );
