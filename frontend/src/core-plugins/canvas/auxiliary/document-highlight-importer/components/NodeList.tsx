@@ -1,9 +1,9 @@
 import { useGetNodes } from "@system/entry/categories/node/core/hooks/useGetNodes";
 import { useImportNode } from "../hooks/useImportNode";
-import { useAuxiliaryTabContext } from "@system/workbench/tab/auxiliary-tab/context/useAuxiliaryTabContext";
+import { useCurrentNodeId } from "@system/workbench/core/hooks/useCurrentNodeId";
 
-export const DocumentList = () => {
-  const { e } = useAuxiliaryTabContext();
+export const NodeList = () => {
+  const id = useCurrentNodeId();
 
   const { data: list = [] } = useGetNodes({
     includeKinds: ["file"],

@@ -5,17 +5,18 @@ import {
   DialogTrigger,
 } from "@system/shared/ui/shadcn/dialog";
 import type { ReactNode } from "react";
-import { DocumentList } from "./DocumentList";
+import { NodeList } from "./NodeList";
 
-export const DocumentPicker = ({ children }: { children: ReactNode }) => {
+//TODO: move business logic out of picker (handle through onSelect)
+export const NodePicker = ({ children }: { children: ReactNode }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent>
-        <DialogHeader>Choose a document</DialogHeader>
+        <DialogHeader>Choose a node</DialogHeader>
 
-        <DocumentList />
+        <NodeList />
       </DialogContent>
     </Dialog>
   );

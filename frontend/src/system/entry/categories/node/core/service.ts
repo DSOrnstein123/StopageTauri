@@ -5,10 +5,10 @@ import {
   type NodeDetail,
 } from "./schema";
 import type { CreateNodePayload, NodeListOptions } from "./types/payload";
-import { pluginManager } from "@system/plugin-manager/pluginManager";
 import type { NodeType } from "@system/plugin-manager/plugin";
 import type { NodeDetailMap } from "@system/entry/categories/node/core/types";
 
+//TODO: add zod validate
 export const nodeService = {
   getDetail: async (id: string) => {
     try {
@@ -35,6 +35,14 @@ export const nodeService = {
       return NodeMetadataListSchema.parse(rawData);
     } catch (error) {
       console.error("getList failed:", error);
+      throw error;
+    }
+  },
+  getDetails: async (ids: string[]) => {
+    try {
+      return invoke<NodeDetail[]>("get_details_by_ids", { ids: ids });
+    } catch (error) {
+      console.error(error);
       throw error;
     }
   },

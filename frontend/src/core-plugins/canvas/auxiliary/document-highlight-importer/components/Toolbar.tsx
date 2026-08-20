@@ -1,15 +1,15 @@
 import { Button } from "@system/shared/ui/shadcn/button";
 import { Plus } from "lucide-react";
-import { DocumentPicker } from "./DocumentPicker";
+import { NodePicker } from "./NodePicker";
 
 export const Toolbar = () => {
   return (
     <div>
-      <DocumentPicker>
+      <NodePicker>
         <Button variant="ghost">
           <Plus />
         </Button>
-      </DocumentPicker>
+      </NodePicker>
     </div>
   );
 };

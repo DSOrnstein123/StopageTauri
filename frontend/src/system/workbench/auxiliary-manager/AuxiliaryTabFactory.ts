@@ -7,6 +7,6 @@ export const AuxiliaryTabFactory = {
   create: (workspaceHost: WorkbenchHost, entryType: EntryType) => {
     const segments = pluginManager.getSegments(entryType);
 
-    return new AuxiliaryTab(workspaceHost, entryType, segments);
+    return new AuxiliaryTab(workspaceHost, segments);
   },
 };

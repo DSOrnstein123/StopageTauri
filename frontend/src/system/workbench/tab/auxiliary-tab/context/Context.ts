@@ -2,6 +2,7 @@ import { createContext, useContext as useReactContext } from "react";
 import type { EntryApi } from "@system/plugin-manager/plugin";
 
 export interface Context {
+  entryId: string;
   entryApi?: EntryApi<unknown>;
 }
 
