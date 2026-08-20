@@ -15,6 +15,7 @@ macro_rules! app_commands {
             //core/node
             node::get_nodes,
             node::get_node_detail,
+            node::get_details_by_ids,
             node::create_node,
             node::update_node_name,
             node::update_node_data,

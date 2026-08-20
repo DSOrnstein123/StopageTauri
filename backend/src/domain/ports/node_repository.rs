@@ -12,6 +12,7 @@ pub trait NodeRepository: Send + Sync {
         options: Option<NodeFilterOptions>,
     ) -> Result<Vec<NodeMetadata>, NodeError>;
     async fn get_detail(&self, id: &str) -> Result<NodeDetail, NodeError>;
+    async fn get_details_by_ids(&self, ids: &[String]) -> Result<Vec<NodeDetail>, NodeError>;
     async fn create(&self, node: &Node) -> Result<NodeDetail, NodeError>;
     async fn update_name(&self, id: &str, new_name: &str) -> Result<(), NodeError>;
     async fn update_data(&self, id: &str, new_data: Value) -> Result<(), NodeError>;

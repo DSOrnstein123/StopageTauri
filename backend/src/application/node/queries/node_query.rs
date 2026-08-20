@@ -21,4 +21,8 @@ impl<'a, R: NodeRepository> NodeQuery<'a, R> {
     pub async fn get_node_detail(&self, id: &str) -> Result<NodeDetail, NodeError> {
         self.repo.get_detail(id).await
     }
+
+    pub async fn get_details_by_ids(&self, ids: &[String]) -> Result<Vec<NodeDetail>, NodeError> {
+        self.repo.get_details_by_ids(ids).await
+    }
 }

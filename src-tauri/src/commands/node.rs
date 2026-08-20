@@ -46,6 +46,22 @@ pub async fn get_node_detail(
 }
 
 #[tauri::command]
+pub async fn get_details_by_ids(
+    state: State<'_, AppState>,
+    ids: Vec<String>,
+) -> Result<Vec<NodeDetailDto>, String> {
+    let query_service = NodeQuery::new(&state.node_repo);
+
+    let ids: &[String] = &ids;
+
+    query_service
+        .get_details_by_ids(ids)
+        .await
+        .map(|domain_nodes| domain_nodes.into_iter().map(Into::into).collect())
+        .map_err(|err| err.to_string())
+}
+
+#[tauri::command]
 pub async fn create_node(
     state: State<'_, AppState>,
     payload: CreateNodePayload,

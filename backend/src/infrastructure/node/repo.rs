@@ -127,6 +127,48 @@ impl NodeRepository for SqliteNodeRepository {
         Ok(nodes.into_iter().map(Into::into).collect())
     }
 
+    async fn get_details_by_ids(&self, ids: &[String]) -> Result<Vec<NodeDetail>, NodeError> {
+        if ids.is_empty() {
+            return Ok(vec![]);
+        }
+
+        let mut builder: QueryBuilder<Sqlite> = QueryBuilder::new(
+            r#"
+        SELECT
+            id as "id!: String",
+            parent_id,
+            icon as "icon: Json<IconData>",
+            name,
+            kind,
+            type as node_type,
+            data as "data: Json<Value>",
+            properties as "properties: Json<Value>",
+            created_at,
+            updated_at,
+            is_trashed
+        FROM nodes
+        WHERE is_trashed = 0
+        AND id IN (
+        "#,
+        );
+
+        let mut separated = builder.separated(", ");
+
+        for id in ids {
+            separated.push_bind(id);
+        }
+
+        separated.push_unseparated(")");
+
+        let nodes = builder
+            .build_query_as::<DbNodeDetail>()
+            .fetch_all(&self.pool)
+            .await
+            .map_err(|e| NodeError::Database(e.to_string()))?;
+
+        Ok(nodes.into_iter().map(Into::into).collect())
+    }
+
     async fn create(&self, node: &Node) -> Result<NodeDetail, NodeError> {
         let icon = Json(IconData {
             icon_type: "lucide".to_string(),
