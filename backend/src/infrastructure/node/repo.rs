@@ -135,14 +135,14 @@ impl NodeRepository for SqliteNodeRepository {
         let mut builder: QueryBuilder<Sqlite> = QueryBuilder::new(
             r#"
         SELECT
-            id as "id!: String",
+            id,
             parent_id,
-            icon as "icon: Json<IconData>",
+            icon,
             name,
             kind,
             type as node_type,
-            data as "data: Json<Value>",
-            properties as "properties: Json<Value>",
+            data ,
+            properties,
             created_at,
             updated_at,
             is_trashed

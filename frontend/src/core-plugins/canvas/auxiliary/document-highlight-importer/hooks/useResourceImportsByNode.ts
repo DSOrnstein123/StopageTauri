@@ -5,5 +5,6 @@ export const useResourceImportsByNode = (canvasId: string) => {
   return useQuery({
     ...getNodeDetailQueryOptions<"canvas">(canvasId),
     select: (data) => data.data.resourceImportsByNode,
+    enabled: !!canvasId,
   });
 };

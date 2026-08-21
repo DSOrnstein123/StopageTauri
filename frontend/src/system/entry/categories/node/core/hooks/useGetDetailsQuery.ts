@@ -10,9 +10,9 @@ export const useGetDetailsQuery = (ids: string[]) => {
     queryFn: async () => {
       const nodes = await nodeService.getDetails(ids);
 
-      nodes.forEach((node) =>
-        queryClient.setQueryData(nodeKeys.detail(node.id), node),
-      );
+      nodes.forEach((node) => {
+        queryClient.setQueryData(nodeKeys.detail(node.id), node);
+      });
 
       return nodes;
     },

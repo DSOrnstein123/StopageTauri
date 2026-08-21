@@ -1,3 +1,4 @@
+import { ImportedNodeList } from "./components/ImportedNodeList";
 import { Toolbar } from "./components/Toolbar";
 
 export const View = () => {
@@ -5,7 +6,7 @@ export const View = () => {
     <div className="flex flex-col">
       <Toolbar />
 
-      {/* <ImportedList /> */}
+      <ImportedNodeList />
     </div>
   );
 };
