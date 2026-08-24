@@ -1,12 +1,10 @@
-import { nodeKeys } from "@system/entry/categories/node/core/keys";
-import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useApi } from "../definition";
 
-export const useRestore = (id: string) => {
+export const useRestore = () => {
   const api = useApi();
 
-  return useQuery({
-    queryKey: nodeKeys.detail(id),
-    queryFn: () => api.restore(),
-  });
+  useEffect(() => {
+    api.restore();
+  }, [api]);
 };

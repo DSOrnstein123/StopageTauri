@@ -10,7 +10,7 @@ export const NodeList = () => {
     includeTypes: ["document"],
   });
 
-  const { mutate: importNode } = useImportNode();
+  const { mutate: importNode, isPending } = useImportNode();
 
   return (
     <div className="flex flex-col">
@@ -18,12 +18,14 @@ export const NodeList = () => {
         <div
           key={item.id}
           className="hover:bg-gray-400"
-          onClick={() =>
+          onClick={() => {
+            if (isPending) return;
+
             importNode({
               canvasId: id,
               nodeId: item.id,
-            })
-          }
+            });
+          }}
         >
           {item.name}
         </div>

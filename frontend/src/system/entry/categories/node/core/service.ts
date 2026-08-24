@@ -19,6 +19,7 @@ export const nodeService = {
       const nodeDetail = NodeDetailSchema.parse(rawData);
       // const schema = pluginManager.getNodeSchema(rawData.type);
       // const nodeData = schema.parse(nodeDetail.data);
+
       return {
         ...nodeDetail,
         // data: nodeData,

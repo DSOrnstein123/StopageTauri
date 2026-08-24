@@ -17,33 +17,26 @@ export const getHighlights = (editor: Editor): HighlightItem[] => {
     }
 
     const mark = node.marks.find((mark) => mark.type.name === "highlight");
-
-    if (!mark) {
-      return;
-    }
+    if (!mark) return;
 
     const id = mark.attrs.id as string | null;
+    if (!id) throw new Error(`Invalid highlight`);
 
-    if (!id) {
-      return;
-    }
-
-    const existing = highlights.get(id);
+    const highlight = highlights.get(id);
     const to = position + node.nodeSize;
 
-    if (existing) {
-      existing.text += node.text;
-      existing.to = to;
-      return;
+    if (!highlight) {
+      highlights.set(id, {
+        id,
+        text: node.text,
+        color: mark.attrs.color ?? null,
+        from: position,
+        to,
+      });
+    } else {
+      highlight.text += node.text;
+      highlight.to = to;
     }
-
-    highlights.set(id, {
-      id,
-      text: node.text,
-      color: mark.attrs.color ?? null,
-      from: position,
-      to,
-    });
   });
 
   return Array.from(highlights.values());

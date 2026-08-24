@@ -17,5 +17,6 @@ export const useGetDetailsQuery = (ids: string[]) => {
       return nodes;
     },
     enabled: ids.length > 0,
+    gcTime: 0,
   });
 };

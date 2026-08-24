@@ -23,6 +23,7 @@ const useRename = () => {
             node.id == id ? { ...node, name: newName } : node,
           ),
       );
+
       queryClient.setQueryData<NodeDetail>(
         nodeKeys.detail(id),
         (data) =>

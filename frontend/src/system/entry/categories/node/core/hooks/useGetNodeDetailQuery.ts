@@ -7,7 +7,11 @@ import type { NodeDetailMap } from "@system/entry/categories/node/core/types";
 export const getNodeDetailQueryOptions = <N extends NodeType>(id: string) =>
   queryOptions({
     queryKey: nodeKeys.detail(id),
-    queryFn: () => nodeService.getDetail(id) as Promise<NodeDetailMap<N>>,
+    queryFn: async () => {
+      const result = await nodeService.getDetail(id);
+
+      return result as NodeDetailMap<N>;
+    },
     enabled: !!id,
     staleTime: Infinity,
   });
