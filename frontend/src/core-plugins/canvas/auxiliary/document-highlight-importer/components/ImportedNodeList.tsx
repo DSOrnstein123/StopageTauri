@@ -23,7 +23,7 @@ export const ImportedNodeList = () => {
   const nodes = queries
     .map((query) => query.data)
     .filter((node): node is NodeDetail => !!node);
-  console.log(nodes);
+
   return (
     <div className="flex flex-col">
       {nodes.map((node) => (
