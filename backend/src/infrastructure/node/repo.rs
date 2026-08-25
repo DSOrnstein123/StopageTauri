@@ -7,7 +7,7 @@ use async_trait::async_trait;
 use serde_json::Value;
 use sqlx::types::Json;
 use sqlx::{QueryBuilder, Sqlite, SqlitePool, query, query_as};
-
+// TODO: split into new file
 pub struct SqliteNodeRepository {
     pub pool: SqlitePool,
 }
