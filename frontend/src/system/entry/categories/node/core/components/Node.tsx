@@ -2,18 +2,18 @@ import NodeContent from "./NodeContent";
 import NodeNameLabel from "./NodeNameLabel";
 import { useGetNodeDetailQuery } from "../hooks/useGetNodeDetailQuery";
 import NodeProvider from "../context/NodeProvider";
-import { useTabContext } from "@system/workbench/tab/context/TabContext";
 import type { EntryTab } from "@system/workbench/tab/entry-tab/EntryTab";
+import { useEntryTabContext } from "@system/workbench/tab/entry-tab/hooks/useEntryTabContext";
 
 const Node = ({ id }: { id: string }) => {
   const { data } = useGetNodeDetailQuery(id);
-  const tab = useTabContext();
+  const tab = useEntryTabContext();
 
   if (!data) return null;
   //TODO: add useEntryTabContext
   const value = {
     id: id,
-    store: tab.store,
+    store: tab.entryStore,
     api: (tab as EntryTab).entryApi,
   };
 

@@ -9,7 +9,7 @@ import { TYPE } from "./identity";
 export const CreateButton = () => {
   const addNode = useStore((state) => state.addNode);
   const { screenToFlowPosition } = useReactFlow();
-
+  //TODO: seperate into useAddNode() later
   const handleOnClick = () => {
     const canvas = document.getElementById("canvas");
     const canvasPosition = canvas?.getBoundingClientRect();
